@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/jpdillingham/swot/issues"
   },
-  "homepage": "https://github.com/jpdillingham/swot#readme"
+  "homepage": "https://github.com/jpdillingham/swot#readme",
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
+    "redux": "^3.7.2"
+  }
 }
