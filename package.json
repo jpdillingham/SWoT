@@ -4,7 +4,10 @@
   "description": "Simple Workout Tracker",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
   },
   "repository": {
     "type": "git",
@@ -15,12 +18,15 @@
   "bugs": {
     "url": "https://github.com/jpdillingham/swot/issues"
   },
-  "homepage": "https://github.com/jpdillingham/swot#readme",
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
+    "react-scripts": "^1.0.17",
     "redux": "^3.7.2"
+  },
+  "devDependencies": {
+    "webpack": "^3.10.0"
   }
 }
