@@ -1,0 +1,19 @@
+{
+  "name": "swot",
+  "version": "1.0.0",
+  "description": "Simple Workout Tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpdillingham/swot.git"
+  },
+  "author": "JP Dillingham",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jpdillingham/swot/issues"
+  },
+  "homepage": "https://github.com/jpdillingham/swot#readme"
+}
