@@ -19,6 +19,7 @@
     "url": "https://github.com/jpdillingham/swot/issues"
   },
   "dependencies": {
+    "amazon-cognito-identity-js": "^1.29.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
