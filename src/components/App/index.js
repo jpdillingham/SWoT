@@ -18,8 +18,8 @@ class App extends Component {
     theme = getMuiTheme({
         palette: {
             primary1Color: "#2196f3",
-            "primary2Color": "#0288d1",
-            "pickerHeaderColor": "#29b6f6"
+            primary2Color: "#0288d1",
+            pickerHeaderColor: "#29b6f6"
         }
     })
 
