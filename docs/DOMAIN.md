@@ -12,6 +12,8 @@ Id | Guid/Uuid | Unique identifier.
 Name | string | Friendly/display name.
 Description | string | Explanation of the exercise, rich text enabled.
 
+### Pseudocode
+
 ```c#
 Exercise {
     Guid Id
@@ -33,6 +35,8 @@ Name | Type | Description
 Goal | float | The goal metric of the exercise; distance, duration, etc.
 Actual | float | The actual metric of of the exercise.
 UOM | string | The unit of measure of the Goal and Actual fields; distance in miles or kilometers, duration in minutes or hours, etc.
+
+### Pseudocode
 
 ```c#
 Basic: Exercise {
