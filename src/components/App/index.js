@@ -3,10 +3,8 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import AppBar from 'material-ui/AppBar';
+import Navigation from '../Navigation'
 
-import Drawer from 'material-ui/Drawer'
-import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
@@ -30,22 +28,7 @@ class App extends Component {
     render() {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
-                <AppBar 
-                    title="SWoT" 
-                    style={styles.appBar}
-                    onLeftIconButtonClick={this.toggleDrawer}
-                />
-                <Drawer 
-                    open={this.state.drawerOpen}
-                    docked={false}
-                    onRequestChange={this.toggleDrawer}
-                >
-                                <AppBar 
-                    title="SWoT" showMenuIconButton={false}
-                />
-                    <MenuItem>Menu Item</MenuItem>
-                    <MenuItem>Menu Item 2</MenuItem>
-                </Drawer>
+                <Navigation/>
                 <div style={{marginLeft: this.state.drawerOpen ? 0 : 0}}>
                     <h1>Hello World!</h1>
                     <FlatButton label="Primary" primary={true} />
