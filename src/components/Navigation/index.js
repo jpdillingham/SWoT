@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
+import { Link } from 'react-router-dom';
 
 class Navigation extends Component {
     state = {
@@ -30,8 +31,8 @@ class Navigation extends Component {
                         title="SWoT" 
                         showMenuIconButton={false}
                     />
-                        <MenuItem>Menu Item</MenuItem>
-                        <MenuItem>Menu Item 2</MenuItem>
+                        <MenuItem><Link to="/">Home</Link></MenuItem>
+                        <MenuItem><Link to="/exercises">Exercises</Link></MenuItem>
                 </Drawer>
             </div>
         );

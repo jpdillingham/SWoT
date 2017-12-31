@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { Link, Route, Switch } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Navigation from '../Navigation'
+import Home from '../Home'
+import Exercises from '../Exercises'
 
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -20,11 +23,18 @@ class App extends Component {
     render() {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
-                <Navigation/>
+                <Navigation>
+                    <Link to="/">Home</Link>
+                    <Link to="/exercises">Exercises</Link>
+                </Navigation>
                 <div>
                     <h1>Hello World!</h1>
                     <FlatButton label="Primary" primary={true} />
                     <RaisedButton label="Primary" primary={true} />
+                    <Switch>
+                        <Route exact path="/" component={Home}/>
+                        <Route path="/exercises" component={Exercises}/>
+                    </Switch>
                 </div>
             </MuiThemeProvider>
         );
