@@ -9,10 +9,6 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
 class App extends Component {
-    state = {
-        drawerOpen: false,
-    }
-
     theme = getMuiTheme({
         palette: {
             primary1Color: "#2196f3",
@@ -21,29 +17,17 @@ class App extends Component {
         }
     })
 
-    toggleDrawer = () => {
-        this.setState({ drawerOpen: !this.state.drawerOpen })
-    }
-
     render() {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
                 <Navigation/>
-                <div style={{marginLeft: this.state.drawerOpen ? 0 : 0}}>
+                <div>
                     <h1>Hello World!</h1>
                     <FlatButton label="Primary" primary={true} />
                     <RaisedButton label="Primary" primary={true} />
                 </div>
             </MuiThemeProvider>
         );
-    }
-}
-
-const styles = {
-    appBar: {
-        position: 'fixed',
-        left: 0,
-        top: 0,
     }
 }
 
