@@ -82,18 +82,18 @@ exercise: {
 
 # Routine
 
-The Routine object contains an ordered array of Exercises, keyed by name.
+The Routine object contains a name and an ordered array of Exercise ids.
 
 ## Model
 
 ```javascript
-routine: [
+routine: {
     id: 'Guid/Uuid',
     name: 'string',
     exercises: [
         { id: 'Guid/Uuid' },
     ]
-]
+}
 ```
 
 ## Examples
