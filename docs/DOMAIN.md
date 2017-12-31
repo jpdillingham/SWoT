@@ -27,9 +27,12 @@ A *Simple* exercise is an activity with an atomic goal and outcome.
 
 Name | Type | Description
 --- | --- | ---
-Id | Guid/Uuid | Unique identifier (Inherited from Exercise).
-Name | string | Friendly/display name  (Inherited from Exercise).
-Description | string | Explanation of the exercise, rich text enabled  (Inherited from Exercise).
+*Id* | *Guid/Uuid* | *Unique identifier (Inherited from Exercise).*
+*Name* | *string* | *Friendly/display name  (Inherited from Exercise).*
+*Description* | *string* | *Explanation of the exercise, rich text enabled  (Inherited from Exercise).*
+Goal | float | The goal metric of the exercise; distance, duration, etc.
+Actual | float | The actual metric of of the exercise.
+UOM | string | The unit of measure of the Goal and Actual fields; distance in miles or kilometers, duration in minutes or hours, etc.
 
 ```c#
 Basic: Exercise {
@@ -37,7 +40,7 @@ Basic: Exercise {
     (string Name)
     (string Description)
     float Goal
-    float Outcome
+    float Actual
     string UOM
 }
 ```
