@@ -27,12 +27,8 @@ class Navigation extends Component {
                     docked={false}
                     onRequestChange={this.toggleDrawer}
                 >
-                    <AppBar 
-                        title="SWoT" 
-                        showMenuIconButton={false}
-                    />
-                        <MenuItem><Link to="/">Home</Link></MenuItem>
-                        <MenuItem><Link to="/exercises">Exercises</Link></MenuItem>
+                    <AppBar title="SWoT" showMenuIconButton={false}/>
+                    {this.props.children}
                 </Drawer>
             </div>
         );

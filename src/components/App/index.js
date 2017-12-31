@@ -10,6 +10,7 @@ import Exercises from '../Exercises'
 
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import MenuItem from 'material-ui/MenuItem'
 
 class App extends Component {
     theme = getMuiTheme({
@@ -24,8 +25,8 @@ class App extends Component {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
                 <Navigation>
-                    <Link to="/">Home</Link>
-                    <Link to="/exercises">Exercises</Link>
+                    <MenuItem href="/">Home</MenuItem>
+                    <MenuItem href="/exercises">Exercises</MenuItem>
                 </Navigation>
                 <div>
                     <h1>Hello World!</h1>
