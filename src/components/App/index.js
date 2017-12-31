@@ -7,6 +7,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Navigation from '../Navigation'
 import Homepage from '../Homepage'
 import Exercises from '../Exercises'
+import Routines from '../Routines'
 
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -39,6 +40,7 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
                         <Route path="/exercises" component={Exercises}/>
+                        <Route path="/routines" component={Routines}/>
                     </Switch>
                 </div>
             </MuiThemeProvider>
