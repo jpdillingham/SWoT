@@ -31,7 +31,7 @@ class ExerciseCard extends Component {
                     >
                     </CardTitle>}
                 >
-                    <img height={94} src="./geometric.png" alt="" />
+                    <img height={94} src="./img/geometric.jpg" alt="" />
                     
                 </CardMedia>
 
