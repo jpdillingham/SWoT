@@ -68,12 +68,14 @@ class Exercises extends Component {
                 <FloatingActionButton secondary={true} zDepth={4} style={styles.fab}>
                     <ContentAdd />
                 </FloatingActionButton>
+                <div style={styles.grid}>
                 {exercises.map(e =>  
                     <div>
                         <ExercizeCard title={e.name} subtitle={e.url} metrics={e.metrics}>
                         </ExercizeCard>
                     </div>
                 )}
+                </div>
             </div>
         )
     }
@@ -82,6 +84,11 @@ class Exercises extends Component {
 export default Exercises
 
 const styles = {
+    grid: {
+        display: 'grid',
+        gridGap: 10,
+        gridTemplateColumns: 'repeat(auto-fit, 400px)'
+    },
     fab: {
         margin: 0,
         top: 'auto',

@@ -11,44 +11,48 @@ import FlatButton from 'material-ui/FlatButton';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
+import IconButton from 'material-ui/IconButton'
+import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app'
+import ActionAssignment from 'material-ui/svg-icons/action/assignment'
+import Avatar from 'material-ui/Avatar'
 
 import Metric from './Metric'
 
 class ExerciseCard extends Component {
     render() {
+        let truncatedUrl = this.props.subtitle.split('/');
+        truncatedUrl = '../' + truncatedUrl[truncatedUrl.length - 1]
+
         return (
             <Card zDepth={2} style={styles.card}>
-                <CardMedia
-                    overlay={<CardTitle 
-                        title={this.props.title} 
-                        subtitle={
-                            <span 
-                                style={styles.link} 
-                                onClick={() => window.location.href=this.props.subtitle}
-                            >
-                                {this.props.subtitle}
-                            </span>
-                        }
-                    >
-                    </CardTitle>}
-                >
-                    <img height={94} src="./img/geometric.jpg" alt="" />
-                    
-                </CardMedia>
-
+                <CardHeader
+                    title={this.props.title}
+                    subtitle={
+                        <span 
+                            style={styles.link}
+                            onClick={() => window.open(this.props.subtitle)}
+                        >
+                            {truncatedUrl}
+                            <IconButton style={styles.exitIconButton} iconStyle={styles.exitIcon}>
+                                <ActionExitToApp/>
+                            </IconButton>
+                        </span>
+                    }
+                    avatar={<Avatar backgroundColor="#64b5f6" src={"img/unknown.png"}></Avatar>}
+                    style={{marginBottom: -30}}
+                />
                 <CardText>
-                <List style={{}}>
-                    <Subheader style={{ marginTop: -15, marginBottom: -5}} inset={false}>Metrics</Subheader>
-                    {this.props.metrics.map(m =>                     
-                    <ListItem
-                        style={{padding: 0, margin: 0}}
-                        leftIcon={<ContentCopy/>}
-                        primaryText={m.name}
-                        secondaryText={m.uom ? m.uom : ''}
-                        />)}
+                    <List>
+                        {this.props.metrics.map(m =>                     
+                            <ListItem
+                                leftIcon={<ActionAssignment/>}
+                                primaryText={m.name}
+                                secondaryText={m.uom ? m.uom : ''}
+                            />
+                        )}
                     </List>
                 </CardText>
-                <CardActions style={{marginTop: -10}}>
+                <CardActions>
                     <FlatButton>Edit</FlatButton>
                     <FlatButton>Delete</FlatButton>
                 </CardActions>
@@ -69,12 +73,25 @@ const styles = {
         position: 'fixed',
     },
     card: {
-        marginBottom: 20,
-        marginLeft: 10,
-        marginRight: 10,
-        width: 500
+        width: 400,
     },
     link: {
         cursor: 'pointer',
+    },
+    metric: {
+        marginLeft: -8
+    },
+    exitIconButton: {
+        border: 0,
+        width: 16,
+        height: 16,
+    },
+    exitIcon: {
+        width: 16,
+        height: 16,
+        marginTop: -10,
+        marginLeft: -5,
+        marginBottom: -3,
+        color: '#808080'
     }
 }
