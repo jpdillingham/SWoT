@@ -38,6 +38,20 @@ export const EXERCISES = [
         ] 
     },
     { 
+        id: '0f2f3a76-c1a2-4a53-bec9-0f124a1f3b15',
+        name: 'chinups',
+        type: 'bodyweight',
+        url: 'https://www.bodybuilding.com/exercises/chin-up',
+        metrics: [
+            {
+                name: 'sets',
+            },
+            {
+                name: 'reps',
+            }
+        ]
+    },
+    { 
         id: '0f2f3a76-c1a2-4a53-bec9-0f124a1f3b16',
         name: 'running',
         type: 'cardio',
