@@ -10,6 +10,7 @@ Values provided for the 'value' field of a metric serve as the default values an
 exercise: {
     id: 'Guid/Uuid',
     name: 'string',
+    type: 'weightlifting' | 'cardio' | 'stretching' | 'balance',
     url: 'string',
     metrics: [
         {
@@ -26,6 +27,7 @@ exercise: {
 { 
     id: 'c4a10b9d-d5de-434e-bac4-c3a4ff014f82',
     name: 'bench press',
+    type: 'weightlifting',
     url: 'https://www.bodybuilding.com/exercises/barbell-bench-press-medium-grip',
     metrics: [
         {
@@ -46,6 +48,7 @@ exercise: {
 { 
     id: '29d53257-5eca-4083-9019-81dc62425801',
     name: 'squat',
+    type: 'weightlifting',
     url: 'https://www.bodybuilding.com/exercises/barbell-full-squat',
     metrics: [
         {
@@ -66,6 +69,7 @@ exercise: {
 { 
     id: '0f2f3a76-c1a2-4a53-bec9-0f124a1f3b16',
     name: 'running',
+    type: 'cardio',
     url: 'https://www.bodybuilding.com/exercises/running-treadmill',
     metrics: [
         {

@@ -15,6 +15,7 @@ class Exercises extends Component {
             { 
                 id: 'c4a10b9d-d5de-434e-bac4-c3a4ff014f82',
                 name: 'bench press',
+                type: 'weightlifting',
                 url: 'https://www.bodybuilding.com/exercises/barbell-bench-press-medium-grip',
                 metrics: [
                     {
@@ -32,6 +33,7 @@ class Exercises extends Component {
             { 
                 id: '29d53257-5eca-4083-9019-81dc62425801',
                 name: 'squat',
+                type: 'weightlifting',
                 url: 'https://www.bodybuilding.com/exercises/barbell-full-squat',
                 metrics: [
                     {
@@ -49,6 +51,7 @@ class Exercises extends Component {
             { 
                 id: '0f2f3a76-c1a2-4a53-bec9-0f124a1f3b16',
                 name: 'running',
+                type: 'cardio',
                 url: 'https://www.bodybuilding.com/exercises/running-treadmill',
                 metrics: [
                     {
