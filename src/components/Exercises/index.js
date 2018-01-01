@@ -65,25 +65,25 @@ class Exercises extends Component {
 
         return (
             <div>
-                <ExercizeCard title="Exercise" subtitle="subtitle"/>
-                <FloatingActionButton secondary={true} style={styles.fab}>
+                <FloatingActionButton secondary={true} zDepth={5} style={styles.fab}>
                     <ContentAdd />
                 </FloatingActionButton>
                 <h1>Exercises</h1>
                 {exercises.map(e =>  
                     <div>
-                        <h3><a href={e.url}>{e.name}</a></h3>
-                        <ul>
-                            {
-                                Object.keys(e.metrics).map((m) => {
-                                    let value = e.metrics[m].value
-                                    let uom = e.metrics[m].uom
-                                    uom = uom ? uom : ''
+                        <ExercizeCard title={e.name} subtitle={e.url}>
+                            <ul>
+                                {
+                                    Object.keys(e.metrics).map((m) => {
+                                        let value = e.metrics[m].value
+                                        let uom = e.metrics[m].uom
+                                        uom = uom ? uom : ''
 
-                                    return <li>{m}: {value + ' ' + uom}</li>
-                                })
-                            }
-                        </ul>
+                                        return <li>{m}: {value + ' ' + uom}</li>
+                                    })
+                                }
+                            </ul>
+                        </ExercizeCard>
                     </div>
                 )}
             </div>
