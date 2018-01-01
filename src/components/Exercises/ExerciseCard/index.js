@@ -39,12 +39,12 @@ class ExerciseCard extends Component {
                 <CardText>
                 <List style={{}}>
                     <Subheader style={{ marginTop: -15, marginBottom: -5}} inset={false}>Metrics</Subheader>
-                    {Object.keys(this.props.metrics).map(m =>                     
+                    {this.props.metrics.map(m =>                     
                     <ListItem
                         style={{padding: 0, margin: 0}}
                         leftIcon={<ContentCopy/>}
-                        primaryText={m}
-                        secondaryText={this.props.metrics[m].uom ? this.props.metrics[m].uom : ''}
+                        primaryText={m.name}
+                        secondaryText={m.uom ? m.uom : ''}
                         />)}
                     </List>
                 </CardText>

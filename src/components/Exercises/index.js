@@ -16,42 +16,50 @@ class Exercises extends Component {
                 id: 'c4a10b9d-d5de-434e-bac4-c3a4ff014f82',
                 name: 'bench press',
                 url: 'https://www.bodybuilding.com/exercises/barbell-bench-press-medium-grip',
-                metrics: {
-                    weight: {
+                metrics: [
+                    {
+                        name: 'weight',
                         uom: 'lbs',
                     },
-                    sets: {
+                    {
+                        name: 'sets',
                     },
-                    reps: {
+                    {
+                        name: 'reps',
                     }
-                } 
+                ]
             },
             { 
                 id: '29d53257-5eca-4083-9019-81dc62425801',
                 name: 'squat',
                 url: 'https://www.bodybuilding.com/exercises/barbell-full-squat',
-                metrics: {
-                    weight: {
+                metrics: [
+                    {
+                        name: 'weight',
                         uom: 'lbs',
                     },
-                    sets: {
+                    {
+                        name: 'sets',
                     },
-                    reps: {
+                    {
+                        name: 'reps',
                     }
-                } 
+                ] 
             },
             { 
                 id: '0f2f3a76-c1a2-4a53-bec9-0f124a1f3b16',
                 name: 'running',
                 url: 'https://www.bodybuilding.com/exercises/running-treadmill',
-                metrics: {
-                    distance: {
-                        uom: 'miles'
+                metrics: [
+                    {
+                        name: 'distance',
+                        uom: 'miles',
                     },
-                    time: {
-                        uom: 'minutes'
+                    {
+                        name: 'time',
+                        uom: 'minutes',
                     }
-                } 
+                ]
             },
         ]
 
@@ -63,17 +71,6 @@ class Exercises extends Component {
                 {exercises.map(e =>  
                     <div>
                         <ExercizeCard title={e.name} subtitle={e.url} metrics={e.metrics}>
-                            <ul>
-                                {
-                                    Object.keys(e.metrics).map((m) => {
-                                        let value = e.metrics[m].value
-                                        let uom = e.metrics[m].uom
-                                        uom = uom ? uom : ''
-
-                                        return <li>{m}: {value + ' ' + uom}</li>
-                                    })
-                                }
-                            </ul>
                         </ExercizeCard>
                     </div>
                 )}
