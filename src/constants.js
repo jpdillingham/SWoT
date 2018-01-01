@@ -1,4 +1,4 @@
-export const EXERCISE_TYPES = [ 'weightlifting', 'cardio', 'stretching', 'balance' ]
+export const EXERCISE_TYPES = [ 'weightlifting', 'bodyweight', 'cardio', 'stretching', 'balance' ]
 
 export const EXERCISES = [
     { 
