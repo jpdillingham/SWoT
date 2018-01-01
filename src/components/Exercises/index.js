@@ -19,13 +19,10 @@ class Exercises extends Component {
                 metrics: {
                     weight: {
                         uom: 'lbs',
-                        value: '205',
                     },
                     sets: {
-                        value: 3
                     },
                     reps: {
-                        value: 5
                     }
                 } 
             },
@@ -36,13 +33,10 @@ class Exercises extends Component {
                 metrics: {
                     weight: {
                         uom: 'lbs',
-                        value: '265',
                     },
                     sets: {
-                        value: 3
                     },
                     reps: {
-                        value: 5
                     }
                 } 
             },
@@ -52,12 +46,10 @@ class Exercises extends Component {
                 url: 'https://www.bodybuilding.com/exercises/running-treadmill',
                 metrics: {
                     distance: {
-                        uom: 'miles',
-                        value: '1',
+                        uom: 'miles'
                     },
                     time: {
-                        uom: 'minutes',
-                        value: '10',
+                        uom: 'minutes'
                     }
                 } 
             },

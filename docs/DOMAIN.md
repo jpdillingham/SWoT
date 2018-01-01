@@ -13,8 +13,7 @@ exercise: {
     url: 'string',
     metrics: {
         metric: {
-            uom: 'string',
-            value: float
+            uom: 'string'
         },
     }
 }
@@ -30,14 +29,9 @@ exercise: {
     metrics: {
         weight: {
             uom: 'lbs',
-            value: '205',
         },
-        sets: {
-            value: 3
-        },
-        reps: {
-            value: 5
-        }
+        sets: {},
+        reps: {}
     } 
 }
 ```
@@ -50,14 +44,9 @@ exercise: {
     metrics: {
         weight: {
             uom: 'lbs',
-            value: '265',
         },
-        sets: {
-            value: 3
-        },
-        reps: {
-            value: 5
-        }
+        sets: {},
+        reps: {}
     } 
 }
 ```
@@ -70,11 +59,9 @@ exercise: {
     metrics: {
         distance: {
             uom: 'miles',
-            value: '1',
         },
         time: {
             uom: 'minutes',
-            value: '10',
         }
     } 
 },
