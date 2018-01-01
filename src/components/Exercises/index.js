@@ -70,7 +70,7 @@ class Exercises extends Component {
                 </FloatingActionButton>
                 {exercises.map(e =>  
                     <div>
-                        <ExercizeCard title={e.name} subtitle={e.url} metrics={Object.keys(e.metrics)}>
+                        <ExercizeCard title={e.name} subtitle={e.url} metrics={e.metrics}>
                             <ul>
                                 {
                                     Object.keys(e.metrics).map((m) => {
