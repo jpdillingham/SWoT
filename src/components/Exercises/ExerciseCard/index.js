@@ -4,37 +4,50 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentCreate from 'material-ui/svg-icons/content/create';
 import ContentRemove from 'material-ui/svg-icons/content/remove';
+import ContentCopy from 'material-ui/svg-icons/content/content-copy';
 import AppBar from 'material-ui/AppBar/AppBar';
-import {Card, CardActions, CardHeader, CardText, CardTitle } from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardText, CardTitle, CardMedia } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-import Paper from 'material-ui/Paper';
+import {List, ListItem} from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+
+import Metric from './Metric'
 
 class ExerciseCard extends Component {
     render() {
         return (
             <Card zDepth={2} style={styles.card}>
-                <CardTitle 
-                    title={this.props.title} 
-                    subtitle={
-                        <span 
-                            style={styles.link} 
-                            onClick={() => window.location.href=this.props.subtitle}
-                        >
-                            {this.props.subtitle}
-                        </span>
-                    }
+                <CardMedia
+                    overlay={<CardTitle 
+                        title={this.props.title} 
+                        subtitle={
+                            <span 
+                                style={styles.link} 
+                                onClick={() => window.location.href=this.props.subtitle}
+                            >
+                                {this.props.subtitle}
+                            </span>
+                        }
+                    >
+                    </CardTitle>}
                 >
-                </CardTitle>
+                    <img height={94} src="./geometric.png" alt="" />
+                    
+                </CardMedia>
+
                 <CardText>
-                    {this.props.children}
+                <List>
+                    <Subheader inset={false}>Metrics</Subheader>
+                    {this.props.metrics.map(m =>                     <ListItem
+                        leftIcon={<ContentCopy/>}
+                        primaryText={m}
+                        secondaryText="3"
+                        />)}
+                    </List>
                 </CardText>
                 <CardActions>
-                    <FloatingActionButton zDepth={2} default={true} mini={true} style={{ position: 'absolute', marginTop: -10 }}>
-                        <ContentCreate />
-                    </FloatingActionButton>
-                    <FloatingActionButton zDepth={2} secondary={true} mini={true} style={{ position: 'absolute', left: 55, marginTop: -10 }}>
-                        <ContentRemove />
-                    </FloatingActionButton>
+                    <FlatButton>Edit</FlatButton>
+                    <FlatButton>Delete</FlatButton>
                 </CardActions>
             </Card>
         )
@@ -53,10 +66,9 @@ const styles = {
         position: 'fixed',
     },
     card: {
-        marginBottom: 30,
-        marginLeft: 20,
-        marginRight: 20,
-        paddingBottom: -30
+        marginBottom: 20,
+        marginLeft: 10,
+        marginRight: 10,
     },
     link: {
         cursor: 'pointer',

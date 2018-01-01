@@ -65,13 +65,12 @@ class Exercises extends Component {
 
         return (
             <div>
-                <FloatingActionButton secondary={true} zDepth={5} style={styles.fab}>
+                <FloatingActionButton secondary={true} zDepth={4} style={styles.fab}>
                     <ContentAdd />
                 </FloatingActionButton>
-                <h1>Exercises</h1>
                 {exercises.map(e =>  
                     <div>
-                        <ExercizeCard title={e.name} subtitle={e.url}>
+                        <ExercizeCard title={e.name} subtitle={e.url} metrics={Object.keys(e.metrics)}>
                             <ul>
                                 {
                                     Object.keys(e.metrics).map((m) => {

@@ -33,7 +33,7 @@ class App extends Component {
                     <MenuItem containerElement={<Link to="/exercises" />} leftIcon={<AddCircleOutline />}>Exercises</MenuItem>
                     <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ContentPaste />}>Routines</MenuItem>
                 </Navigation>
-                <div>
+                <div style={{marginTop: 83}}>
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
                         <Route path="/exercises" component={Exercises}/>
