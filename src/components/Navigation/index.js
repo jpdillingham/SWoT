@@ -37,7 +37,7 @@ class Navigation extends Component {
 
 const styles = {
     appBar: {
-        position: 'fixed',
+        position: 'relative',
         left: 0,
         top: 0,
     }

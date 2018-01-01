@@ -34,9 +34,6 @@ class App extends Component {
                     <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ContentPaste />}>Routines</MenuItem>
                 </Navigation>
                 <div>
-                    <h1>Hello World!</h1>
-                    <FlatButton label="Primary" primary={true} />
-                    <RaisedButton label="Primary" primary={true} />
                     <Switch>
                         <Route exact path="/" component={Homepage}/>
                         <Route path="/exercises" component={Exercises}/>

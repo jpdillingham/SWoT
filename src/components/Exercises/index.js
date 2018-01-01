@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
 
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import AppBar from 'material-ui/AppBar/AppBar';
+import {Card, CardActions, CardHeader, CardText, CardTitle } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
+import Paper from 'material-ui/Paper';
+
+import ExercizeCard from './ExerciseCard'
+
 class Exercises extends Component {
     render() {
         let exercises = [
@@ -56,6 +65,10 @@ class Exercises extends Component {
 
         return (
             <div>
+                <ExercizeCard title="Exercise" subtitle="subtitle"/>
+                <FloatingActionButton secondary={true} style={styles.fab}>
+                    <ContentAdd />
+                </FloatingActionButton>
                 <h1>Exercises</h1>
                 {exercises.map(e =>  
                     <div>
@@ -79,3 +92,17 @@ class Exercises extends Component {
 }
 
 export default Exercises
+
+const styles = {
+    fab: {
+        margin: 0,
+        top: 'auto',
+        right: 20,
+        bottom: 20,
+        left: 'auto',
+        position: 'fixed',
+    },
+    card: {
+        margin: 20
+    }
+}
