@@ -18,19 +18,26 @@ import Avatar from 'material-ui/Avatar'
 
 import Metric from './Metric'
 
+import { EXERCISE_TYPES } from '../../../constants'
+
 class ExerciseCard extends Component {
     render() {
-        let truncatedUrl = this.props.subtitle.split('/');
-        truncatedUrl = '../' + truncatedUrl[truncatedUrl.length - 1]
+        let truncatedUrl = this.props.exercise.url.split('/');
+        truncatedUrl = '../' + truncatedUrl[truncatedUrl.length - 1];
+
+        let exerciseImage = this.props.exercise.type;
+        if (EXERCISE_TYPES.indexOf(exerciseImage) == -1) { 
+            exerciseImage = 'unknown'
+        }
 
         return (
             <Card zDepth={2} style={styles.card}>
                 <CardHeader
-                    title={this.props.title}
+                    title={this.props.exercise.name}
                     subtitle={
                         <span 
                             style={styles.link}
-                            onClick={() => window.open(this.props.subtitle)}
+                            onClick={() => window.open(this.props.exercise.url)}
                         >
                             {truncatedUrl}
                             <IconButton style={styles.exitIconButton} iconStyle={styles.exitIcon}>
@@ -38,12 +45,12 @@ class ExerciseCard extends Component {
                             </IconButton>
                         </span>
                     }
-                    avatar={<Avatar backgroundColor="#64b5f6" src={"img/unknown.png"}></Avatar>}
+                    avatar={<Avatar backgroundColor="#64b5f6" src={'img/' + exerciseImage + '.png'}></Avatar>}
                     style={{marginBottom: -30}}
                 />
                 <CardText>
                     <List>
-                        {this.props.metrics.map(m =>                     
+                        {this.props.exercise.metrics.map(m =>                     
                             <ListItem
                                 leftIcon={<ActionAssignment/>}
                                 primaryText={m.name}
