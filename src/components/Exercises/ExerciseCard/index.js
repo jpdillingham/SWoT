@@ -10,6 +10,7 @@ import {Card, CardActions, CardHeader, CardText, CardTitle, CardMedia } from 'ma
 import FlatButton from 'material-ui/FlatButton';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
 
 import Metric from './Metric'
 
@@ -36,16 +37,18 @@ class ExerciseCard extends Component {
                 </CardMedia>
 
                 <CardText>
-                <List>
-                    <Subheader inset={false}>Metrics</Subheader>
-                    {Object.keys(this.props.metrics).map(m =>                     <ListItem
+                <List style={{}}>
+                    <Subheader style={{ marginTop: -15, marginBottom: -5}} inset={false}>Metrics</Subheader>
+                    {Object.keys(this.props.metrics).map(m =>                     
+                    <ListItem
+                        style={{padding: 0, margin: 0}}
                         leftIcon={<ContentCopy/>}
                         primaryText={m}
                         secondaryText={this.props.metrics[m].uom ? this.props.metrics[m].uom : ''}
                         />)}
                     </List>
                 </CardText>
-                <CardActions>
+                <CardActions style={{marginTop: -10}}>
                     <FlatButton>Edit</FlatButton>
                     <FlatButton>Delete</FlatButton>
                 </CardActions>
@@ -69,6 +72,7 @@ const styles = {
         marginBottom: 20,
         marginLeft: 10,
         marginRight: 10,
+        width: 500
     },
     link: {
         cursor: 'pointer',
