@@ -50,18 +50,18 @@ class ExerciseCard extends Component {
                 />
                 <CardText>
                     <List>
-                        {this.props.exercise.metrics.map(m =>                     
+                        {this.props.exercise.metrics ? this.props.exercise.metrics.map(m =>                     
                             <ListItem
                                 leftIcon={<ActionAssignment/>}
                                 primaryText={m.name}
                                 secondaryText={m.uom ? m.uom : ''}
                             />
-                        )}
+                        ) : ''}
                     </List>
                 </CardText>
                 <CardActions>
                     <FlatButton>Edit</FlatButton>
-                    <FlatButton>Delete</FlatButton>
+                    <FlatButton onClick={() => this.props.delete()}>Delete</FlatButton>
                 </CardActions>
             </Card>
         )

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -10,18 +11,25 @@ import Paper from 'material-ui/Paper';
 import ExercizeCard from './ExerciseCard'
 
 import { EXERCISES } from '../../constants'
+import { getGuid } from '../../util'
 
 class Exercises extends Component {
     render() {
         return (
             <div>
-                <FloatingActionButton secondary={true} zDepth={4} style={styles.fab}>
+                <FloatingActionButton onClick={() => 
+                    this.props.addExercise({
+                        id: getGuid(),
+                        name: prompt('enter name'),
+                        type: 'cardio',
+                        url: 'url',
+                    })} secondary={true} zDepth={4} style={styles.fab}>
                     <ContentAdd />
                 </FloatingActionButton>
                 <div style={styles.grid}>
-                {EXERCISES.map(e =>  
+                {this.props.exercises.map(e =>  
                     <div>
-                        <ExercizeCard exercise={e}>
+                        <ExercizeCard exercise={e} delete={() => this.props.deleteExercise(e.id)}>
                         </ExercizeCard>
                     </div>
                 )}
@@ -29,9 +37,22 @@ class Exercises extends Component {
             </div>
         )
     }
+} 
+
+const mapStateToProps = (state, ownProps) => {
+    return { exercises: state.exercises }
 }
 
-export default Exercises
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    addExercise: (exercise) => {
+        dispatch({ type: 'ADD_EXERCISE', exercise: exercise })
+    },
+    deleteExercise: (id) => {
+        dispatch({ type: 'DELETE_EXERCISE', id: id })
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Exercises)
 
 const styles = {
     grid: {
