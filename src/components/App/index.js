@@ -15,23 +15,24 @@ import MenuItem from 'material-ui/MenuItem'
 import Home from 'material-ui/svg-icons/action/home';
 import AddCircleOutline from 'material-ui/svg-icons/content/add-circle-outline'
 import ContentPaste from 'material-ui/svg-icons/content/content-paste'
+import ActionAccessibility from 'material-ui/svg-icons/action/accessibility'
+
+const theme = getMuiTheme({
+    palette: {
+        primary1Color: "#2196f3",
+        primary2Color: "#64b5f6",
+        accent1Color: '#ff5722',
+        pickerHeaderColor: "#29b6f6"
+    }
+})
 
 class App extends Component {
-    theme = getMuiTheme({
-        palette: {
-            primary1Color: "#2196f3",
-            primary2Color: "#64b5f6",
-            accent1Color: '#ff5722',
-            pickerHeaderColor: "#29b6f6"
-        }
-    })
-
     render() {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
                 <Navigation>
                     <MenuItem containerElement={<Link to="/" />} leftIcon={<Home />} >Home</MenuItem>
-                    <MenuItem containerElement={<Link to="/exercises" />} leftIcon={<AddCircleOutline />}>Exercises</MenuItem>
+                    <MenuItem containerElement={<Link to="/exercises" />} leftIcon={<ActionAccessibility />}>Exercises</MenuItem>
                     <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ContentPaste />}>Routines</MenuItem>
                 </Navigation>
                 <div style={{marginTop: 83}}>
