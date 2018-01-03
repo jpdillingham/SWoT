@@ -17,10 +17,28 @@ import ActionAssignment from 'material-ui/svg-icons/action/assignment'
 import Avatar from 'material-ui/Avatar'
 
 import Metric from './Metric'
+import ExerciseDeleteDialog from '../ExerciseDeleteDialog'
 
 import { EXERCISE_TYPES } from '../../../constants'
 
 class ExerciseCard extends Component {
+    state = {
+        deleteDialogOpen: false
+    }
+
+    handleDeleteDialogClose = (confirmDelete) => {
+        if (confirmDelete) {
+            this.props.delete();
+            this.props.snackbar('Deleted exercise \'' + this.props.exercise.name + '\'')
+        }
+
+        this.setState({ deleteDialogOpen: false })
+    }
+
+    handleDeletedialogOpen = () => {
+        this.setState({ deleteDialogOpen: true })
+    }
+
     render() {
         let truncatedUrl = this.props.exercise.url.split('/');
         truncatedUrl = '../' + truncatedUrl[truncatedUrl.length - 1];
@@ -61,8 +79,13 @@ class ExerciseCard extends Component {
                 </CardText>
                 <CardActions>
                     <FlatButton>Edit</FlatButton>
-                    <FlatButton onClick={() => this.props.delete()}>Delete</FlatButton>
+                    <FlatButton onClick={() => this.handleDeletedialogOpen()}>Delete</FlatButton>
                 </CardActions>
+                <ExerciseDeleteDialog 
+                    open={this.state.deleteDialogOpen} 
+                    handleClose={this.handleDeleteDialogClose}
+                    exercise={this.props.exercise}
+                />
             </Card>
         )
     }
