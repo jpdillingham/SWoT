@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import { Link, Route, Switch } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -16,6 +18,7 @@ import Home from 'material-ui/svg-icons/action/home';
 import AddCircleOutline from 'material-ui/svg-icons/content/add-circle-outline'
 import ContentPaste from 'material-ui/svg-icons/content/content-paste'
 import ActionAccessibility from 'material-ui/svg-icons/action/accessibility'
+import Snackbar from 'material-ui/Snackbar'
 
 const theme = getMuiTheme({
     palette: {
@@ -27,6 +30,13 @@ const theme = getMuiTheme({
 })
 
 class App extends Component {
+    state = {
+        snackbar: {
+            visible: false,
+            message: ''
+        }
+    }
+
     render() {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
@@ -42,9 +52,32 @@ class App extends Component {
                         <Route path="/routines" component={Routines}/>
                     </Switch>
                 </div>
+                <Snackbar
+                    open={this.props.snackbar.visible}
+                    message={this.props.snackbar.message}
+                    autoHideDuration={2500}
+                    onRequestClose={this.hideSnackbar}
+                />
+                <FlatButton onClick={() => this.props.showSnackbar('hello world!')}>snack</FlatButton>
             </MuiThemeProvider>
         );
+    }    
+}
+
+const mapStateToProps = (state, ownProps) => {
+    console.log('state:', state)
+    return { 
+        snackbar: state.snackbar
     }
 }
 
-export default App;
+const mapDispatchToProps = (dispatch, ownProps) => ({
+    showSnackbar: (message) => {
+        dispatch({ type: 'SNACKBAR_SHOW', snackbar: { visible: true, message: message ? message : '' }} )
+    },
+    hideSnackbar: () => {
+        dispatch({ type: 'SNACKBAR_HIDE', snackbar: { visible: false, message: '' } })
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
