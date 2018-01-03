@@ -10,7 +10,11 @@ import App from './components/App'
 
 const initialState = {
     exercises: EXERCISES,
-    routines: ROUTINES
+    routines: ROUTINES,
+    snackbar: {
+        visible: false,
+        message: ''
+    }
 }
 
 const reducer = (state = initialState, action) => {
@@ -23,6 +27,15 @@ const reducer = (state = initialState, action) => {
             return Object.assign({}, state, {
                 exercises: state.exercises.filter(e => e.id != action.id)
             });
+        case 'SNACKBAR_SHOW':
+            console.log(action);
+            return Object.assign({}, state, {
+                snackbar: action.snackbar
+            })
+        case 'SNACKBAR_HIDE':
+            return Object.assign({}, state, {
+                snackbar: action.snackbar
+            })
         default:
             return state;
     }
