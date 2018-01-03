@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 import AppBar from 'material-ui/AppBar/AppBar';
 import {Card, CardActions, CardHeader, CardText, CardTitle } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 
 import ExercizeCard from './ExerciseCard'
+import ExerciseAddButton from './ExerciseAddButton'
 
 import { EXERCISES } from '../../constants'
 import { getGuid } from '../../util'
@@ -17,22 +16,13 @@ class Exercises extends Component {
     render() {
         return (
             <div>
-                <FloatingActionButton onClick={() => 
-                    this.props.addExercise({
-                        id: getGuid(),
-                        name: prompt('enter name'),
-                        type: 'cardio',
-                        url: 'url',
-                    })} secondary={true} zDepth={4} style={styles.fab}>
-                    <ContentAdd />
-                </FloatingActionButton>
+                <ExerciseAddButton addExercise={this.props.addExercise}/>
                 <div style={styles.grid}>
-                {this.props.exercises.map(e =>  
-                    <div>
-                        <ExercizeCard exercise={e} delete={() => this.props.deleteExercise(e.id)}>
-                        </ExercizeCard>
-                    </div>
-                )}
+                    {this.props.exercises.map(e =>  
+                        <div>
+                            <ExercizeCard exercise={e} delete={() => this.props.deleteExercise(e.id)} snackbar={this.props.showSnackbar} />
+                        </div>
+                    )}
                 </div>
             </div>
         )
@@ -49,6 +39,12 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     deleteExercise: (id) => {
         dispatch({ type: 'DELETE_EXERCISE', id: id })
+    },
+    showSnackbar: (message) => {
+        dispatch({ type: 'SNACKBAR_SHOW', snackbar: { visible: true, message: message ? message : '' }} )
+    },
+    hideSnackbar: () => {
+        dispatch({ type: 'SNACKBAR_HIDE', snackbar: { visible: false, message: '' } })
     }
 })
 
@@ -59,15 +55,6 @@ const styles = {
         display: 'grid',
         gridGap: 10,
         gridTemplateColumns: 'repeat(auto-fit, 400px)'
-    },
-    fab: {
-        margin: 0,
-        top: 'auto',
-        right: 20,
-        bottom: 20,
-        left: 'auto',
-        position: 'fixed',
-        zIndex: 1000
     },
     card: {
         margin: 20
