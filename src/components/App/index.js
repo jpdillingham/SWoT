@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 
 import { Link, Route, Switch } from 'react-router-dom';
 
@@ -20,15 +21,6 @@ import ContentPaste from 'material-ui/svg-icons/content/content-paste'
 import ActionAccessibility from 'material-ui/svg-icons/action/accessibility'
 import Snackbar from 'material-ui/Snackbar'
 
-const theme = getMuiTheme({
-    palette: {
-        primary1Color: "#2196f3",
-        primary2Color: "#64b5f6",
-        accent1Color: '#ff5722',
-        pickerHeaderColor: "#29b6f6"
-    }
-})
-
 class App extends Component {
     state = {
         snackbar: {
@@ -37,28 +29,39 @@ class App extends Component {
         }
     }
 
+    theme = getMuiTheme({
+        palette: {
+            primary1Color: "#2196f3",
+            primary2Color: "#64b5f6",
+            accent1Color: '#ff5722',
+            pickerHeaderColor: "#29b6f6"
+        }
+    })
+
     render() {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
-                <Navigation>
-                    <MenuItem containerElement={<Link to="/" />} leftIcon={<Home />} >Home</MenuItem>
-                    <MenuItem containerElement={<Link to="/exercises" />} leftIcon={<ActionAccessibility />}>Exercises</MenuItem>
-                    <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ContentPaste />}>Routines</MenuItem>
-                </Navigation>
-                <div style={{marginTop: 83}}>
-                    <Switch>
-                        <Route exact path="/" component={Homepage}/>
-                        <Route path="/exercises" component={Exercises}/>
-                        <Route path="/routines" component={Routines}/>
-                    </Switch>
+                <div>
+                    <Navigation>
+                        <MenuItem containerElement={<Link to="/" />} leftIcon={<Home />} >Home</MenuItem>
+                        <MenuItem containerElement={<Link to="/exercises" />} leftIcon={<ActionAccessibility />}>Exercises</MenuItem>
+                        <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ContentPaste />}>Routines</MenuItem>
+                    </Navigation>
+                    <div style={{marginTop: 83}}>
+                        <Switch>
+                            <Route exact path="/" component={Homepage}/>
+                            <Route path="/exercises" component={Exercises}/>
+                            <Route path="/routines" component={Routines}/>
+                        </Switch>
+                    </div>
+                    <Snackbar
+                        open={this.props.snackbar.visible}
+                        message={this.props.snackbar.message}
+                        autoHideDuration={2500}
+                        onRequestClose={this.hideSnackbar}
+                    />
+                    <FlatButton onClick={() => this.props.showSnackbar('hello world!')}>snack</FlatButton>
                 </div>
-                <Snackbar
-                    open={this.props.snackbar.visible}
-                    message={this.props.snackbar.message}
-                    autoHideDuration={2500}
-                    onRequestClose={this.hideSnackbar}
-                />
-                <FlatButton onClick={() => this.props.showSnackbar('hello world!')}>snack</FlatButton>
             </MuiThemeProvider>
         );
     }    
@@ -80,4 +83,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
