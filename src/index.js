@@ -20,22 +20,15 @@ const initialState = {
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case 'ADD_EXERCISE':
-            return  Object.assign({}, state, { 
-                exercises: state.exercises.concat(action.exercise) 
-            });
+            return { 
+                ...state, exercises: state.exercises.concat(action.exercise) 
+            };
         case 'DELETE_EXERCISE':
-            return Object.assign({}, state, {
-                exercises: state.exercises.filter(e => e.id != action.id)
-            });
+            return { 
+                ...state, exercises: state.exercises.filter(e => e.id != action.id)
+            };
         case 'SNACKBAR_SHOW':
-            console.log(action);
-            return Object.assign({}, state, {
-                snackbar: action.snackbar
-            })
-        case 'SNACKBAR_HIDE':
-            return Object.assign({}, state, {
-                snackbar: action.snackbar
-            })
+            return { ...state, snackbar: action.snackbar }
         default:
             return state;
     }
