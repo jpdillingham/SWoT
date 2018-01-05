@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+import ExerciseAddDialog from '../ExerciseAddDialog'
+
 import { getGuid } from '../../../util'
 
 const styles = {
@@ -18,23 +20,40 @@ const styles = {
 }
 
 class ExerciseAddButton extends Component {
+    state = {
+        addDialogOpen: false
+    }
+
+    handleAddClick = () => {
+        this.setState({ addDialogOpen: true })
+    }
+
+    handleAddDialogClose = (result) => {
+        if (result.added) {
+            console.log(result.exercise)
+            this.props.addExercise(result.exercise)
+            this.props.showSnackbar('Added exercise \'' + result.exercise.name + '\'')
+        }
+
+        this.setState({ addDialogOpen: false })
+    }
+
     render() {
         return (
-            <FloatingActionButton 
-                onClick={() => 
-                    this.props.addExercise({
-                        id: getGuid(),
-                        name: prompt('enter name'),
-                        type: 'cardio',
-                        url: 'url',
-                    })
-                } 
-                secondary={true} 
-                zDepth={4} 
-                style={styles.fab}
-            >
-                <ContentAdd />
-            </FloatingActionButton>
+            <div>
+                <FloatingActionButton 
+                    onClick={this.handleAddClick} 
+                    secondary={true} 
+                    zDepth={4} 
+                    style={styles.fab}
+                >
+                    <ContentAdd />
+                </FloatingActionButton>
+                <ExerciseAddDialog 
+                    open={this.state.addDialogOpen} 
+                    handleClose={this.handleAddDialogClose}
+                />
+            </div>
         )
     }
 }
