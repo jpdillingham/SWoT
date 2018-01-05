@@ -1,25 +1,17 @@
 import React, { Component } from 'react';
 
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
-import ContentCreate from 'material-ui/svg-icons/content/create';
-import ContentRemove from 'material-ui/svg-icons/content/remove';
-import ContentCopy from 'material-ui/svg-icons/content/content-copy';
-import AppBar from 'material-ui/AppBar/AppBar';
-import {Card, CardActions, CardHeader, CardText, CardTitle, CardMedia } from 'material-ui/Card';
+import {Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
-import IconButton from 'material-ui/IconButton'
-import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app'
-import ActionAssignment from 'material-ui/svg-icons/action/assignment'
-import Avatar from 'material-ui/Avatar'
+import IconButton from 'material-ui/IconButton';
+import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
+import ActionAssignment from 'material-ui/svg-icons/action/assignment';
+import Avatar from 'material-ui/Avatar';
 
-import Metric from './Metric'
-import ExerciseDeleteDialog from '../ExerciseDeleteDialog'
+import ExerciseDeleteDialog from '../ExerciseDeleteDialog';
 
-import { EXERCISE_TYPES } from '../../../constants'
+import { EXERCISE_TYPES } from '../../../constants';
 
 class ExerciseCard extends Component {
     state = {
@@ -44,7 +36,7 @@ class ExerciseCard extends Component {
         truncatedUrl = '../' + truncatedUrl[truncatedUrl.length - 1];
 
         let exerciseImage = this.props.exercise.type;
-        if (EXERCISE_TYPES.indexOf(exerciseImage) == -1) { 
+        if (EXERCISE_TYPES.indexOf(exerciseImage) === -1) { 
             exerciseImage = 'unknown'
         }
 

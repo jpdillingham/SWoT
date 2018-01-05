@@ -25,7 +25,7 @@ const reducer = (state = initialState, action) => {
             };
         case 'DELETE_EXERCISE':
             return { 
-                ...state, exercises: state.exercises.filter(e => e.id != action.id)
+                ...state, exercises: state.exercises.filter(e => e.id !== action.id)
             };
         case 'SNACKBAR_SHOW':
             return { ...state, snackbar: action.snackbar }

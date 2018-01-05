@@ -13,7 +13,7 @@ class Routines extends Component {
                             <li>{r.name}</li>
                             <ul>
                                 {r.exercises.map(e => {
-                                    let exercise = EXERCISES.find(ex => ex.id == e.id)
+                                    let exercise = EXERCISES.find(ex => ex.id === e.id)
 
                                     return <li key={exercise.id}>{exercise.name}</li>
                                 })}

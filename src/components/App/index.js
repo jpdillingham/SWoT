@@ -12,11 +12,8 @@ import Homepage from '../Homepage'
 import Exercises from '../Exercises'
 import Routines from '../Routines'
 
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import MenuItem from 'material-ui/MenuItem'
 import Home from 'material-ui/svg-icons/action/home';
-import AddCircleOutline from 'material-ui/svg-icons/content/add-circle-outline'
 import ContentPaste from 'material-ui/svg-icons/content/content-paste'
 import ActionAccessibility from 'material-ui/svg-icons/action/accessibility'
 import Snackbar from 'material-ui/Snackbar'
