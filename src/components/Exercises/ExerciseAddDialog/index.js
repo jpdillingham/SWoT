@@ -122,7 +122,7 @@ class ExerciseAddDialog extends Component {
                         onChange={this.handleTypeChange}
                         style={styles.type}
                     >
-                        {EXERCISE_TYPES.map(e => <MenuItem value={e} primaryText={e}/>)}
+                        {EXERCISE_TYPES.map(e => <MenuItem key={e} value={e} primaryText={e}/>)}
                     </SelectField><br/>
                     <TextField
                         hintText="e.g. '/barbell-bench-press-medium-grip'"

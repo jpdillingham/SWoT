@@ -71,6 +71,7 @@ class ExerciseCard extends Component {
                         <Subheader>Metrics</Subheader>
                         {this.props.exercise.metrics ? this.props.exercise.metrics.map(m =>                     
                             <ListItem
+                                key={m.name}
                                 leftIcon={<ActionAssignment/>}
                                 primaryText={m.name}
                                 secondaryText={m.uom ? m.uom : ''}

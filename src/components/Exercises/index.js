@@ -22,7 +22,7 @@ class Exercises extends Component {
                 />
                 <div style={styles.grid}>
                     {this.props.exercises.map(e =>  
-                        <div>
+                        <div key={e.id}>
                             <ExercizeCard 
                                 exercise={e} 
                                 deleteExercise={this.props.deleteExercise} 
