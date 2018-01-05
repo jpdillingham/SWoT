@@ -3,10 +3,6 @@ import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 
-const styles = {
-
-}
-
 class ExerciseDeleteDialog extends Component {
     render() {
         const actions = [

@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import AppBar from 'material-ui/AppBar/AppBar';
-import {Card, CardActions, CardHeader, CardText, CardTitle } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import Paper from 'material-ui/Paper';
-
 import ExercizeCard from './ExerciseCard'
 import ExerciseAddButton from './ExerciseAddButton'
-
-import { EXERCISES } from '../../constants'
-import { getGuid } from '../../util'
 
 class Exercises extends Component {
     render() {

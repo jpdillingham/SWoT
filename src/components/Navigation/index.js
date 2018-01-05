@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
-import AppBar from 'material-ui/AppBar'
-import Drawer from 'material-ui/Drawer'
-import MenuItem from 'material-ui/MenuItem'
-import { Link } from 'react-router-dom';
+import AppBar from 'material-ui/AppBar';
+import Drawer from 'material-ui/Drawer';
 
 class Navigation extends Component {
     state = {
