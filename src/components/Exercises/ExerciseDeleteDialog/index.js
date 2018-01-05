@@ -13,13 +13,13 @@ class ExerciseDeleteDialog extends Component {
             <FlatButton
               label="Cancel"
               primary={true}
-              onClick={() => this.props.handleClose(false)}
+              onClick={() => this.props.handleClose({ cancelled: true })}
             />,
             <FlatButton
               label="Delete"
               primary={true}
               disabled={false}
-              onClick={() => this.props.handleClose(true)}
+              onClick={() => this.props.handleClose({ deleted: true })}
             />,
           ];
 

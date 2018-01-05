@@ -26,8 +26,8 @@ class ExerciseCard extends Component {
         deleteDialogOpen: false
     }
 
-    handleDeleteDialogClose = (confirmDelete) => {
-        if (confirmDelete) {
+    handleDeleteDialogClose = (result) => {
+        if (result.deleted) {
             this.props.deleteExercise(this.props.exercise.id);
             this.props.showSnackbar('Deleted exercise \'' + this.props.exercise.name + '\'')
         }
