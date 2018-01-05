@@ -46,7 +46,7 @@ class App extends Component {
                         <MenuItem containerElement={<Link to="/exercises" />} leftIcon={<ActionAccessibility />}>Exercises</MenuItem>
                         <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ContentPaste />}>Routines</MenuItem>
                     </Navigation>
-                    <div style={{marginTop: 83}}>
+                    <div style={styles.content}>
                         <Switch>
                             <Route exact path="/" component={Homepage}/>
                             <Route path="/exercises" component={Exercises}/>
@@ -62,6 +62,12 @@ class App extends Component {
             </MuiThemeProvider>
         );
     }    
+}
+
+const styles = {
+    content: {
+        marginTop: 73
+    }
 }
 
 const mapStateToProps = (state, ownProps) => {
