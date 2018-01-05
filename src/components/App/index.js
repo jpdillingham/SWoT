@@ -57,9 +57,7 @@ class App extends Component {
                         open={this.props.snackbar.visible}
                         message={this.props.snackbar.message}
                         autoHideDuration={2500}
-                        onRequestClose={this.hideSnackbar}
                     />
-                    <FlatButton onClick={() => this.props.showSnackbar('hello world!')}>snack</FlatButton>
                 </div>
             </MuiThemeProvider>
         );
@@ -67,7 +65,6 @@ class App extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-    console.log('state:', state)
     return { 
         snackbar: state.snackbar
     }
@@ -76,9 +73,6 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
     showSnackbar: (message) => {
         dispatch({ type: 'SNACKBAR_SHOW', snackbar: { visible: true, message: message ? message : '' }} )
-    },
-    hideSnackbar: () => {
-        dispatch({ type: 'SNACKBAR_HIDE', snackbar: { visible: false, message: '' } })
     }
 })
 
