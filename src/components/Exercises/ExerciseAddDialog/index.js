@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 
-import FlatButton from 'material-ui/FlatButton'
-import Dialog from 'material-ui/Dialog'
-import TextField from 'material-ui/TextField'
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
-import ActionAssignment from 'material-ui/svg-icons/action/assignment'
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import {List, ListItem} from 'material-ui/List';
-import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../../constants'
-import { getGuid } from '../../../util'
 import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider'
 
-import MetricAddDialog from '../MetricAddDialog'
+import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../../constants';
+import { getGuid } from '../../../util';
+
+import MetricAddDialog from '../MetricAddDialog';
 
 const styles = {
     name: {
@@ -26,6 +26,9 @@ const styles = {
     },
     dialog: {
         width: 400
+    },
+    addMetric: {
+        float: 'left'
     }
 }
 
@@ -61,6 +64,10 @@ class ExerciseAddDialog extends Component {
         }))
     }
 
+    handleMetricDialogOpen = () => {
+        this.setState({ metricDialogOpen: true })
+    }
+
     handleMetricDialogClose = (result) => {
         if (result.added) {
             this.setState(prevState => ({
@@ -73,36 +80,32 @@ class ExerciseAddDialog extends Component {
         this.setState({ metricDialogOpen: false })
     }
 
-    handleMetricDialogOpen = () => {
-        this.setState({ metricDialogOpen: true })
-    }
-
     componentWillReceiveProps(nextProps) {
         this.setState(initialState);
     }
 
     render() {
-        const dialogActions = [
-            <FlatButton 
-                style={{float: 'left'}}
-                label="Add Metric"
-                onClick={this.handleMetricDialogOpen}
-            />,
-            <FlatButton
-                label="Cancel"
-                onClick={() => this.props.handleClose({ cancelled: true })}
-            />,
-            <FlatButton
-                label="Add"
-                onClick={() => this.props.handleClose({ added: true, exercise: this.state.exercise })}
-            />,
-        ];
-
         return (
             <div>
                 <Dialog
                     title="Add Exercise"
-                    actions={dialogActions}
+                    actions={
+                        <div>
+                            <FlatButton 
+                                style={styles.addMetric}
+                                label="Add Metric"
+                                onClick={this.handleMetricDialogOpen}
+                            />
+                            <FlatButton
+                                label="Cancel"
+                                onClick={() => this.props.handleClose({ cancelled: true })}
+                            />
+                            <FlatButton
+                                label="Add"
+                                onClick={() => this.props.handleClose({ added: true, exercise: this.state.exercise })}
+                            />
+                        </div>
+                    }
                     modal={true}
                     open={this.props.open}
                     contentStyle={styles.dialog}
@@ -131,6 +134,7 @@ class ExerciseAddDialog extends Component {
                         <Subheader>Metrics</Subheader>
                         {this.state.exercise.metrics ? this.state.exercise.metrics.map(m =>                     
                                 <ListItem
+                                    key={m.name}
                                     leftIcon={<ActionAssignment/>}
                                     primaryText={m.name}
                                     secondaryText={m.uom ? m.uom : ''}
