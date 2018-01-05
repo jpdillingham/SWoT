@@ -5,9 +5,14 @@ import Dialog from 'material-ui/Dialog'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
-
+import ActionAssignment from 'material-ui/svg-icons/action/assignment'
+import {List, ListItem} from 'material-ui/List';
 import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../../constants'
 import { getGuid } from '../../../util'
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider'
+
+import MetricAddDialog from '../MetricAddDialog'
 
 const styles = {
     name: {
@@ -24,17 +29,19 @@ const styles = {
     }
 }
 
+const initialState = {
+    exercise: {
+        id: getGuid(),
+        name: '',
+        type: '',
+        url: '',
+        metrics: []
+    },
+    metricDialogOpen: false
+}
+
 class ExerciseAddDialog extends Component {
-    state = {
-        exercise: {
-            id: getGuid(),
-            name: '',
-            type: '',
-            url: '',
-            metrics: [
-            ]
-        }
-    }
+    state = initialState
 
     handleTypeChange = (event, index, value) => {
         this.setState(prevState => ({ 
@@ -54,25 +61,48 @@ class ExerciseAddDialog extends Component {
         }))
     }
 
+    handleMetricDialogClose = (result) => {
+        if (result.added) {
+            this.setState(prevState => ({
+                exercise: { 
+                    ...prevState.exercise, metrics: prevState.exercise.metrics.concat(result.metric) 
+                }
+            }))
+        }
+
+        this.setState({ metricDialogOpen: false })
+    }
+
+    handleMetricDialogOpen = () => {
+        this.setState({ metricDialogOpen: true })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState(initialState);
+    }
+
     render() {
-        const actions = [
-            <FlatButton
-              label="Cancel"
-              primary={true}
-              onClick={() => this.props.handleClose({ cancelled: true })}
+        const dialogActions = [
+            <FlatButton 
+                style={{float: 'left'}}
+                label="Add Metric"
+                onClick={this.handleMetricDialogOpen}
             />,
             <FlatButton
-              label="Add"
-              primary={true}
-              onClick={() => this.props.handleClose({ added: true, exercise: this.state.exercise })}
+                label="Cancel"
+                onClick={() => this.props.handleClose({ cancelled: true })}
             />,
-          ];
+            <FlatButton
+                label="Add"
+                onClick={() => this.props.handleClose({ added: true, exercise: this.state.exercise })}
+            />,
+        ];
 
         return (
             <div>
                 <Dialog
                     title="Add Exercise"
-                    actions={actions}
+                    actions={dialogActions}
                     modal={true}
                     open={this.props.open}
                     contentStyle={styles.dialog}
@@ -97,7 +127,21 @@ class ExerciseAddDialog extends Component {
                         style={styles.url}
                         onChange={this.handleUrlChange}
                     /><br />
+                    <List>
+                        <Subheader>Metrics</Subheader>
+                        {this.state.exercise.metrics ? this.state.exercise.metrics.map(m =>                     
+                                <ListItem
+                                    leftIcon={<ActionAssignment/>}
+                                    primaryText={m.name}
+                                    secondaryText={m.uom ? m.uom : ''}
+                                />
+                            ) : ''}
+                    </List>
                 </Dialog>
+                <MetricAddDialog
+                    open={this.state.metricDialogOpen} 
+                    handleClose={this.handleMetricDialogClose}
+                />
             </div>
         )
     }

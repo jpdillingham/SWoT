@@ -64,10 +64,11 @@ class ExerciseCard extends Component {
                         </span>
                     }
                     avatar={<Avatar backgroundColor="#64b5f6" src={'img/' + exerciseImage + '.png'}></Avatar>}
-                    style={{marginBottom: -30}}
+                    style={{marginBottom: -20}}
                 />
                 <CardText>
                     <List>
+                        <Subheader>Metrics</Subheader>
                         {this.props.exercise.metrics ? this.props.exercise.metrics.map(m =>                     
                             <ListItem
                                 leftIcon={<ActionAssignment/>}
