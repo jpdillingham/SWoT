@@ -16,11 +16,18 @@ class Exercises extends Component {
     render() {
         return (
             <div>
-                <ExerciseAddButton addExercise={this.props.addExercise}/>
+                <ExerciseAddButton 
+                    addExercise={this.props.addExercise} 
+                    showSnackbar={this.props.showSnackbar}
+                />
                 <div style={styles.grid}>
                     {this.props.exercises.map(e =>  
                         <div>
-                            <ExercizeCard exercise={e} delete={() => this.props.deleteExercise(e.id)} snackbar={this.props.showSnackbar} />
+                            <ExercizeCard 
+                                exercise={e} 
+                                deleteExercise={this.props.deleteExercise} 
+                                showSnackbar={this.props.showSnackbar} 
+                            />
                         </div>
                     )}
                 </div>
