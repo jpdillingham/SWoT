@@ -33,7 +33,6 @@ class App extends Component {
         palette: {
             primary1Color: "#2196f3",
             primary2Color: "#64b5f6",
-            accent1Color: '#ff5722',
             pickerHeaderColor: "#29b6f6"
         }
     })
