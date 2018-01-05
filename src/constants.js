@@ -1,5 +1,7 @@
 export const EXERCISE_TYPES = [ 'weightlifting', 'bodyweight', 'cardio', 'stretching', 'balance' ]
 
+export const EXERCISE_URL_BASE = 'https://www.bodybuilding.com/exercises/'
+
 export const EXERCISES = [
     { 
         id: 'c4a10b9d-d5de-434e-bac4-c3a4ff014f82',
