@@ -8,9 +8,6 @@ import IconButton from 'material-ui/IconButton';
 import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import Avatar from 'material-ui/Avatar';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
 
 import ExerciseDeleteDialog from '../ExerciseDeleteDialog';
 
