@@ -43,23 +43,6 @@ class ExerciseCard extends Component {
             exerciseImage = 'unknown'
         }
 
-        const iconButtonElement = (
-            <IconButton
-              touch={true}
-              tooltipPosition="bottom-left"
-            >
-              <MoreVertIcon color='#808080' />
-            </IconButton>
-          );
-
-        const rightIconMenu = (
-            <IconMenu iconButtonElement={iconButtonElement}>
-              <MenuItem>Reply</MenuItem>
-              <MenuItem>Forward</MenuItem>
-              <MenuItem>Delete</MenuItem>
-            </IconMenu>
-          );
-
         return (
             <Card zDepth={2} style={styles.card}>
                 <CardHeader
@@ -85,7 +68,6 @@ class ExerciseCard extends Component {
                             <ListItem
                                 key={m.name}
                                 leftIcon={<ActionAssignment/>}
-                                rightIconButton={rightIconMenu}
                                 primaryText={m.name}
                                 secondaryText={m.uom ? m.uom : ''}
                             />

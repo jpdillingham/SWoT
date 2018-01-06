@@ -8,6 +8,10 @@ import MenuItem from 'material-ui/MenuItem';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton';
+import {grey400} from 'material-ui/styles/colors';
 
 import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../../constants';
 import { getGuid } from '../../../util';
@@ -40,7 +44,11 @@ const initialState = {
         url: '',
         metrics: []
     },
-    metricDialogOpen: false
+    metricDialog: {
+        open: false,
+        intent: '',
+        metric: {}
+    }
 }
 
 class ExerciseDialog extends Component {
@@ -64,20 +72,56 @@ class ExerciseDialog extends Component {
         }))
     }
 
-    handleMetricDialogOpen = () => {
-        this.setState({ metricDialogOpen: true })
+    handleMetricDialogOpen = (intent, metric) => {
+        this.setState({ 
+            metricDialog: { 
+                open: true, 
+                intent: intent, 
+                metric: metric 
+            } 
+        })
     }
 
     handleMetricDialogClose = (result) => {
         if (result.added) {
-            this.setState(prevState => ({
-                exercise: { 
-                    ...prevState.exercise, metrics: prevState.exercise.metrics.concat(result.metric) 
-                }
-            }))
+            this.metricAdd(result.metric)
+        }
+        else if (result.edited) {
+            this.metricUpdate(result.metric)
         }
 
-        this.setState({ metricDialogOpen: false })
+        this.setState({ metricDialog: { open: false, intent: '' } })
+    }
+
+    handleMetricDelete = (metric) => {
+        this.metricDelete(metric);
+    }
+
+    metricAdd = (metric) => {
+        this.setState(prevState => ({
+            exercise: {
+                ...prevState.exercise,
+                metrics: prevState.exercise.metrics.concat(metric)
+            }
+        }))
+    }
+
+    metricUpdate = (metric) => {
+        this.setState(prevState => ({
+            exercise: {
+                ...prevState.exercise,
+                metrics: prevState.exercise.metrics.map(m => { return m.name == metric.name ? metric : m })
+            }
+        }))
+    }
+
+    metricDelete = (metric) => {
+        this.setState(prevState => ({
+            exercise: {
+                ...prevState.exercise,
+                metrics: prevState.exercise.metrics.filter(m => m.name != metric.name)
+            }
+        }))
     }
 
     componentWillReceiveProps(nextProps) {
@@ -85,6 +129,17 @@ class ExerciseDialog extends Component {
     }
 
     render() {
+        const rightIconMenu = (
+            <IconMenu iconButtonElement={
+                <IconButton touch={true} tooltipPosition="bottom-left">
+                    <MoreVertIcon color={grey400} />
+                </IconButton>
+            }>
+              <MenuItem onClick={this.handleMetricDialogOpen}>Edit</MenuItem>
+              <MenuItem onClick={this.handleMetricDelete}>Delete</MenuItem>
+            </IconMenu>
+        );
+
         return (
             <div>
                 <Dialog
@@ -94,7 +149,7 @@ class ExerciseDialog extends Component {
                             <FlatButton 
                                 style={styles.addMetric}
                                 label="Add Metric"
-                                onClick={this.handleMetricDialogOpen}
+                                onClick={() => this.handleMetricDialogOpen('add')}
                             />
                             <FlatButton
                                 label="Cancel"
@@ -136,6 +191,16 @@ class ExerciseDialog extends Component {
                                 <ListItem
                                     key={m.name}
                                     leftIcon={<ActionAssignment/>}
+                                    rightIconButton={
+                                        <IconMenu iconButtonElement={
+                                            <IconButton touch={true} tooltipPosition="bottom-left">
+                                                <MoreVertIcon color={grey400} />
+                                            </IconButton>
+                                        }>
+                                          <MenuItem onClick={() => this.handleMetricDialogOpen('edit', m)}>Edit</MenuItem>
+                                          <MenuItem onClick={() => this.handleMetricDelete(m)}>Delete</MenuItem>
+                                        </IconMenu>
+                                    }
                                     primaryText={m.name}
                                     secondaryText={m.uom ? m.uom : ''}
                                 />
@@ -143,7 +208,10 @@ class ExerciseDialog extends Component {
                     </List>
                 </Dialog>
                 <MetricDialog
-                    open={this.state.metricDialogOpen} 
+                    open={this.state.metricDialog.open} 
+                    intent={this.state.metricDialog.intent}
+                    metric={this.state.metricDialog.metric}
+                    existingNames={this.state.exercise.metrics.map(m => m.name)}
                     handleClose={this.handleMetricDialogClose}
                 />
             </div>
