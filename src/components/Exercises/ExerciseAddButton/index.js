@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import ExerciseAddDialog from '../ExerciseAddDialog';
+import ExerciseDialog from '../ExerciseDialog';
 
 
 const styles = {
@@ -48,7 +48,7 @@ class ExerciseAddButton extends Component {
                 >
                     <ContentAdd />
                 </FloatingActionButton>
-                <ExerciseAddDialog 
+                <ExerciseDialog 
                     open={this.state.addDialogOpen} 
                     handleClose={this.handleAddDialogClose}
                 />

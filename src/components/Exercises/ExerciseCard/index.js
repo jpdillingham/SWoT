@@ -8,6 +8,9 @@ import IconButton from 'material-ui/IconButton';
 import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import Avatar from 'material-ui/Avatar';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 import ExerciseDeleteDialog from '../ExerciseDeleteDialog';
 
@@ -40,6 +43,23 @@ class ExerciseCard extends Component {
             exerciseImage = 'unknown'
         }
 
+        const iconButtonElement = (
+            <IconButton
+              touch={true}
+              tooltipPosition="bottom-left"
+            >
+              <MoreVertIcon color='#808080' />
+            </IconButton>
+          );
+
+        const rightIconMenu = (
+            <IconMenu iconButtonElement={iconButtonElement}>
+              <MenuItem>Reply</MenuItem>
+              <MenuItem>Forward</MenuItem>
+              <MenuItem>Delete</MenuItem>
+            </IconMenu>
+          );
+
         return (
             <Card zDepth={2} style={styles.card}>
                 <CardHeader
@@ -65,6 +85,7 @@ class ExerciseCard extends Component {
                             <ListItem
                                 key={m.name}
                                 leftIcon={<ActionAssignment/>}
+                                rightIconButton={rightIconMenu}
                                 primaryText={m.name}
                                 secondaryText={m.uom ? m.uom : ''}
                             />

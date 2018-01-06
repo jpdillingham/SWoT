@@ -12,7 +12,7 @@ import Subheader from 'material-ui/Subheader';
 import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../../constants';
 import { getGuid } from '../../../util';
 
-import MetricAddDialog from '../MetricAddDialog';
+import MetricDialog from '../MetricDialog';
 
 const styles = {
     name: {
@@ -43,7 +43,7 @@ const initialState = {
     metricDialogOpen: false
 }
 
-class ExerciseAddDialog extends Component {
+class ExerciseDialog extends Component {
     state = initialState
 
     handleTypeChange = (event, index, value) => {
@@ -142,7 +142,7 @@ class ExerciseAddDialog extends Component {
                             ) : ''}
                     </List>
                 </Dialog>
-                <MetricAddDialog
+                <MetricDialog
                     open={this.state.metricDialogOpen} 
                     handleClose={this.handleMetricDialogClose}
                 />
@@ -151,5 +151,5 @@ class ExerciseAddDialog extends Component {
     }
 }
 
-export default ExerciseAddDialog
+export default ExerciseDialog
 
