@@ -50,6 +50,7 @@ class ExerciseAddButton extends Component {
                 </FloatingActionButton>
                 <ExerciseDialog 
                     open={this.state.addDialogOpen} 
+                    intent={'add'}
                     handleClose={this.handleAddDialogClose}
                 />
             </div>

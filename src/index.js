@@ -27,6 +27,12 @@ const reducer = (state = initialState, action) => {
             return { 
                 ...state, exercises: state.exercises.filter(e => e.id !== action.id)
             };
+        case 'UPDATE_EXERCISE':
+            return {
+                ...state, exercises: state.exercises.map(e => { 
+                    return e.id == action.exercise.id ? action.exercise : e
+                })
+            }
         case 'SNACKBAR_SHOW':
             return { ...state, snackbar: action.snackbar }
         default:
@@ -35,6 +41,10 @@ const reducer = (state = initialState, action) => {
 }
 
 const store = createStore(reducer);
+
+store.subscribe(() => {
+    console.log('State Updated:', store.getState())
+})
 
 ReactDOM.render(
     <Provider store={store}>

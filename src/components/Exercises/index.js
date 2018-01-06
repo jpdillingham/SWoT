@@ -17,6 +17,7 @@ class Exercises extends Component {
                         <div key={e.id}>
                             <ExercizeCard 
                                 exercise={e} 
+                                updateExercise={this.props.updateExercise}
                                 deleteExercise={this.props.deleteExercise} 
                                 showSnackbar={this.props.showSnackbar} 
                             />
@@ -38,6 +39,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
     },
     deleteExercise: (id) => {
         dispatch({ type: 'DELETE_EXERCISE', id: id })
+    },
+    updateExercise: (exercise) => {
+        dispatch({ type: 'UPDATE_EXERCISE', exercise: exercise })
     },
     showSnackbar: (message) => {
         dispatch({ type: 'SNACKBAR_SHOW', snackbar: { visible: true, message: message ? message : '' }} )

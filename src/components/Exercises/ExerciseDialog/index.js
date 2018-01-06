@@ -90,7 +90,7 @@ class ExerciseDialog extends Component {
             this.metricUpdate(result.metric)
         }
 
-        this.setState({ metricDialog: { open: false, intent: '' } })
+        this.setState({ metricDialog: { open: false, intent: '', metric: {} } })
     }
 
     metricAdd = (metric) => {
@@ -106,7 +106,9 @@ class ExerciseDialog extends Component {
         this.setState(prevState => ({
             exercise: {
                 ...prevState.exercise,
-                metrics: prevState.exercise.metrics.map(m => { return m.name == metric.name ? metric : m })
+                metrics: prevState.exercise.metrics.map(m => { 
+                    return m.name == metric.name ? metric : m 
+                })
             }
         }))
     }
@@ -161,7 +163,7 @@ class ExerciseDialog extends Component {
         return (
             <div>
                 <Dialog
-                    title="Add Exercise"
+                title={(this.props.intent === 'add' ? 'Add' : 'Edit') + ' Exercise'} 
                     actions={
                         <div>
                             <FlatButton label="Add Metric" onClick={this.handleAddMetricClick} style={styles.addMetric} />
@@ -176,6 +178,7 @@ class ExerciseDialog extends Component {
                     <TextField
                         hintText="e.g. 'Bench Press'"
                         floatingLabelText="Name"
+                        defaultValue={this.state.exercise.name}
                         style={styles.name}
                         onChange={this.handleNameChange}
                     /><br />
@@ -190,6 +193,7 @@ class ExerciseDialog extends Component {
                     <TextField
                         hintText="e.g. '/barbell-bench-press-medium-grip'"
                         floatingLabelText="Bodybuilding.com Url"
+                        defaultValue={this.state.exercise.url}
                         style={styles.url}
                         onChange={this.handleUrlChange}
                     /><br />

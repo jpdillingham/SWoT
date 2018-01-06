@@ -9,13 +9,19 @@ import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import Avatar from 'material-ui/Avatar';
 
+import ExerciseDialog from '../ExerciseDialog'
 import ExerciseDeleteDialog from '../ExerciseDeleteDialog';
 
 import { EXERCISE_TYPES } from '../../../constants';
 
 class ExerciseCard extends Component {
     state = {
-        deleteDialogOpen: false
+        deleteDialogOpen: false,
+        exerciseDialog: {
+            open: false,
+            intent: '',
+            exercise: {}
+        }
     }
 
     handleDeleteDialogClose = (result) => {
@@ -25,6 +31,34 @@ class ExerciseCard extends Component {
         }
 
         this.setState({ deleteDialogOpen: false })
+    }
+
+    handleDialogClose = (result) => {
+        if (result.edited) {
+            this.props.updateExercise(result.exercise)
+        }
+
+        this.setState(prevState => ({
+            exerciseDialog: {
+                open: false,
+                intent: '',
+                exercise: {}
+            }
+        }))
+    }
+
+    handleExerciseDialogOpen = (intent, exercise) => {
+        this.setState(prevState => ({
+            exerciseDialog: {
+                open: true,
+                intent: intent,
+                exercise: exercise
+            }
+        }))
+    }
+
+    handleEditClick = () => {
+        this.handleExerciseDialogOpen('edit', this.props.exercise)
     }
 
     handleDeletedialogOpen = () => {
@@ -72,13 +106,20 @@ class ExerciseCard extends Component {
                     </List>
                 </CardText>
                 <CardActions>
-                    <FlatButton>Edit</FlatButton>
+                    <FlatButton onClick={this.handleEditClick}>Edit</FlatButton>
                     <FlatButton onClick={() => this.handleDeletedialogOpen()}>Delete</FlatButton>
                 </CardActions>
                 <ExerciseDeleteDialog 
                     open={this.state.deleteDialogOpen} 
                     handleClose={this.handleDeleteDialogClose}
                     exercise={this.props.exercise}
+                />
+                <ExerciseDialog
+                    open={this.state.exerciseDialog.open}
+                    intent={this.state.exerciseDialog.intent}
+                    exercise={this.state.exerciseDialog.exercise}
+                    existingNames={this.props.existingNames}
+                    handleClose={this.handleDialogClose}
                 />
             </Card>
         )
