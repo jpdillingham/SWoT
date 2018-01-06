@@ -93,10 +93,6 @@ class ExerciseDialog extends Component {
         this.setState({ metricDialog: { open: false, intent: '' } })
     }
 
-    handleMetricDelete = (metric) => {
-        this.metricDelete(metric);
-    }
-
     metricAdd = (metric) => {
         this.setState(prevState => ({
             exercise: {
@@ -124,41 +120,53 @@ class ExerciseDialog extends Component {
         }))
     }
 
+    handleEditMetricMenuClick = (metric) => {
+        this.handleMetricDialogOpen('edit', metric)
+    }
+
+    handleDeleteMetricMenuClick = (metric) => {
+        this.metricDelete(metric);
+    }
+
+    handleAddMetricClick = () => {
+        this.handleMetricDialogOpen('add')
+    }
+
+    handleSaveClick = (result) => {
+        result = { exercise: this.state.exercise }
+
+        if (this.props.intent === 'edit') {
+            result.edited = true
+        }
+        else {
+            result.added = true
+        }
+
+        this.props.handleClose(result);
+    }
+
+    handleCancelClick = () => {
+        this.props.handleClose({ cancelled: true })
+    }
+
     componentWillReceiveProps(nextProps) {
         this.setState(initialState);
+
+        if (nextProps.intent === 'edit') {
+            this.setState({ exercise: nextProps.exercise })
+        }
     }
 
     render() {
-        const rightIconMenu = (
-            <IconMenu iconButtonElement={
-                <IconButton touch={true} tooltipPosition="bottom-left">
-                    <MoreVertIcon color={grey400} />
-                </IconButton>
-            }>
-              <MenuItem onClick={this.handleMetricDialogOpen}>Edit</MenuItem>
-              <MenuItem onClick={this.handleMetricDelete}>Delete</MenuItem>
-            </IconMenu>
-        );
-
         return (
             <div>
                 <Dialog
                     title="Add Exercise"
                     actions={
                         <div>
-                            <FlatButton 
-                                style={styles.addMetric}
-                                label="Add Metric"
-                                onClick={() => this.handleMetricDialogOpen('add')}
-                            />
-                            <FlatButton
-                                label="Cancel"
-                                onClick={() => this.props.handleClose({ cancelled: true })}
-                            />
-                            <FlatButton
-                                label="Add"
-                                onClick={() => this.props.handleClose({ added: true, exercise: this.state.exercise })}
-                            />
+                            <FlatButton label="Add Metric" onClick={this.handleAddMetricClick} style={styles.addMetric} />
+                            <FlatButton label="Cancel" onClick={this.handleCancelClick} />
+                            <FlatButton label="Save" onClick={this.handleSaveClick} />
                         </div>
                     }
                     modal={true}
@@ -197,8 +205,8 @@ class ExerciseDialog extends Component {
                                                 <MoreVertIcon color={grey400} />
                                             </IconButton>
                                         }>
-                                          <MenuItem onClick={() => this.handleMetricDialogOpen('edit', m)}>Edit</MenuItem>
-                                          <MenuItem onClick={() => this.handleMetricDelete(m)}>Delete</MenuItem>
+                                          <MenuItem onClick={() => this.handleEditMetricMenuClick(m)}>Edit</MenuItem>
+                                          <MenuItem onClick={() => this.handleDeleteMetricMenuClick(m)}>Delete</MenuItem>
                                         </IconMenu>
                                     }
                                     primaryText={m.name}
