@@ -61,10 +61,10 @@ class ExerciseDialog extends Component {
         let nameList = this.props.existingNames;
 
         if (this.props.intent === 'edit') {
-            nameList = nameList.filter(n => n !== this.props.exercise.name)
+            nameList = nameList.filter(n => n.toLowerCase() !== this.props.exercise.name.toLowerCase())
         }
 
-        if (nameList.find(n => n === value)) {
+        if (nameList.find(n => n.toLowerCase() === value.toLowerCase())) {
             this.setState({
                 validationErrors: { name: 'This name is already in use.' } 
             })
