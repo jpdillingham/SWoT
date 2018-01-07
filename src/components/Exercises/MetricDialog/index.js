@@ -56,16 +56,23 @@ class MetricDialog extends Component {
     }
 
     handleSaveClick = (result) => {
-        result = { metric: this.state.metric }
-
-        if (this.props.intent === 'edit') {
-            result.edited = true
+        if (this.state.metric.name === '') {
+            this.setState({
+                validationErrors: { name: 'The Metric must have a name.' }
+            })
         }
         else {
-            result.added = true
-        }
+            result = { metric: this.state.metric }
 
-        this.props.handleClose(result);
+            if (this.props.intent === 'edit') {
+                result.edited = true
+            }
+            else {
+                result.added = true
+            }
+
+            this.props.handleClose(result);
+        }
     }
 
     handleCancelClick = () => {
@@ -92,6 +99,7 @@ class MetricDialog extends Component {
                         />
                         <FlatButton
                             label="Save"
+                            disabled={this.state.validationErrors.name !== ''}
                             onClick={this.handleSaveClick}
                         />
                     </div>
