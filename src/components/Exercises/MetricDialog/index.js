@@ -119,7 +119,7 @@ class MetricDialog extends Component {
                 />
                 <TextField
                     hintText="e.g. 'Lbs'"
-                    floatingLabelText="Unit of Measure"
+                    floatingLabelText="(Optional) Unit of Measure"
                     defaultValue={this.state.metric.uom}
                     style={styles.uom}
                     onChange={this.handleUomChange}
