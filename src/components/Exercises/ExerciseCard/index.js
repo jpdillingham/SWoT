@@ -149,7 +149,6 @@ const styles = {
         cursor: 'pointer',
     },
     metric: {
-        marginLeft: -8
     },
     exitIconButton: {
         border: 0,
