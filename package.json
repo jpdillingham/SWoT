@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Simple Workout Tracker",
   "main": "index.js",
+  "homepage": "swot-static",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
