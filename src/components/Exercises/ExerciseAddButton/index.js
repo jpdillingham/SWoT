@@ -5,7 +5,6 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import ExerciseDialog from '../ExerciseDialog';
 
-
 const styles = {
     fab: {
         margin: 0,
@@ -20,21 +19,22 @@ const styles = {
 
 class ExerciseAddButton extends Component {
     state = {
-        addDialogOpen: false
+        addDialog: {
+            open: false
+        }
     }
 
     handleAddClick = () => {
-        this.setState({ addDialogOpen: true })
+        this.setState(prevState => ({ ...prevState.addDialog, open: true }))
     }
 
     handleAddDialogClose = (result) => {
         if (result.added) {
-            console.log(result.exercise)
             this.props.addExercise(result.exercise)
             this.props.showSnackbar('Added exercise \'' + result.exercise.name + '\'')
         }
 
-        this.setState({ addDialogOpen: false })
+        this.setState(prevState => ({ ...prevState.addDialog, open: false }))
     }
 
     render() {
@@ -59,4 +59,3 @@ class ExerciseAddButton extends Component {
 }
 
 export default ExerciseAddButton
-

@@ -4,6 +4,17 @@ import { connect } from 'react-redux';
 import ExercizeCard from './ExerciseCard'
 import ExerciseAddButton from './ExerciseAddButton'
 
+const styles = {
+    grid: {
+        display: 'grid',
+        gridGap: 10,
+        gridTemplateColumns: 'repeat(auto-fit, 400px)'
+    },
+    card: {
+        margin: 20
+    }
+}
+
 class Exercises extends Component {
     render() {
         return (
@@ -52,14 +63,3 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Exercises)
-
-const styles = {
-    grid: {
-        display: 'grid',
-        gridGap: 10,
-        gridTemplateColumns: 'repeat(auto-fit, 400px)'
-    },
-    card: {
-        margin: 20
-    }
-}
