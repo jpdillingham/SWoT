@@ -30,7 +30,7 @@ const reducer = (state = initialState, action) => {
         case 'UPDATE_EXERCISE':
             return {
                 ...state, exercises: state.exercises.map(e => { 
-                    return e.id == action.exercise.id ? action.exercise : e
+                    return e.id === action.exercise.id ? action.exercise : e
                 })
             }
         case 'SNACKBAR_SHOW':
