@@ -88,7 +88,7 @@ class ExerciseCard extends Component {
                             </IconButton>
                         </span>
                     }
-                    avatar={<Avatar backgroundColor="#64b5f6" src={'img/' + exerciseImage + '.png'}></Avatar>}
+                    avatar={<Avatar backgroundColor="#64b5f6" src={process.env.PUBLIC_URL + '/img/' + exerciseImage + '.png'}></Avatar>}
                     style={{marginBottom: -20}}
                 />
                 <CardText>
