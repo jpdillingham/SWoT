@@ -53,6 +53,7 @@ class App extends Component {
                     <Snackbar
                         open={this.props.snackbar.visible}
                         message={this.props.snackbar.message}
+                        onRequestClose={this.props.hideSnackbar}
                         autoHideDuration={2500}
                     />
                 </div>
@@ -76,6 +77,9 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => ({
     showSnackbar: (message) => {
         dispatch({ type: 'SNACKBAR_SHOW', snackbar: { visible: true, message: message ? message : '' }} )
+    },
+    hideSnackbar: () => {
+        dispatch({ type: 'SNACKBAR_HIDE' })
     }
 })
 

@@ -35,6 +35,8 @@ const reducer = (state = initialState, action) => {
             }
         case 'SNACKBAR_SHOW':
             return { ...state, snackbar: action.snackbar }
+        case 'SNACKBAR_HIDE':
+            return { ...state, snackbar: { visible: false, message: '' }}
         default:
             return state;
     }
