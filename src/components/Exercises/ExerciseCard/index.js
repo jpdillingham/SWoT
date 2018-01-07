@@ -74,40 +74,42 @@ class ExerciseCard extends Component {
         }
 
         return (
-            <Card zDepth={2} style={styles.card}>
-                <CardHeader
-                    title={this.props.exercise.name}
-                    subtitle={
-                        <span 
-                            style={styles.link}
-                            onClick={() => window.open(this.props.exercise.url)}
-                        >
-                            {truncatedUrl}
-                            <IconButton style={styles.exitIconButton} iconStyle={styles.exitIcon}>
-                                <ActionExitToApp/>
-                            </IconButton>
-                        </span>
-                    }
-                    avatar={<Avatar backgroundColor="#64b5f6" src={process.env.PUBLIC_URL + '/img/' + exerciseImage + '.png'}></Avatar>}
-                    style={{marginBottom: -20}}
-                />
-                <CardText>
-                    <List>
-                        <Subheader>Metrics</Subheader>
-                        {this.props.exercise.metrics ? this.props.exercise.metrics.map(m =>                     
-                            <ListItem
-                                key={m.name}
-                                leftIcon={<ActionAssignment/>}
-                                primaryText={m.name}
-                                secondaryText={m.uom ? m.uom : ''}
-                            />
-                        ) : ''}
-                    </List>
-                </CardText>
-                <CardActions>
-                    <FlatButton onClick={this.handleEditClick}>Edit</FlatButton>
-                    <FlatButton onClick={this.handleDeleteClick}>Delete</FlatButton>
-                </CardActions>
+            <div style={styles.container}>
+                <Card zDepth={2} style={styles.card}>
+                    <CardHeader
+                        title={this.props.exercise.name}
+                        subtitle={
+                            <span 
+                                style={styles.link}
+                                onClick={() => window.open(this.props.exercise.url)}
+                            >
+                                {truncatedUrl}
+                                <IconButton style={styles.exitIconButton} iconStyle={styles.exitIcon}>
+                                    <ActionExitToApp/>
+                                </IconButton>
+                            </span>
+                        }
+                        avatar={<Avatar backgroundColor="#64b5f6" src={process.env.PUBLIC_URL + '/img/' + exerciseImage + '.png'}></Avatar>}
+                        style={{marginBottom: -20}}
+                    />
+                    <CardText style={styles.text}>
+                        <List>
+                            <Subheader>Metrics</Subheader>
+                            {this.props.exercise.metrics ? this.props.exercise.metrics.map(m =>                     
+                                <ListItem
+                                    key={m.name}
+                                    leftIcon={<ActionAssignment/>}
+                                    primaryText={m.name}
+                                    secondaryText={m.uom ? m.uom : ''}
+                                />
+                            ) : ''}
+                        </List>
+                    </CardText>
+                    <CardActions style={styles.actions}>
+                        <FlatButton onClick={this.handleEditClick}>Edit</FlatButton>
+                        <FlatButton onClick={this.handleDeleteClick}>Delete</FlatButton>
+                    </CardActions>
+                </Card>
                 <ExerciseDeleteDialog 
                     open={this.state.deleteDialog.open} 
                     handleClose={this.handleDeleteDialogClose}
@@ -120,7 +122,7 @@ class ExerciseCard extends Component {
                     existingNames={this.props.existingNames}
                     handleClose={this.handleExerciseDialogClose}
                 />
-            </Card>
+            </div>
         )
     }
 }
@@ -128,16 +130,20 @@ class ExerciseCard extends Component {
 export default ExerciseCard
 
 const styles = {
-    fab: {
-        margin: 0,
-        top: 'auto',
-        right: 20,
-        bottom: 20,
-        left: 'auto',
-        position: 'fixed',
+    container: {
+        height: '100%'
     },
     card: {
         width: 400,
+        height: '100%',
+        position: 'relative'
+    },
+    text: {
+        marginBottom: 40
+    },
+    actions: {
+        position: 'absolute',
+        bottom: 0
     },
     link: {
         cursor: 'pointer',
