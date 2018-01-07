@@ -50,7 +50,9 @@ const initialState = {
         metric: {}
     },
     validationErrors: {
-        name: ''
+        name: '',
+        type: '',
+        url: '',
     }
 }
 
@@ -65,30 +67,29 @@ class ExerciseDialog extends Component {
         }
 
         if (nameList.find(n => n.toLowerCase() === value.toLowerCase())) {
-            this.setState({
-                validationErrors: { name: 'This name is already in use.' } 
-            })
+            this.setState(prevState => ({
+                validationErrors: { ...prevState.validationErrors, name: 'This name is already in use.' } 
+            }))
         }
         else {
             this.setState(prevState => ({
                 exercise: { ...prevState.exercise, name: value },
-                validationErrors: { name: '' }
+                validationErrors: {  ...prevState.validationErrors, name: '' }
             }))
         }
-
-        this.setState(prevState => ({
-        }))
     }
 
     handleTypeChange = (event, index, value) => {
         this.setState(prevState => ({ 
-            exercise: { ...prevState.exercise, type: value } 
+            exercise: { ...prevState.exercise, type: value },
+            validationErrors: { ...prevState.validationErrors, type: '' }
         }))
     }
 
     handleUrlChange = (event, value) => {
         this.setState(prevState => ({
-            exercise: { ...prevState.exercise, url: EXERCISE_URL_BASE + value }
+            exercise: { ...prevState.exercise, url: EXERCISE_URL_BASE + value },
+            validationErrors: { ...prevState.validationErrors, url: '' }
         }))
     }
 
@@ -128,16 +129,26 @@ class ExerciseDialog extends Component {
     }
 
     handleSaveClick = (result) => {
-        result = { exercise: this.state.exercise }
-
-        if (this.props.intent === 'edit') {
-            result.edited = true
-        }
-        else {
-            result.added = true
-        }
-
-        this.props.handleClose(result);
+        this.setState({
+            validationErrors: { 
+                name: this.state.exercise.name === '' ? 'The Exercise must have a name.' : '',
+                type: this.state.exercise.type === '' ? 'A type must be selected.' : '',
+                url: this.state.exercise.url === '' ? 'A url must be provided.' : ''
+            }
+        }, () => {
+            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
+                result = { exercise: this.state.exercise }
+    
+                if (this.props.intent === 'edit') {
+                    result.edited = true
+                }
+                else {
+                    result.added = true
+                }
+    
+                this.props.handleClose(result);
+            }
+        })
     }
 
     handleCancelClick = () => {
@@ -190,7 +201,14 @@ class ExerciseDialog extends Component {
                         <div>
                             <FlatButton label="Add Metric" onClick={this.handleAddMetricClick} style={styles.addMetric} />
                             <FlatButton label="Cancel" onClick={this.handleCancelClick} />
-                            <FlatButton label="Save" onClick={this.handleSaveClick} />
+                            <FlatButton 
+                                label="Save" 
+                                onClick={this.handleSaveClick} 
+                                disabled={
+                                    Object.keys(this.state.validationErrors)
+                                        .find(e => this.state.validationErrors[e] !== '') !== undefined
+                                }
+                            />
                         </div>
                     }
                     modal={true}
@@ -209,6 +227,7 @@ class ExerciseDialog extends Component {
                         floatingLabelText="Type"
                         value={this.state.exercise.type}
                         onChange={this.handleTypeChange}
+                        errorText={this.state.validationErrors.type}
                         style={styles.type}
                     >
                         {EXERCISE_TYPES.map(e => <MenuItem key={e} value={e} primaryText={e}/>)}
@@ -218,6 +237,7 @@ class ExerciseDialog extends Component {
                         floatingLabelText="Bodybuilding.com Url"
                         defaultValue={this.state.exercise.url}
                         style={styles.url}
+                        errorText={this.state.validationErrors.url}
                         onChange={this.handleUrlChange}
                     /><br />
                     <List>
