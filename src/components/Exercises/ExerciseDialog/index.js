@@ -61,10 +61,10 @@ class ExerciseDialog extends Component {
         let nameList = this.props.existingNames;
 
         if (this.props.intent === 'edit') {
-            nameList = nameList.filter(n => n != this.props.exercise.name)
+            nameList = nameList.filter(n => n !== this.props.exercise.name)
         }
 
-        if (nameList.find(n => n == value)) {
+        if (nameList.find(n => n === value)) {
             this.setState({
                 validationErrors: { name: 'This name is already in use.' } 
             })
@@ -166,7 +166,7 @@ class ExerciseDialog extends Component {
             exercise: {
                 ...prevState.exercise,
                 metrics: prevState.exercise.metrics.map(m => { 
-                    return m.name == metric.name ? metric : m 
+                    return m.name === metric.name ? metric : m 
                 })
             }
         }))
@@ -176,7 +176,7 @@ class ExerciseDialog extends Component {
         this.setState(prevState => ({
             exercise: {
                 ...prevState.exercise,
-                metrics: prevState.exercise.metrics.filter(m => m.name != metric.name)
+                metrics: prevState.exercise.metrics.filter(m => m.name !== metric.name)
             }
         }))
     }
