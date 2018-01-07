@@ -16,11 +16,13 @@ import { EXERCISE_TYPES } from '../../../constants';
 
 class ExerciseCard extends Component {
     state = {
-        deleteDialogOpen: false,
+        deleteDialog: {
+            open: false,
+        },
         exerciseDialog: {
             open: false,
             intent: '',
-            exercise: {}
+            exercise: {},
         }
     }
 
@@ -30,12 +32,13 @@ class ExerciseCard extends Component {
             this.props.showSnackbar('Deleted exercise \'' + this.props.exercise.name + '\'')
         }
 
-        this.setState({ deleteDialogOpen: false })
+        this.setState({ deleteDialog: { open: false }})
     }
 
-    handleDialogClose = (result) => {
+    handleExerciseDialogClose = (result) => {
         if (result.edited) {
             this.props.updateExercise(result.exercise)
+            this.props.showSnackbar('Updated exercise \'' + this.props.exercise.name + '\'')
         }
 
         this.setState(prevState => ({
@@ -47,22 +50,18 @@ class ExerciseCard extends Component {
         }))
     }
 
-    handleExerciseDialogOpen = (intent, exercise) => {
+    handleEditClick = () => {
         this.setState(prevState => ({
             exerciseDialog: {
                 open: true,
-                intent: intent,
-                exercise: exercise
+                intent: 'edit',
+                exercise: this.props.exercise
             }
         }))
     }
 
-    handleEditClick = () => {
-        this.handleExerciseDialogOpen('edit', this.props.exercise)
-    }
-
-    handleDeletedialogOpen = () => {
-        this.setState({ deleteDialogOpen: true })
+    handleDeleteClick = () => {
+        this.setState({ deleteDialog: { open: true }})
     }
 
     render() {
@@ -107,10 +106,10 @@ class ExerciseCard extends Component {
                 </CardText>
                 <CardActions>
                     <FlatButton onClick={this.handleEditClick}>Edit</FlatButton>
-                    <FlatButton onClick={() => this.handleDeletedialogOpen()}>Delete</FlatButton>
+                    <FlatButton onClick={this.handleDeleteClick}>Delete</FlatButton>
                 </CardActions>
                 <ExerciseDeleteDialog 
-                    open={this.state.deleteDialogOpen} 
+                    open={this.state.deleteDialog.open} 
                     handleClose={this.handleDeleteDialogClose}
                     exercise={this.props.exercise}
                 />
@@ -119,7 +118,7 @@ class ExerciseCard extends Component {
                     intent={this.state.exerciseDialog.intent}
                     exercise={this.state.exerciseDialog.exercise}
                     existingNames={this.props.existingNames}
-                    handleClose={this.handleDialogClose}
+                    handleClose={this.handleExerciseDialogClose}
                 />
             </Card>
         )

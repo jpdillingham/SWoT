@@ -48,11 +48,37 @@ const initialState = {
         open: false,
         intent: '',
         metric: {}
+    },
+    validationErrors: {
+        name: ''
     }
 }
 
 class ExerciseDialog extends Component {
     state = initialState
+
+    handleNameChange = (event, value) => {
+        let nameList = this.props.existingNames;
+
+        if (this.props.intent === 'edit') {
+            nameList = nameList.filter(n => n != this.props.exercise.name)
+        }
+
+        if (nameList.find(n => n == value)) {
+            this.setState({
+                validationErrors: { name: 'This name is already in use.' } 
+            })
+        }
+        else {
+            this.setState(prevState => ({
+                exercise: { ...prevState.exercise, name: value },
+                validationErrors: { name: '' }
+            }))
+        }
+
+        this.setState(prevState => ({
+        }))
+    }
 
     handleTypeChange = (event, index, value) => {
         this.setState(prevState => ({ 
@@ -60,26 +86,10 @@ class ExerciseDialog extends Component {
         }))
     }
 
-    handleNameChange = (event, value) => {
-        this.setState(prevState => ({
-            exercise: { ...prevState.exercise, name: value }
-        }))
-    }
-
     handleUrlChange = (event, value) => {
         this.setState(prevState => ({
             exercise: { ...prevState.exercise, url: EXERCISE_URL_BASE + value }
         }))
-    }
-
-    handleMetricDialogOpen = (intent, metric) => {
-        this.setState({ 
-            metricDialog: { 
-                open: true, 
-                intent: intent, 
-                metric: metric 
-            } 
-        })
     }
 
     handleMetricDialogClose = (result) => {
@@ -91,6 +101,55 @@ class ExerciseDialog extends Component {
         }
 
         this.setState({ metricDialog: { open: false, intent: '', metric: {} } })
+    }
+
+    handleEditMetricMenuClick = (metric) => {
+        this.setState({ 
+            metricDialog: { 
+                open: true, 
+                intent: 'edit', 
+                metric: metric 
+            } 
+        })
+    }
+
+    handleDeleteMetricMenuClick = (metric) => {
+        this.metricDelete(metric);
+    }
+
+    handleAddMetricClick = () => {
+        this.setState({ 
+            metricDialog: { 
+                open: true, 
+                intent: 'add', 
+                metric: {}
+            } 
+        })
+    }
+
+    handleSaveClick = (result) => {
+        result = { exercise: this.state.exercise }
+
+        if (this.props.intent === 'edit') {
+            result.edited = true
+        }
+        else {
+            result.added = true
+        }
+
+        this.props.handleClose(result);
+    }
+
+    handleCancelClick = () => {
+        this.props.handleClose({ cancelled: true })
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState(initialState);
+
+        if (nextProps.intent === 'edit') {
+            this.setState({ exercise: nextProps.exercise })
+        }
     }
 
     metricAdd = (metric) => {
@@ -122,43 +181,6 @@ class ExerciseDialog extends Component {
         }))
     }
 
-    handleEditMetricMenuClick = (metric) => {
-        this.handleMetricDialogOpen('edit', metric)
-    }
-
-    handleDeleteMetricMenuClick = (metric) => {
-        this.metricDelete(metric);
-    }
-
-    handleAddMetricClick = () => {
-        this.handleMetricDialogOpen('add')
-    }
-
-    handleSaveClick = (result) => {
-        result = { exercise: this.state.exercise }
-
-        if (this.props.intent === 'edit') {
-            result.edited = true
-        }
-        else {
-            result.added = true
-        }
-
-        this.props.handleClose(result);
-    }
-
-    handleCancelClick = () => {
-        this.props.handleClose({ cancelled: true })
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState(initialState);
-
-        if (nextProps.intent === 'edit') {
-            this.setState({ exercise: nextProps.exercise })
-        }
-    }
-
     render() {
         return (
             <div>
@@ -179,6 +201,7 @@ class ExerciseDialog extends Component {
                         hintText="e.g. 'Bench Press'"
                         floatingLabelText="Name"
                         defaultValue={this.state.exercise.name}
+                        errorText={this.state.validationErrors.name}
                         style={styles.name}
                         onChange={this.handleNameChange}
                     /><br />

@@ -25,7 +25,7 @@ class ExerciseAddButton extends Component {
     }
 
     handleAddClick = () => {
-        this.setState(prevState => ({ ...prevState.addDialog, open: true }))
+        this.setState({ addDialog: { open: true }})
     }
 
     handleAddDialogClose = (result) => {
@@ -34,7 +34,7 @@ class ExerciseAddButton extends Component {
             this.props.showSnackbar('Added exercise \'' + result.exercise.name + '\'')
         }
 
-        this.setState(prevState => ({ ...prevState.addDialog, open: false }))
+        this.setState({ addDialog: { open: false }})
     }
 
     render() {
@@ -49,8 +49,9 @@ class ExerciseAddButton extends Component {
                     <ContentAdd />
                 </FloatingActionButton>
                 <ExerciseDialog 
-                    open={this.state.addDialogOpen} 
+                    open={this.state.addDialog.open} 
                     intent={'add'}
+                    existingNames={this.props.existingNames}
                     handleClose={this.handleAddDialogClose}
                 />
             </div>

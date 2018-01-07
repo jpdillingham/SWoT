@@ -22,6 +22,7 @@ class Exercises extends Component {
                 <ExerciseAddButton 
                     addExercise={this.props.addExercise} 
                     showSnackbar={this.props.showSnackbar}
+                    existingNames={this.props.exercises.map(e => e.name)}
                 />
                 <div style={styles.grid}>
                     {this.props.exercises.map(e =>  
@@ -31,6 +32,7 @@ class Exercises extends Component {
                                 updateExercise={this.props.updateExercise}
                                 deleteExercise={this.props.deleteExercise} 
                                 showSnackbar={this.props.showSnackbar} 
+                                existingNames={this.props.exercises.map(e => e.name)}
                             />
                         </div>
                     )}

@@ -33,18 +33,18 @@ class MetricDialog extends Component {
         let nameList = this.props.existingNames;
 
         if (this.props.intent === 'edit') {
-            nameList = this.props.existingNames.filter(n => n != this.props.metric.name)
+            nameList = nameList.filter(n => n != this.props.metric.name)
         }
 
         if (nameList.find(n => n == value)) {
-            this.setState(prevState => ({
-                validationErrors: { ...prevState, name: 'This name is already in use.' }
-            }))
+            this.setState({
+                validationErrors: { name: 'This name is already in use.' }
+            })
         }
         else {
             this.setState(prevState => ({
                 metric: { ...prevState.metric, name: value },
-                validationErrors: { ...prevState, name: '' }
+                validationErrors: { name: '' }
             }))
         }
     }
