@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import axios from 'axios';
 
@@ -18,35 +18,41 @@ const initialState = {
     }
 }
 
-const reducer = (state = initialState, action) => {
+const routinesReducer = (state = initialState.routines, action) => {
+    switch (action.type) {
+        default:
+            return state;
+    }
+}
+const exercisesReducer = (state = initialState.exercises, action) => {
     switch (action.type) {
         case 'SET_EXERCISES':
-            return {
-                ...state, exercises: action.exercises
-            };
+            return action.exercises;
         case 'ADD_EXERCISE':
-            return { 
-                ...state, exercises: state.exercises.concat(action.exercise) 
-            };
+            return state.concat(action.exercise);
         case 'DELETE_EXERCISE':
-            return { 
-                ...state, exercises: state.exercises.filter(e => e.id !== action.id)
-            };
+            return state.filter(e => e.id !== action.id);
         case 'UPDATE_EXERCISE':
-            return {
-                ...state, exercises: state.exercises.map(e => { 
+            return state.map(e => { 
                     return e.id === action.exercise.id ? action.exercise : e
                 })
-            }
-        case 'SNACKBAR_SHOW':
-            return { ...state, snackbar: action.snackbar }
-        case 'SNACKBAR_HIDE':
-            return { ...state, snackbar: { visible: false, message: '' }}
         default:
             return state;
     }
 }
 
+const snackbarReducer = (state = initialState.snackbar, action) => { 
+    switch (action.type) {
+        case 'SNACKBAR_SHOW':
+            return action.snackbar;
+        case 'SNACKBAR_HIDE':
+            return { visible: false, message: '' }
+        default:
+            return state;
+    }
+}
+
+const reducer = combineReducers({ exercises: exercisesReducer, snackbar: snackbarReducer })
 const store = createStore(reducer);
 
 store.subscribe(() => {

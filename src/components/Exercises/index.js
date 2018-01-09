@@ -21,7 +21,6 @@ const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deploym
 class Exercises extends Component {
     componentWillMount() {
         axios.get(endpoint).then((response) => {  
-            console.log(response.data)
             this.props.setExercises(response.data)
         })
     }
