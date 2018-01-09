@@ -9,7 +9,7 @@ import { EXERCISES, ROUTINES } from './constants'
 import App from './components/App'
 
 const initialState = {
-    exercises: EXERCISES,
+    exercises: [],
     routines: ROUTINES,
     snackbar: {
         visible: false,
@@ -19,6 +19,10 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case 'GET_EXERCISES':
+            return {
+                ...state, exercises: EXERCISES
+            }
         case 'ADD_EXERCISE':
             return { 
                 ...state, exercises: state.exercises.concat(action.exercise) 
