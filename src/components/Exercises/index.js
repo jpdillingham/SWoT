@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import ExercizeCard from './ExerciseCard'
 import ExerciseAddButton from './ExerciseAddButton'
@@ -15,9 +16,14 @@ const styles = {
     }
 }
 
+const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
+
 class Exercises extends Component {
     componentWillMount() {
-        this.props.getExercises()
+        axios.get(endpoint).then((response) => {  
+            console.log(response.data)
+            this.props.setExercises(response.data)
+        })
     }
 
     render() {
@@ -51,8 +57,8 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getExercises: () => {
-        dispatch({ type: 'GET_EXERCISES' })
+    getExercises: (exercises) => {
+        dispatch({ type: 'SET_EXERCISES', exercises: exercises })
     },
     addExercise: (exercise) => {
         dispatch({ type: 'ADD_EXERCISE', exercise: exercise })
