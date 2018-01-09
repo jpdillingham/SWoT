@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import axios from 'axios';
 
 import { EXERCISES, ROUTINES } from './constants'
 
@@ -17,14 +18,12 @@ const initialState = {
     }
 }
 
-const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
-
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'GET_EXERCISES':
+        case 'SET_EXERCISES':
             return {
-                ...state, exercises: EXERCISES
-            }
+                ...state, exercises: action.exercises
+            };
         case 'ADD_EXERCISE':
             return { 
                 ...state, exercises: state.exercises.concat(action.exercise) 
