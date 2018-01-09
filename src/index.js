@@ -17,6 +17,8 @@ const initialState = {
     }
 }
 
+const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case 'GET_EXERCISES':
