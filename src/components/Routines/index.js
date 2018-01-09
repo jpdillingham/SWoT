@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
-import { EXERCISES, ROUTINES } from '../../constants'
+import { ROUTINES } from '../../constants'
 
 class Routines extends Component {
     render() {
@@ -13,7 +14,7 @@ class Routines extends Component {
                             <li>{r.name}</li>
                             <ul>
                                 {r.exercises.map(e => {
-                                    let exercise = EXERCISES.find(ex => ex.id === e.id)
+                                    let exercise = this.props.exercises.find(ex => ex.id === e.id)
 
                                     return <li key={exercise.id}>{exercise.name}</li>
                                 })}
@@ -26,4 +27,8 @@ class Routines extends Component {
     }
 }
 
-export default Routines
+const mapStateToProps = (state, ownProps) => {
+    return { exercises: state.exercises }
+}
+
+export default connect(mapStateToProps)(Routines)

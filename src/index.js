@@ -5,7 +5,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import axios from 'axios';
 
-import { EXERCISES, ROUTINES } from './constants'
+import { ROUTINES } from './constants'
 
 import App from './components/App'
 

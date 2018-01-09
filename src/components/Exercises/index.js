@@ -57,7 +57,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-    getExercises: (exercises) => {
+    setExercises: (exercises) => {
         dispatch({ type: 'SET_EXERCISES', exercises: exercises })
     },
     addExercise: (exercise) => {
