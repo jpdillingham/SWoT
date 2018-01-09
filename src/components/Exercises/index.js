@@ -16,6 +16,10 @@ const styles = {
 }
 
 class Exercises extends Component {
+    componentWillMount() {
+        this.props.getExercises()
+    }
+
     render() {
         return (
             <div>
@@ -47,6 +51,9 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+    getExercises: () => {
+        dispatch({ type: 'GET_EXERCISES' })
+    },
     addExercise: (exercise) => {
         dispatch({ type: 'ADD_EXERCISE', exercise: exercise })
     },
