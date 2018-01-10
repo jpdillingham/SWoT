@@ -19,13 +19,6 @@ import ActionAccessibility from 'material-ui/svg-icons/action/accessibility'
 import Snackbar from 'material-ui/Snackbar'
 
 class App extends Component {
-    state = {
-        snackbar: {
-            visible: false,
-            message: ''
-        }
-    }
-
     theme = getMuiTheme({
         palette: {
             primary1Color: "#2196f3",
