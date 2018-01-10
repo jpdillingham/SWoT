@@ -63,7 +63,7 @@ const styles = {
 
 const mapStateToProps = (state, ownProps) => {
     return { 
-        snackbar: state.snackbar
+        snackbar: state.app.snackbar
     }
 }
 

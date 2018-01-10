@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { ROUTINES } from './constants'
 import ExercisesReducer from './components/exercises/ExercisesReducer'
+import AppReducer from './components/app/AppReducer';
 
 const initialState = {
     routines: ROUTINES,
@@ -29,7 +30,7 @@ const snackbar = (state = initialState.snackbar, action) => {
 }
 
 const rootReducer = combineReducers({ 
-    snackbar, 
+    app: AppReducer, 
     exercises: ExercisesReducer,
     routines 
 })
