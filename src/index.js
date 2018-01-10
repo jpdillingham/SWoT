@@ -8,7 +8,7 @@ import axios from 'axios';
 
 import { ROUTINES } from './constants'
 
-import App from './components/App'
+import App from './components/app/App'
 import rootReducer from './reducers'
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
