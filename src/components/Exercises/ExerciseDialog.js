@@ -16,7 +16,7 @@ import {grey400} from 'material-ui/styles/colors';
 import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../constants';
 import { getGuid } from '../../util';
 
-import MetricDialog from './MetricDialog';
+import ExerciseMetricDialog from './ExerciseMetricDialog';
 
 const styles = {
     name: {
@@ -262,7 +262,7 @@ class ExerciseDialog extends Component {
                             ) : ''}
                     </List>
                 </Dialog>
-                <MetricDialog
+                <ExerciseMetricDialog
                     open={this.state.metricDialog.open} 
                     intent={this.state.metricDialog.intent}
                     metric={this.state.metricDialog.metric}

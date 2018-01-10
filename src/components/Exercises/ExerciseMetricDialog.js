@@ -26,7 +26,7 @@ const initialState = {
     }
 }
 
-class MetricDialog extends Component {
+class ExerciseMetricDialog extends Component {
     state = initialState;
 
     handleNameChange = (event, value) => {
@@ -129,4 +129,4 @@ class MetricDialog extends Component {
     }
 }
 
-export default MetricDialog
+export default ExerciseMetricDialog
