@@ -9,10 +9,10 @@ import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import Avatar from 'material-ui/Avatar';
 
-import ExerciseDialog from '../ExerciseDialog'
-import ExerciseDeleteDialog from '../ExerciseDeleteDialog';
+import ExerciseDialog from './ExerciseDialog'
+import ExerciseDeleteDialog from './ExerciseDeleteDialog';
 
-import { EXERCISE_TYPES } from '../../../constants';
+import { EXERCISE_TYPES } from '../../constants';
 
 class ExerciseCard extends Component {
     state = {

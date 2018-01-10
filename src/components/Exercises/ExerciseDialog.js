@@ -13,10 +13,10 @@ import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import {grey400} from 'material-ui/styles/colors';
 
-import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../../constants';
-import { getGuid } from '../../../util';
+import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../constants';
+import { getGuid } from '../../util';
 
-import MetricDialog from '../MetricDialog';
+import MetricDialog from './MetricDialog';
 
 const styles = {
     name: {

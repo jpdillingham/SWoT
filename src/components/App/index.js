@@ -9,7 +9,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Navigation from '../Navigation'
 import Homepage from '../Homepage'
-import Exercises from '../Exercises'
+import Exercises from '../Exercises/Exercises'
 import Routines from '../Routines'
 
 import MenuItem from 'material-ui/MenuItem'
