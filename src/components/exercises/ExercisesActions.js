@@ -21,7 +21,6 @@ function receiveExercises(status, items) {
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
 
 export function fetchExercises() {
-    console.log('thunk...')
     return function(dispatch, getState) {
         dispatch(requestExercises())
 
