@@ -6,6 +6,7 @@ import { fetchExercises } from './ExercisesActions'
 
 import ExercizeCard from './ExerciseCard'
 import ExerciseAddButton from './ExerciseAddButton'
+import CircularProgress from 'material-ui/CircularProgress'
 
 const styles = {
     grid: {
@@ -15,6 +16,12 @@ const styles = {
     },
     card: {
         margin: 20
+    },
+    progress: {
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)'
     }
 }
 
@@ -33,7 +40,7 @@ class Exercises extends Component {
                 />
                 { 
                     this.props.exercises.isFetching ? 
-                        'fetching' : 
+                        <CircularProgress style={styles.progress} /> : 
                         <div style={styles.grid}>
                             {this.props.exercises.items.map(e =>  
                                 <div key={e.id}>
