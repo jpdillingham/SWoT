@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
+import { fetchExercises } from './ExercisesActions'
+
 import ExercizeCard from './ExerciseCard'
 import ExerciseAddButton from './ExerciseAddButton'
 
@@ -16,13 +18,9 @@ const styles = {
     }
 }
 
-const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
-
 class Exercises extends Component {
     componentWillMount() {
-        axios.get(endpoint).then((response) => {  
-            this.props.setExercises(response.data)
-        })
+        this.props.fetchExercises();
     }
 
     render() {
@@ -31,31 +29,40 @@ class Exercises extends Component {
                 <ExerciseAddButton 
                     addExercise={this.props.addExercise} 
                     showSnackbar={this.props.showSnackbar}
-                    existingNames={this.props.exercises.map(e => e.name)}
+                    existingNames={this.props.exercises.items.map(e => e.name)}
                 />
-                <div style={styles.grid}>
-                    {this.props.exercises.map(e =>  
-                        <div key={e.id}>
-                            <ExercizeCard 
-                                exercise={e} 
-                                updateExercise={this.props.updateExercise}
-                                deleteExercise={this.props.deleteExercise} 
-                                showSnackbar={this.props.showSnackbar} 
-                                existingNames={this.props.exercises.map(e => e.name)}
-                            />
+                { 
+                    this.props.exercises.isFetching ? 
+                        'fetching' : 
+                        <div style={styles.grid}>
+                            {this.props.exercises.items.map(e =>  
+                                <div key={e.id}>
+                                    <ExercizeCard 
+                                        exercise={e} 
+                                        updateExercise={this.props.updateExercise}
+                                        deleteExercise={this.props.deleteExercise} 
+                                        showSnackbar={this.props.showSnackbar} 
+                                        existingNames={this.props.exercises.items.map(e => e.name)}
+                                    />
+                                </div>
+                            )}
                         </div>
-                    )}
-                </div>
+                }
             </div>
         )
     }
 } 
 
 const mapStateToProps = (state, ownProps) => {
-    return { exercises: state.exercises }
+    return { 
+        exercises: state.exercises
+    }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
+    fetchExercises: () => {
+        dispatch(fetchExercises())
+    },
     setExercises: (exercises) => {
         dispatch({ type: 'SET_EXERCISES', exercises: exercises })
     },
