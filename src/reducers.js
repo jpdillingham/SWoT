@@ -18,17 +18,6 @@ const routines = (state = initialState.routines, action) => {
     }
 }
 
-const snackbar = (state = initialState.snackbar, action) => { 
-    switch (action.type) {
-        case 'SNACKBAR_SHOW':
-            return action.snackbar;
-        case 'SNACKBAR_HIDE':
-            return { visible: false, message: '' }
-        default:
-            return state;
-    }
-}
-
 const rootReducer = combineReducers({ 
     app: AppReducer, 
     exercises: ExercisesReducer,
