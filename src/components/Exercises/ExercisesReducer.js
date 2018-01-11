@@ -5,7 +5,6 @@ const initialState = {
 }
 
 const ExercisesReducer = (state = initialState, action) => {
-    console.log(action)
     switch (action.type) {
         case 'REQUEST_EXERCISES':
             return { 
