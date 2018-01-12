@@ -1,18 +1,15 @@
 import axios from 'axios'
 
-export const REQUEST_EXERCISES = 'REQUEST_EXERCISES'
-
 function requestExercises() {
     return {
-        type: REQUEST_EXERCISES
+        type: 'REQUEST_EXERCISES'
     }
 }
 
-export const RECEIVE_EXERCISES = 'RECEIVE_EXERCISES'
 
 function receiveExercises(status, items) {
     return {
-        type: RECEIVE_EXERCISES,
+        type: 'RECEIVE_EXERCISES',
         status: status,
         items: items
     }
