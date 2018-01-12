@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-import { fetchExercises } from './ExercisesActions'
+import { fetchExercises, addExercise } from './ExercisesActions'
 
 import ExercizeCard from './ExerciseCard'
 import ExerciseAddButton from './ExerciseAddButton'
@@ -74,7 +74,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
         dispatch({ type: 'SET_EXERCISES', exercises: exercises })
     },
     addExercise: (exercise) => {
-        dispatch({ type: 'ADD_EXERCISE', exercise: exercise })
+        dispatch(addExercise(exercise))
     },
     deleteExercise: (id) => {
         dispatch({ type: 'DELETE_EXERCISE', id: id })
