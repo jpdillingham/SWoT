@@ -22,10 +22,16 @@ export const addExercise = (exercise) => {
 }
 
 export const deleteExercise = (id) => {
-    console.log(id)
     return {
         type: 'DELETE_EXERCISE',
         id: id
+    }
+}
+
+export const updateExercise = (exercise) => {
+    return {
+        type: 'UPDATE_EXERCISE',
+        exercise: exercise
     }
 }
 
