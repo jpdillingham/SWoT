@@ -6,12 +6,26 @@ function requestExercises() {
     }
 }
 
-
 function receiveExercises(status, items) {
     return {
         type: 'RECEIVE_EXERCISES',
         status: status,
         items: items
+    }
+}
+
+export const addExercise = (exercise) => {
+    return {
+        type: 'ADD_EXERCISE',
+        exercise: exercise
+    }
+}
+
+export const deleteExercise = (id) => {
+    console.log(id)
+    return {
+        type: 'DELETE_EXERCISE',
+        id: id
     }
 }
 

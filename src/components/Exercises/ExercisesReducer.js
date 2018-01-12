@@ -5,6 +5,7 @@ const initialState = {
 }
 
 const ExercisesReducer = (state = initialState, action) => {
+    console.log(action)
     switch (action.type) {
         case 'REQUEST_EXERCISES':
             return { 
@@ -21,9 +22,15 @@ const ExercisesReducer = (state = initialState, action) => {
                 items: action.items
              }
         case 'ADD_EXERCISE':
-            return state.concat(action.exercise);
+            return { 
+                ...state,
+                items: state.items.concat(action.exercise)
+            }
         case 'DELETE_EXERCISE':
-            return state.filter(e => e.id !== action.id);
+            return {
+                ...state,
+                items: state.items.filter(e => e.id !== action.id)
+            }
         case 'UPDATE_EXERCISE':
             return state.map(e => { 
                     return e.id === action.exercise.id ? action.exercise : e

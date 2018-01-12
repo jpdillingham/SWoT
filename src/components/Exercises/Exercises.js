@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-import { fetchExercises, addExercise } from './ExercisesActions'
+import { fetchExercises, addExercise, deleteExercise } from './ExercisesActions'
 
 import ExercizeCard from './ExerciseCard'
 import ExerciseAddButton from './ExerciseAddButton'
@@ -60,34 +61,14 @@ class Exercises extends Component {
     }
 } 
 
-const mapStateToProps = (state, ownProps) => {
-    return { 
-        exercises: state.exercises
-    }
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    fetchExercises: () => {
-        dispatch(fetchExercises())
-    },
-    setExercises: (exercises) => {
-        dispatch({ type: 'SET_EXERCISES', exercises: exercises })
-    },
-    addExercise: (exercise) => {
-        dispatch(addExercise(exercise))
-    },
-    deleteExercise: (id) => {
-        dispatch({ type: 'DELETE_EXERCISE', id: id })
-    },
-    updateExercise: (exercise) => {
-        dispatch({ type: 'UPDATE_EXERCISE', exercise: exercise })
-    },
-    showSnackbar: (message) => {
-        dispatch({ type: 'SNACKBAR_SHOW', snackbar: { visible: true, message: message ? message : '' }} )
-    },
-    hideSnackbar: () => {
-        dispatch({ type: 'SNACKBAR_HIDE', snackbar: { visible: false, message: '' } })
-    }
+const mapStateToProps = (state) => ({
+    exercises: state.exercises
 })
+
+const mapDispatchToProps = {
+    fetchExercises,
+    addExercise,
+    deleteExercise
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Exercises)
