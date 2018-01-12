@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
-import { fetchExercises, addExercise, deleteExercise } from './ExercisesActions'
+import { fetchExercises, addExercise, deleteExercise, updateExercise } from './ExercisesActions'
+import { showSnackbar } from '../app/AppActions.js'
 
 import ExercizeCard from './ExerciseCard'
 import ExerciseAddButton from './ExerciseAddButton'
@@ -68,7 +68,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     fetchExercises,
     addExercise,
-    deleteExercise
+    deleteExercise,
+    updateExercise,
+    showSnackbar
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Exercises)
