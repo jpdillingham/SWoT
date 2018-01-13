@@ -14,10 +14,16 @@ const receiveExercises = (status, items) => {
     }
 }
 
+const add = (exercise) => ({
+  type: 'ADD_EXERCISE',
+  exercise: exercise  
+})
+
 export const addExercise = (exercise) => {
-    return {
-        type: 'ADD_EXERCISE',
-        exercise: exercise
+    return function(dispatch) {
+        return new Promise(function(resolve, reject) { 
+            resolve()
+        })
     }
 }
 

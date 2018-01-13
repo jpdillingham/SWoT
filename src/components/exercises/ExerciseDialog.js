@@ -146,7 +146,12 @@ class ExerciseDialog extends Component {
                     result.added = true
                 }
     
-                this.props.handleClose(result);
+                this.props.addExercise(this.state.exercise)
+                    .then(() => {
+                        this.props.handleClose(result);
+                    }, (err) => {
+                        console.log(err);
+                    })
             }
         })
     }
