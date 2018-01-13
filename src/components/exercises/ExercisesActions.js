@@ -1,12 +1,12 @@
 import axios from 'axios'
 
-function requestExercises() {
+const requestExercises = () => {
     return {
         type: 'REQUEST_EXERCISES'
     }
 }
 
-function receiveExercises(status, items) {
+const receiveExercises = (status, items) => {
     return {
         type: 'RECEIVE_EXERCISES',
         status: status,
