@@ -1,24 +1,36 @@
 const initialState = {
-    isFetching: false,
-    isErrored: false,
-    items: []
+    api: {
+        get: {
+            isFetching: false,
+            isErrored: false,
+        },
+    },
+    items: [],
 }
 
 const ExercisesReducer = (state = initialState, action) => {
     console.log(action)
     switch (action.type) {
-        case 'REQUEST_EXERCISES':
+        case 'EXERCISES_GET_REQUEST':
             return { 
                 ...state, 
-                isFetching: true, 
-                isErrored: false,
+                api: { 
+                    get: { 
+                        isFetching: true, 
+                        isErrored: false,
+                    }
+                },
                 items: []
             };
-        case 'RECEIVE_EXERCISES':
+        case 'EXERCISES_GET_RESPONSE':
             return { 
                 ...state, 
-                isFetching: false, 
-                isErrored: action.status === 200 ? false : true,
+                api: {
+                    get: {
+                        isFetching: false, 
+                        isErrored: action.status === 200 ? false : true,
+                    }
+                },
                 items: action.items
              }
         case 'ADD_EXERCISE':

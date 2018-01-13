@@ -1,11 +1,13 @@
 import axios from 'axios'
 
+const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
+
 const requestExercises = () => ({
-    type: 'REQUEST_EXERCISES'
+    type: 'EXERCISES_GET_REQUEST'
 })
 
 const receiveExercises = (status, items) => ({
-    type: 'RECEIVE_EXERCISES',
+    type: 'EXERCISES_GET_RESPONSE',
     status: status,
     items: items
 })
@@ -41,15 +43,18 @@ export const updateExercise = (exercise) => {
     }
 }
 
-const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
 
-export const fetchExercises = () => {
-    return function(dispatch, getState) {
-        dispatch(requestExercises())
+export const fetchExercises = () => (dispatch) => {
+    dispatch(requestExercises())
 
+    return new Promise((resolve, reject) => {
         axios.get(endpoint)
-            .then(response => { 
-                dispatch(receiveExercises(response.status, response.data))
-            })      
-    }
+        .then(response => { 
+            dispatch(receiveExercises(response.status, response.data))
+            resolve(response.data)
+        }, error => {
+            dispatch(receiveExercises(error.response.status || -1, []))
+            reject(error)
+        })     
+    }) 
 }

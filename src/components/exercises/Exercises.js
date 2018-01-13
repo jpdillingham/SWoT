@@ -40,21 +40,21 @@ class Exercises extends Component {
                     existingNames={this.props.exercises.items.map(e => e.name)}
                 />
                 { 
-                    this.props.exercises.isFetching ? 
-                        <CircularProgress style={styles.progress} /> : 
-                        <div style={styles.grid}>
-                            {this.props.exercises.items.map(e =>  
-                                <div key={e.id}>
-                                    <ExercizeCard 
-                                        exercise={e} 
-                                        updateExercise={this.props.updateExercise}
-                                        deleteExercise={this.props.deleteExercise} 
-                                        showSnackbar={this.props.showSnackbar} 
-                                        existingNames={this.props.exercises.items.map(e => e.name)}
-                                    />
-                                </div>
-                            )}
-                        </div>
+                    this.props.exercises.api.get.isFetching ? <CircularProgress style={styles.progress} /> : 
+                        this.props.exercises.api.get.isErrored ? 'error' :
+                            <div style={styles.grid}>
+                                {this.props.exercises.items.map(e =>  
+                                    <div key={e.id}>
+                                        <ExercizeCard 
+                                            exercise={e} 
+                                            updateExercise={this.props.updateExercise}
+                                            deleteExercise={this.props.deleteExercise} 
+                                            showSnackbar={this.props.showSnackbar} 
+                                            existingNames={this.props.exercises.items.map(e => e.name)}
+                                        />
+                                    </div>
+                                )}
+                            </div>
                 }
             </div>
         )
