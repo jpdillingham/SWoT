@@ -37,7 +37,7 @@ export const updateExercise = (exercise) => {
 
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
 
-export function fetchExercises() {
+export const fetchExercises = () => {
     return function(dispatch, getState) {
         dispatch(requestExercises())
 
