@@ -2,28 +2,40 @@ import axios from 'axios'
 
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
 
-const requestExercisesGet = () => ({
+const exercisesGetRequest = () => ({
     type: 'EXERCISES_GET_REQUEST'
 })
 
-const receiveExercisesGet = (status, items) => ({
+const exercisesGetResponse = (status, items) => ({
     type: 'EXERCISES_GET_RESPONSE',
     status: status,
     items: items
 })
 
-const add = (exercise) => ({
-    type: 'ADD_EXERCISE',
-    exercise: { ...exercise, url: 'https://www.bodybuilding.com/exercises/' + exercise.url }
+const exercisesPostRequest = () => ({
+    type: 'EXERCISES_POST_REQUEST'
+})
+
+const exercisesPostResponse = (status, item) => ({
+    type: 'EXERCISES_POST_RESPONSE',
+    status: status,
+    item: item
 })
 
 export const addExercise = (exercise) => (dispatch) => {
+    if (!exercise.url.toLowerCase().startsWith('http')) {
+        exercise.url = 'https://www.bodybuilding.com/exercises/' + exercise.url
+    }
+
+    dispatch(exercisesPostRequest())
+
     return new Promise((resolve, reject) => { 
             axios.post(endpoint, exercise)
                 .then(response => {
-                    dispatch(add(JSON.parse(response.data)))
+                    dispatch(exercisesPostResponse(response.status, response.data))
                     resolve(response)
                 }, error => {
+                    dispatch(exercisesPostResponse(error.response.status || -1, {}))
                     reject(error)
                 })
         })
@@ -45,15 +57,15 @@ export const updateExercise = (exercise) => {
 
 
 export const fetchExercises = () => (dispatch) => {
-    dispatch(requestExercisesGet())
+    dispatch(exercisesGetRequest())
 
     return new Promise((resolve, reject) => {
         axios.get(endpoint)
         .then(response => { 
-            dispatch(receiveExercisesGet(response.status, response.data))
+            dispatch(exercisesGetResponse(response.status, response.data))
             resolve(response.data)
         }, error => {
-            dispatch(receiveExercisesGet(error.response.status || -1, []))
+            dispatch(exercisesGetResponse(error.response.status || -1, []))
             reject(error)
         })     
     }) 
