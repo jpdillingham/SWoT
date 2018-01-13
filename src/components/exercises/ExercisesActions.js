@@ -2,11 +2,11 @@ import axios from 'axios'
 
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
 
-const requestExercises = () => ({
+const requestExercisesGet = () => ({
     type: 'EXERCISES_GET_REQUEST'
 })
 
-const receiveExercises = (status, items) => ({
+const receiveExercisesGet = (status, items) => ({
     type: 'EXERCISES_GET_RESPONSE',
     status: status,
     items: items
@@ -45,15 +45,15 @@ export const updateExercise = (exercise) => {
 
 
 export const fetchExercises = () => (dispatch) => {
-    dispatch(requestExercises())
+    dispatch(requestExercisesGet())
 
     return new Promise((resolve, reject) => {
         axios.get(endpoint)
         .then(response => { 
-            dispatch(receiveExercises(response.status, response.data))
+            dispatch(receiveExercisesGet(response.status, response.data))
             resolve(response.data)
         }, error => {
-            dispatch(receiveExercises(error.response.status || -1, []))
+            dispatch(receiveExercisesGet(error.response.status || -1, []))
             reject(error)
         })     
     }) 
