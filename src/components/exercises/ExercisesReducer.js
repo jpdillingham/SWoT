@@ -1,7 +1,7 @@
 const initialState = {
     api: {
         get: {
-            isFetching: false,
+            isExecuting: false,
             isErrored: false,
         },
     },
@@ -16,7 +16,7 @@ const ExercisesReducer = (state = initialState, action) => {
                 ...state, 
                 api: { 
                     get: { 
-                        isFetching: true, 
+                        isExecuting: true, 
                         isErrored: false,
                     }
                 },
@@ -27,7 +27,7 @@ const ExercisesReducer = (state = initialState, action) => {
                 ...state, 
                 api: {
                     get: {
-                        isFetching: false, 
+                        isExecuting: false, 
                         isErrored: action.status === 200 ? false : true,
                     }
                 },

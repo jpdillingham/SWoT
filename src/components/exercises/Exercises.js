@@ -8,6 +8,8 @@ import { showSnackbar } from '../app/AppActions.js'
 import ExercizeCard from './ExerciseCard'
 import ExerciseAddButton from './ExerciseAddButton'
 import CircularProgress from 'material-ui/CircularProgress'
+import { red500 } from 'material-ui/styles/colors'
+import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 const styles = {
     grid: {
@@ -19,6 +21,17 @@ const styles = {
         margin: 20
     },
     progress: {
+        height: 48,
+        width: 48,
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)'
+    },
+    error: {
+        color: red500,
+        height: 48,
+        width: 48,
         position: 'fixed',
         top: '50%',
         left: '50%',
@@ -40,8 +53,8 @@ class Exercises extends Component {
                     existingNames={this.props.exercises.items.map(e => e.name)}
                 />
                 { 
-                    this.props.exercises.api.get.isFetching ? <CircularProgress style={styles.progress} /> : 
-                        this.props.exercises.api.get.isErrored ? 'error' :
+                    this.props.exercises.api.get.isExecuting ? <CircularProgress style={styles.progress} /> : 
+                        this.props.exercises.api.get.isErrored ? <ActionHighlightOff style={styles.error} /> :
                             <div style={styles.grid}>
                                 {this.props.exercises.items.map(e =>  
                                     <div key={e.id}>
