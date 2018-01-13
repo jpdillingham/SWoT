@@ -1,30 +1,30 @@
 import axios from 'axios'
 
-const requestExercises = () => {
-    return {
-        type: 'REQUEST_EXERCISES'
-    }
-}
-
-const receiveExercises = (status, items) => {
-    return {
-        type: 'RECEIVE_EXERCISES',
-        status: status,
-        items: items
-    }
-}
-
-const add = (exercise) => ({
-  type: 'ADD_EXERCISE',
-  exercise: exercise  
+const requestExercises = () => ({
+    type: 'REQUEST_EXERCISES'
 })
 
-export const addExercise = (exercise) => {
-    return function(dispatch) {
-        return new Promise(function(resolve, reject) { 
-            resolve()
+const receiveExercises = (status, items) => ({
+    type: 'RECEIVE_EXERCISES',
+    status: status,
+    items: items
+})
+
+const add = (exercise) => ({
+    type: 'ADD_EXERCISE',
+    exercise: { ...exercise, url: 'https://www.bodybuilding.com/exercises/' + exercise.url }
+})
+
+export const addExercise = (exercise) => (dispatch) => {
+    return new Promise((resolve, reject) => { 
+            axios.post(endpoint, exercise)
+                .then(response => {
+                    dispatch(add(JSON.parse(response.data)))
+                    resolve(response)
+                }, error => {
+                    reject(error)
+                })
         })
-    }
 }
 
 export const deleteExercise = (id) => {
