@@ -49,7 +49,6 @@ class Exercises extends Component {
             <div>
                 <ExerciseAddButton 
                     showSnackbar={this.props.showSnackbar}
-                    existingNames={this.props.exercises.items.map(e => e.name)}
                 />
                 { 
                     this.props.exercises.api.get.isExecuting ? <CircularProgress style={styles.progress} /> : 
