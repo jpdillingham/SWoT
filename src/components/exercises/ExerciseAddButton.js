@@ -29,10 +29,6 @@ class ExerciseAddButton extends Component {
     }
 
     handleAddDialogClose = (result) => {
-        if (result.added) {
-            this.props.showSnackbar('Added exercise \'' + result.exercise.name + '\'')
-        }
-
         this.setState({ addDialog: { open: false }})
     }
 

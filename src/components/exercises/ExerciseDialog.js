@@ -16,6 +16,7 @@ import {grey400} from 'material-ui/styles/colors';
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { addExercise, cancelAddExercise } from './ExercisesActions'
+import { showSnackbar } from '../app/AppActions.js'
 
 import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../constants';
 import { getGuid } from '../../util';
@@ -132,7 +133,7 @@ class ExerciseDialog extends Component {
         })
     }
 
-    handleSaveClick = (result) => {
+    handleSaveClick = () => {
         this.setState({
             validationErrors: { 
                 name: this.state.exercise.name === '' ? 'The Exercise must have a name.' : '',
@@ -141,36 +142,48 @@ class ExerciseDialog extends Component {
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                result = { exercise: this.state.exercise }
-    
                 if (this.props.intent === 'edit') {
-                    result.edited = true
+                    this.props.showSnackbar('unimplemented!')
                 }
                 else {
-                    result.added = true
-                }
-    
-                this.props.addExercise(this.state.exercise)
-                    .then(() => {
-                        this.props.handleClose(result);
-                    }, (err) => {
-                        console.log(err);
+                    this.props.addExercise(this.state.exercise)
+                    .then((response) => {
+                        this.props.showSnackbar('Added Exercise \'' + response.data.name + '\'.')
+                        this.props.handleClose();
+                    }, (error) => {
+                        this.handleApiError(error);
                     })
+                }
             }
         })
     }
 
+    handleApiError = (error) => {
+        let message = 'Error saving Exercise'
+        if (error.response) {
+            message += ': ' + error.response.data
+        }
+        else {
+            message += '.'
+        }
+
+        this.props.showSnackbar(message);
+    }
+
     handleCancelClick = () => {
         this.props.cancelAddExercise();
-        this.props.handleClose({ cancelled: true })
+        this.props.handleClose()
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.intent === 'add') {
-            this.setState(initialState);
+        if (this.props.open && !nextProps.open) {
+            this.setState(initialState)
         }
-        else if (nextProps.intent === 'edit') {
-            this.setState({ exercise: nextProps.exercise })
+  
+        if (!this.props.open && nextProps.open) {
+            if (nextProps.intent === 'edit') {
+                this.setState({ exercise: nextProps.exercise })
+            }
         }
     }
 
@@ -216,8 +229,8 @@ class ExerciseDialog extends Component {
                                 label={this.props.api.post.isErrored ? 'Retry' : 'Save' }
                                 onClick={this.handleSaveClick} 
                                 disabled={
-                                    Object.keys(this.state.validationErrors)
-                                        .find(e => this.state.validationErrors[e] !== '') !== undefined
+                                    (Object.keys(this.state.validationErrors)
+                                        .find(e => this.state.validationErrors[e] !== '') !== undefined) || this.props.api.post.isExecuting
                                 }
                             />
                         </div>
@@ -272,14 +285,6 @@ class ExerciseDialog extends Component {
                                 />
                             ) : ''}
                     </List>
-                    { this.props.api.post.isExecuting ? <div style={{ color: '#00FF00', alignContent: 'center'}}>
-                        <ActionHighlightOff style={{ color: '#00FF00', height: 24, width: 24}}/>
-                        <span style={{ marginLeft: 10, marginTop: -100 }}>Saving Exercise...</span></div> : '' }
-
-                    { this.props.api.post.isErrored ? <div style={{ color: '#ff0000', alignContent: 'center'}}>
-                        <ActionHighlightOff style={{ color: '#ff0000', height: 24, width: 24}}/>
-                        <span style={{ marginLeft: 10, marginTop: -100 }}>Error saving Exercise.</span>
-                    </div> : '' }
                 </Dialog>
                 <ExerciseMetricDialog
                     open={this.state.metricDialog.open} 
@@ -300,7 +305,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     addExercise,
-    cancelAddExercise
+    cancelAddExercise,
+    showSnackbar
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExerciseDialog)
