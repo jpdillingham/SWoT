@@ -3,7 +3,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { fetchExercises, addExercise, cancelAddExercise, deleteExercise, updateExercise } from './ExercisesActions'
-import { showSnackbar } from '../app/AppActions.js'
 
 import ExercizeCard from './ExerciseCard'
 import ExerciseAddButton from './ExerciseAddButton'
@@ -47,9 +46,7 @@ class Exercises extends Component {
     render() {
         return (
             <div>
-                <ExerciseAddButton 
-                    showSnackbar={this.props.showSnackbar}
-                />
+                <ExerciseAddButton />
                 { 
                     this.props.exercises.api.get.isExecuting ? <CircularProgress style={styles.progress} /> : 
                         this.props.exercises.api.get.isErrored ? <ActionHighlightOff style={styles.error} /> :
@@ -81,8 +78,7 @@ const mapDispatchToProps = {
     addExercise,
     cancelAddExercise,
     deleteExercise,
-    updateExercise,
-    showSnackbar
+    updateExercise
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Exercises)
