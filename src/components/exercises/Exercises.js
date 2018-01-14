@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchExercises, addExercise, deleteExercise, updateExercise } from './ExercisesActions'
+import { fetchExercises, addExercise, cancelAddExercise, deleteExercise, updateExercise } from './ExercisesActions'
 import { showSnackbar } from '../app/AppActions.js'
 
 import ExercizeCard from './ExerciseCard'
@@ -49,6 +49,7 @@ class Exercises extends Component {
             <div>
                 <ExerciseAddButton 
                     addExercise={this.props.addExercise} 
+                    cancelAddExercise={this.props.cancelAddExercise}
                     showSnackbar={this.props.showSnackbar}
                     existingNames={this.props.exercises.items.map(e => e.name)}
                 />
@@ -81,6 +82,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     fetchExercises,
     addExercise,
+    cancelAddExercise,
     deleteExercise,
     updateExercise,
     showSnackbar

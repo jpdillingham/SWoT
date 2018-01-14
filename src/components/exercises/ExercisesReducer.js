@@ -62,6 +62,17 @@ const ExercisesReducer = (state = initialState, action) => {
                 },
                 items: action.status === 200 ? state.items.concat(action.item) : state.items
             }
+        case 'EXERCISES_POST_RESET': 
+            return {
+                ...state,
+                api: {
+                    ...state.api,
+                    post: {
+                        isExecuting: false,
+                        isErrored: false
+                    }
+                }
+            }
         case 'DELETE_EXERCISE':
             return {
                 ...state,

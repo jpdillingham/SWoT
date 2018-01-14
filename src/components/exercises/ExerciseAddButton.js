@@ -33,6 +33,9 @@ class ExerciseAddButton extends Component {
             //this.props.addExercise(result.exercise)
             this.props.showSnackbar('Added exercise \'' + result.exercise.name + '\'')
         }
+        else if (result.cancelled) {
+            this.props.cancelAddExercise()
+        }
 
         this.setState({ addDialog: { open: false }})
     }

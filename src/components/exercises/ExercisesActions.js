@@ -22,6 +22,8 @@ const exercisesPostResponse = (status, item) => ({
     item: item
 })
 
+const exercisesPostReset = () => ({ type: 'EXERCISES_POST_RESET' })
+
 export const addExercise = (exercise) => (dispatch) => {
     if (!exercise.url.toLowerCase().startsWith('http')) {
         exercise.url = 'https://www.bodybuilding.com/exercises/' + exercise.url
@@ -39,6 +41,10 @@ export const addExercise = (exercise) => (dispatch) => {
                     reject(error)
                 })
         })
+}
+
+export const cancelAddExercise = () => {
+    return exercisesPostReset();
 }
 
 export const deleteExercise = (id) => {
