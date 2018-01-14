@@ -21,8 +21,8 @@ const ExercisesReducer = (state = initialState, action) => {
                 api: { 
                     ...state.api,
                     get: { 
+                        ...state.api.get,
                         isExecuting: true, 
-                        isErrored: false,
                     }
                 },
                 items: []
@@ -45,8 +45,8 @@ const ExercisesReducer = (state = initialState, action) => {
                 api: {
                     ...state.api,
                     post: {
+                        ...state.api.post,
                         isExecuting: true,
-                        isErrored: false,
                     }
                 }
             }
