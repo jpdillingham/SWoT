@@ -30,11 +30,7 @@ class ExerciseAddButton extends Component {
 
     handleAddDialogClose = (result) => {
         if (result.added) {
-            //this.props.addExercise(result.exercise)
             this.props.showSnackbar('Added exercise \'' + result.exercise.name + '\'')
-        }
-        else if (result.cancelled) {
-            this.props.cancelAddExercise()
         }
 
         this.setState({ addDialog: { open: false }})
@@ -52,10 +48,8 @@ class ExerciseAddButton extends Component {
                     <ContentAdd />
                 </FloatingActionButton>
                 <ExerciseDialog 
-                    open={this.state.addDialog.open} 
                     intent={'add'}
-                    existingNames={this.props.existingNames}
-                    addExercise={this.props.addExercise}
+                    open={this.state.addDialog.open} 
                     handleClose={this.handleAddDialogClose}
                 />
             </div>

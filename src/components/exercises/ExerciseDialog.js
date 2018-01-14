@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -12,6 +13,9 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import {grey400} from 'material-ui/styles/colors';
+import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
+
+import { addExercise, cancelAddExercise } from './ExercisesActions'
 
 import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../constants';
 import { getGuid } from '../../util';
@@ -28,8 +32,8 @@ const styles = {
     url: {
         width: '100%'
     },
-    dialog: {
-        width: 400
+    dialogContent: {
+        width: 400,
     },
     addMetric: {
         float: 'left'
@@ -157,13 +161,15 @@ class ExerciseDialog extends Component {
     }
 
     handleCancelClick = () => {
+        this.props.cancelAddExercise();
         this.props.handleClose({ cancelled: true })
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState(initialState);
-
-        if (nextProps.intent === 'edit') {
+        if (nextProps.intent === 'add') {
+            this.setState(initialState);
+        }
+        else if (nextProps.intent === 'edit') {
             this.setState({ exercise: nextProps.exercise })
         }
     }
@@ -201,13 +207,13 @@ class ExerciseDialog extends Component {
         return (
             <div>
                 <Dialog
-                title={(this.props.intent === 'add' ? 'Add' : 'Edit') + ' Exercise'} 
+                    title={(this.props.intent === 'add' ? 'Add' : 'Edit') + ' Exercise'} 
                     actions={
                         <div>
                             <FlatButton label="Add Metric" onClick={this.handleAddMetricClick} style={styles.addMetric} />
                             <FlatButton label="Cancel" onClick={this.handleCancelClick} />
                             <FlatButton 
-                                label="Save" 
+                                label={this.props.api.post.isErrored ? 'Retry' : 'Save' }
                                 onClick={this.handleSaveClick} 
                                 disabled={
                                     Object.keys(this.state.validationErrors)
@@ -218,7 +224,7 @@ class ExerciseDialog extends Component {
                     }
                     modal={true}
                     open={this.props.open}
-                    contentStyle={styles.dialog}
+                    contentStyle={styles.dialogContent}
                 >
                     <TextField
                         hintText="e.g. 'Bench Press'"
@@ -266,6 +272,14 @@ class ExerciseDialog extends Component {
                                 />
                             ) : ''}
                     </List>
+                    { this.props.api.post.isExecuting ? <div style={{ color: '#00FF00', alignContent: 'center'}}>
+                        <ActionHighlightOff style={{ color: '#00FF00', height: 24, width: 24}}/>
+                        <span style={{ marginLeft: 10, marginTop: -100 }}>Saving Exercise...</span></div> : '' }
+
+                    { this.props.api.post.isErrored ? <div style={{ color: '#ff0000', alignContent: 'center'}}>
+                        <ActionHighlightOff style={{ color: '#ff0000', height: 24, width: 24}}/>
+                        <span style={{ marginLeft: 10, marginTop: -100 }}>Error saving Exercise.</span>
+                    </div> : '' }
                 </Dialog>
                 <ExerciseMetricDialog
                     open={this.state.metricDialog.open} 
@@ -279,5 +293,14 @@ class ExerciseDialog extends Component {
     }
 }
 
-export default ExerciseDialog
+const mapStateToProps = (state) => ({
+    existingNames: state.exercises.items.map(e => e.name),
+    api: state.exercises.api
+})
 
+const mapDispatchToProps = {
+    addExercise,
+    cancelAddExercise
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExerciseDialog)

@@ -48,8 +48,6 @@ class Exercises extends Component {
         return (
             <div>
                 <ExerciseAddButton 
-                    addExercise={this.props.addExercise} 
-                    cancelAddExercise={this.props.cancelAddExercise}
                     showSnackbar={this.props.showSnackbar}
                     existingNames={this.props.exercises.items.map(e => e.name)}
                 />
