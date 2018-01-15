@@ -13,7 +13,6 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import {grey400} from 'material-ui/styles/colors';
-import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { addExercise, cancelAddExercise } from './ExercisesActions'
 import { showSnackbar } from '../app/AppActions.js'
@@ -162,7 +161,7 @@ class ExerciseDialog extends Component {
         let message = 'Error saving Exercise'
 
         if (error.response) {
-            message += ': ' + JSON.stringify(error.response.data).replace(/\"/g, "")
+            message += ': ' + JSON.stringify(error.response.data).replace(/"/g, "")
         }
         else {
             message += '.'

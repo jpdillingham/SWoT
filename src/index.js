@@ -4,9 +4,6 @@ import { BrowserRouter } from 'react-router-dom'
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux';
-import axios from 'axios';
-
-import { ROUTINES } from './constants'
 
 import App from './components/app/App'
 import rootReducer from './reducers'
