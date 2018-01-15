@@ -12,8 +12,9 @@ const exercisesGetResponse = (status, items) => ({
     items: items
 })
 
-const exercisesPostRequest = () => ({
-    type: 'EXERCISES_POST_REQUEST'
+const exercisesPostRequest = (item) => ({
+    type: 'EXERCISES_POST_REQUEST',
+    item: item
 })
 
 const exercisesPostResponse = (status, item) => ({
@@ -24,12 +25,38 @@ const exercisesPostResponse = (status, item) => ({
 
 const exercisesPostReset = () => ({ type: 'EXERCISES_POST_RESET' })
 
+const exercisesPutRequest = (item) => ({
+    type: 'EXERCISES_PUT_REQUEST',
+    item: item
+})
+
+const exercisesPutResponse = (status, item) => ({
+    type: 'EXERCISES_PUT_RESPONSE',
+    status: status,
+    item: item
+})
+
+const exercisesPutReset = () => ({ type: 'EXERCISES_PUT_RESET' })
+
+const exercisesDeleteRequest = (item) => ({
+    type: 'EXERCISES_DELETE_REQUEST',
+    item: item
+})
+
+const exercisesDeleteResponse = (status, item) => ({
+    type: 'EXERCISES_DELETE_RESPONSE',
+    status: status,
+    item: item
+})
+
+const exercisesDeleteReset = () => ({ type: 'EXERCISES_DELETE_RESET' })
+
 export const addExercise = (exercise) => (dispatch) => {
     if (!exercise.url.toLowerCase().startsWith('http')) {
         exercise.url = 'https://www.bodybuilding.com/exercises/' + exercise.url
     }
 
-    dispatch(exercisesPostRequest())
+    dispatch(exercisesPostRequest(exercise))
 
     return new Promise((resolve, reject) => { 
             axios.post(endpoint, exercise)
@@ -37,8 +64,7 @@ export const addExercise = (exercise) => (dispatch) => {
                     dispatch(exercisesPostResponse(response.status, response.data))
                     resolve(response)
                 }, error => {
-                    console.log('a', error.response)
-                    dispatch(exercisesPostResponse(error.response.status || -1, {}))
+                    dispatch(exercisesPostResponse(error.response ? error.response.status : 500, {}))
                     reject(error)
                 })
         })
