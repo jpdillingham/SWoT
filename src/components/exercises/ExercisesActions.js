@@ -37,6 +37,7 @@ export const addExercise = (exercise) => (dispatch) => {
                     dispatch(exercisesPostResponse(response.status, response.data))
                     resolve(response)
                 }, error => {
+                    console.log('a', error.response)
                     dispatch(exercisesPostResponse(error.response.status || -1, {}))
                     reject(error)
                 })
