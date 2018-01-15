@@ -100,14 +100,6 @@ export const deleteExercise = (id) => {
     }
 }
 
-export const updateExercise = (exercise) => {
-    return {
-        type: 'UPDATE_EXERCISE',
-        exercise: exercise
-    }
-}
-
-
 export const fetchExercises = () => (dispatch) => {
     dispatch(exercisesGetRequest())
 
