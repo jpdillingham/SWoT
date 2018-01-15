@@ -21,7 +21,6 @@ class ExerciseCard extends Component {
         },
         exerciseDialog: {
             open: false,
-            intent: '',
             exercise: {},
         }
     }
@@ -34,7 +33,6 @@ class ExerciseCard extends Component {
         this.setState(prevState => ({
             exerciseDialog: {
                 open: false,
-                intent: '',
                 exercise: {}
             }
         }))
@@ -44,7 +42,6 @@ class ExerciseCard extends Component {
         this.setState(prevState => ({
             exerciseDialog: {
                 open: true,
-                intent: 'edit',
                 exercise: this.props.exercise
             }
         }))
@@ -107,7 +104,7 @@ class ExerciseCard extends Component {
                 />
                 <ExerciseDialog
                     open={this.state.exerciseDialog.open}
-                    intent={this.state.exerciseDialog.intent}
+                    intent={'edit'}
                     exercise={this.state.exerciseDialog.exercise}
                     handleClose={this.handleExerciseDialogClose}
                 />
