@@ -59,19 +59,38 @@ export const addExercise = (exercise) => (dispatch) => {
     dispatch(exercisesPostRequest(exercise))
 
     return new Promise((resolve, reject) => { 
-            axios.post(endpoint, exercise)
-                .then(response => {
-                    dispatch(exercisesPostResponse(response.status, response.data))
-                    resolve(response)
-                }, error => {
-                    dispatch(exercisesPostResponse(error.response ? error.response.status : 500, {}))
-                    reject(error)
-                })
+        axios.post(endpoint, exercise)
+            .then(response => {
+                dispatch(exercisesPostResponse(response.status, response.data))
+                resolve(response)
+            }, error => {
+                dispatch(exercisesPostResponse(error.response ? error.response.status : 500, {}))
+                reject(error)
+            })
         })
 }
 
 export const cancelAddExercise = () => {
     return exercisesPostReset();
+}
+
+export const updateExercise = (exercise) => (dispatch) => {
+    dispatch(exercisesPutRequest(exercise))
+
+    return new Promise((resolve, reject) => {
+        axios.put(endpoint, exercise)
+            .then(response => {
+                dispatch(exercisesPutResponse(response.status, response.data))
+                resolve(response)
+            }, error => {
+                dispatch(exercisesPutResponse(error.response ? error.response.status: 500, {}))
+                reject(error)
+            })
+        })
+}
+
+export const cancelUpdateExercise = () => {
+    return exercisesPutReset();
 }
 
 export const deleteExercise = (id) => {
