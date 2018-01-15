@@ -14,7 +14,7 @@ import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import {grey400} from 'material-ui/styles/colors';
 
-import { addExercise, cancelAddExercise } from './ExercisesActions'
+import { addExercise, cancelAddExercise, updateExercise, cancelUpdateExercise } from './ExercisesActions'
 import { showSnackbar } from '../app/AppActions.js'
 
 import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../constants';
@@ -142,7 +142,12 @@ class ExerciseDialog extends Component {
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
                 if (this.props.intent === 'edit') {
-                    this.props.showSnackbar('unimplemented!')
+                    this.props.updateExercise(this.state.exercise)
+                    .then((response) => {
+                        this.props.showSnackbar('Updated Exercise \'' + response.data.name + '\'.')
+                    }, (error) => {
+                        this.handleApiError(error);
+                    })
                 }
                 else {
                     this.props.addExercise(this.state.exercise)
@@ -171,7 +176,13 @@ class ExerciseDialog extends Component {
     }
 
     handleCancelClick = () => {
-        this.props.cancelAddExercise();
+        if (this.props.intent === 'edit') {
+            this.props.cancelUpdateExercise();
+        }
+        else {
+            this.props.cancelAddExercise();
+        }
+
         this.props.handleClose()
     }
 
@@ -306,6 +317,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     addExercise,
     cancelAddExercise,
+    updateExercise,
+    cancelUpdateExercise,
     showSnackbar
 }
 
