@@ -53,7 +53,7 @@ const ExercisesReducer = (state = initialState, action) => {
                 ...state, api: {
                     ...state.api, post: {
                         isExecuting: false,
-                        isErrored: action.status === 200 ? false : true,
+                        isErrored: action.status === 201 ? false : true,
                     }
                 },
                 items: action.status === 201 ? state.items.concat(action.item) : state.items
@@ -84,9 +84,9 @@ const ExercisesReducer = (state = initialState, action) => {
                         isErrored: action.status === 200 ? false: true,
                     }
                 },
-                items: state.items.map(e => { 
-                    return e.id ===action.exercise.id ? action.exercise : e
-                })
+                items: action.status === 200 ? state.items.map(e => { 
+                    return e.id === action.item.id ? action.item : e
+                }) : state.items
             }
         case 'EXERCISES_PUT_RESET':
             return {

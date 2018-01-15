@@ -145,6 +145,7 @@ class ExerciseDialog extends Component {
                     this.props.updateExercise(this.state.exercise)
                     .then((response) => {
                         this.props.showSnackbar('Updated Exercise \'' + response.data.name + '\'.')
+                        this.props.handleClose();
                     }, (error) => {
                         this.handleApiError(error);
                     })
@@ -237,11 +238,11 @@ class ExerciseDialog extends Component {
                             <FlatButton label="Add Metric" onClick={this.handleAddMetricClick} style={styles.addMetric} />
                             <FlatButton label="Cancel" onClick={this.handleCancelClick} />
                             <FlatButton 
-                                label={this.props.api.post.isErrored ? 'Retry' : 'Save' }
+                                label={this.props.api.post.isErrored || this.props.api.put.isErrored ? 'Retry' : 'Save' }
                                 onClick={this.handleSaveClick} 
                                 disabled={
                                     (Object.keys(this.state.validationErrors)
-                                        .find(e => this.state.validationErrors[e] !== '') !== undefined) || this.props.api.post.isExecuting
+                                        .find(e => this.state.validationErrors[e] !== '') !== undefined) || (this.props.api.post.isExecuting || this.props.api.put.isExecuting)
                                 }
                             />
                         </div>
