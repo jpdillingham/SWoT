@@ -27,20 +27,10 @@ class ExerciseCard extends Component {
     }
 
     handleDeleteDialogClose = (result) => {
-        if (result.deleted) {
-            this.props.deleteExercise(this.props.exercise.id);
-            this.props.showSnackbar('Deleted exercise \'' + this.props.exercise.name + '\'')
-        }
-
         this.setState({ deleteDialog: { open: false }})
     }
 
     handleExerciseDialogClose = (result) => {
-        if (result.edited) {
-            this.props.updateExercise(result.exercise)
-            this.props.showSnackbar('Updated exercise \'' + this.props.exercise.name + '\'')
-        }
-
         this.setState(prevState => ({
             exerciseDialog: {
                 open: false,
@@ -119,7 +109,6 @@ class ExerciseCard extends Component {
                     open={this.state.exerciseDialog.open}
                     intent={this.state.exerciseDialog.intent}
                     exercise={this.state.exerciseDialog.exercise}
-                    existingNames={this.props.existingNames}
                     handleClose={this.handleExerciseDialogClose}
                 />
             </div>
