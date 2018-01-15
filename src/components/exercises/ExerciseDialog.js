@@ -160,8 +160,9 @@ class ExerciseDialog extends Component {
 
     handleApiError = (error) => {
         let message = 'Error saving Exercise'
+
         if (error.response) {
-            message += ': ' + error.response.data
+            message += ': ' + JSON.stringify(error.response.data).replace(/\"/g, "")
         }
         else {
             message += '.'
