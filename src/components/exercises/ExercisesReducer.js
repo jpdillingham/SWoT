@@ -129,18 +129,6 @@ const ExercisesReducer = (state = initialState, action) => {
                     }
                 }
             }
-        case 'DELETE_EXERCISE':
-            return {
-                ...state,
-                items: state.items.filter(e => e.id !== action.id)
-            }
-        case 'UPDATE_EXERCISE':
-            return {
-                ...state, 
-                items: state.items.map(e => { 
-                    return e.id === action.exercise.id ? action.exercise : e
-                })
-            }
         default:
             return state;
     }
