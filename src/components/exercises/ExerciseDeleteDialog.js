@@ -14,40 +14,42 @@ class ExerciseDeleteDialog extends Component {
                 this.props.showSnackbar('Deleted Exercise \'' + this.props.exercise.name + '\'.')
                 this.props.handleClose();
             }, (error) => {
-                this.handleApiError(error);
+                let message = 'Error deleting Exercise'
+
+                if (error.response) {
+                    message += ': ' + JSON.stringify(error.response.data).replace(/"/g, "")
+                }
+                else {
+                    message += '.'
+                }
+        
+                this.props.showSnackbar(message);
             })
     }
 
-    handleApiError = (error) => {
-        let message = 'Error deleting Exercise'
-
-        if (error.response) {
-            message += ': ' + JSON.stringify(error.response.data).replace(/"/g, "")
-        }
-        else {
-            message += '.'
-        }
-
-        this.props.showSnackbar(message);
+    handleCancelClick = () => {
+        this.props.cancelDeleteExercise();
+        this.props.handleClose();
     }
 
     render() {
-        const actions = [
-            <FlatButton
-              label="Cancel"
-              onClick={() => this.props.handleClose()}
-            />,
-            <FlatButton
-              label="Delete"
-              onClick={() => this.handleDeleteClick()}
-            />,
-          ];
-
         return (
             <div>
                 <Dialog
                     title="Delete Exercise"
-                    actions={actions}
+                    actions={  
+                        <div>          
+                            <FlatButton
+                                label="Cancel"
+                                onClick={() => this.handleCancelClick()}
+                            />
+                            <FlatButton
+                                label={this.props.api.delete.isErrored ? 'Retry' : 'Delete' }
+                                disabled={this.props.api.delete.isExecuting}
+                                onClick={() => this.handleDeleteClick()}
+                            />
+                        </div>
+                    }
                     modal={true}
                     open={this.props.open}
                 >
