@@ -97,7 +97,6 @@ export const deleteExercise = (id) => (dispatch) => {
     dispatch(exercisesDeleteRequest(id))
 
     return new Promise((resolve, reject) => {
-        console.log(id)
         axios.delete(endpoint, id)
             .then(response => {
                 dispatch(exercisesDeleteResponse(response.status, id))
