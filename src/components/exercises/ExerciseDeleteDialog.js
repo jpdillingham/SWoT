@@ -12,16 +12,9 @@ class ExerciseDeleteDialog extends Component {
         this.props.deleteExercise(this.props.exercise.id)
             .then((response) => {
                 this.props.showSnackbar('Deleted Exercise \'' + this.props.exercise.name + '\'.')
-                this.props.handleClose();
             }, (error) => {
                 let message = 'Error deleting Exercise'
-
-                if (error.response) {
-                    message += ': ' + JSON.stringify(error.response.data).replace(/"/g, "")
-                }
-                else {
-                    message += '.'
-                }
+                message += error.response ? ': ' + JSON.stringify(error.response.data).replace(/"/g, "") : '.'
         
                 this.props.showSnackbar(message);
             })
