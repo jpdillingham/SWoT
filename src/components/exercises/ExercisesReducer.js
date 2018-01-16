@@ -11,6 +11,10 @@ const initialState = {
         put: {
             isExecuting: false,
             isErrored: false,
+        },
+        delete: {
+            isExecuting: false,
+            isErrored: false,
         }
     },
     items: [],
@@ -81,7 +85,7 @@ const ExercisesReducer = (state = initialState, action) => {
                 ...state, api: {
                     ...state.api, put: {
                         isExecuting: false,
-                        isErrored: action.status === 200 ? false: true,
+                        isErrored: action.status === 200 ? false : true,
                     }
                 },
                 items: action.status === 200 ? state.items.map(e => { 
@@ -92,6 +96,34 @@ const ExercisesReducer = (state = initialState, action) => {
             return {
                 ...state, api: {
                     ...state.api, put: {
+                        isExecuting: false,
+                        isErrored: false,
+                    }
+                }
+            }
+        case 'EXERCISES_DELETE_REQUEST':
+            return {
+                ...state, api: {
+                    ...state.api, delete: {
+                        ...state.api.delete,
+                        isExecuting: true,
+                    }
+                }
+            }
+        case 'EXERCISES_DELETE_RESPONSE':
+            return {
+                ...state, api: {
+                    ...state.api, delete: {
+                        isExecuting: false,
+                        isErrored: action.status === 204 ? false : true,
+                    }
+                },
+                items: action.status === 204 ? state.items.filter(e => e.id !== action.id) : state.items
+            }
+        case 'EXERCISES_DELETE_RESET':
+            return {
+                ...state, api: {
+                    ...state.api, delete: {
                         isExecuting: false,
                         isErrored: false,
                     }
