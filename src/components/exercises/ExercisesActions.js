@@ -38,15 +38,15 @@ const exercisesPutResponse = (status, item) => ({
 
 const exercisesPutReset = () => ({ type: 'EXERCISES_PUT_RESET' })
 
-const exercisesDeleteRequest = (item) => ({
+const exercisesDeleteRequest = (id) => ({
     type: 'EXERCISES_DELETE_REQUEST',
-    item: item
+    id: id
 })
 
-const exercisesDeleteResponse = (status, item) => ({
+const exercisesDeleteResponse = (status, id) => ({
     type: 'EXERCISES_DELETE_RESPONSE',
     status: status,
-    item: item
+    id: id
 })
 
 const exercisesDeleteReset = () => ({ type: 'EXERCISES_DELETE_RESET' })
@@ -83,7 +83,7 @@ export const updateExercise = (exercise) => (dispatch) => {
                 dispatch(exercisesPutResponse(response.status, response.data))
                 resolve(response)
             }, error => {
-                dispatch(exercisesPutResponse(error.response ? error.response.status: 500, {}))
+                dispatch(exercisesPutResponse(error.response ? error.response.status : 500, {}))
                 reject(error)
             })
         })
@@ -93,11 +93,23 @@ export const cancelUpdateExercise = () => {
     return exercisesPutReset();
 }
 
-export const deleteExercise = (id) => {
-    return {
-        type: 'DELETE_EXERCISE',
-        id: id
-    }
+export const deleteExercise = (id) => (dispatch) => {
+    dispatch(exercisesDeleteRequest(id))
+
+    return new Promise((resolve, reject) => {
+        axios.delete(endpoint, id)
+            .then(response => {
+                dispatch(exercisesDeleteResponse(response.status, response.data))
+                resolve(response)
+            }, error => {
+                dispatch(exercisesDeleteResponse(error.response ? error.response.status: 500, {}))
+                reject(error)
+            })
+        })
+}
+
+export const cancelDeleteExercise = () => {
+    return exercisesDeleteReset();
 }
 
 export const fetchExercises = () => (dispatch) => {
