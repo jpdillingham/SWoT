@@ -27,8 +27,22 @@ const styles = {
 }
 
 class Exercises extends Component {
+    state = {
+        api: {
+            isExecuting: false,
+            isErrored: false,
+        }
+    }
+
     componentWillMount() {
-        this.props.fetchExercises();
+        this.setState({ api: { ...this.state.api, isExecuting: true }})
+
+        this.props.fetchExercises()
+            .then(response => {
+                this.setState({ api: { isExecuting: false, isErrored: false }})
+            }, error => {
+                this.setState({ api: { isExecuting: false, isErrored: true }})
+            })
     }
 
     render() {
@@ -36,8 +50,8 @@ class Exercises extends Component {
             <div>
                 <ExerciseAddButton />
                 { 
-                    this.props.exercises.api.get.isExecuting ? <CircularProgress style={styles.icon} /> : 
-                        this.props.exercises.api.get.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
+                    this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
+                        this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                             <div style={styles.grid}>
                                 {this.props.exercises.items.map(e =>  
                                     <div key={e.id}>
