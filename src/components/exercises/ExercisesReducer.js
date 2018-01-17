@@ -19,24 +19,9 @@ const initialState = {
 const ExercisesReducer = (state = initialState, action) => {
     console.log(action)
     switch (action.type) {
-        case 'EXERCISES_GET_REQUEST':
+        case 'EXERCISES_GET':
             return { 
-                ...state, api: { 
-                    ...state.api, get: { 
-                        ...state.api.get,
-                        isExecuting: true, 
-                    }
-                },
-                items: []
-            };
-        case 'EXERCISES_GET_RESPONSE':
-            return { 
-                ...state, api: {
-                    ...state.api, get: {
-                        isExecuting: false, 
-                        isErrored: action.status === 200 ? false : true,
-                    }
-                },
+                ...state,
                 items: action.items
              }
         case 'EXERCISES_POST_REQUEST':

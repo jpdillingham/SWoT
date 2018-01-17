@@ -2,16 +2,6 @@ import axios from 'axios'
 
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
 
-const exercisesGetRequest = () => ({
-    type: 'EXERCISES_GET_REQUEST'
-})
-
-const exercisesGetResponse = (status, items) => ({
-    type: 'EXERCISES_GET_RESPONSE',
-    status: status,
-    items: items
-})
-
 const exercisesPostRequest = (item) => ({
     type: 'EXERCISES_POST_REQUEST',
     item: item
@@ -99,16 +89,18 @@ export const deleteExercise = (id) => (dispatch) => {
         })
 }
 
-export const fetchExercises = () => (dispatch) => {
-    dispatch(exercisesGetRequest())
+const exercisesGet = (items) => ({
+    type: 'EXERCISES_GET',
+    items: items
+})
 
+export const fetchExercises = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         axios.get(endpoint)
         .then(response => { 
-            dispatch(exercisesGetResponse(response.status, response.data))
+            dispatch(exercisesGet(response.data))
             resolve(response.data)
         }, error => {
-            dispatch(exercisesGetResponse(error.response.status || -1, []))
             reject(error)
         })     
     }) 
