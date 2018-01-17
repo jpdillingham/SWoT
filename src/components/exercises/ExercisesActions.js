@@ -99,7 +99,7 @@ export const fetchExercises = () => (dispatch) => {
         axios.get(endpoint)
         .then(response => { 
             dispatch(exercisesGet(response.data))
-            resolve(response.data)
+            resolve(response)
         }, error => {
             reject(error)
         })     
