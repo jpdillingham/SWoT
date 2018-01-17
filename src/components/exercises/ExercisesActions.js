@@ -38,18 +38,7 @@ const exercisesPutResponse = (status, item) => ({
 
 const exercisesPutReset = () => ({ type: 'EXERCISES_PUT_RESET' })
 
-const exercisesDeleteRequest = (id) => ({
-    type: 'EXERCISES_DELETE_REQUEST',
-    id: id
-})
 
-const exercisesDeleteResponse = (status, id) => ({
-    type: 'EXERCISES_DELETE_RESPONSE',
-    status: status,
-    id: id
-})
-
-const exercisesDeleteReset = () => ({ type: 'EXERCISES_DELETE_RESET' })
 
 export const addExercise = (exercise) => (dispatch) => {
     if (!exercise.url.toLowerCase().startsWith('http')) {
@@ -93,23 +82,21 @@ export const cancelUpdateExercise = () => {
     return exercisesPutReset();
 }
 
-export const deleteExercise = (id) => (dispatch) => {
-    dispatch(exercisesDeleteRequest(id))
+const exercisesDelete = (id) => ({
+    type: 'EXERCISES_DELETE',
+    id: id
+})
 
+export const deleteExercise = (id) => (dispatch) => {
     return new Promise((resolve, reject) => {
         axios.delete(endpoint, id)
             .then(response => {
-                dispatch(exercisesDeleteResponse(response.status, id))
+                dispatch(exercisesDelete(id))
                 resolve(response)
             }, error => {
-                dispatch(exercisesDeleteResponse(error.response ? error.response.status: 500, {}))
                 reject(error)
             })
         })
-}
-
-export const cancelDeleteExercise = () => {
-    return exercisesDeleteReset();
 }
 
 export const fetchExercises = () => (dispatch) => {

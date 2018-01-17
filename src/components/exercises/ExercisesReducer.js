@@ -12,10 +12,6 @@ const initialState = {
             isExecuting: false,
             isErrored: false,
         },
-        delete: {
-            isExecuting: false,
-            isErrored: false,
-        }
     },
     items: [],
 }
@@ -101,33 +97,10 @@ const ExercisesReducer = (state = initialState, action) => {
                     }
                 }
             }
-        case 'EXERCISES_DELETE_REQUEST':
+        case 'EXERCISES_DELETE':
             return {
-                ...state, api: {
-                    ...state.api, delete: {
-                        ...state.api.delete,
-                        isExecuting: true,
-                    }
-                }
-            }
-        case 'EXERCISES_DELETE_RESPONSE':
-            return {
-                ...state, api: {
-                    ...state.api, delete: {
-                        isExecuting: false,
-                        isErrored: action.status === 204 ? false : true,
-                    }
-                },
-                items: action.status === 204 ? state.items.filter(e => e.id !== action.id) : state.items
-            }
-        case 'EXERCISES_DELETE_RESET':
-            return {
-                ...state, api: {
-                    ...state.api, delete: {
-                        isExecuting: false,
-                        isErrored: false,
-                    }
-                }
+                ...state,
+                items: state.items.filter(e => e.id !== action.id)
             }
         default:
             return state;
