@@ -19,9 +19,9 @@ class ExerciseDeleteDialog extends Component {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
 
         this.props.deleteExercise(this.props.exercise.id)
-            .then((response) => {
+            .then(response => {
                 this.props.showSnackbar('Deleted Exercise \'' + this.props.exercise.name + '\'.')
-            }, (error) => {
+            }, error => {
                 let message = 'Error deleting Exercise'
                 message += error.response ? ': ' + JSON.stringify(error.response.data).replace(/"/g, "") : '.'
         
