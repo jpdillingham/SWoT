@@ -18,9 +18,9 @@ const ExercisesReducer = (state = initialState, action) => {
         case 'EXERCISES_PUT':
             return {
                 ...state,
-                items: action.status === 200 ? state.items.map(e => { 
+                items: state.items.map(e => { 
                     return e.id === action.item.id ? action.item : e
-                }) : state.items
+                })
             }
         case 'EXERCISES_DELETE':
             return {

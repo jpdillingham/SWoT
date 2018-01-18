@@ -29,9 +29,8 @@ export const addExercise = (exercise) => (dispatch) => {
         })
 }
 
-const exercisesPut = (status, item) => ({
+const exercisesPut = (item) => ({
     type: 'EXERCISES_PUT',
-    status: status,
     item: item
 })
 
@@ -39,8 +38,13 @@ export const updateExercise = (exercise) => (dispatch) => {
     return new Promise((resolve, reject) => {
         axios.put(endpoint, exercise)
             .then(response => {
-                dispatch(exercisesPut(response.status, response.data))
-                resolve(response)
+                if (response.status === 200) {
+                    dispatch(exercisesPut(response.data))
+                    resolve(response)
+                }
+                else {
+                    reject("Unknown PUT response code (expected 200, received " + response.status + ").")
+                }
             }, error => {
                 reject(error)
             })
@@ -56,8 +60,13 @@ export const deleteExercise = (id) => (dispatch) => {
     return new Promise((resolve, reject) => {
         axios.delete(endpoint, id)
             .then(response => {
-                dispatch(exercisesDelete(id))
-                resolve(response)
+                if (response.status === 200) {
+                    dispatch(exercisesDelete(id))
+                    resolve(response)
+                }
+                else {
+                    reject("Unknown DELETE response code (expected 204, received " + response.status + ").")
+                }
             }, error => {
                 reject(error)
             })
