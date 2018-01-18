@@ -13,7 +13,7 @@ const ExercisesReducer = (state = initialState, action) => {
         case 'EXERCISES_POST':
             return {
                 ...state, 
-                items: action.status === 201 ? state.items.concat(action.item) : state.items
+                items: state.items.concat(action.item)
             }
         case 'EXERCISES_PUT':
             return {

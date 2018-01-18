@@ -2,9 +2,8 @@ import axios from 'axios'
 
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
 
-const exercisesPost = (status, item) => ({
+const exercisesPost = (item) => ({
     type: 'EXERCISES_POST',
-    status: status,
     item: item
 })
 
@@ -16,8 +15,14 @@ export const addExercise = (exercise) => (dispatch) => {
     return new Promise((resolve, reject) => { 
         axios.post(endpoint, exercise)
             .then(response => {
-                dispatch(exercisesPost(response.status, response.data))
-                resolve(response)
+                if (response.status === 201) {
+                    dispatch(exercisesPost(response.data))
+                    resolve(response)
+                }
+                else {
+                    reject("Unknown POST response code (expected 201, received " + response.status + ").")
+                }
+                
             }, error => {
                 reject(error)
             })

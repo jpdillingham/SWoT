@@ -174,13 +174,13 @@ class ExerciseDialog extends Component {
     }
 
     handleApiError = (error) => {
-        let message = 'Error saving Exercise'
+        let message = 'Error saving Exercise: '
 
         if (error.response) {
-            message += ': ' + JSON.stringify(error.response.data).replace(/"/g, "")
+            message += JSON.stringify(error.response.data).replace(/"/g, "")
         }
         else {
-            message += '.'
+            message += error
         }
 
         this.setState({ api: { isExecuting: false, isErrored: true }})
