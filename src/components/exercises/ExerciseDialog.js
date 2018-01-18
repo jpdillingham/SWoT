@@ -57,6 +57,10 @@ const initialState = {
         name: '',
         type: '',
         url: '',
+    },
+    api: {
+        isExecuting: false,
+        isErrored: false,
     }
 }
 
@@ -141,11 +145,12 @@ class ExerciseDialog extends Component {
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
+                this.setState({ ...this.state.api, isExecuting: true })
+
                 if (this.props.intent === 'edit') {
                     this.props.updateExercise(this.state.exercise)
                     .then((response) => {
-                        this.props.showSnackbar('Updated Exercise \'' + response.data.name + '\'.')
-                        this.props.handleClose();
+                        this.handleApiSuccess('Updated Exercise \'' + response.data.name + '\'.')
                     }, (error) => {
                         this.handleApiError(error);
                     })
@@ -153,14 +158,19 @@ class ExerciseDialog extends Component {
                 else {
                     this.props.addExercise(this.state.exercise)
                     .then((response) => {
-                        this.props.showSnackbar('Added Exercise \'' + response.data.name + '\'.')
-                        this.props.handleClose();
+                        this.handleApiSuccess('Added Exercise \'' + response.data.name + '\'.')
                     }, (error) => {
                         this.handleApiError(error);
                     })
                 }
             }
         })
+    }
+
+    handleApiSuccess = (message) => {
+        this.setState({ ...this.state.api, isExecuting: false })
+        this.props.showSnackbar(message)
+        this.props.handleClose();
     }
 
     handleApiError = (error) => {
@@ -173,17 +183,12 @@ class ExerciseDialog extends Component {
             message += '.'
         }
 
+        this.setState({ api: { isExecuting: false, isErrored: true }})
         this.props.showSnackbar(message);
     }
 
     handleCancelClick = () => {
-        if (this.props.intent === 'edit') {
-            this.props.cancelUpdateExercise();
-        }
-        else {
-            this.props.cancelAddExercise();
-        }
-
+        this.setState({ api: { isExecuting: false, isErrored: false }})
         this.props.handleClose()
     }
 
@@ -238,11 +243,11 @@ class ExerciseDialog extends Component {
                             <FlatButton label="Add Metric" onClick={this.handleAddMetricClick} style={styles.addMetric} />
                             <FlatButton label="Cancel" onClick={this.handleCancelClick} />
                             <FlatButton 
-                                label={this.props.api.post.isErrored || this.props.api.put.isErrored ? 'Retry' : 'Save' }
+                                label={this.state.api.isErrored ? 'Retry' : 'Save' }
                                 onClick={this.handleSaveClick} 
                                 disabled={
                                     (Object.keys(this.state.validationErrors)
-                                        .find(e => this.state.validationErrors[e] !== '') !== undefined) || (this.props.api.post.isExecuting || this.props.api.put.isExecuting)
+                                        .find(e => this.state.validationErrors[e] !== '') !== undefined) || (this.state.api.isExecuting)
                                 }
                             />
                         </div>
