@@ -4,10 +4,6 @@ const initialState = {
             isExecuting: false,
             isErrored: false,
         },
-        post: {
-            isExecuting: false,
-            isErrored: false,
-        },
         put: {
             isExecuting: false,
             isErrored: false,
@@ -24,33 +20,10 @@ const ExercisesReducer = (state = initialState, action) => {
                 ...state,
                 items: action.items
              }
-        case 'EXERCISES_POST_REQUEST':
-            return { 
-                ...state, api: {
-                    ...state.api, post: {
-                        ...state.api.post,
-                        isExecuting: true,
-                    }
-                }
-            }
-        case 'EXERCISES_POST_RESPONSE':
+        case 'EXERCISES_POST':
             return {
-                ...state, api: {
-                    ...state.api, post: {
-                        isExecuting: false,
-                        isErrored: action.status === 201 ? false : true,
-                    }
-                },
+                ...state, 
                 items: action.status === 201 ? state.items.concat(action.item) : state.items
-            }
-        case 'EXERCISES_POST_RESET': 
-            return {
-                ...state, api: {
-                    ...state.api, post: {
-                        isExecuting: false,
-                        isErrored: false
-                    }
-                }
             }
         case 'EXERCISES_PUT_REQUEST':
             return {
