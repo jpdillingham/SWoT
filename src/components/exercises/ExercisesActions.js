@@ -2,18 +2,7 @@ import axios from 'axios'
 
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
 
-const exercisesPostRequest = (item) => ({
-    type: 'EXERCISES_POST_REQUEST',
-    item: item
-})
 
-const exercisesPostResponse = (status, item) => ({
-    type: 'EXERCISES_POST_RESPONSE',
-    status: status,
-    item: item
-})
-
-const exercisesPostReset = () => ({ type: 'EXERCISES_POST_RESET' })
 
 const exercisesPutRequest = (item) => ({
     type: 'EXERCISES_PUT_REQUEST',
@@ -28,29 +17,26 @@ const exercisesPutResponse = (status, item) => ({
 
 const exercisesPutReset = () => ({ type: 'EXERCISES_PUT_RESET' })
 
-
+const exercisesPost = (status, item) => ({
+    type: 'EXERCISES_POST',
+    status: status,
+    item: item
+})
 
 export const addExercise = (exercise) => (dispatch) => {
     if (!exercise.url.toLowerCase().startsWith('http')) {
         exercise.url = 'https://www.bodybuilding.com/exercises/' + exercise.url
     }
 
-    dispatch(exercisesPostRequest(exercise))
-
     return new Promise((resolve, reject) => { 
         axios.post(endpoint, exercise)
             .then(response => {
-                dispatch(exercisesPostResponse(response.status, response.data))
+                dispatch(exercisesPost(response.status, response.data))
                 resolve(response)
             }, error => {
-                dispatch(exercisesPostResponse(error.response ? error.response.status : 500, {}))
                 reject(error)
             })
         })
-}
-
-export const cancelAddExercise = () => {
-    return exercisesPostReset();
 }
 
 export const updateExercise = (exercise) => (dispatch) => {
