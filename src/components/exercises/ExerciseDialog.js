@@ -14,7 +14,7 @@ import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import {grey400} from 'material-ui/styles/colors';
 
-import { addExercise, cancelAddExercise, updateExercise, cancelUpdateExercise } from './ExercisesActions'
+import { addExercise, updateExercise, cancelUpdateExercise } from './ExercisesActions'
 import { showSnackbar } from '../app/AppActions.js'
 
 import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../constants';
@@ -316,13 +316,11 @@ class ExerciseDialog extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    existingNames: state.exercises.items.map(e => e.name),
-    api: state.exercises.api
+    existingNames: state.exercises.items.map(e => e.name)
 })
 
 const mapDispatchToProps = {
     addExercise,
-    cancelAddExercise,
     updateExercise,
     cancelUpdateExercise,
     showSnackbar
