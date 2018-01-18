@@ -2,21 +2,6 @@ import axios from 'axios'
 
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
 
-
-
-const exercisesPutRequest = (item) => ({
-    type: 'EXERCISES_PUT_REQUEST',
-    item: item
-})
-
-const exercisesPutResponse = (status, item) => ({
-    type: 'EXERCISES_PUT_RESPONSE',
-    status: status,
-    item: item
-})
-
-const exercisesPutReset = () => ({ type: 'EXERCISES_PUT_RESET' })
-
 const exercisesPost = (status, item) => ({
     type: 'EXERCISES_POST',
     status: status,
@@ -39,23 +24,22 @@ export const addExercise = (exercise) => (dispatch) => {
         })
 }
 
-export const updateExercise = (exercise) => (dispatch) => {
-    dispatch(exercisesPutRequest(exercise))
+const exercisesPut = (status, item) => ({
+    type: 'EXERCISES_PUT',
+    status: status,
+    item: item
+})
 
+export const updateExercise = (exercise) => (dispatch) => {
     return new Promise((resolve, reject) => {
         axios.put(endpoint, exercise)
             .then(response => {
-                dispatch(exercisesPutResponse(response.status, response.data))
+                dispatch(exercisesPut(response.status, response.data))
                 resolve(response)
             }, error => {
-                dispatch(exercisesPutResponse(error.response ? error.response.status : 500, {}))
                 reject(error)
             })
         })
-}
-
-export const cancelUpdateExercise = () => {
-    return exercisesPutReset();
 }
 
 const exercisesDelete = (id) => ({

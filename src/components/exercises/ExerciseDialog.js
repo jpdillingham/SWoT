@@ -14,7 +14,7 @@ import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import {grey400} from 'material-ui/styles/colors';
 
-import { addExercise, updateExercise, cancelUpdateExercise } from './ExercisesActions'
+import { addExercise, updateExercise } from './ExercisesActions'
 import { showSnackbar } from '../app/AppActions.js'
 
 import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../constants';
@@ -322,7 +322,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     addExercise,
     updateExercise,
-    cancelUpdateExercise,
     showSnackbar
 }
 
