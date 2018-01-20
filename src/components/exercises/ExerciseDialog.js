@@ -316,7 +316,7 @@ class ExerciseDialog extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    existingNames: state.exercises.items.map(e => e.name)
+    existingNames: state.exercises.map(e => e.name)
 })
 
 const mapDispatchToProps = {

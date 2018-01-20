@@ -1,32 +1,18 @@
-const initialState = {
-    items: [],
-}
+const initialState = []
 
 const ExercisesReducer = (state = initialState, action) => {
     console.log(action)
     switch (action.type) {
         case 'EXERCISES_GET':
-            return { 
-                ...state,
-                items: action.items
-             }
+            return action.exercises
         case 'EXERCISES_POST':
-            return {
-                ...state, 
-                items: state.items.concat(action.item)
-            }
+            return state.concat(action.exercise)
         case 'EXERCISES_PUT':
-            return {
-                ...state,
-                items: state.items.map(e => { 
-                    return e.id === action.item.id ? action.item : e
+            return state.map(e => { 
+                    return e.id === action.exercise.id ? action.exercise : e
                 })
-            }
         case 'EXERCISES_DELETE':
-            return {
-                ...state,
-                items: state.items.filter(e => e.id !== action.id)
-            }
+            return state.filter(e => e.id !== action.id)
         default:
             return state;
     }

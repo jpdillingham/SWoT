@@ -53,7 +53,7 @@ class Exercises extends Component {
                     this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
                         this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                             <div style={styles.grid}>
-                                {this.props.exercises.items.map(e =>  
+                                {this.props.exercises.map(e =>  
                                     <div key={e.id}>
                                         <ExercizeCard exercise={e} />
                                     </div>
