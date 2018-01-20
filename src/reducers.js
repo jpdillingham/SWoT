@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { ROUTINES } from './constants'
 import ExercisesReducer from './components/exercises/ExercisesReducer'
 import AppReducer from './components/app/AppReducer';
+import RoutinesReducer from './components/routines/RoutinesReducer'
 
 const initialState = {
     routines: ROUTINES,
@@ -21,7 +22,7 @@ const routines = (state = initialState.routines, action) => {
 const rootReducer = combineReducers({ 
     app: AppReducer, 
     exercises: ExercisesReducer,
-    routines 
+    routines: RoutinesReducer,
 })
   
 export default rootReducer
