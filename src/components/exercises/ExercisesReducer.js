@@ -1,7 +1,6 @@
 const initialState = []
 
 const ExercisesReducer = (state = initialState, action) => {
-    console.log(action)
     switch (action.type) {
         case 'EXERCISES_GET':
             return action.exercises
