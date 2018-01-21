@@ -12,7 +12,7 @@ import Avatar from 'material-ui/Avatar';
 import ExerciseDialog from './ExerciseDialog'
 import ExerciseDeleteDialog from './ExerciseDeleteDialog';
 
-import { EXERCISE_TYPES } from '../../constants';
+import { EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
 
 class ExerciseCard extends Component {
     state = {
@@ -76,7 +76,7 @@ class ExerciseCard extends Component {
                                 </IconButton>
                             </span>
                         }
-                        avatar={<Avatar backgroundColor="#64b5f6" src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'}></Avatar>}
+                        avatar={<Avatar backgroundColor={EXERCISE_AVATAR_COLOR} src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'}></Avatar>}
                         style={{marginBottom: -20}}
                     />
                     <CardText style={styles.text}>
@@ -85,7 +85,7 @@ class ExerciseCard extends Component {
                             {this.props.exercise.metrics ? this.props.exercise.metrics.map(m =>                     
                                 <ListItem
                                     key={m.name}
-                                    leftIcon={<ActionAssessment/>}
+                                    leftIcon={<ActionAssessment color={'#000000'}/>}
                                     primaryText={m.name}
                                     secondaryText={m.uom ? m.uom : ''}
                                 />

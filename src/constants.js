@@ -2,6 +2,10 @@ export const EXERCISE_TYPES = [ 'Weightlifting', 'Bodyweight', 'Cardio', 'Stretc
 
 export const EXERCISE_URL_BASE = 'https://www.bodybuilding.com/exercises/'
 
+export const EXERCISE_AVATAR_COLOR = '#00c853'
+
+export const ROUTINE_AVATAR_COLOR = '#ff6d00'
+
 export const ROUTINES = [
     {
         id: 'f5d161a9-4913-4052-bc80-c82643ba7d25',
