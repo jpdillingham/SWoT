@@ -81,7 +81,6 @@ class ExerciseCard extends Component {
                     />
                     <CardText style={styles.text}>
                         <List>
-                            <Subheader>Metrics</Subheader>
                             {this.props.exercise.metrics ? this.props.exercise.metrics.map(m =>                     
                                 <ListItem
                                     key={m.name}
