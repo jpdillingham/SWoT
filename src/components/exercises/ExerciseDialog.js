@@ -6,7 +6,7 @@ import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import ActionAssignment from 'material-ui/svg-icons/action/assignment';
+import ActionAssessment from 'material-ui/svg-icons/action/assessment';
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
@@ -286,7 +286,7 @@ class ExerciseDialog extends Component {
                         {this.state.exercise.metrics ? this.state.exercise.metrics.map(m =>                     
                                 <ListItem
                                     key={m.name}
-                                    leftIcon={<ActionAssignment/>}
+                                    leftIcon={<ActionAssessment/>}
                                     rightIconButton={
                                         <IconMenu iconButtonElement={
                                             <IconButton touch={true} tooltipPosition="bottom-left">

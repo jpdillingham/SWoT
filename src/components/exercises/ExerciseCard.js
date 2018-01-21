@@ -6,7 +6,7 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import IconButton from 'material-ui/IconButton';
 import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
-import ActionAssignment from 'material-ui/svg-icons/action/assignment';
+import ActionAssessment from 'material-ui/svg-icons/action/assessment';
 import Avatar from 'material-ui/Avatar';
 
 import ExerciseDialog from './ExerciseDialog'
@@ -85,7 +85,7 @@ class ExerciseCard extends Component {
                             {this.props.exercise.metrics ? this.props.exercise.metrics.map(m =>                     
                                 <ListItem
                                     key={m.name}
-                                    leftIcon={<ActionAssignment/>}
+                                    leftIcon={<ActionAssessment/>}
                                     primaryText={m.name}
                                     secondaryText={m.uom ? m.uom : ''}
                                 />
