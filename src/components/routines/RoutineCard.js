@@ -9,6 +9,11 @@ import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import Avatar from 'material-ui/Avatar';
 
+import { ROUTINE_AVATAR_COLOR} from '../../constants';
+
+import RoutineExerciseListItem from './RoutineExerciseListItem'
+import { black } from 'material-ui/styles/colors';
+
 class RoutineCard extends Component {
     state = {
     }
@@ -20,17 +25,12 @@ class RoutineCard extends Component {
                     <CardHeader
                         title={this.props.routine.name}
                         style={{marginBottom: -20}}
+                        avatar={<Avatar backgroundColor={ROUTINE_AVATAR_COLOR} color={black} icon={<ActionAssignment/>}></Avatar>}
                     />
                     <CardText style={styles.text}>
                         <List>
-                            <Subheader>Exercises</Subheader>
-                            {this.props.routine.exercises ? this.props.routine.exercises.map(m =>                     
-                                <ListItem
-                                    key={m.name}
-                                    leftIcon={<ActionAssignment/>}
-                                    primaryText={m.name}
-                                    secondaryText={m.uom ? m.uom : ''}
-                                />
+                            {this.props.routine.exercises ? this.props.routine.exercises.map(e =>                     
+                                <RoutineExerciseListItem exercise={e} />
                             ) : ''}
                         </List>
                     </CardText>
