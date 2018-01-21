@@ -7,6 +7,8 @@ import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
+import RoutineCard from './RoutineCard'
+
 const styles = {
     grid: {
         display: 'grid',
@@ -50,14 +52,7 @@ class Routines extends Component {
                         this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                             <div style={styles.grid}>
                                 {this.props.routines.map(r =>  
-                                    <div key={r.id}>
-                                        {r.name}
-                                        <ul>
-                                            {r.exercises.map(e =>
-                                                <li>{e.name}</li>
-                                            )}
-                                        </ul>
-                                    </div>
+                                    <RoutineCard routine={r} />
                                 )}
                             </div>
                 }
