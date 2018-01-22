@@ -24,8 +24,9 @@ class RoutineCard extends Component {
                 <Card zDepth={2} style={styles.card}>
                     <CardHeader
                         title={this.props.routine.name}
-                        style={{marginBottom: -20}}
-                        avatar={<Avatar backgroundColor={ROUTINE_AVATAR_COLOR} color={black} icon={<ActionAssignment/>}></Avatar>}
+                        subtitle={'Contains ' + this.props.routine.exercises.length + ' exercise' + (this.props.routine.exercises.length === 1 ? '.' : 's.') }
+                        style={{marginBottom: -30}}
+                        avatar={<Avatar backgroundColor={ROUTINE_AVATAR_COLOR} color={black} size={36} icon={<ActionAssignment/>}></Avatar>}
                     />
                     <CardText style={styles.text}>
                         <List>
@@ -65,19 +66,4 @@ const styles = {
     link: {
         cursor: 'pointer',
     },
-    metric: {
-    },
-    exitIconButton: {
-        border: 0,
-        width: 16,
-        height: 16,
-    },
-    exitIcon: {
-        width: 16,
-        height: 16,
-        marginTop: -10,
-        marginLeft: -5,
-        marginBottom: -3,
-        color: '#808080'
-    }
 }

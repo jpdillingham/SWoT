@@ -76,8 +76,8 @@ class ExerciseCard extends Component {
                                 </IconButton>
                             </span>
                         }
-                        avatar={<Avatar backgroundColor={EXERCISE_AVATAR_COLOR} src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'}></Avatar>}
-                        style={{marginBottom: -20}}
+                        avatar={<Avatar backgroundColor={EXERCISE_AVATAR_COLOR} size={36} src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'}></Avatar>}
+                        style={{marginBottom: -30}}
                     />
                     <CardText style={styles.text}>
                         <List>
