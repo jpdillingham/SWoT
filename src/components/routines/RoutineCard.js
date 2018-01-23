@@ -10,9 +10,10 @@ import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import Avatar from 'material-ui/Avatar';
 
 import { ROUTINE_AVATAR_COLOR} from '../../constants';
-
+import ContentCreate from 'material-ui/svg-icons/content/create';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RoutineExerciseListItem from './RoutineExerciseListItem'
-import { black } from 'material-ui/styles/colors';
+import { black, white } from 'material-ui/styles/colors';
 
 class RoutineCard extends Component {
     state = {
@@ -24,10 +25,19 @@ class RoutineCard extends Component {
                 <Card zDepth={2} style={styles.card}>
                     <CardHeader
                         title={this.props.routine.name}
-                        subtitle={'Contains ' + this.props.routine.exercises.length + ' exercise' + (this.props.routine.exercises.length === 1 ? '.' : 's.') }
-                        style={{marginBottom: -30}}
-                        avatar={<Avatar backgroundColor={ROUTINE_AVATAR_COLOR} color={black} size={36} icon={<ActionAssignment/>}></Avatar>}
-                    />
+                        titleStyle={styles.cardTitle}
+                        style={styles.cardHeader}
+                        avatar={<Avatar backgroundColor={ROUTINE_AVATAR_COLOR} color={white} size={36} icon={<ActionAssignment/>}></Avatar>}
+                    >
+                                        <FloatingActionButton 
+                    secondary={false} 
+                    zDepth={2} 
+                    style={styles.fab}
+                    mini={true}
+                >
+                    <ContentCreate />
+                </FloatingActionButton>
+                    </CardHeader>
                     <CardText style={styles.text}>
                         <List>
                             {this.props.routine.exercises ? this.props.routine.exercises.map(e =>                     
@@ -48,6 +58,24 @@ class RoutineCard extends Component {
 export default RoutineCard
 
 const styles = {
+    fab: {
+        margin: 0,
+        top: 47,
+        right: 20,
+        bottom: 'auto',
+        left: 'auto',
+        position: 'absolute',
+        zIndex: 1000,
+    },
+    cardHeader: {
+        backgroundColor: ROUTINE_AVATAR_COLOR,
+        marginBottom: 0,
+    },
+    cardTitle: {
+        fontSize: '20px',
+        marginTop: 6,
+        color: '#FFFFFF'
+    },
     container: {
         height: '100%'
     },
