@@ -14,6 +14,9 @@ import ContentCreate from 'material-ui/svg-icons/content/create';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RoutineExerciseListItem from './RoutineExerciseListItem'
 import { black, white } from 'material-ui/styles/colors';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 class RoutineCard extends Component {
     state = {
@@ -27,17 +30,27 @@ class RoutineCard extends Component {
                         title={this.props.routine.name}
                         titleStyle={styles.cardTitle}
                         style={styles.cardHeader}
-                        avatar={<Avatar backgroundColor={ROUTINE_AVATAR_COLOR} color={white} size={36} icon={<ActionAssignment/>}></Avatar>}
+                        avatar={<Avatar backgroundColor={ROUTINE_AVATAR_COLOR} color={black} size={36} icon={<ActionAssignment/>}></Avatar>}
                     >
-                                        <FloatingActionButton 
-                    secondary={false} 
-                    zDepth={2} 
-                    style={styles.fab}
-                    mini={true}
-                >
-                    <ContentCreate />
-                </FloatingActionButton>
+                        <FloatingActionButton 
+                            secondary={false} 
+                            zDepth={2} 
+                            style={styles.fab}
+                            mini={true}
+                        >
+                            <ContentCreate />
+                        </FloatingActionButton>
+
                     </CardHeader>
+                    <IconMenu
+                            style={styles.iconMenu}
+                            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                        >
+                            <MenuItem primaryText="Duplicate" />
+                            <MenuItem primaryText="Delete" />
+                        </IconMenu>
                     <CardText style={styles.text}>
                         <List>
                             {this.props.routine.exercises ? this.props.routine.exercises.map(e =>                     
@@ -46,8 +59,8 @@ class RoutineCard extends Component {
                         </List>
                     </CardText>
                     <CardActions style={styles.actions}>
-                        <FlatButton>Edit</FlatButton>
-                        <FlatButton>Delete</FlatButton>
+                        {/*<FlatButton onClick={this.handleDeleteClick}>Duplicate</FlatButton>
+                        <FlatButton onClick={this.handleDeleteClick}>Delete</FlatButton>*/}
                     </CardActions>
                 </Card>
             </div>
@@ -58,10 +71,15 @@ class RoutineCard extends Component {
 export default RoutineCard
 
 const styles = {
+    iconMenu: {
+        position: 'absolute',
+        right: 0,
+        top: 10,
+    },
     fab: {
         margin: 0,
         top: 47,
-        right: 20,
+        right: 40,
         bottom: 'auto',
         left: 'auto',
         position: 'absolute',
@@ -74,7 +92,6 @@ const styles = {
     cardTitle: {
         fontSize: '20px',
         marginTop: 6,
-        color: '#FFFFFF'
     },
     container: {
         height: '100%'
@@ -89,7 +106,8 @@ const styles = {
     },
     actions: {
         position: 'absolute',
-        bottom: 0
+        bottom: 0,
+        right: 0
     },
     link: {
         cursor: 'pointer',
