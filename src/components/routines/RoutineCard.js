@@ -97,12 +97,12 @@ const styles = {
         height: '100%'
     },
     card: {
-        width: 400,
+        width: 390,
         height: '100%',
         position: 'relative'
     },
     text: {
-        marginBottom: 40
+        /* marginBottom: 40 */
     },
     actions: {
         position: 'absolute',
