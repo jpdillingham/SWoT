@@ -238,6 +238,7 @@ class ExerciseDialog extends Component {
             <div>
                 <Dialog
                     title={(this.props.intent === 'add' ? 'Add' : 'Edit') + ' Exercise'} 
+                    autoScrollBodyContent={true}
                     actions={
                         <div>
                             <FlatButton label="Add Metric" onClick={this.handleAddMetricClick} style={styles.addMetric} />
