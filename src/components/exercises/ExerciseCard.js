@@ -83,9 +83,9 @@ class ExerciseCard extends Component {
                                 onClick={() => window.open(this.props.exercise.url)}
                             >
                                 {this.props.exercise.name}
-                                <IconButton style={styles.exitIconButton} iconStyle={styles.exitIcon}>
+                                { /*<IconButton style={styles.exitIconButton} iconStyle={styles.exitIcon}>
                                     <ActionExitToApp/>
-                                </IconButton>
+                        </IconButton> */ }
                             </span>
                         }
                         avatar={<Avatar backgroundColor={EXERCISE_AVATAR_COLOR} size={32} src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'}></Avatar>}
