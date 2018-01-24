@@ -11,8 +11,14 @@ import Avatar from 'material-ui/Avatar';
 
 import ExerciseDialog from './ExerciseDialog'
 import ExerciseDeleteDialog from './ExerciseDeleteDialog';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentCreate from 'material-ui/svg-icons/content/create';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 import { EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
+import { black } from 'material-ui/styles/colors';
 
 class ExerciseCard extends Component {
     state = {
@@ -51,6 +57,10 @@ class ExerciseCard extends Component {
         this.setState({ deleteDialog: { open: true }})
     }
 
+    handleMenuClick = (event, menuItem, index) => {
+        console.log(event, menuItem, index)
+    }
+
     render() {
         let truncatedUrl = this.props.exercise.url.split('/');
         truncatedUrl = '../' + truncatedUrl[truncatedUrl.length - 1];
@@ -64,21 +74,40 @@ class ExerciseCard extends Component {
             <div style={styles.container}>
                 <Card zDepth={2} style={styles.card}>
                     <CardHeader
-                        title={this.props.exercise.name}
-                        subtitle={
+                        
+                        titleStyle={styles.cardTitle}
+                        style={styles.cardHeader}
+                        title={
                             <span 
                                 style={styles.link}
                                 onClick={() => window.open(this.props.exercise.url)}
                             >
-                                {truncatedUrl}
+                                {this.props.exercise.name}
                                 <IconButton style={styles.exitIconButton} iconStyle={styles.exitIcon}>
                                     <ActionExitToApp/>
                                 </IconButton>
                             </span>
                         }
-                        avatar={<Avatar backgroundColor={EXERCISE_AVATAR_COLOR} size={36} src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'}></Avatar>}
-                        style={{marginBottom: -30}}
-                    />
+                        avatar={<Avatar backgroundColor={EXERCISE_AVATAR_COLOR} size={32} src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'}></Avatar>}
+                    >
+                        <FloatingActionButton 
+                            secondary={false} 
+                            zDepth={2} 
+                            style={styles.fab}
+                            mini={true}
+                        >
+                            <ContentCreate />
+                        </FloatingActionButton>
+                    </CardHeader>
+                    <IconMenu
+                            style={styles.iconMenu}
+                            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                    >
+                        <MenuItem primaryText="Duplicate" onClick={this.handleMenuClick} />
+                        <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
+                    </IconMenu>
                     <CardText style={styles.text}>
                         <List>
                             {this.props.exercise.metrics ? this.props.exercise.metrics.map(m =>                     
@@ -100,6 +129,7 @@ class ExerciseCard extends Component {
                     open={this.state.deleteDialog.open} 
                     handleClose={this.handleDeleteDialogClose}
                     exercise={this.props.exercise}
+                    style={styles.deletedialog}
                 />
                 <ExerciseDialog
                     open={this.state.exerciseDialog.open}
@@ -115,13 +145,38 @@ class ExerciseCard extends Component {
 export default ExerciseCard
 
 const styles = {
+    deleteDialog: {
+        zIndex: 2000,
+    },
     container: {
         height: '100%'
     },
+    cardHeader: {
+        backgroundColor: EXERCISE_AVATAR_COLOR,
+        marginBottom: 0,
+    },
+    cardTitle: {
+        fontSize: '20px',
+        marginTop: 6,
+    },
+    iconMenu: {
+        position: 'absolute',
+        right: 0,
+        top: 10,
+    },
     card: {
-        width: 400,
+        width: 390,
         height: '100%',
-        position: 'relative'
+        position: 'relative',
+    },
+    fab: {
+        margin: 0,
+        top: 47,
+        right: 40,
+        bottom: 'auto',
+        left: 'auto',
+        position: 'absolute',
+        zIndex: 1000,
     },
     text: {
         marginBottom: 40
@@ -130,22 +185,20 @@ const styles = {
         position: 'absolute',
         bottom: 0
     },
+    exitIconButton: {
+        border: 0,
+        width: 24,
+        height: 24,
+    },
+    exitIcon: {
+        width: 24,
+        height: 24,
+        marginTop: -10,
+        marginLeft: -5,
+        marginBottom: -5,
+        color: '#1b5e20',
+    },
     link: {
         cursor: 'pointer',
     },
-    metric: {
-    },
-    exitIconButton: {
-        border: 0,
-        width: 16,
-        height: 16,
-    },
-    exitIcon: {
-        width: 16,
-        height: 16,
-        marginTop: -10,
-        marginLeft: -5,
-        marginBottom: -3,
-        color: '#808080'
-    }
 }
