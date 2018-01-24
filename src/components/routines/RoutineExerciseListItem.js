@@ -22,7 +22,7 @@ class RoutineExerciseListItem extends Component {
         return(
             <ListItem
                 key={this.props.exercise.name}
-                leftAvatar={<Avatar backgroundColor={transparent} src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'}></Avatar>}
+                leftIcon={<img style={styles.leftIcon} src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'}></img>}
                 primaryText={this.props.exercise.name}
             />
         )
@@ -30,3 +30,11 @@ class RoutineExerciseListItem extends Component {
 }
 
 export default RoutineExerciseListItem
+
+const styles = {
+    leftIcon: {
+        width: '32px',
+        height: '32px',
+        marginTop: 7,
+    }
+}
