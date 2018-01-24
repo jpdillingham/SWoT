@@ -46,10 +46,10 @@ class RoutineCard extends Component {
                             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                        >
-                            <MenuItem primaryText="Duplicate" />
-                            <MenuItem primaryText="Delete" />
-                        </IconMenu>
+                    >
+                        <MenuItem primaryText="Duplicate" />
+                        <MenuItem primaryText="Delete" />
+                    </IconMenu>
                     <CardText style={styles.text}>
                         <List>
                             {this.props.routine.exercises ? this.props.routine.exercises.map(e =>                     
