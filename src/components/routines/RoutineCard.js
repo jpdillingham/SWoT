@@ -40,7 +40,6 @@ class RoutineCard extends Component {
                         >
                             <ContentCreate />
                         </FloatingActionButton>
-
                     </CardHeader>
                     <IconMenu
                             style={styles.iconMenu}
