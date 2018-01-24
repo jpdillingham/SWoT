@@ -95,6 +95,7 @@ class ExerciseCard extends Component {
                             zDepth={2} 
                             style={styles.fab}
                             mini={true}
+                            onClick={this.handleEditClick}
                         >
                             <ContentCreate />
                         </FloatingActionButton>
@@ -121,8 +122,8 @@ class ExerciseCard extends Component {
                         </List>
                     </CardText>
                     <CardActions style={styles.actions}>
-                        <FlatButton onClick={this.handleEditClick}>Edit</FlatButton>
-                        <FlatButton onClick={this.handleDeleteClick}>Delete</FlatButton>
+                        {/*<FlatButton onClick={this.handleEditClick}>Edit</FlatButton>
+                        <FlatButton onClick={this.handleDeleteClick}>Delete</FlatButton>*/}
                     </CardActions>
                 </Card>
                 <ExerciseDeleteDialog 
@@ -179,7 +180,7 @@ const styles = {
         zIndex: 1000,
     },
     text: {
-        marginBottom: 40
+        /* marginBottom: 40 */
     },
     actions: {
         position: 'absolute',
