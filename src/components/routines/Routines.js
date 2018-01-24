@@ -9,11 +9,13 @@ import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import RoutineCard from './RoutineCard'
 
+import { CARD_WIDTH } from '../../constants'
+
 const styles = {
     grid: {
         display: 'grid',
         gridGap: 10,
-        gridTemplateColumns: 'repeat(auto-fit, 400px)'
+        gridTemplateColumns: 'repeat(auto-fit, ' + CARD_WIDTH + 'px)'
     },
     icon: {
         height: 48,

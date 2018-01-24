@@ -9,7 +9,7 @@ import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import Avatar from 'material-ui/Avatar';
 
-import { ROUTINE_AVATAR_COLOR} from '../../constants';
+import { CARD_WIDTH, ROUTINE_AVATAR_COLOR } from '../../constants';
 import ContentCreate from 'material-ui/svg-icons/content/create';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RoutineExerciseListItem from './RoutineExerciseListItem'
@@ -96,7 +96,7 @@ const styles = {
         height: '100%'
     },
     card: {
-        width: 390,
+        width: CARD_WIDTH,
         height: '100%',
         position: 'relative'
     },

@@ -17,7 +17,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 
-import { EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
+import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
 import { black } from 'material-ui/styles/colors';
 
 class ExerciseCard extends Component {
@@ -166,7 +166,7 @@ const styles = {
         top: 10,
     },
     card: {
-        width: 390,
+        width: CARD_WIDTH,
         height: '100%',
         position: 'relative',
     },
