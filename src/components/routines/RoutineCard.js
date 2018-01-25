@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 
 import {Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
+import { List } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
-import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import Avatar from 'material-ui/Avatar';
 
@@ -13,7 +10,7 @@ import { CARD_WIDTH, ROUTINE_AVATAR_COLOR } from '../../constants';
 import ContentCreate from 'material-ui/svg-icons/content/create';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RoutineExerciseListItem from './RoutineExerciseListItem'
-import { black, white } from 'material-ui/styles/colors';
+import { black } from 'material-ui/styles/colors';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
