@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 
-import {Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
-import IconButton from 'material-ui/IconButton';
-import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
-import ActionAssignment from 'material-ui/svg-icons/action/assignment';
-import Avatar from 'material-ui/Avatar';
+import { ListItem } from 'material-ui/List';
 
-import { EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
-import { transparent } from 'material-ui/styles/colors';
+import { EXERCISE_TYPES } from '../../constants';
 
 class RoutineExerciseListItem extends Component {
     render() {
@@ -22,7 +14,13 @@ class RoutineExerciseListItem extends Component {
         return(
             <ListItem
                 key={this.props.exercise.name}
-                leftIcon={<img style={styles.leftIcon} src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'}></img>}
+                leftIcon={
+                    <img 
+                        alt={this.props.exercise.type} 
+                        style={styles.leftIcon} 
+                        src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'}
+                    />
+                }
                 primaryText={this.props.exercise.name}
             />
         )
