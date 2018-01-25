@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 
 import {Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
+import { List, ListItem } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
-import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import ActionAssessment from 'material-ui/svg-icons/action/assessment';
 import Avatar from 'material-ui/Avatar';
 
@@ -18,7 +15,6 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
-import { black } from 'material-ui/styles/colors';
 
 class ExerciseCard extends Component {
     state = {
@@ -62,9 +58,6 @@ class ExerciseCard extends Component {
     }
 
     render() {
-        let truncatedUrl = this.props.exercise.url.split('/');
-        truncatedUrl = '../' + truncatedUrl[truncatedUrl.length - 1];
-
         let exerciseImage = this.props.exercise.type;
         if (EXERCISE_TYPES.indexOf(exerciseImage) === -1) { 
             exerciseImage = 'unknown'
