@@ -8,6 +8,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import RoutineCard from './RoutineCard'
+import RoutineAddButton from './RoutineAddButton'
 
 import { CARD_WIDTH } from '../../constants'
 
@@ -58,6 +59,7 @@ class Routines extends Component {
                                 )}
                             </div>
                 }
+                <RoutineAddButton/>
             </div>
         )
     }
