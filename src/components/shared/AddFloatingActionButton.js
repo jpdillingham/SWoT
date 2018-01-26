@@ -41,6 +41,8 @@ class AddFloatingActionButton extends Component {
                 >
                     <ContentAdd />
                 </FloatingActionButton>
+
+                // TODO: inject event handlers and open variable
                 {this.props.dialog}
             </div>
         )
