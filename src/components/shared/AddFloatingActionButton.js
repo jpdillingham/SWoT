@@ -41,9 +41,11 @@ class AddFloatingActionButton extends Component {
                 >
                     <ContentAdd />
                 </FloatingActionButton>
-
-                // TODO: inject event handlers and open variable
-                {this.props.dialog}
+                
+                {React.cloneElement(this.props.dialog, { 
+                    open: this.state.addDialog.open, 
+                    handleClose: this.handleAddDialogClose 
+                })}
             </div>
         )
     }
