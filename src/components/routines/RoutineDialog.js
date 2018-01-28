@@ -83,7 +83,7 @@ class RoutineDialog extends Component {
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.setState({ ...this.state.api, isExecuting: true })
+                this.setState({ api: { ...this.state.api, isExecuting: true } })
 
                 if (this.props.intent === INTENTS.EDIT) {
                     // edit routine
