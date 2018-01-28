@@ -38,7 +38,7 @@ const styles = {
     },
     addMetric: {
         float: 'left'
-    }
+    },
 }
 
 const initialState = {
@@ -245,7 +245,6 @@ class ExerciseDialog extends Component {
                             <FlatButton label="Add Metric" onClick={this.handleAddMetricClick} style={styles.addMetric} />
                             <FlatButton label="Cancel" onClick={this.handleCancelClick} />
                             <FlatButton 
-                                icon={ this.state.api.isExecuting ? <CircularProgress/> : '' }
                                 label={this.state.api.isErrored ? 'Retry' : 'Save'}
                                 onClick={this.handleSaveClick} 
                                 disabled={
@@ -259,7 +258,6 @@ class ExerciseDialog extends Component {
                     open={this.props.open}
                     contentStyle={styles.dialogContent}
                 >
-                    {JSON.stringify(this.state)}
                     <TextField
                         hintText="e.g. 'Bench Press'"
                         floatingLabelText="Name"
