@@ -21,7 +21,6 @@ import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
 import { getGuid } from '../../util';
 
 import ExerciseMetricDialog from './ExerciseMetricDialog';
-import CircularProgress from 'material-ui/CircularProgress'
 
 const styles = {
     name: {

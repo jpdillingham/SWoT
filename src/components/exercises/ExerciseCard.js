@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
+import {Card, CardHeader, CardText } from 'material-ui/Card';
 import { List, ListItem } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import ActionAssessment from 'material-ui/svg-icons/action/assessment';

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { fetchExercises } from './ExercisesActions'
 
 import ExercizeCard from './ExerciseCard'
-import ExerciseAddButton from './ExerciseAddButton'
 
 import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
