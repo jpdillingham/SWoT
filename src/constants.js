@@ -10,6 +10,7 @@ export const CARD_WIDTH = 390
 export const INTENTS = {
     ADD: 'ADD',
     EDIT: 'EDIT',
+    COPY: 'COPY',
 }
 
 export const ROUTINES = [
