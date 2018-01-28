@@ -21,6 +21,7 @@ import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
 import { getGuid } from '../../util';
 
 import ExerciseMetricDialog from './ExerciseMetricDialog';
+import CircularProgress from 'material-ui/CircularProgress'
 
 const styles = {
     name: {
@@ -145,7 +146,7 @@ class ExerciseDialog extends Component {
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.setState({ ...this.state.api, isExecuting: true })
+                this.setState({ api: { ...this.state.api, isExecuting: true } })
 
                 if (this.props.intent === INTENTS.EDIT) {
                     this.props.updateExercise(this.state.exercise)
@@ -244,7 +245,8 @@ class ExerciseDialog extends Component {
                             <FlatButton label="Add Metric" onClick={this.handleAddMetricClick} style={styles.addMetric} />
                             <FlatButton label="Cancel" onClick={this.handleCancelClick} />
                             <FlatButton 
-                                label={this.state.api.isErrored ? 'Retry' : 'Save' }
+                                icon={ this.state.api.isExecuting ? <CircularProgress/> : '' }
+                                label={this.state.api.isErrored ? 'Retry' : 'Save'}
                                 onClick={this.handleSaveClick} 
                                 disabled={
                                     (Object.keys(this.state.validationErrors)
@@ -257,6 +259,7 @@ class ExerciseDialog extends Component {
                     open={this.props.open}
                     contentStyle={styles.dialogContent}
                 >
+                    {JSON.stringify(this.state)}
                     <TextField
                         hintText="e.g. 'Bench Press'"
                         floatingLabelText="Name"
