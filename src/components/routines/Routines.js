@@ -8,7 +8,6 @@ import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import RoutineCard from './RoutineCard'
-import RoutineAddButton from './RoutineAddButton'
 
 import AddFloatingActionButton from '../shared/AddFloatingActionButton'
 import { CARD_WIDTH, INTENTS } from '../../constants'
