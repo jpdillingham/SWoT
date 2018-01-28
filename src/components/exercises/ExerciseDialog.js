@@ -202,6 +202,9 @@ class ExerciseDialog extends Component {
             if (nextProps.intent === INTENTS.EDIT) {
                 this.setState({ exercise: nextProps.exercise })
             }
+            else if (nextProps.intent === INTENTS.COPY) {
+                this.setState({ exercise: { ...nextProps.exercise, id: getGuid() }})
+            }
         }
     }
 

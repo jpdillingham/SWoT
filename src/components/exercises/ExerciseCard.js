@@ -16,6 +16,73 @@ import MenuItem from 'material-ui/MenuItem';
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR, INTENTS } from '../../constants';
 
+const styles = {
+    deleteDialog: {
+        zIndex: 2000,
+    },
+    container: {
+        height: '100%'
+    },
+    cardHeader: {
+        backgroundColor: EXERCISE_AVATAR_COLOR,
+        marginBottom: 0,
+    },
+    cardTitle: {
+        fontSize: '20px',
+        marginTop: 6,
+    },
+    iconMenu: {
+        position: 'absolute',
+        right: 0,
+        top: 10,
+    },
+    card: {
+        width: CARD_WIDTH,
+        height: '100%',
+        position: 'relative',
+    },
+    fab: {
+        margin: 0,
+        top: 47,
+        right: 40,
+        bottom: 'auto',
+        left: 'auto',
+        position: 'absolute',
+        zIndex: 1000,
+    },
+    actions: {
+        position: 'absolute',
+        bottom: 0
+    },
+    exitIconButton: {
+        border: 0,
+        width: 24,
+        height: 24,
+    },
+    exitIcon: {
+        width: 24,
+        height: 24,
+        marginTop: -10,
+        marginLeft: -5,
+        marginBottom: -5,
+        color: '#1b5e20',
+    },
+    link: {
+        cursor: 'pointer',
+    },
+}
+
+const initialState = {
+    deleteDialog: {
+        open: false,
+    },
+    exerciseDialog: {
+        open: false,
+        exercise: {},
+        intent: INTENTS.EDIT
+    }    
+}
+
 class ExerciseCard extends Component {
     state = {
         deleteDialog: {
@@ -24,6 +91,7 @@ class ExerciseCard extends Component {
         exerciseDialog: {
             open: false,
             exercise: {},
+            intent: INTENTS.EDIT
         }
     }
 
@@ -31,20 +99,18 @@ class ExerciseCard extends Component {
         this.setState({ deleteDialog: { open: false }})
     }
 
-    handleExerciseDialogClose = (result) => {
-        this.setState(prevState => ({
-            exerciseDialog: {
-                open: false,
-                exercise: {}
-            }
-        }))
+    handleExerciseDialogClose = () => {
+        this.setState({
+            exerciseDialog: { ...initialState.exerciseDialog }
+        })
     }
 
     handleEditClick = () => {
         this.setState(prevState => ({
             exerciseDialog: {
                 open: true,
-                exercise: this.props.exercise
+                exercise: this.props.exercise,
+                intent: INTENTS.EDIT,
             }
         }))
     }
@@ -53,8 +119,18 @@ class ExerciseCard extends Component {
         this.setState({ deleteDialog: { open: true }})
     }
 
-    handleMenuClick = (event, menuItem, index) => {
-        console.log(event, menuItem, index)
+    handleDuplicateClick = () => {
+        let exercise = Object.assign({}, this.props.exercise)
+
+        exercise.name = exercise.name + '(1)'
+
+        this.setState(prevState => ({
+            exerciseDialog: {
+                open: true,
+                exercise: exercise,
+                intent: INTENTS.COPY
+            }
+        }))
     }
 
     render() {
@@ -99,7 +175,7 @@ class ExerciseCard extends Component {
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem primaryText="Duplicate" onClick={this.handleMenuClick} />
+                        <MenuItem primaryText="Duplicate" onClick={this.handleDuplicateClick} />
                         <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
                     </IconMenu>
                     <CardText style={styles.text}>
@@ -123,11 +199,11 @@ class ExerciseCard extends Component {
                     open={this.state.deleteDialog.open} 
                     handleClose={this.handleDeleteDialogClose}
                     exercise={this.props.exercise}
-                    style={styles.deletedialog}
+                    style={styles.deleteDialog}
                 />
                 <ExerciseDialog
                     open={this.state.exerciseDialog.open}
-                    intent={INTENTS.EDIT}
+                    intent={this.state.exerciseDialog.intent}
                     exercise={this.state.exerciseDialog.exercise}
                     handleClose={this.handleExerciseDialogClose}
                 />
@@ -137,62 +213,3 @@ class ExerciseCard extends Component {
 }
 
 export default ExerciseCard
-
-const styles = {
-    deleteDialog: {
-        zIndex: 2000,
-    },
-    container: {
-        height: '100%'
-    },
-    cardHeader: {
-        backgroundColor: EXERCISE_AVATAR_COLOR,
-        marginBottom: 0,
-    },
-    cardTitle: {
-        fontSize: '20px',
-        marginTop: 6,
-    },
-    iconMenu: {
-        position: 'absolute',
-        right: 0,
-        top: 10,
-    },
-    card: {
-        width: CARD_WIDTH,
-        height: '100%',
-        position: 'relative',
-    },
-    fab: {
-        margin: 0,
-        top: 47,
-        right: 40,
-        bottom: 'auto',
-        left: 'auto',
-        position: 'absolute',
-        zIndex: 1000,
-    },
-    text: {
-        /* marginBottom: 40 */
-    },
-    actions: {
-        position: 'absolute',
-        bottom: 0
-    },
-    exitIconButton: {
-        border: 0,
-        width: 24,
-        height: 24,
-    },
-    exitIcon: {
-        width: 24,
-        height: 24,
-        marginTop: -10,
-        marginLeft: -5,
-        marginBottom: -5,
-        color: '#1b5e20',
-    },
-    link: {
-        cursor: 'pointer',
-    },
-}
