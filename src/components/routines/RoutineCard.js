@@ -50,7 +50,7 @@ class RoutineCard extends Component {
                     <CardText style={styles.text}>
                         <List>
                             {this.props.routine.exercises ? this.props.routine.exercises.map(e =>                     
-                                <RoutineExerciseListItem exercise={e} />
+                                <RoutineExerciseListItem key={e.id} exercise={e} />
                             ) : ''}
                         </List>
                     </CardText>
