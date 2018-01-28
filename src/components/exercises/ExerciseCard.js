@@ -50,23 +50,6 @@ const styles = {
         position: 'absolute',
         zIndex: 1000,
     },
-    actions: {
-        position: 'absolute',
-        bottom: 0
-    },
-    exitIconButton: {
-        border: 0,
-        width: 24,
-        height: 24,
-    },
-    exitIcon: {
-        width: 24,
-        height: 24,
-        marginTop: -10,
-        marginLeft: -5,
-        marginBottom: -5,
-        color: '#1b5e20',
-    },
     link: {
         cursor: 'pointer',
     },
@@ -84,16 +67,7 @@ const initialState = {
 }
 
 class ExerciseCard extends Component {
-    state = {
-        deleteDialog: {
-            open: false,
-        },
-        exerciseDialog: {
-            open: false,
-            exercise: {},
-            intent: INTENTS.EDIT
-        }
-    }
+    state = initialState
 
     handleDeleteDialogClose = (result) => {
         this.setState({ deleteDialog: { open: false }})
@@ -121,7 +95,6 @@ class ExerciseCard extends Component {
 
     handleDuplicateClick = () => {
         let exercise = Object.assign({}, this.props.exercise)
-
         exercise.name = exercise.name + '(1)'
 
         this.setState(prevState => ({
@@ -142,8 +115,7 @@ class ExerciseCard extends Component {
         return (
             <div style={styles.container}>
                 <Card zDepth={2} style={styles.card}>
-                    <CardHeader
-                        
+                    <CardHeader                        
                         titleStyle={styles.cardTitle}
                         style={styles.cardHeader}
                         title={
@@ -152,12 +124,15 @@ class ExerciseCard extends Component {
                                 onClick={() => window.open(this.props.exercise.url)}
                             >
                                 {this.props.exercise.name}
-                                { /*<IconButton style={styles.exitIconButton} iconStyle={styles.exitIcon}>
-                                    <ActionExitToApp/>
-                        </IconButton> */ }
                             </span>
                         }
-                        avatar={<Avatar backgroundColor={EXERCISE_AVATAR_COLOR} size={32} src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'}></Avatar>}
+                        avatar={
+                            <Avatar 
+                                backgroundColor={EXERCISE_AVATAR_COLOR} 
+                                size={32} 
+                                src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'} 
+                            />
+                        }
                     >
                         <FloatingActionButton 
                             secondary={false} 
@@ -190,10 +165,6 @@ class ExerciseCard extends Component {
                             ) : ''}
                         </List>
                     </CardText>
-                    <CardActions style={styles.actions}>
-                        {/*<FlatButton onClick={this.handleEditClick}>Edit</FlatButton>
-                        <FlatButton onClick={this.handleDeleteClick}>Delete</FlatButton>*/}
-                    </CardActions>
                 </Card>
                 <ExerciseDeleteDialog 
                     open={this.state.deleteDialog.open} 
