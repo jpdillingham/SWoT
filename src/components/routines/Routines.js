@@ -57,7 +57,7 @@ class Routines extends Component {
                         this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                             <div style={styles.grid}>
                                 {this.props.routines.map(r =>  
-                                    <RoutineCard routine={r} />
+                                    <RoutineCard key={r.id} routine={r} />
                                 )}
                             </div>
                 }
