@@ -11,7 +11,7 @@ import RoutineCard from './RoutineCard'
 import RoutineAddButton from './RoutineAddButton'
 
 import AddFloatingActionButton from '../shared/AddFloatingActionButton'
-import { CARD_WIDTH } from '../../constants'
+import { CARD_WIDTH, INTENTS } from '../../constants'
 import RoutineDialog from './RoutineDialog';
 
 const styles = {
@@ -61,7 +61,7 @@ class Routines extends Component {
                                 )}
                             </div>
                 }
-                <AddFloatingActionButton dialog={<RoutineDialog intent={'add'} />} />
+                <AddFloatingActionButton dialog={<RoutineDialog intent={INTENTS.ADD} />} />
             </div>
         )
     }

@@ -16,7 +16,7 @@ import {grey400} from 'material-ui/styles/colors';
 
 import { showSnackbar } from '../app/AppActions.js'
 
-import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../constants';
+import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
 import { getGuid } from '../../util';
 
 
@@ -59,7 +59,7 @@ class RoutineDialog extends Component {
     handleNameChange = (event, value) => {
         let nameList = this.props.existingNames;
 
-        if (this.props.intent === 'edit') {
+        if (this.props.intent === INTENTS.EDIT) {
             nameList = nameList.filter(n => n.toLowerCase() !== this.props.exercise.name.toLowerCase())
         }
 
@@ -85,7 +85,7 @@ class RoutineDialog extends Component {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
                 this.setState({ ...this.state.api, isExecuting: true })
 
-                if (this.props.intent === 'edit') {
+                if (this.props.intent === INTENTS.EDIT) {
                     // edit routine
                 }
                 else {
@@ -126,7 +126,7 @@ class RoutineDialog extends Component {
         }
   
         if (!this.props.open && nextProps.open) {
-            if (nextProps.intent === 'edit') {
+            if (nextProps.intent === INTENTS.EDIT) {
                 this.setState({ routine: nextProps.routine })
             }
         }
@@ -136,7 +136,7 @@ class RoutineDialog extends Component {
         return (
             <div>
                 <Dialog
-                    title={(this.props.intent === 'add' ? 'Add' : 'Edit') + ' Routine'} 
+                    title={(this.props.intent === INTENTS.ADD ? 'Add' : 'Edit') + ' Routine'} 
                     autoScrollBodyContent={true}
                     actions={
                         <div>

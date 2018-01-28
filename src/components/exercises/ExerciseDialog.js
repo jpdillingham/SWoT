@@ -17,7 +17,7 @@ import {grey400} from 'material-ui/styles/colors';
 import { addExercise, updateExercise } from './ExercisesActions'
 import { showSnackbar } from '../app/AppActions.js'
 
-import { EXERCISE_TYPES, EXERCISE_URL_BASE } from '../../constants';
+import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
 import { getGuid } from '../../util';
 
 import ExerciseMetricDialog from './ExerciseMetricDialog';
@@ -70,7 +70,7 @@ class ExerciseDialog extends Component {
     handleNameChange = (event, value) => {
         let nameList = this.props.existingNames;
 
-        if (this.props.intent === 'edit') {
+        if (this.props.intent === INTENTS.EDIT) {
             nameList = nameList.filter(n => n.toLowerCase() !== this.props.exercise.name.toLowerCase())
         }
 
@@ -116,7 +116,7 @@ class ExerciseDialog extends Component {
         this.setState({ 
             metricDialog: { 
                 open: true, 
-                intent: 'edit', 
+                intent: INTENTS.EDIT, 
                 metric: metric 
             } 
         })
@@ -130,7 +130,7 @@ class ExerciseDialog extends Component {
         this.setState({ 
             metricDialog: { 
                 open: true, 
-                intent: 'add', 
+                intent: INTENTS.ADD, 
                 metric: {}
             } 
         })
@@ -147,7 +147,7 @@ class ExerciseDialog extends Component {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
                 this.setState({ ...this.state.api, isExecuting: true })
 
-                if (this.props.intent === 'edit') {
+                if (this.props.intent === INTENTS.EDIT) {
                     this.props.updateExercise(this.state.exercise)
                     .then((response) => {
                         this.handleApiSuccess('Updated Exercise \'' + response.data.name + '\'.')
@@ -198,7 +198,7 @@ class ExerciseDialog extends Component {
         }
   
         if (!this.props.open && nextProps.open) {
-            if (nextProps.intent === 'edit') {
+            if (nextProps.intent === INTENTS.EDIT) {
                 this.setState({ exercise: nextProps.exercise })
             }
         }
@@ -237,7 +237,7 @@ class ExerciseDialog extends Component {
         return (
             <div>
                 <Dialog
-                    title={(this.props.intent === 'add' ? 'Add' : 'Edit') + ' Exercise'} 
+                    title={(this.props.intent === INTENTS.ADD ? 'Add' : 'Edit') + ' Exercise'} 
                     autoScrollBodyContent={true}
                     actions={
                         <div>

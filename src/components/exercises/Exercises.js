@@ -12,7 +12,7 @@ import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import AddFloatingActionButton from '../shared/AddFloatingActionButton'
 import ExerciseDialog from './ExerciseDialog'
 
-import { CARD_WIDTH } from '../../constants'
+import { CARD_WIDTH, INTENTS } from '../../constants'
 
 const styles = {
     grid: {
@@ -63,7 +63,7 @@ class Exercises extends Component {
                                 )}
                             </div>
                 }
-                <AddFloatingActionButton dialog={<ExerciseDialog intent={'add'} />} />
+                <AddFloatingActionButton dialog={<ExerciseDialog intent={INTENTS.ADD} />} />
             </div>
         )
     }

@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
+import { INTENTS } from '../../constants';
 
 const styles = {
     name: {
@@ -32,7 +33,7 @@ class ExerciseMetricDialog extends Component {
     handleNameChange = (event, value) => {
         let nameList = this.props.existingNames;
 
-        if (this.props.intent === 'edit') {
+        if (this.props.intent === INTENTS.EDIT) {
             nameList = nameList.filter(n => n.toLowerCase() !== this.props.metric.name.toLowerCase())
         }
 
@@ -64,7 +65,7 @@ class ExerciseMetricDialog extends Component {
         else {
             result = { metric: this.state.metric }
 
-            if (this.props.intent === 'edit') {
+            if (this.props.intent === INTENTS.EDIT) {
                 result.edited = true
             }
             else {
@@ -82,7 +83,7 @@ class ExerciseMetricDialog extends Component {
     componentWillReceiveProps(nextProps) {
         this.setState(initialState);
 
-        if (nextProps.intent === 'edit') {
+        if (nextProps.intent === INTENTS.EDIT) {
             this.setState({ metric: nextProps.metric })
         }
     }
@@ -90,7 +91,7 @@ class ExerciseMetricDialog extends Component {
     render() {
         return (
             <Dialog
-                title={(this.props.intent === 'add' ? 'Add' : 'Edit') + ' Metric'} 
+                title={(this.props.intent === INTENTS.ADD ? 'Add' : 'Edit') + ' Metric'} 
                 actions={
                     <div>
                         <FlatButton
@@ -114,7 +115,7 @@ class ExerciseMetricDialog extends Component {
                     defaultValue={this.state.metric.name}
                     errorText={this.state.validationErrors.name}
                     style={styles.name}
-                    disabled={this.props.intent === 'edit'}
+                    disabled={this.props.intent === INTENTS.EDIT}
                     onChange={this.handleNameChange}
                 />
                 <TextField
