@@ -9,9 +9,6 @@ import MenuItem from 'material-ui/MenuItem';
 import ActionAssessment from 'material-ui/svg-icons/action/assessment';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
-const styles = {
-}
-
 class ExerciseMetricList extends Component {
     render() {
         return (
