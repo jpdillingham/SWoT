@@ -22,6 +22,7 @@ import { getGuid } from '../../util';
 
 import ExerciseMetricDialog from './ExerciseMetricDialog';
 import ExerciseMetricList from './ExerciseMetricList';
+import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 
 const styles = {
     name: {
@@ -247,13 +248,10 @@ class ExerciseDialog extends Component {
                         <div>
                             <FlatButton label="Add Metric" onClick={this.handleAddMetricClick} style={styles.addMetric} />
                             <FlatButton label="Cancel" onClick={this.handleCancelClick} />
-                            <FlatButton 
-                                label={this.state.api.isErrored ? 'Retry' : 'Save'}
+                            <SaveRetryFlatButton 
                                 onClick={this.handleSaveClick} 
-                                disabled={
-                                    (Object.keys(this.state.validationErrors)
-                                        .find(e => this.state.validationErrors[e] !== '') !== undefined) || (this.state.api.isExecuting)
-                                }
+                                api={this.state.api} 
+                                validation={this.state.validationErrors} 
                             />
                         </div>
                     }
