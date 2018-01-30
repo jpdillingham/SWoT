@@ -21,6 +21,7 @@ import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
 import { getGuid } from '../../util';
 
 import ExerciseMetricDialog from './ExerciseMetricDialog';
+import ExerciseMetricList from './ExerciseMetricList';
 
 const styles = {
     name: {
@@ -285,27 +286,11 @@ class ExerciseDialog extends Component {
                         errorText={this.state.validationErrors.url}
                         onChange={this.handleUrlChange}
                     /><br />
-                    <List>
-                        <Subheader>Metrics</Subheader>
-                        {this.state.exercise.metrics ? this.state.exercise.metrics.map(m =>                     
-                                <ListItem
-                                    key={m.name}
-                                    leftIcon={<ActionAssessment/>}
-                                    rightIconButton={
-                                        <IconMenu iconButtonElement={
-                                            <IconButton touch={true} tooltipPosition="bottom-left">
-                                                <MoreVertIcon color={grey400} />
-                                            </IconButton>
-                                        }>
-                                          <MenuItem onClick={() => this.handleEditMetricMenuClick(m)}>Edit</MenuItem>
-                                          <MenuItem onClick={() => this.handleDeleteMetricMenuClick(m)}>Delete</MenuItem>
-                                        </IconMenu>
-                                    }
-                                    primaryText={m.name}
-                                    secondaryText={m.uom ? m.uom : ''}
-                                />
-                            ) : ''}
-                    </List>
+                    <ExerciseMetricList 
+                        metrics={this.state.exercise.metrics} 
+                        onEditClick={this.handleEditMetricMenuClick}
+                        onDeleteClick={this.handleDeleteMetricMenuClick}
+                    />
                 </Dialog>
                 <ExerciseMetricDialog
                     open={this.state.metricDialog.open} 
