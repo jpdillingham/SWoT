@@ -15,8 +15,21 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 
+import RoutineDeleteDialog from './RoutineDeleteDialog'
+
 class RoutineCard extends Component {
     state = {
+        deleteDialog: {
+            open: false,
+        },
+    }
+
+    handleDeleteClick = () => {
+        this.setState({ deleteDialog: { open: true }})
+    }
+
+    handleDeleteDialogClose = (result) => {
+        this.setState({ deleteDialog: { open: false }})
     }
 
     render() {
@@ -45,7 +58,7 @@ class RoutineCard extends Component {
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
                         <MenuItem primaryText="Duplicate" />
-                        <MenuItem primaryText="Delete" />
+                        <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
                     </IconMenu>
                     <CardText style={styles.text}>
                         <List>
@@ -59,6 +72,12 @@ class RoutineCard extends Component {
                         <FlatButton onClick={this.handleDeleteClick}>Delete</FlatButton>*/}
                     </CardActions>
                 </Card>
+                <RoutineDeleteDialog 
+                    open={this.state.deleteDialog.open} 
+                    handleClose={this.handleDeleteDialogClose}
+                    routine={this.props.routine}
+                    style={styles.deleteDialog}
+                />
             </div>
         )
     }
