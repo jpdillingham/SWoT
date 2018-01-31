@@ -40,7 +40,7 @@ const styles = {
 }
 
 const initialState = {
-    exercise: {
+    routine: {
         id: getGuid(),
         name: '',
         exercises: []
@@ -61,7 +61,7 @@ class RoutineDialog extends Component {
         let nameList = this.props.existingNames;
 
         if (this.props.intent === INTENTS.EDIT) {
-            nameList = nameList.filter(n => n.toLowerCase() !== this.props.exercise.name.toLowerCase())
+            nameList = nameList.filter(n => n.toLowerCase() !== this.props.routine.name.toLowerCase())
         }
 
         if (nameList.find(n => n.toLowerCase() === value.toLowerCase())) {
@@ -71,7 +71,7 @@ class RoutineDialog extends Component {
         }
         else {
             this.setState(prevState => ({
-                exercise: { ...prevState.exercise, name: value },
+                routine: { ...prevState.exercise, name: value },
                 validationErrors: {  ...prevState.validationErrors, name: '' }
             }))
         }
@@ -80,7 +80,7 @@ class RoutineDialog extends Component {
     handleSaveClick = () => {
         this.setState({
             validationErrors: { 
-                name: this.state.exercise.name === '' ? 'The Routine must have a name.' : '',
+                name: this.state.routine.name === '' ? 'The Routine must have a name.' : '',
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
@@ -130,6 +130,9 @@ class RoutineDialog extends Component {
             if (nextProps.intent === INTENTS.EDIT) {
                 this.setState({ routine: nextProps.routine })
             }
+            else if (nextProps.intent === INTENTS.COPY) {
+                this.setState({ routine: { ...nextProps.routine, id: getGuid() }})
+            }
         }
     }
 
@@ -154,7 +157,14 @@ class RoutineDialog extends Component {
                     open={this.props.open}
                     contentStyle={styles.dialogContent}
                 >
-                    { /* todo: add dialog content */ }
+                    <TextField
+                        hintText="e.g. 'Legs'"
+                        floatingLabelText="Name"
+                        defaultValue={this.state.routine.name}
+                        errorText={this.state.validationErrors.name}
+                        style={styles.name}
+                        onChange={this.handleNameChange}
+                    /><br />
                 </Dialog>
             </div>
         )
@@ -162,6 +172,7 @@ class RoutineDialog extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    existingNames: state.routines.map(e => e.name)
 })
 
 const mapDispatchToProps = {
