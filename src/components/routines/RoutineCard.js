@@ -16,13 +16,23 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 
 import RoutineDeleteDialog from './RoutineDeleteDialog'
+import RoutineDialog from './RoutineDialog'
+
+import { INTENTS } from '../../constants'
+
+const initialState = {
+    deleteDialog: {
+        open: false,
+    },
+    routineDialog: {
+        open: false,
+        routine: {},
+        intent: INTENTS.EDIT
+    } 
+}
 
 class RoutineCard extends Component {
-    state = {
-        deleteDialog: {
-            open: false,
-        },
-    }
+    state = initialState;
 
     handleDeleteClick = () => {
         this.setState({ deleteDialog: { open: true }})
@@ -31,6 +41,36 @@ class RoutineCard extends Component {
     handleDeleteDialogClose = (result) => {
         this.setState({ deleteDialog: { open: false }})
     }
+
+    handleDuplicateClick = () => {
+        let routine = Object.assign({}, this.props.routine)
+        routine.name = routine.name + '(1)'
+
+        this.setState(prevState => ({
+            routineDialog: {
+                open: true,
+                routine: routine,
+                intent: INTENTS.COPY
+            }
+        }))
+    }
+
+    handleRoutineDialogClose = () => {
+        this.setState({
+            routineDialog: { ...initialState.routineDialog }
+        })
+    }
+
+    handleEditClick = () => {
+        this.setState(prevState => ({
+            routineDialog: {
+                open: true,
+                routine: this.props.routine,
+                intent: INTENTS.EDIT,
+            }
+        }))
+    }
+
 
     render() {
         return (
@@ -47,6 +87,7 @@ class RoutineCard extends Component {
                             zDepth={2} 
                             style={styles.fab}
                             mini={true}
+                            onClick={this.handleEditClick}
                         >
                             <ContentCreate />
                         </FloatingActionButton>
@@ -57,7 +98,7 @@ class RoutineCard extends Component {
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem primaryText="Duplicate" />
+                        <MenuItem primaryText="Duplicate" onClick={this.handleDuplicateClick} />
                         <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
                     </IconMenu>
                     <CardText style={styles.text}>
@@ -77,6 +118,12 @@ class RoutineCard extends Component {
                     handleClose={this.handleDeleteDialogClose}
                     routine={this.props.routine}
                     style={styles.deleteDialog}
+                />
+                <RoutineDialog
+                    open={this.state.routineDialog.open}
+                    intent={this.state.routineDialog.intent}
+                    routine={this.state.routineDialog.routine}
+                    handleClose={this.handleRoutineDialogClose}
                 />
             </div>
         )
