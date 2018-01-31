@@ -11,3 +11,15 @@ export const fetchRoutines = () => (dispatch) => {
             resolve(ROUTINES)
         })     
 }
+
+const routinesDelete = (id) => ({
+    type: 'ROUTINES_DELETE',
+    id: id
+})
+
+export const deleteRoutine = (id) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+            dispatch(routinesDelete(id))
+            resolve(ROUTINES)
+        })
+}
