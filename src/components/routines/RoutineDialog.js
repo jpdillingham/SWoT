@@ -17,7 +17,7 @@ import {grey400} from 'material-ui/styles/colors';
 import { showSnackbar } from '../app/AppActions.js'
 
 import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
-import { getGuid } from '../../util';
+import { getGuid, swap } from '../../util';
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton'
 import RoutineExerciseList from './RoutineExerciseList';
 
@@ -142,7 +142,7 @@ class RoutineDialog extends Component {
         let index = arr.indexOf(exercise);
 
         if (index > 0) {
-            arr = this.swap(arr, index, index - 1);     
+            arr = swap(arr, index, index - 1);     
         }
 
         this.setState({ routine: { ...this.state.routine, exercises: arr } }) 
@@ -153,20 +153,10 @@ class RoutineDialog extends Component {
         let index = arr.indexOf(exercise);
 
         if (index < arr.length - 1) {
-            arr = this.swap(arr, index, index + 1);
+            arr = swap(arr, index, index + 1);
         }
 
         this.setState({ routine: { ...this.state.routine, exercises: arr } })
-    }
-
-    swap = (array, index1, index2) => {
-        let copy = array.slice();
-
-        let temp = copy[index1];
-        copy[index1] = copy[index2];
-        copy[index2] = temp;
-
-        return copy;
     }
 
     handleEditExerciseMenuClick = (exercise) => {
