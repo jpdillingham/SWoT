@@ -19,6 +19,7 @@ import { showSnackbar } from '../app/AppActions.js'
 import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
 import { getGuid } from '../../util';
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton'
+import RoutineExerciseList from './RoutineExerciseList';
 
 
 const styles = {
@@ -136,6 +137,22 @@ class RoutineDialog extends Component {
         }
     }
 
+    handleMoveUpExerciseMenuClick = (exercise) => {
+        console.log(exercise);
+    }
+
+    handleMoveDownExerciseMenuClick = (exercise) => {
+
+    }
+
+    handleEditExerciseMenuClick = (exercise) => {
+
+    }
+
+    handleEditExerciseMenuClick = (exercise) => {
+
+    }
+
     render() {
         return (
             <div>
@@ -165,6 +182,13 @@ class RoutineDialog extends Component {
                         style={styles.name}
                         onChange={this.handleNameChange}
                     /><br />
+                    <RoutineExerciseList 
+                        exercises={this.state.routine.exercises} 
+                        onMoveUpClick={this.handleMoveUpExerciseMenuClick}
+                        onMoveDownClick={this.handleMoveDownExerciseMenuClick}
+                        onEditClick={this.handleEditExerciseMenuClick}
+                        onDeleteClick={this.handleDeleteExerciseMenuClick}
+                    />
                 </Dialog>
             </div>
         )
