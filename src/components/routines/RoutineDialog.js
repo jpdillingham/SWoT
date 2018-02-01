@@ -142,16 +142,31 @@ class RoutineDialog extends Component {
         let index = arr.indexOf(exercise);
 
         if (index > 0) {
-            let temp = arr[index - 1];
-            arr[index - 1] = exercise;
-            arr[index] = temp;        
+            arr = this.swap(arr, index, index - 1);     
+        }
+
+        this.setState({ routine: { ...this.state.routine, exercises: arr } }) 
+    }
+
+    handleMoveDownExerciseMenuClick = (exercise) => {
+        let arr = this.state.routine.exercises.slice();
+        let index = arr.indexOf(exercise);
+
+        if (index < arr.length - 1) {
+            arr = this.swap(arr, index, index + 1);
         }
 
         this.setState({ routine: { ...this.state.routine, exercises: arr } })
     }
 
-    handleMoveDownExerciseMenuClick = (exercise) => {
+    swap = (array, index1, index2) => {
+        let copy = array.slice();
 
+        let temp = copy[index1];
+        copy[index1] = copy[index2];
+        copy[index2] = temp;
+
+        return copy;
     }
 
     handleEditExerciseMenuClick = (exercise) => {
