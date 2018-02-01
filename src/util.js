@@ -7,3 +7,13 @@ export const getGuid = () => {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();
 }
+
+export const swap = (array, index1, index2) => {
+    let copy = array.slice();
+
+    let temp = copy[index1];
+    copy[index1] = copy[index2];
+    copy[index2] = temp;
+
+    return copy;
+}
