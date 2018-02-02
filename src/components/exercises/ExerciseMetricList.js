@@ -4,10 +4,11 @@ import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
-import {grey400} from 'material-ui/styles/colors';
+import {grey400, black} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
 import ActionAssessment from 'material-ui/svg-icons/action/assessment';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+
 
 class ExerciseMetricList extends Component {
     render() {
@@ -17,7 +18,7 @@ class ExerciseMetricList extends Component {
                 {this.props.metrics ? this.props.metrics.map(m =>                     
                         <ListItem
                             key={m.name}
-                            leftIcon={<ActionAssessment/>}
+                            leftIcon={<ActionAssessment color={black} />}
                             rightIconButton={
                                 <IconMenu iconButtonElement={
                                     <IconButton touch={true} tooltipPosition="bottom-left">
