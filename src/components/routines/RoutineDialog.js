@@ -4,19 +4,8 @@ import { connect } from 'react-redux';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
-import ActionAssessment from 'material-ui/svg-icons/action/assessment';
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import IconMenu from 'material-ui/IconMenu';
-import IconButton from 'material-ui/IconButton';
-import {grey400} from 'material-ui/styles/colors';
 
-import { showSnackbar } from '../app/AppActions.js'
-
-import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
+import { INTENTS } from '../../constants';
 import { getGuid, swap } from '../../util';
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton'
 import RoutineExerciseList from './RoutineExerciseList';
