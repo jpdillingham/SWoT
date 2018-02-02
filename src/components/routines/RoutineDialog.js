@@ -14,18 +14,9 @@ const styles = {
     name: {
         width: '100%'
     },
-    type: {
-        width: '100%'
-    },
-    url: {
-        width: '100%'
-    },
     dialogContent: {
         width: 400,
     },
-    addMetric: {
-        float: 'left'
-    }
 }
 
 const initialState = {
