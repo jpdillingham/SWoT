@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
+import RoutineExerciseList from './RoutineExerciseList';
+import SaveRetryFlatButton from '../shared/SaveRetryFlatButton'
 import TextField from 'material-ui/TextField';
 
 import { INTENTS } from '../../constants';
 import { getGuid, swap } from '../../util';
-import SaveRetryFlatButton from '../shared/SaveRetryFlatButton'
-import RoutineExerciseList from './RoutineExerciseList';
-
 
 const styles = {
     name: {
