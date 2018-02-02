@@ -6,7 +6,6 @@ import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import {grey400} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
-import ActionAssessment from 'material-ui/svg-icons/action/assessment';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Divider from 'material-ui/Divider';
 
