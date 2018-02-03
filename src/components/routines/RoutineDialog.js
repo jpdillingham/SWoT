@@ -138,12 +138,8 @@ class RoutineDialog extends Component {
         this.setState({ routine: { ...this.state.routine, exercises: arr } })
     }
 
-    handleEditExerciseMenuClick = (exercise) => {
-
-    }
-
-    handleEditExerciseMenuClick = (exercise) => {
-
+    handleDeleteExerciseMenuClick = (exercise) => {
+        this.setState({ routine: { ...this.state.routine, exercises: this.state.routine.exercises.filter(e => e.id !== exercise.id) }})
     }
 
     render() {
