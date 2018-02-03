@@ -50,7 +50,6 @@ class RoutineExerciseList extends Component {
                                     <MenuItem onClick={() => this.props.onMoveUpClick(e)}>Move Up</MenuItem>
                                     <MenuItem onClick={() => this.props.onMoveDownClick(e)}>Move Down</MenuItem>
                                     <Divider />
-                                    <MenuItem onClick={() => this.props.onEditClick(e)}>Edit</MenuItem>
                                     <MenuItem onClick={() => this.props.onDeleteClick(e)}>Delete</MenuItem>
                                 </IconMenu>
                             }

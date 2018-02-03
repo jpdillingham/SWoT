@@ -179,7 +179,6 @@ class RoutineDialog extends Component {
                         exercises={this.state.routine.exercises} 
                         onMoveUpClick={this.handleMoveUpExerciseMenuClick}
                         onMoveDownClick={this.handleMoveDownExerciseMenuClick}
-                        onEditClick={this.handleEditExerciseMenuClick}
                         onDeleteClick={this.handleDeleteExerciseMenuClick}
                     />
                 </Dialog>
