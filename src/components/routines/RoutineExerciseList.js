@@ -36,7 +36,7 @@ class RoutineExerciseList extends Component {
                             leftIcon={                        
                             <img alt={e.type} 
                                 style={styles.leftIcon} 
-                                src={process.env.PUBLIC_URL + '/img/' + e.type + '.png'}
+                                src={process.env.PUBLIC_URL + '/img/' + e.type.toLowerCase() + '.png'}
                             />
                             }
                             rightIconButton={
