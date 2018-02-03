@@ -27,8 +27,6 @@ class RoutineExerciseList extends Component {
     }
 
     render() {
-
-
         return (
             <List>
                 <Subheader>Exercises</Subheader>
