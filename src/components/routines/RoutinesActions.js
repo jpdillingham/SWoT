@@ -7,10 +7,45 @@ const routinesPost = (routine) => ({
     routine: routine
 })
 
+export const addRoutine = (routine) => (dispatch) => {
+    return new Promise((resolve, reject) => { 
+        axios.post(endpoint, routine)
+            .then(response => {
+                if (response.status === 201) {
+                    dispatch(exercisesPost(response.data))
+                    resolve(response)
+                }
+                else {
+                    reject("Unknown POST response code (expected 201, received " + response.status + ").")
+                }
+                
+            }, error => {
+                reject(error)
+            })
+        })
+}
+
 const routinesPut = (routine) => ({
     type: 'ROUTINES_PUT',
     routine: routine
 })
+
+export const updateRoutine = (routine) => (dispatch) => {
+    return new Promise((resolve, reject) => {
+        axios.put(endpoint, routine)
+            .then(response => {
+                if (response.status === 200) {
+                    dispatch(exercisesPut(response.data))
+                    resolve(response)
+                }
+                else {
+                    reject("Unknown PUT response code (expected 200, received " + response.status + ").")
+                }
+            }, error => {
+                reject(error)
+            })
+        })
+}
 
 const routinesGet = (routines) => ({
     type: 'ROUTINES_GET',
