@@ -15,7 +15,7 @@ deploy:
   bucket: swot-content
   skip_cleanup: true
   local_dir: build
-  region: eu-east-1
+  region: us-east-1
   acl: public_read
   on:
     repo: jpdillingham/SWoT
