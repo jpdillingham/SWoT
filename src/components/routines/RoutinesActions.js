@@ -2,6 +2,16 @@ import axios from 'axios'
 
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines'
 
+const routinesPost = (routine) => ({
+    type: 'ROUTINES_POST',
+    routine: routine
+})
+
+const routinesPut = (routine) => ({
+    type: 'ROUTINES_PUT',
+    routine: routine
+})
+
 const routinesGet = (routines) => ({
     type: 'ROUTINES_GET',
     routines: routines
