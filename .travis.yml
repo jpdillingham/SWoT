@@ -1,3 +1,12 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+  - node_modules
+script:
+  - npm test
+  - npm run build
 deploy:
   provider: s3
   access_key_id: AKIAIAMHE73TSFTKF4SQ
