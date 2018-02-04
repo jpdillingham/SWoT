@@ -12,7 +12,7 @@ export const addRoutine = (routine) => (dispatch) => {
         axios.post(endpoint, routine)
             .then(response => {
                 if (response.status === 201) {
-                    dispatch(exercisesPost(response.data))
+                    dispatch(routinesPost(response.data))
                     resolve(response)
                 }
                 else {
@@ -35,7 +35,7 @@ export const updateRoutine = (routine) => (dispatch) => {
         axios.put(endpoint, routine)
             .then(response => {
                 if (response.status === 200) {
-                    dispatch(exercisesPut(response.data))
+                    dispatch(routinesPut(response.data))
                     resolve(response)
                 }
                 else {
