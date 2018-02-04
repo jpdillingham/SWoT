@@ -19,3 +19,4 @@ deploy:
   acl: public_read
   on:
     repo: jpdillingham/SWoT
+    branch: master
