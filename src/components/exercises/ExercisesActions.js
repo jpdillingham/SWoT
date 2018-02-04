@@ -70,7 +70,7 @@ export const deleteExercise = (id) => (dispatch) => {
             }, error => {
                 reject(error)
             })
-        })
+    })
 }
 
 const exercisesGet = (exercises) => ({
@@ -81,11 +81,11 @@ const exercisesGet = (exercises) => ({
 export const fetchExercises = () => (dispatch) => {
     return new Promise((resolve, reject) => {
         axios.get(endpoint)
-        .then(response => { 
-            dispatch(exercisesGet(response.data))
-            resolve(response)
-        }, error => {
-            reject(error)
-        })     
+            .then(response => { 
+                dispatch(exercisesGet(response.data))
+                resolve(response)
+            }, error => {
+                reject(error)
+            })     
     }) 
 }
