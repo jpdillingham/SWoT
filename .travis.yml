@@ -14,6 +14,8 @@ deploy:
     secure: JuDtxp4QZnXMda0uaRhZMJsVGMFyzjmnraNJGkFR+uqO9EsJxmxAnc1KEu71AwUgnjbsnBmreq9VGJ4JZc0B89QMgSbdJDrWTd1YE79mc+01dUHcBsVtJ5dIB+00nnq9PvNe0CGDqd73tVBpyrJzY1ArWxqHP3SSysX9xOVQm3gTGhQQyc1AKS8KP2MkPyLI9BhgbGw4A3e0TYc7ZuZJkzjKIuj4Aay3xQ5XNB6MM/U7iS3Hi3t++88CtEgWkbLexcIHJ9h+ckoP2WtMdaonFLZyUdAE12+CMeQQm/3fPDCrbfRlhme9L3ZipXyHi/smQM1Fun9yBCsXXT4h3AfQSuYb1+PhL55vdAcseP21yZkxnTL27RQONy4YHyc7YTXJliJ2MdjrKXkJvH12x/+Y+KSeet+SPGM3m5T0u3bhAYNqUk9V65g6KrCmPEfDOlN8ej+kdYF1emspoBlNTHRlVNYGfvG99dRAwYotEM57MFYHSbjhE2fWf8j0mtSNtNnOzsUR005IGruFCXGqZsN88Yp4jhBwJ0afi1AAaEaGBiFF9XxgBKreCBE53mql0dxuG5Ukeysv5DjxyByo4r5v4dNlT16mk9jLxln+Ze4lPFSn9se8uAmRYp07HbRzr0W6tuEbL2W3cuXrNIXBhepQVpHjeBuQ0iFNi4UQroXsACQ=
   bucket: swot-content
   skip_cleanup: true
+  local_dir: build
+  region: eu-east-1
   acl: public_read
   on:
     repo: jpdillingham/SWoT
