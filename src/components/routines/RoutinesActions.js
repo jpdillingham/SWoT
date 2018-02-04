@@ -1,3 +1,7 @@
+import axios from 'axios'
+
+const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
+
 import { ROUTINES } from '../../constants'
 
 const routinesGet = (routines) => ({
