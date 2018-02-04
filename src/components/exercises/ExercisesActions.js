@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
+const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/exercises'
 
 const exercisesPost = (exercise) => ({
     type: 'EXERCISES_POST',
