@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ROUTINES } from '../../constants'
 
-const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment'
+const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines'
 
 const routinesGet = (routines) => ({
     type: 'ROUTINES_GET',
@@ -10,9 +10,14 @@ const routinesGet = (routines) => ({
 
 export const fetchRoutines = () => (dispatch) => {
     return new Promise((resolve, reject) => {
-            dispatch(routinesGet(ROUTINES))
-            resolve(ROUTINES)
-        })     
+        axios.get(endpoint)
+        .then(response => {
+            dispatch(routinesGet(response.data))
+            resolve(response)
+        }, error => {
+            reject(error)
+        })    
+    })
 }
 
 const routinesDelete = (id) => ({
