@@ -51,7 +51,7 @@ class RoutineDialog extends Component {
         }
         else {
             this.setState(prevState => ({
-                routine: { ...prevState.exercise, name: value },
+                routine: { ...prevState.routine, name: value },
                 validationErrors: {  ...prevState.validationErrors, name: '' }
             }))
         }
