@@ -7,8 +7,12 @@ import RoutineExerciseList from './RoutineExerciseList';
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton'
 import TextField from 'material-ui/TextField';
 
+import RoutineExerciseDialog from './RoutineExerciseDialog';
+
 import { INTENTS } from '../../constants';
 import { getGuid, swap } from '../../util';
+
+import { fetchExercises } from '../exercises/ExercisesActions'
 
 const styles = {
     name: {
@@ -17,6 +21,9 @@ const styles = {
     dialogContent: {
         width: 400,
     },
+    addExercise: {
+        float: 'left'
+    },
 }
 
 const initialState = {
@@ -24,6 +31,9 @@ const initialState = {
         id: getGuid(),
         name: '',
         exercises: []
+    },
+    exerciseDialog: {
+        open: false
     },
     validationErrors: {
         name: '',
@@ -55,6 +65,12 @@ class RoutineDialog extends Component {
                 validationErrors: {  ...prevState.validationErrors, name: '' }
             }))
         }
+    }
+
+    handleAddExerciseClick = () => {
+        this.props.fetchExercises().then(
+            this.setState({ exerciseDialog: { open: true }})
+        )
     }
 
     handleSaveClick = () => {
@@ -142,6 +158,13 @@ class RoutineDialog extends Component {
         this.setState({ routine: { ...this.state.routine, exercises: this.state.routine.exercises.filter(e => e.id !== exercise.id) }})
     }
 
+    handleExerciseDialogClose = (result) => {
+        if (result.added) {
+            this.setState({ routine: { ...this.state.routine, exercises: this.state.routine.exercises.concat(result.exercise) }})
+        }
+        this.setState({ exerciseDialog: { open: false }});
+    }
+
     render() {
         return (
             <div>
@@ -150,7 +173,7 @@ class RoutineDialog extends Component {
                     autoScrollBodyContent={true}
                     actions={
                         <div>
-                            <FlatButton label="Add Exercise" onClick={this.handleAddMetricClick} style={styles.addMetric} />
+                            <FlatButton label="Add Exercise" onClick={this.handleAddExerciseClick} style={styles.addExercise} />
                             <FlatButton label="Cancel" onClick={this.handleCancelClick} />
                             <SaveRetryFlatButton 
                                 onClick={this.handleSaveClick} 
@@ -178,16 +201,23 @@ class RoutineDialog extends Component {
                         onDeleteClick={this.handleDeleteExerciseMenuClick}
                     />
                 </Dialog>
+                <RoutineExerciseDialog
+                    open={this.state.exerciseDialog.open} 
+                    exercises={this.props.exercises}
+                    handleClose={this.handleExerciseDialogClose}
+                />
             </div>
         )
     }
 }
 
 const mapStateToProps = (state) => ({
-    existingNames: state.routines.map(e => e.name)
+    existingNames: state.routines.map(e => e.name),
+    exercises: state.exercises,
 })
 
 const mapDispatchToProps = {
+    fetchExercises,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutineDialog)
