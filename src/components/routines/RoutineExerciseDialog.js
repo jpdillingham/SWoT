@@ -28,7 +28,7 @@ class RoutineExerciseDialog extends Component {
     }
 
     handleCancelClick = () => {
-        this.props.handleClose()
+        this.props.handleClose({ cancelled: true })
     }
 
     handleExerciseChange = (event, index, value) => {
