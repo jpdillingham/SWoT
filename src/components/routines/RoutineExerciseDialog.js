@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import { INTENTS } from '../../constants';
 
 const styles = {
     dialog: {
@@ -33,7 +31,7 @@ class RoutineExerciseDialog extends Component {
 
     handleExerciseChange = (event, index, value) => {
         this.setState(prevState => ({
-            exercise: this.props.exercises.find(e => e.id == value)
+            exercise: this.props.exercises.find(e => e.id === value)
         }))
     }
 
