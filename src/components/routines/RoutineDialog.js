@@ -13,6 +13,8 @@ import { INTENTS } from '../../constants';
 import { getGuid, swap } from '../../util';
 
 import { fetchExercises } from '../exercises/ExercisesActions'
+import { updateRoutine, addRoutine } from '../routines/RoutinesActions'
+import { showSnackbar } from '../app/AppActions'
 
 const styles = {
     name: {
@@ -83,10 +85,20 @@ class RoutineDialog extends Component {
                 this.setState({ api: { ...this.state.api, isExecuting: true } })
 
                 if (this.props.intent === INTENTS.EDIT) {
-                    // edit routine
+                    this.props.updateRoutine(this.state.routine)
+                    .then((response) => {
+                        this.handleApiSuccess('Updated Routine \'' + response.data.name + '\'.')
+                    }, (error) => {
+                        this.handleApiError(error);
+                    })
                 }
                 else {
-                    // add routine
+                    this.props.addRoutine(this.state.routine)
+                    .then((response) => {
+                        this.handleApiSuccess('Added Routine \'' + response.data.name + '\'.')
+                    }, (error) => {
+                        this.handleApiError(error);
+                    })
                 }
             }
         })
@@ -218,6 +230,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     fetchExercises,
+    updateRoutine,
+    addRoutine,
+    showSnackbar
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutineDialog)
