@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
+import {Card, CardHeader, CardText } from 'material-ui/Card';
 import { List } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
@@ -103,15 +103,11 @@ class RoutineCard extends Component {
                     </IconMenu>
                     <CardText style={styles.text}>
                         <List>
-                            {this.props.routine.exercises ? this.props.routine.exercises.map(e =>                     
-                                <RoutineExerciseListItem key={e.id} exercise={e} />
+                            {this.props.routine.exercises ? this.props.routine.exercises.map((e, index) =>                     
+                                <RoutineExerciseListItem key={index} exercise={e} />
                             ) : ''}
                         </List>
                     </CardText>
-                    <CardActions style={styles.actions}>
-                        {/*<FlatButton onClick={this.handleDeleteClick}>Duplicate</FlatButton>
-                        <FlatButton onClick={this.handleDeleteClick}>Delete</FlatButton>*/}
-                    </CardActions>
                 </Card>
                 <RoutineDeleteDialog 
                     open={this.state.deleteDialog.open} 
@@ -165,11 +161,6 @@ const styles = {
     },
     text: {
         /* marginBottom: 40 */
-    },
-    actions: {
-        position: 'absolute',
-        bottom: 0,
-        right: 0
     },
     link: {
         cursor: 'pointer',

@@ -144,9 +144,8 @@ class RoutineDialog extends Component {
         }
     }
 
-    handleMoveUpExerciseMenuClick = (exercise) => {
+    handleMoveUpExerciseMenuClick = (index) => {
         let arr = this.state.routine.exercises.slice();
-        let index = arr.indexOf(exercise);
 
         if (index > 0) {
             arr = swap(arr, index, index - 1);     
@@ -155,9 +154,8 @@ class RoutineDialog extends Component {
         this.setState({ routine: { ...this.state.routine, exercises: arr } }) 
     }
 
-    handleMoveDownExerciseMenuClick = (exercise) => {
+    handleMoveDownExerciseMenuClick = (index) => {
         let arr = this.state.routine.exercises.slice();
-        let index = arr.indexOf(exercise);
 
         if (index < arr.length - 1) {
             arr = swap(arr, index, index + 1);
@@ -166,8 +164,11 @@ class RoutineDialog extends Component {
         this.setState({ routine: { ...this.state.routine, exercises: arr } })
     }
 
-    handleDeleteExerciseMenuClick = (exercise) => {
-        this.setState({ routine: { ...this.state.routine, exercises: this.state.routine.exercises.filter(e => e.id !== exercise.id) }})
+    handleDeleteExerciseMenuClick = (index) => {
+        let arr = this.state.routine.exercises.slice()
+        arr.splice(index, 1)
+
+        this.setState({ routine: { ...this.state.routine, exercises: arr }})
     }
 
     handleExerciseDialogClose = (result) => {
