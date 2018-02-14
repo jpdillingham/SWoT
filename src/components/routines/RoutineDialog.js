@@ -151,7 +151,6 @@ class RoutineDialog extends Component {
             arr = swap(arr, index, index - 1);     
         }
 
-        console.log(arr);
         this.setState({ routine: { ...this.state.routine, exercises: arr } }) 
     }
 
@@ -162,12 +161,14 @@ class RoutineDialog extends Component {
             arr = swap(arr, index, index + 1);
         }
 
-        console.log(arr);
         this.setState({ routine: { ...this.state.routine, exercises: arr } })
     }
 
-    handleDeleteExerciseMenuClick = (exercise) => {
-        this.setState({ routine: { ...this.state.routine, exercises: this.state.routine.exercises.filter(e => e.id !== exercise.id) }})
+    handleDeleteExerciseMenuClick = (index) => {
+        let arr = this.state.routine.exercises.slice()
+        arr.splice(index, 1)
+
+        this.setState({ routine: { ...this.state.routine, exercises: arr }})
     }
 
     handleExerciseDialogClose = (result) => {
