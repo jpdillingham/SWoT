@@ -103,8 +103,8 @@ class RoutineCard extends Component {
                     </IconMenu>
                     <CardText style={styles.text}>
                         <List>
-                            {this.props.routine.exercises ? this.props.routine.exercises.map(e =>                     
-                                <RoutineExerciseListItem key={e.id} exercise={e} />
+                            {this.props.routine.exercises ? this.props.routine.exercises.map((e, index) =>                     
+                                <RoutineExerciseListItem key={index} exercise={e} />
                             ) : ''}
                         </List>
                     </CardText>

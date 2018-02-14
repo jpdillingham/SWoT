@@ -30,9 +30,9 @@ class RoutineExerciseList extends Component {
         return (
             <List>
                 <Subheader>Exercises</Subheader>
-                {this.props.exercises ? this.props.exercises.map(e =>                     
+                {this.props.exercises ? this.props.exercises.map((e, index) =>                     
                         <ListItem
-                            key={e.id}
+                            key={index}
                             leftIcon={                        
                             <img alt={e.type} 
                                 style={styles.leftIcon} 
@@ -45,10 +45,10 @@ class RoutineExerciseList extends Component {
                                         <MoreVertIcon color={grey400} />
                                     </IconButton>
                                 }>
-                                    <MenuItem onClick={() => this.props.onMoveUpClick(e)}>Move Up</MenuItem>
-                                    <MenuItem onClick={() => this.props.onMoveDownClick(e)}>Move Down</MenuItem>
+                                    <MenuItem onClick={() => this.props.onMoveUpClick(index)}>Move Up</MenuItem>
+                                    <MenuItem onClick={() => this.props.onMoveDownClick(index)}>Move Down</MenuItem>
                                     <Divider />
-                                    <MenuItem onClick={() => this.props.onDeleteClick(e)}>Delete</MenuItem>
+                                    <MenuItem onClick={() => this.props.onDeleteClick(index)}>Delete</MenuItem>
                                 </IconMenu>
                             }
                             primaryText={e.name}
