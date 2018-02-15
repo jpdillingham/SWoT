@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
+import LogoutButton from '../security/LogoutButton';
 
 class Navigation extends Component {
     state = {
@@ -19,7 +20,9 @@ class Navigation extends Component {
                     title="SWoT" 
                     style={styles.appBar}
                     onLeftIconButtonClick={this.toggleDrawer}
-                />
+                >
+                    <LogoutButton/>
+                </AppBar>
                 <Drawer 
                     open={this.state.drawerOpen}
                     docked={false}
