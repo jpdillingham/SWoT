@@ -33,7 +33,7 @@ class App extends Component {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
                 <div>
-                    {this.props.user == undefined ? <LoginSignupCard/> : 
+                    {this.props.user === undefined ? <LoginSignupCard/> : 
                     <div>
                     <Navigation>
                         <MenuItem containerElement={<Link to="/" />} leftIcon={<Home />} >Home</MenuItem>
