@@ -18,6 +18,8 @@ import ContentPaste from 'material-ui/svg-icons/content/content-paste'
 import ActionAccessibility from 'material-ui/svg-icons/action/accessibility'
 import Snackbar from 'material-ui/Snackbar'
 
+import LoginSignupCard from '../security/LoginSignupCard'
+
 class App extends Component {
     theme = getMuiTheme({
         palette: {
@@ -31,6 +33,8 @@ class App extends Component {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
                 <div>
+                    {this.props.user == undefined ? <LoginSignupCard/> : 
+                    <div>
                     <Navigation>
                         <MenuItem containerElement={<Link to="/" />} leftIcon={<Home />} >Home</MenuItem>
                         <MenuItem containerElement={<Link to="/exercises" />} leftIcon={<ActionAccessibility />}>Exercises</MenuItem>
@@ -43,6 +47,8 @@ class App extends Component {
                             <Route path="/routines" component={Routines}/>
                         </Switch>
                     </div>
+                    </div>
+                    }
                     <Snackbar
                         open={this.props.snackbar.visible}
                         message={this.props.snackbar.message}
@@ -63,7 +69,8 @@ const styles = {
 
 const mapStateToProps = (state, ownProps) => {
     return { 
-        snackbar: state.app.snackbar
+        snackbar: state.app.snackbar,
+        user: state.security.user,
     }
 }
 
