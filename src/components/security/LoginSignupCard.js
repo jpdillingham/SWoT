@@ -5,9 +5,6 @@ import { login } from './SecurityActions'
 
 import FlatButton from 'material-ui/FlatButton'
 
-const styles = {
-}
-
 const initialState = {
 }
 
