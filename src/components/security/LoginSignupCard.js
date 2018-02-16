@@ -7,6 +7,9 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { Card, CardHeader, CardMedia, CardTitle, CardText, CardActions } from 'material-ui/Card'
 import { white } from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider/Divider';
+import TextField from 'material-ui/TextField'
+import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
+import ActionFace from 'material-ui/svg-icons/action/face'
 
 const styles = {
     card: {
@@ -47,17 +50,20 @@ const styles = {
     loginButton: {
         marginTop: '10px',
         marginBottom: '10px',
-        marginLeft: '87px',
+        marginLeft: '95px',
         width: '200px'
     },
     registerButton: {
         marginTop: '10px',
         marginBottom: '10px',
-        marginLeft: '87px',
+        marginLeft: '95px',
         width: '200px'
     },
     buttonText: {
-        margin: 'auto'
+        marginTop: '30pt',
+        fontSize: '9pt',
+        textAlign: 'center',
+        display: 'block'
     }
 }
 const initialState = {
@@ -83,16 +89,29 @@ class LoginSignupCard extends Component {
                     </div>
                 </CardMedia>
                 <CardText>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                    Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                    Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                    <div style={{ left: '10px', right: '10px', textAlign: 'center'}}>
+                        <ActionFace style={{ marginRight: '10px' }}/>
+                        <TextField
+                            hintText="Username"
+                            floatingLabelText="Username"
+                        />
+                    </div>
+                    <div style={{ left: '10px', right: '10px', textAlign: 'center'}}>
+                        <CommunicationVpnKey style={{ marginRight: '10px' }}/>
+                        <TextField
+                            hintText="Password"
+                            floatingLabelText="Password"
+                        />
+                    </div>
                 </CardText>
                 <CardActions>
-                    <RaisedButton style={styles.loginButton} primary={true} label="Login" onClick={this.handleLoginClick} />
-                    <Divider/>
-                    <span style={styles.buttonText}>No account?</span>
-                    <RaisedButton style={styles.registerButton} label="Register" onClick={this.handleLoginClick} />
+                    <div style={{ width: '390px', position: 'relative', left: '-8px'}}>
+                        <RaisedButton style={styles.loginButton} primary={true} label="Login" onClick={this.handleLoginClick} />
+                    </div>
+                    <div style={{ width: '390px', position: 'relative', left: '-8px'}}>
+                        <span style={styles.buttonText}>No account?</span>
+                        <RaisedButton style={styles.registerButton} label="Register" onClick={this.handleLoginClick} />
+                    </div>
                 </CardActions>
             </Card>
         )
