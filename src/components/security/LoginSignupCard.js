@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { login } from './SecurityActions'
 
-import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
 import { Card, CardHeader, CardMedia, CardTitle, CardText, CardActions } from 'material-ui/Card'
 import { white } from 'material-ui/styles/colors';
 
@@ -18,7 +18,7 @@ const styles = {
     },
     media: {
         height: '200px',
-        backgroundColor: '#00bcd4',
+        backgroundColor: '#2196f3',
     },
     iconGroup: {
         position: 'relative'
@@ -43,6 +43,9 @@ const styles = {
         textAlign: 'center',
         textShadow: '2px 2px 10px #000000',
     },
+    loginButton: {
+        margin: 'auto'
+    }
 }
 const initialState = {
 }
@@ -73,7 +76,7 @@ class LoginSignupCard extends Component {
                     Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
                 </CardText>
                 <CardActions>
-                    <FlatButton label="Login" onClick={this.handleLoginClick} />
+                    <RaisedButton style={styles.loginButton} primary={true} label="Login" onClick={this.handleLoginClick} />
                 </CardActions>
             </Card>
         )
