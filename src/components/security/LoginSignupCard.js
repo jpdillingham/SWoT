@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import { login } from './SecurityActions'
 
 import RaisedButton from 'material-ui/RaisedButton'
-import { Card, CardHeader, CardMedia, CardTitle, CardText, CardActions } from 'material-ui/Card'
-import { white } from 'material-ui/styles/colors';
-import Divider from 'material-ui/Divider/Divider';
+import { Card, CardMedia, CardText, CardActions } from 'material-ui/Card'
 import TextField from 'material-ui/TextField'
 import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
 import ActionFace from 'material-ui/svg-icons/action/face'
