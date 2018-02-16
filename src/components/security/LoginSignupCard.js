@@ -16,6 +16,10 @@ const styles = {
     overlay: {
         maginTop: '-100px'
     },
+    media: {
+        height: '200px',
+        backgroundColor: '#00bcd4',
+    },
     iconGroup: {
         position: 'relative'
     },
@@ -23,21 +27,22 @@ const styles = {
         position: 'relative'
     },
     iconForeground: {
-        position: 'absolute',
+        position: 'relative',
         width: '128px',
         height: '128px',
-        top: 0,
+        top: '20px',
         left: '131px'
     },
     iconText: {
         position: 'absolute',
         left: 0,
-        bottom: '10px',
+        color: 'white',
+        bottom: '-60px',
         width: '390px',
-        color: white,
         fontSize: '24pt',
-        textAlign: 'center'
-    }
+        textAlign: 'center',
+        textShadow: '2px 2px 10px #000000',
+    },
 }
 const initialState = {
 }
@@ -53,15 +58,14 @@ class LoginSignupCard extends Component {
         return (
             <Card zDepth={4} style={styles.card}>
                 <CardMedia
-
+                    style={styles.media}
                 >
                     <div style={styles.iconGroup}>
-                        <img style={styles.iconBackground} src="/img/geometric.jpg" alt="" />
+                        {/*<img style={styles.iconBackground} src="/img/geometric.jpg" alt="" /> */}
                         <img style={styles.iconForeground} src="/img/weightlifting.png" alt="" />
                         <span style={styles.iconText}><strong>S</strong>imple <strong>Wo</strong>rkout <strong>T</strong>racker</span>
                     </div>
                 </CardMedia>
-                <CardTitle title="Card title" subtitle="Card subtitle" />
                 <CardText>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
