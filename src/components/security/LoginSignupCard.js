@@ -6,6 +6,7 @@ import { login } from './SecurityActions'
 import RaisedButton from 'material-ui/RaisedButton'
 import { Card, CardHeader, CardMedia, CardTitle, CardText, CardActions } from 'material-ui/Card'
 import { white } from 'material-ui/styles/colors';
+import Divider from 'material-ui/Divider/Divider';
 
 const styles = {
     card: {
@@ -44,6 +45,18 @@ const styles = {
         textShadow: '2px 2px 10px #000000',
     },
     loginButton: {
+        marginTop: '10px',
+        marginBottom: '10px',
+        marginLeft: '87px',
+        width: '200px'
+    },
+    registerButton: {
+        marginTop: '10px',
+        marginBottom: '10px',
+        marginLeft: '87px',
+        width: '200px'
+    },
+    buttonText: {
         margin: 'auto'
     }
 }
@@ -77,6 +90,9 @@ class LoginSignupCard extends Component {
                 </CardText>
                 <CardActions>
                     <RaisedButton style={styles.loginButton} primary={true} label="Login" onClick={this.handleLoginClick} />
+                    <Divider/>
+                    <span style={styles.buttonText}>No account?</span>
+                    <RaisedButton style={styles.registerButton} label="Register" onClick={this.handleLoginClick} />
                 </CardActions>
             </Card>
         )
