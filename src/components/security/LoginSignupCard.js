@@ -67,6 +67,7 @@ const styles = {
     }
 }
 const initialState = {
+    loginMode: true
 }
 
 class LoginSignupCard extends Component {
@@ -74,6 +75,10 @@ class LoginSignupCard extends Component {
 
     handleLoginClick = () => {
         this.props.login({ name: 'a. user'})
+    }
+
+    toggleMode = () => {
+        this.setState({ loginMode: !this.state.loginMode })
     }
 
     render() {
@@ -89,6 +94,8 @@ class LoginSignupCard extends Component {
                     </div>
                 </CardMedia>
                 <CardText>
+                    {this.state.loginMode ? 
+                    <div>
                     <div style={{ left: '10px', right: '10px', textAlign: 'center'}}>
                         <ActionFace style={{ marginRight: '10px' }}/>
                         <TextField
@@ -102,7 +109,30 @@ class LoginSignupCard extends Component {
                             hintText="Password"
                             floatingLabelText="Password"
                         />
-                    </div>
+                    </div></div> :
+                                        <div><div style={{ left: '10px', right: '10px', textAlign: 'center'}}>
+                                        <ActionFace style={{ marginRight: '10px' }}/>
+                                        <TextField
+                                            hintText="Username"
+                                            floatingLabelText="Username"
+                                        />
+                                    </div>
+                                    <div style={{ left: '10px', right: '10px', textAlign: 'center'}}>
+                                        <CommunicationVpnKey style={{ marginRight: '10px' }}/>
+                                        <TextField
+                                            hintText="Password"
+                                            floatingLabelText="Password"
+                                        />
+                                    </div>
+                                    <div style={{ left: '10px', right: '10px', textAlign: 'center'}}>
+                                        <CommunicationVpnKey style={{ marginRight: '10px' }}/>
+                                        <TextField
+                                            hintText="Repeat Password"
+                                            floatingLabelText="Repeat Password"
+                                        />
+                                    </div>
+                                    </div>
+                    }
                 </CardText>
                 <CardActions>
                     <div style={{ width: '390px', position: 'relative', left: '-8px'}}>
@@ -110,7 +140,7 @@ class LoginSignupCard extends Component {
                     </div>
                     <div style={{ width: '390px', position: 'relative', left: '-8px'}}>
                         <span style={styles.buttonText}>No account?</span>
-                        <RaisedButton style={styles.registerButton} label="Register" onClick={this.handleLoginClick} />
+                        <RaisedButton style={styles.registerButton} label="Register" onClick={this.toggleMode} />
                     </div>
                 </CardActions>
             </Card>
