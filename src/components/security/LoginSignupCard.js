@@ -4,7 +4,41 @@ import { connect } from 'react-redux';
 import { login } from './SecurityActions'
 
 import FlatButton from 'material-ui/FlatButton'
+import { Card, CardHeader, CardMedia, CardTitle, CardText, CardActions } from 'material-ui/Card'
+import { white } from 'material-ui/styles/colors';
 
+const styles = {
+    card: {
+        width: '390px',
+        margin: 'auto',
+        marginTop: '100px'
+    },
+    overlay: {
+        maginTop: '-100px'
+    },
+    iconGroup: {
+        position: 'relative'
+    },
+    iconBackground: {
+        position: 'relative'
+    },
+    iconForeground: {
+        position: 'absolute',
+        width: '128px',
+        height: '128px',
+        top: 0,
+        left: '131px'
+    },
+    iconText: {
+        position: 'absolute',
+        left: 0,
+        bottom: '10px',
+        width: '390px',
+        color: white,
+        fontSize: '24pt',
+        textAlign: 'center'
+    }
+}
 const initialState = {
 }
 
@@ -17,7 +51,27 @@ class LoginSignupCard extends Component {
 
     render() {
         return (
-            <FlatButton label="Login" onClick={this.handleLoginClick} />
+            <Card zDepth={4} style={styles.card}>
+                <CardMedia
+
+                >
+                    <div style={styles.iconGroup}>
+                        <img style={styles.iconBackground} src="/img/geometric.jpg" alt="" />
+                        <img style={styles.iconForeground} src="/img/weightlifting.png" alt="" />
+                        <span style={styles.iconText}><strong>S</strong>imple <strong>Wo</strong>rkout <strong>T</strong>racker</span>
+                    </div>
+                </CardMedia>
+                <CardTitle title="Card title" subtitle="Card subtitle" />
+                <CardText>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+                    Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+                    Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                </CardText>
+                <CardActions>
+                    <FlatButton label="Login" onClick={this.handleLoginClick} />
+                </CardActions>
+            </Card>
         )
     }
 }
