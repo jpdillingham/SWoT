@@ -9,6 +9,9 @@ import TextField from 'material-ui/TextField'
 import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
 import ActionFace from 'material-ui/svg-icons/action/face'
 
+import LoginCard from './LoginCard'
+import RegisterCard from './RegisterCard';
+
 const styles = {
     card: {
         width: '390px',
@@ -82,54 +85,16 @@ class LoginSignupCard extends Component {
     render() {
         return (
             <Card zDepth={4} style={styles.card}>
-                <CardMedia
-                    style={styles.media}
-                >
+                <CardMedia style={styles.media}>
                     <div style={styles.iconGroup}>
-                        {/*<img style={styles.iconBackground} src="/img/geometric.jpg" alt="" /> */}
                         <img style={styles.iconForeground} src="/img/weightlifting.png" alt="" />
                         <span style={styles.iconText}><strong>S</strong>imple <strong>Wo</strong>rkout <strong>T</strong>racker</span>
                     </div>
                 </CardMedia>
                 <CardText>
                     {this.state.loginMode ? 
-                    <div>
-                    <div style={{ left: '10px', right: '10px', textAlign: 'center'}}>
-                        <ActionFace style={{ marginRight: '10px' }}/>
-                        <TextField
-                            hintText="Username"
-                            floatingLabelText="Username"
-                        />
-                    </div>
-                    <div style={{ left: '10px', right: '10px', textAlign: 'center'}}>
-                        <CommunicationVpnKey style={{ marginRight: '10px' }}/>
-                        <TextField
-                            hintText="Password"
-                            floatingLabelText="Password"
-                        />
-                    </div></div> :
-                                        <div><div style={{ left: '10px', right: '10px', textAlign: 'center'}}>
-                                        <ActionFace style={{ marginRight: '10px' }}/>
-                                        <TextField
-                                            hintText="Username"
-                                            floatingLabelText="Username"
-                                        />
-                                    </div>
-                                    <div style={{ left: '10px', right: '10px', textAlign: 'center'}}>
-                                        <CommunicationVpnKey style={{ marginRight: '10px' }}/>
-                                        <TextField
-                                            hintText="Password"
-                                            floatingLabelText="Password"
-                                        />
-                                    </div>
-                                    <div style={{ left: '10px', right: '10px', textAlign: 'center'}}>
-                                        <CommunicationVpnKey style={{ marginRight: '10px' }}/>
-                                        <TextField
-                                            hintText="Repeat Password"
-                                            floatingLabelText="Repeat Password"
-                                        />
-                                    </div>
-                                    </div>
+                        <LoginCard/> :
+                        <RegisterCard/>
                     }
                 </CardText>
                 <CardActions>
