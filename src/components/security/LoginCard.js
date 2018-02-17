@@ -20,22 +20,20 @@ class LoginCard extends Component {
     render() {
         return(
             <div>
-                <CardText>
-            <div style={styles.group}>
-                <ActionFace style={styles.icon}/>
-                <TextField
-                    hintText="Username"
-                    floatingLabelText="Username"
-                />
-            </div>
-            <div style={styles.group}>
-                <CommunicationVpnKey style={styles.icon}/>
-                <TextField
-                    hintText="Password"
-                    floatingLabelText="Password"
-                />
-            </div>
-            </CardText>
+                <div style={styles.group}>
+                    <ActionFace style={styles.icon}/>
+                    <TextField
+                        hintText="Username"
+                        floatingLabelText="Username"
+                    />
+                </div>
+                <div style={styles.group}>
+                    <CommunicationVpnKey style={styles.icon}/>
+                    <TextField
+                        hintText="Password"
+                        floatingLabelText="Password"
+                    />
+                </div>
             </div>
         )
     }
