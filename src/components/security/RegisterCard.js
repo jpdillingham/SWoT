@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import ActionFace from 'material-ui/svg-icons/action/face'
 import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
 import TextField from 'material-ui/TextField'
-import { CardText, CardActions } from 'material-ui/Card';
-import RaisedButton from 'material-ui/RaisedButton'
 
 const styles = {
     group: {

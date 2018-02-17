@@ -5,9 +5,6 @@ import { login } from './SecurityActions'
 
 import RaisedButton from 'material-ui/RaisedButton'
 import { Card, CardMedia, CardText, CardActions } from 'material-ui/Card'
-import TextField from 'material-ui/TextField'
-import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
-import ActionFace from 'material-ui/svg-icons/action/face'
 
 import LoginCard from './LoginCard'
 import RegisterCard from './RegisterCard';
