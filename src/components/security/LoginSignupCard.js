@@ -75,7 +75,11 @@ class LoginSignupCard extends Component {
         this.props.login({ name: 'a. user'})
     }
 
-    toggleMode = () => {
+    handleRegisterClick = () => {
+        alert("register!")
+    }
+
+    handleToggleClick = () => {
         this.setState({ loginMode: !this.state.loginMode })
     }
 
@@ -88,21 +92,16 @@ class LoginSignupCard extends Component {
                         <span style={styles.iconText}><strong>S</strong>imple <strong>Wo</strong>rkout <strong>T</strong>racker</span>
                     </div>
                 </CardMedia>
-                <CardText>
-                    {this.state.loginMode ? 
-                        <LoginCard/> :
-                        <RegisterCard/>
-                    }
-                </CardText>
-                <CardActions>
-                    <div style={{ width: '390px', position: 'relative', left: '-8px'}}>
-                        <RaisedButton style={styles.loginButton} primary={true} label="Login" onClick={this.handleLoginClick} />
-                    </div>
-                    <div style={{ width: '390px', position: 'relative', left: '-8px'}}>
-                        <span style={styles.buttonText}>No account?</span>
-                        <RaisedButton style={styles.registerButton} label="Register" onClick={this.toggleMode} />
-                    </div>
-                </CardActions>
+                {this.state.loginMode ? 
+                    <LoginCard 
+                        onLoginClick={this.handleLoginClick} 
+                        onToggleClick={this.handleToggleClick}
+                    /> :
+                    <RegisterCard
+                        onRegisterClick={this.handleRegisterClick} 
+                        onToggleClick={this.handleToggleClick}
+                    />
+                }
             </Card>
         )
     }
