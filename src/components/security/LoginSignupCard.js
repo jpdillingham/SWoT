@@ -15,17 +15,11 @@ const styles = {
         margin: 'auto',
         marginTop: '100px'
     },
-    overlay: {
-        maginTop: '-100px'
-    },
     media: {
         height: '200px',
         backgroundColor: '#2196f3',
     },
     iconGroup: {
-        position: 'relative'
-    },
-    iconBackground: {
         position: 'relative'
     },
     iconForeground: {
@@ -45,24 +39,6 @@ const styles = {
         textAlign: 'center',
         textShadow: '2px 2px 10px #000000',
     },
-    loginButton: {
-        marginTop: '10px',
-        marginBottom: '10px',
-        marginLeft: '95px',
-        width: '200px'
-    },
-    registerButton: {
-        marginTop: '10px',
-        marginBottom: '10px',
-        marginLeft: '95px',
-        width: '200px'
-    },
-    buttonText: {
-        marginTop: '30pt',
-        fontSize: '9pt',
-        textAlign: 'center',
-        display: 'block'
-    }
 }
 const initialState = {
     loginMode: true
