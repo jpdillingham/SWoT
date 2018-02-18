@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 
 import { login } from './SecurityActions'
 
-import RaisedButton from 'material-ui/RaisedButton'
-import { Card, CardMedia, CardText, CardActions } from 'material-ui/Card'
+import { Card, CardMedia } from 'material-ui/Card'
 
 import LoginCard from './LoginCard'
 import RegisterCard from './RegisterCard';
