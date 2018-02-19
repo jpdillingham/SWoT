@@ -33,4 +33,5 @@ export const register = (username, email, password) => (dispatch) => {
                 resolve(result);
             }
         })
+    })
 }
