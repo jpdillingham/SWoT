@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import ActionFace from 'material-ui/svg-icons/action/face'
 import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
+import CommunicationEmail from 'material-ui/svg-icons/communication/email'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { CardText, CardActions } from 'material-ui/Card'
@@ -40,10 +41,10 @@ class LoginCard extends Component {
             <div>
                 <CardText>
                     <div style={styles.group}>
-                        <ActionFace style={styles.icon}/>
+                        <CommunicationEmail style={styles.icon}/>
                         <TextField
-                            hintText="Username"
-                            floatingLabelText="Username"
+                            hintText="Email"
+                            floatingLabelText="Email"
                         />
                     </div>
                     <div style={styles.group}>

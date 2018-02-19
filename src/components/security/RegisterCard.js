@@ -41,13 +41,6 @@ class RegisterCard extends Component {
             <div>
                 <CardText>
                 <div style={styles.group}>
-                    <ActionFace style={styles.icon}/>
-                    <TextField
-                        hintText="Username"
-                        floatingLabelText="Username"
-                    />
-                </div>
-                <div style={styles.group}>
                     <CommunicationEmail style={styles.icon}/>
                     <TextField
                         hintText="Email"
