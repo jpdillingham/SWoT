@@ -50,8 +50,8 @@ class LoginSignupCard extends Component {
         this.props.login({ name: 'a. user' })
     }
 
-    handleRegisterClick = (username, email, password) => {
-        this.props.register(username, email, password)
+    handleRegisterClick = (username, password) => {
+        this.props.register(username, password)
         .then((response) => {
             console.log(response)
         }, (error) => {
