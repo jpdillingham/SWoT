@@ -1,5 +1,4 @@
-import { CognitoUserPool, CognitoUserAttribute, CognitoUser } from 'amazon-cognito-identity-js'
-
+import { CognitoUserPool } from 'amazon-cognito-identity-js'
 import { COGNITO_DATA } from '../../constants'
 
 const loginAction = (user) => ({
