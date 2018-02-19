@@ -71,7 +71,11 @@ class RegisterCard extends Component {
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
-                        <RaisedButton style={styles.button} primary={true} label="Register" onClick={this.props.onRegisterClick} />
+                        <RaisedButton 
+                            style={styles.button} 
+                            primary={true} 
+                            label="Register" 
+                            onClick={() => this.props.onRegisterClick('user', 'test@whatnet.us', 'password!')} />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Already registered?</span>

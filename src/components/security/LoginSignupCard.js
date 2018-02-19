@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { login } from './SecurityActions'
+import { login, register } from './SecurityActions'
 
 import { Card, CardMedia } from 'material-ui/Card'
 
@@ -50,8 +50,13 @@ class LoginSignupCard extends Component {
         this.props.login({ name: 'a. user'})
     }
 
-    handleRegisterClick = () => {
-        alert("register!")
+    handleRegisterClick = (username, email, password) => {
+        this.props.register(username, email, password)
+        .then((response) => {
+            console.log(response)
+        }, (error) => {
+            console.log(error)
+        })
     }
 
     handleToggleClick = () => {
@@ -88,10 +93,15 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
+/* const mapDispatchToProps = (dispatch, ownProps) => ({
     login: (user) => {
         dispatch(login(user))
-    }
-})
+    },
+    register,
+}) */
+
+const mapDispatchToProps = {
+    register,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginSignupCard);
