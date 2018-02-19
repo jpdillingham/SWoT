@@ -47,7 +47,7 @@ class LoginSignupCard extends Component {
     state = initialState
 
     handleLoginClick = () => {
-        this.props.login({ name: 'a. user'})
+        this.props.login({ name: 'a. user' })
     }
 
     handleRegisterClick = (username, email, password) => {
@@ -93,14 +93,8 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-/* const mapDispatchToProps = (dispatch, ownProps) => ({
-    login: (user) => {
-        dispatch(login(user))
-    },
-    register,
-}) */
-
 const mapDispatchToProps = {
+    login,
     register,
 }
 

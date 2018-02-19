@@ -2,14 +2,22 @@ import { CognitoUserPool, CognitoUserAttribute, CognitoUser } from 'amazon-cogni
 
 import { COGNITO_DATA } from '../../constants'
 
-export const login = (user) => ({
+const loginAction = (user) => ({
     type: 'LOGIN',
     user: user
 })
 
-export const logout = () => ({
+const logoutAction = () => ({
     type: 'LOGOUT'
 })
+
+export const login = (user) => (dispatch) => {
+    dispatch(loginAction(user));
+}
+
+export const logout = () => (dispatch) => {
+    dispatch(logoutAction());
+}
 
 export const register = (username, email, password) => (dispatch) => {
     let userPool = new CognitoUserPool(COGNITO_DATA);
