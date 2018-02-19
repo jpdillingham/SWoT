@@ -70,14 +70,16 @@ class RegisterCard extends Component {
 
     handleRegisterClick = () => {
         this.setState({ validationErrors: this.validateState() }, () => {
-            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.props.onRegisterClick(this.state.email, this.state.password);
+            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
+                this.props.onRegisterClick(this.state.info.email, this.state.info.password);
             }
         })
     }
 
     validateState = () => {
         let validationErrors = this.state.validationErrors;
+
+        // TODO: validate email
 
         if (this.state.info.password === undefined || this.state.info.password === '') {
             validationErrors = { 
