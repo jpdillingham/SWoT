@@ -97,6 +97,12 @@ class RegisterCard extends Component {
                 password: 'The password can\'t be blank.' 
             }
         }
+        else if (this.state.info.password.length < 6) {
+            validationErrors = { 
+                ...validationErrors, 
+                password: 'The password must be at least 6 characters.',
+            }
+        }
         else if (this.state.info.password !== this.state.info.password2) {
             let text = 'The supplied passwords don\'t match.';
 
