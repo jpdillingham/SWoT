@@ -35,11 +35,7 @@ class App extends Component {
                 <div>
                     {this.props.user === undefined ? <LoginSignupCard/> : 
                     <div>
-                    <Navigation>
-                        <MenuItem containerElement={<Link to="/" />} leftIcon={<Home />} >Home</MenuItem>
-                        <MenuItem containerElement={<Link to="/exercises" />} leftIcon={<ActionAccessibility />}>Exercises</MenuItem>
-                        <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ContentPaste />}>Routines</MenuItem>
-                    </Navigation>
+
                     <div style={styles.content}>
                         <Switch>
                             <Route exact path="/" component={Homepage}/>
