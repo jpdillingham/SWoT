@@ -50,7 +50,7 @@ const initialState = {
     }
 }
 
-class RegisterCard extends Component {
+class Register extends Component {
     state = initialState;
 
     handleNavigateClick = (url) => {
@@ -178,4 +178,4 @@ class RegisterCard extends Component {
     }
 }
 
-export default RegisterCard
+export default Register

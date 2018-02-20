@@ -20,7 +20,7 @@ import Snackbar from 'material-ui/Snackbar'
 
 import LoginSignupCard from '../security/LoginSignupCard'
 import Login from '../security/Login'
-import Registercard from '../security/RegisterCard'
+import Register from '../security/Register'
 import ConfirmRegistration from '../security/ConfirmRegistration'
 
 class App extends Component {
@@ -42,7 +42,7 @@ class App extends Component {
                             <Route path="/exercises" component={Exercises}/>
                             <Route path="/routines" component={Routines}/>
                             <Route path="/login" component={Login}/>
-                            <Route path="/register" component={Registercard}/>
+                            <Route path="/register" component={Register}/>
                             <Route path="/confirm" component={ConfirmRegistration}/>
                         </Switch>
                     </div>
