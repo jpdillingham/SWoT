@@ -42,6 +42,10 @@ const initialState = {
 class ConfirmCard extends Component {
     state = initialState;
 
+    handleNavigateClick = (url) => {
+        window.location.href = '/' + url
+    }
+
     handleConfirmClick = () => {
         this.props.onConfirmClick(this.state.code);
         this.setState({ confirmed: true })
@@ -74,7 +78,7 @@ class ConfirmCard extends Component {
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Ready to log in?</span>
-                        <RaisedButton style={styles.button} primary={this.state.confirmed} label="Login" onClick={() => this.props.onChangeModeClick('login')} />
+                        <RaisedButton style={styles.button} primary={this.state.confirmed} label="Login" onClick={() => this.handleNavigateClick('login')} />
                     </div>
                 </CardActions>
             </SecurityCard>
