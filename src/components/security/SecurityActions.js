@@ -18,11 +18,11 @@ export const logout = () => (dispatch) => {
     dispatch(logoutAction());
 }
 
-export const register = (username, password) => (dispatch) => {
+export const register = (email, password) => (dispatch) => {
     let userPool = new CognitoUserPool(COGNITO_DATA);
     
     return new Promise((resolve, reject) => { 
-        userPool.signUp(username, password, [], null, function(err, result) {
+        userPool.signUp(email, password, [], null, function(err, result) {
             if (err) {
                 console.log(err);
                 reject(err);
