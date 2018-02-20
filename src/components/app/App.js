@@ -21,7 +21,7 @@ import Snackbar from 'material-ui/Snackbar'
 import LoginSignupCard from '../security/LoginSignupCard'
 import LoginCard from '../security/LoginCard'
 import Registercard from '../security/RegisterCard'
-import ConfirmCard from '../security/ConfirmCard'
+import ConfirmRegistration from '../security/ConfirmRegistration'
 
 class App extends Component {
     theme = getMuiTheme({
@@ -43,7 +43,7 @@ class App extends Component {
                             <Route path="/routines" component={Routines}/>
                             <Route path="/login" component={LoginCard}/>
                             <Route path="/register" component={Registercard}/>
-                            <Route path="/confirm" component={ConfirmCard}/>
+                            <Route path="/confirm" component={ConfirmRegistration}/>
                         </Switch>
                     </div>
                     <Snackbar

@@ -39,7 +39,7 @@ const initialState = {
     confirmed: false,
 }
 
-class ConfirmCard extends Component {
+class ConfirmRegistration extends Component {
     state = initialState;
 
     handleNavigateClick = (url) => {
@@ -86,4 +86,4 @@ class ConfirmCard extends Component {
     }
 }
 
-export default ConfirmCard
+export default ConfirmRegistration

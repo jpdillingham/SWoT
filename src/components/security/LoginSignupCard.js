@@ -3,12 +3,6 @@ import { connect } from 'react-redux';
 
 import { login, register } from './SecurityActions'
 
-import { Card, CardMedia } from 'material-ui/Card'
-
-import LoginCard from './LoginCard'
-import RegisterCard from './RegisterCard';
-import ConfirmCard from './ConfirmCard';
-
 const styles = {
     card: {
         width: '390px',
@@ -72,33 +66,7 @@ class LoginSignupCard extends Component {
 
     render() {
         return (
-            <Card zDepth={4} style={styles.card}>
-                <CardMedia style={styles.media}>
-                    <div style={styles.iconGroup}>
-                        <img style={styles.iconForeground} src="/img/weightlifting.png" alt="" />
-                        <span style={styles.iconText}><strong>S</strong>imple <strong>Wo</strong>rkout <strong>T</strong>racker</span>
-                    </div>
-                </CardMedia>
-                    {this.state.displayMode === 'login' ? 
-                        <LoginCard 
-                            onLoginClick={this.handleLoginClick} 
-                            onChangeModeClick={this.handleChangeModeClick}
-                        /> 
-                    : ''}
-                    {this.state.displayMode === 'register' ?
-                        <RegisterCard
-                            onRegisterClick={this.handleRegisterClick} 
-                            onChangeModeClick={this.handleChangeModeClick}
-                        />
-                    : ''}
-                    {this.state.displayMode === 'confirm' ?
-                        <ConfirmCard
-                            onConfirmClick={this.handleConfirmClick} 
-                            onChangeModeClick={this.handleChangeModeClick}
-                        />
-                    : ''}
-                }
-            </Card>
+            null
         )
     }
 }
