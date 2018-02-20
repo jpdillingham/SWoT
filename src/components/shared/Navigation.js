@@ -4,15 +4,6 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import LogoutButton from '../security/LogoutButton';
 
-import { withRouter } from 'react-router-dom'
-
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
-import Homepage from '../Homepage'
-import Exercises from '../exercises/Exercises'
-import Routines from '../routines/Routines'
-
 import Links from '../app/Links'
 
 class Navigation extends Component {

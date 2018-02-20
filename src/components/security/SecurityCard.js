@@ -1,10 +1,7 @@
 
 import React, { Component } from 'react';
 
-import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
-import { Card, CardMedia, CardText, CardActions } from 'material-ui/Card'
+import { Card, CardMedia } from 'material-ui/Card'
 
 const styles = {
     card: {

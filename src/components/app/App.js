@@ -2,22 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
+import Snackbar from 'material-ui/Snackbar'
 
 import Homepage from '../Homepage'
 import Exercises from '../exercises/Exercises'
 import Routines from '../routines/Routines'
 
-import MenuItem from 'material-ui/MenuItem'
-import Home from 'material-ui/svg-icons/action/home';
-import ContentPaste from 'material-ui/svg-icons/content/content-paste'
-import ActionAccessibility from 'material-ui/svg-icons/action/accessibility'
-import Snackbar from 'material-ui/Snackbar'
-
-import LoginSignupCard from '../security/LoginSignupCard'
 import Login from '../security/Login'
 import Register from '../security/Register'
 import ConfirmRegistration from '../security/ConfirmRegistration'
