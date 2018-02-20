@@ -50,6 +50,7 @@ class LoginSignupCard extends Component {
 
     handleLoginClick = () => {
         this.props.login({ name: 'a. user' })
+        window.location.href="/"
     }
 
     handleRegisterClick = (username, password) => {

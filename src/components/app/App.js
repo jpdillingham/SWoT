@@ -19,6 +19,9 @@ import ActionAccessibility from 'material-ui/svg-icons/action/accessibility'
 import Snackbar from 'material-ui/Snackbar'
 
 import LoginSignupCard from '../security/LoginSignupCard'
+import LoginCard from '../security/LoginCard'
+import Registercard from '../security/RegisterCard'
+import ConfirmCard from '../security/ConfirmCard'
 
 class App extends Component {
     theme = getMuiTheme({
@@ -33,18 +36,16 @@ class App extends Component {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
                 <div>
-                    {this.props.user === undefined ? <LoginSignupCard/> : 
-                    <div>
-
                     <div style={styles.content}>
                         <Switch>
                             <Route exact path="/" component={Homepage}/>
                             <Route path="/exercises" component={Exercises}/>
                             <Route path="/routines" component={Routines}/>
+                            <Route path="/login" component={LoginCard}/>
+                            <Route path="/register" component={Registercard}/>
+                            <Route path="/confirm" component={ConfirmCard}/>
                         </Switch>
                     </div>
-                    </div>
-                    }
                     <Snackbar
                         open={this.props.snackbar.visible}
                         message={this.props.snackbar.message}

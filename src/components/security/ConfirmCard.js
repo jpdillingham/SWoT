@@ -4,6 +4,7 @@ import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { CardText, CardActions } from 'material-ui/Card'
+import SecurityCard from './SecurityCard';
 
 const styles = {
     group: {
@@ -52,7 +53,7 @@ class ConfirmCard extends Component {
 
     render() {
         return(
-            <div>
+            <SecurityCard>
                 <CardText>
                     <div style={styles.group}>
                         <ActionCheckCircle style={styles.icon}/>
@@ -76,7 +77,7 @@ class ConfirmCard extends Component {
                         <RaisedButton style={styles.button} primary={this.state.confirmed} label="Login" onClick={() => this.props.onChangeModeClick('login')} />
                     </div>
                 </CardActions>
-            </div>
+            </SecurityCard>
         )
     }
 }

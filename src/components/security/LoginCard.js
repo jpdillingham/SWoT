@@ -5,6 +5,7 @@ import CommunicationEmail from 'material-ui/svg-icons/communication/email'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { CardText, CardActions } from 'material-ui/Card'
+import SecurityCard from './SecurityCard';
 
 const styles = {
     group: {
@@ -35,9 +36,13 @@ const styles = {
 }
 
 class LoginCard extends Component {
+    handleNavigateClick = (url) => {
+        window.location.href = '/' + url
+    }
+
     render() {
         return(
-            <div>
+            <SecurityCard>
                 <CardText>
                     <div style={styles.group}>
                         <CommunicationEmail style={styles.icon}/>
@@ -60,10 +65,10 @@ class LoginCard extends Component {
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>No account?</span>
-                        <RaisedButton style={styles.button} label="Register" onClick={() => this.props.onChangeModeClick('register')} />
+                        <RaisedButton style={styles.button} label="Register" onClick={() => this.handleNavigateClick('register')} />
                     </div>
                 </CardActions>
-            </div>
+            </SecurityCard>
         )
     }
 }

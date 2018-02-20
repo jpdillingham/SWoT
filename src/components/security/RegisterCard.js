@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { CardText, CardActions } from 'material-ui/Card'
 
 import { validateEmail } from '../../util'
+import SecurityCard from './SecurityCard';
 
 const styles = {
     group: {
@@ -51,6 +52,10 @@ const initialState = {
 
 class RegisterCard extends Component {
     state = initialState;
+
+    handleNavigateClick = (url) => {
+        window.location.href = '/' + url
+    }
 
     handleEmailChange = (event, value) => {
         this.setState({ 
@@ -118,7 +123,7 @@ class RegisterCard extends Component {
 
     render() {
         return(
-            <div>
+            <SecurityCard>
                 <CardText>
                 <div style={styles.group}>
                     <CommunicationEmail style={styles.icon}/>
@@ -161,14 +166,14 @@ class RegisterCard extends Component {
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Have a confirmation code?</span>
-                        <RaisedButton style={styles.button} label="Confirm Registration" onClick={() => this.props.onChangeModeClick('confirm')} />
+                        <RaisedButton style={styles.button} label="Confirm Registration" onClick={() => this.handleNavigateClick('confirm')} />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Already registered?</span>
-                        <RaisedButton style={styles.button} label="Login" onClick={() => this.props.onChangeModeClick('login')} />
+                        <RaisedButton style={styles.button} label="Login" onClick={() => this.handleNavigateClick('login')} />
                     </div>
                 </CardActions>
-            </div>
+            </SecurityCard>
         )
     }
 }
