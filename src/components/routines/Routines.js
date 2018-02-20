@@ -12,7 +12,7 @@ import RoutineCard from './RoutineCard'
 import AddFloatingActionButton from '../shared/AddFloatingActionButton'
 import { CARD_WIDTH, INTENTS } from '../../constants'
 import RoutineDialog from './RoutineDialog';
-import Navigation from '../Navigation';
+import Navigation from '../app/Navigation'
 
 const styles = {
     grid: {
