@@ -10,7 +10,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import AddFloatingActionButton from '../shared/AddFloatingActionButton'
 import ExerciseDialog from './ExerciseDialog'
-import Navigation from '../app/Navigation'
+import Navigation from '../shared/Navigation'
 
 import { CARD_WIDTH, INTENTS } from '../../constants'
 

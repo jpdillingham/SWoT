@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Navigation from '../app/Navigation'
+import Navigation from '../shared/Navigation'
 
 class Homepage extends Component {
     render() {
