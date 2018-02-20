@@ -7,6 +7,7 @@ import { Card, CardMedia } from 'material-ui/Card'
 
 import LoginCard from './LoginCard'
 import RegisterCard from './RegisterCard';
+import ConfirmCard from './ConfirmCard';
 
 const styles = {
     card: {
@@ -39,8 +40,9 @@ const styles = {
         textShadow: '2px 2px 10px #000000',
     },
 }
+
 const initialState = {
-    loginMode: true
+    displayMode: 'login'
 }
 
 class LoginSignupCard extends Component {
@@ -59,8 +61,12 @@ class LoginSignupCard extends Component {
         })
     }
 
-    handleToggleClick = () => {
-        this.setState({ loginMode: !this.state.loginMode })
+    handleConfirmClick = (code) => {
+
+    }
+
+    handleChangeModeClick = (mode) => {
+        this.setState({ displayMode: mode })
     }
 
     render() {
@@ -72,15 +78,24 @@ class LoginSignupCard extends Component {
                         <span style={styles.iconText}><strong>S</strong>imple <strong>Wo</strong>rkout <strong>T</strong>racker</span>
                     </div>
                 </CardMedia>
-                {this.state.loginMode ? 
-                    <LoginCard 
-                        onLoginClick={this.handleLoginClick} 
-                        onToggleClick={this.handleToggleClick}
-                    /> :
-                    <RegisterCard
-                        onRegisterClick={this.handleRegisterClick} 
-                        onToggleClick={this.handleToggleClick}
-                    />
+                    {this.state.displayMode === 'login' ? 
+                        <LoginCard 
+                            onLoginClick={this.handleLoginClick} 
+                            onChangeModeClick={this.handleChangeModeClick}
+                        /> 
+                    : ''}
+                    {this.state.displayMode === 'register' ?
+                        <RegisterCard
+                            onRegisterClick={this.handleRegisterClick} 
+                            onChangeModeClick={this.handleChangeModeClick}
+                        />
+                    : ''}
+                    {this.state.displayMode === 'confirm' ?
+                        <ConfirmCard
+                            onConfirmClick={this.handleConfirmClick} 
+                            onChangeModeClick={this.handleChangeModeClick}
+                        />
+                    : ''}
                 }
             </Card>
         )

@@ -160,8 +160,12 @@ class RegisterCard extends Component {
                             onClick={this.handleRegisterClick} />
                     </div>
                     <div style={styles.center}>
+                        <span style={styles.toggleText}>Have a confirmation code?</span>
+                        <RaisedButton style={styles.button} label="Confirm Registration" onClick={() => this.props.onChangeModeClick('confirm')} />
+                    </div>
+                    <div style={styles.center}>
                         <span style={styles.toggleText}>Already registered?</span>
-                        <RaisedButton style={styles.button} label="Login" onClick={this.props.onToggleClick} />
+                        <RaisedButton style={styles.button} label="Login" onClick={() => this.props.onChangeModeClick('login')} />
                     </div>
                 </CardActions>
             </div>

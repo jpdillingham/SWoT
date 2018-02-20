@@ -60,7 +60,7 @@ class LoginCard extends Component {
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>No account?</span>
-                        <RaisedButton style={styles.button} label="Register" onClick={this.props.onToggleClick} />
+                        <RaisedButton style={styles.button} label="Register" onClick={() => this.props.onChangeModeClick('register')} />
                     </div>
                 </CardActions>
             </div>
