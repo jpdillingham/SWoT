@@ -6,6 +6,8 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { CardText, CardActions } from 'material-ui/Card'
 
+import { validateEmail } from '../../util'
+
 const styles = {
     group: {
         left: '10px',
@@ -51,7 +53,10 @@ class RegisterCard extends Component {
     state = initialState;
 
     handleEmailChange = (event, value) => {
-        this.setState({ info: { ...this.state.info, email: value }});
+        this.setState({ 
+            info: { ...this.state.info, email: value },
+            validationErrors: { ...this.state.validationErrors, email: undefined }
+        });
     }
 
     handlePasswordChange = (event, value) => {
@@ -79,7 +84,12 @@ class RegisterCard extends Component {
     validateState = () => {
         let validationErrors = this.state.validationErrors;
 
-        // TODO: validate email
+        if (!validateEmail(this.state.info.email)) {
+            validationErrors = {
+                ...validationErrors,
+                email: 'Invalid email.'
+            }
+        }
 
         if (this.state.info.password === undefined || this.state.info.password === '') {
             validationErrors = { 
@@ -109,6 +119,8 @@ class RegisterCard extends Component {
                     <TextField
                         hintText="Email"
                         floatingLabelText="Email"
+                        defaultValue={this.state.info.email}
+                        errorText={this.state.validationErrors.email}
                         onChange={this.handleEmailChange}
                     />
                 </div>
