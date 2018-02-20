@@ -19,7 +19,7 @@ import ActionAccessibility from 'material-ui/svg-icons/action/accessibility'
 import Snackbar from 'material-ui/Snackbar'
 
 import LoginSignupCard from '../security/LoginSignupCard'
-import LoginCard from '../security/LoginCard'
+import Login from '../security/Login'
 import Registercard from '../security/RegisterCard'
 import ConfirmRegistration from '../security/ConfirmRegistration'
 
@@ -41,7 +41,7 @@ class App extends Component {
                             <Route exact path="/" component={Homepage}/>
                             <Route path="/exercises" component={Exercises}/>
                             <Route path="/routines" component={Routines}/>
-                            <Route path="/login" component={LoginCard}/>
+                            <Route path="/login" component={Login}/>
                             <Route path="/register" component={Registercard}/>
                             <Route path="/confirm" component={ConfirmRegistration}/>
                         </Switch>

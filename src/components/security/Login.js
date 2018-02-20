@@ -35,7 +35,7 @@ const styles = {
     }
 }
 
-class LoginCard extends Component {
+class Login extends Component {
     handleNavigateClick = (url) => {
         window.location.href = '/' + url
     }
@@ -73,4 +73,4 @@ class LoginCard extends Component {
     }
 }
 
-export default LoginCard
+export default Login
