@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
-import ActionFace from 'material-ui/svg-icons/action/face'
 import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
+import CommunicationEmail from 'material-ui/svg-icons/communication/email'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { CardText, CardActions } from 'material-ui/Card'
+import SecurityCard from './SecurityCard';
 
 const styles = {
     group: {
@@ -34,16 +35,20 @@ const styles = {
     }
 }
 
-class LoginCard extends Component {
+class Login extends Component {
+    handleNavigateClick = (url) => {
+        window.location.href = '/' + url
+    }
+
     render() {
         return(
-            <div>
+            <SecurityCard>
                 <CardText>
                     <div style={styles.group}>
-                        <ActionFace style={styles.icon}/>
+                        <CommunicationEmail style={styles.icon}/>
                         <TextField
-                            hintText="Username"
-                            floatingLabelText="Username"
+                            hintText="Email"
+                            floatingLabelText="Email"
                         />
                     </div>
                     <div style={styles.group}>
@@ -60,12 +65,12 @@ class LoginCard extends Component {
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>No account?</span>
-                        <RaisedButton style={styles.button} label="Register" onClick={this.props.onToggleClick} />
+                        <RaisedButton style={styles.button} label="Register" onClick={() => this.handleNavigateClick('register')} />
                     </div>
                 </CardActions>
-            </div>
+            </SecurityCard>
         )
     }
 }
 
-export default LoginCard
+export default Login

@@ -2,23 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 
-import { Link, Route, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
-import Navigation from '../Navigation'
+import Snackbar from 'material-ui/Snackbar'
+
 import Homepage from '../Homepage'
 import Exercises from '../exercises/Exercises'
 import Routines from '../routines/Routines'
 
-import MenuItem from 'material-ui/MenuItem'
-import Home from 'material-ui/svg-icons/action/home';
-import ContentPaste from 'material-ui/svg-icons/content/content-paste'
-import ActionAccessibility from 'material-ui/svg-icons/action/accessibility'
-import Snackbar from 'material-ui/Snackbar'
-
-import LoginSignupCard from '../security/LoginSignupCard'
+import Login from '../security/Login'
+import Register from '../security/Register'
+import ConfirmRegistration from '../security/ConfirmRegistration'
 
 class App extends Component {
     theme = getMuiTheme({
@@ -33,22 +30,16 @@ class App extends Component {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
                 <div>
-                    {this.props.user === undefined ? <LoginSignupCard/> : 
-                    <div>
-                    <Navigation>
-                        <MenuItem containerElement={<Link to="/" />} leftIcon={<Home />} >Home</MenuItem>
-                        <MenuItem containerElement={<Link to="/exercises" />} leftIcon={<ActionAccessibility />}>Exercises</MenuItem>
-                        <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ContentPaste />}>Routines</MenuItem>
-                    </Navigation>
                     <div style={styles.content}>
                         <Switch>
                             <Route exact path="/" component={Homepage}/>
                             <Route path="/exercises" component={Exercises}/>
                             <Route path="/routines" component={Routines}/>
+                            <Route path="/login" component={Login}/>
+                            <Route path="/register" component={Register}/>
+                            <Route path="/confirm" component={ConfirmRegistration}/>
                         </Switch>
                     </div>
-                    </div>
-                    }
                     <Snackbar
                         open={this.props.snackbar.visible}
                         message={this.props.snackbar.message}

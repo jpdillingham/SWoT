@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 
+import Navigation from '../shared/Navigation'
+
 class Homepage extends Component {
     render() {
         return (
-            <h1>Home</h1>
+            <Navigation>
+                <h1>Home</h1>
+            </Navigation>
         )
     }
 }

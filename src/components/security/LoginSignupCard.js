@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { login } from './SecurityActions'
-
-import { Card, CardMedia } from 'material-ui/Card'
-
-import LoginCard from './LoginCard'
-import RegisterCard from './RegisterCard';
+import { login, register } from './SecurityActions'
 
 const styles = {
     card: {
@@ -39,45 +34,39 @@ const styles = {
         textShadow: '2px 2px 10px #000000',
     },
 }
+
 const initialState = {
-    loginMode: true
+    displayMode: 'login'
 }
 
 class LoginSignupCard extends Component {
     state = initialState
 
     handleLoginClick = () => {
-        this.props.login({ name: 'a. user'})
+        this.props.login({ name: 'a. user' })
+        window.location.href="/"
     }
 
-    handleRegisterClick = () => {
-        alert("register!")
+    handleRegisterClick = (username, password) => {
+        this.props.register(username, password)
+        .then((response) => {
+            console.log(response)
+        }, (error) => {
+            console.log(error)
+        })
     }
 
-    handleToggleClick = () => {
-        this.setState({ loginMode: !this.state.loginMode })
+    handleConfirmClick = (code) => {
+
+    }
+
+    handleChangeModeClick = (mode) => {
+        this.setState({ displayMode: mode })
     }
 
     render() {
         return (
-            <Card zDepth={4} style={styles.card}>
-                <CardMedia style={styles.media}>
-                    <div style={styles.iconGroup}>
-                        <img style={styles.iconForeground} src="/img/weightlifting.png" alt="" />
-                        <span style={styles.iconText}><strong>S</strong>imple <strong>Wo</strong>rkout <strong>T</strong>racker</span>
-                    </div>
-                </CardMedia>
-                {this.state.loginMode ? 
-                    <LoginCard 
-                        onLoginClick={this.handleLoginClick} 
-                        onToggleClick={this.handleToggleClick}
-                    /> :
-                    <RegisterCard
-                        onRegisterClick={this.handleRegisterClick} 
-                        onToggleClick={this.handleToggleClick}
-                    />
-                }
-            </Card>
+            null
         )
     }
 }
@@ -88,10 +77,9 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    login: (user) => {
-        dispatch(login(user))
-    }
-})
+const mapDispatchToProps = {
+    login,
+    register,
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginSignupCard);
