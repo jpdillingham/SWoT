@@ -19,13 +19,13 @@ export const logout = () => (dispatch) => {
 }
 
 export const register = (email, password) => {
-    let userPool = new CognitoUserPool({ 
+    let cognitoUserPool = new CognitoUserPool({ 
         UserPoolId: COGNITO_POOLID, 
         ClientId: COGNITO_CLIENTID 
     });
     
     return new Promise((resolve, reject) => { 
-        userPool.signUp(email, password, [], null, function(err, result) {
+        cognitoUserPool.signUp(email, password, [], null, function(err, result) {
             if (err) {
                 console.log(err);
                 reject(err);
@@ -39,8 +39,21 @@ export const register = (email, password) => {
 }
 
 export const confirm = (email, code) => {
-    let user = new CognitoUser({ 
+    let cognitoUser = new CognitoUser({ 
         Username: email, 
         Pool: COGNITO_POOLID
+    })
+
+    return new Promise((resolve, reject) => {
+        cognitoUser.confirmRegistration(code, true, function(err, result) {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+            else {
+                console.log(result);
+                resolve(result);
+            }
+        });
     })
 }
