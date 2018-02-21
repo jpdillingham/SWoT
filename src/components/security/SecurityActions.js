@@ -10,6 +10,11 @@ const logoutAction = () => ({
     type: 'LOGOUT'
 })
 
+const cognitoUserPool = new CognitoUserPool({ 
+    UserPoolId: COGNITO_POOLID, 
+    ClientId: COGNITO_CLIENTID 
+});
+
 export const login = (user) => (dispatch) => {
     dispatch(loginAction(user));
 }
@@ -18,12 +23,7 @@ export const logout = () => (dispatch) => {
     dispatch(logoutAction());
 }
 
-export const register = (email, password) => {
-    let cognitoUserPool = new CognitoUserPool({ 
-        UserPoolId: COGNITO_POOLID, 
-        ClientId: COGNITO_CLIENTID 
-    });
-    
+export const register = (email, password) => (dispatch) => {
     return new Promise((resolve, reject) => { 
         cognitoUserPool.signUp(email, password, [], null, function(err, result) {
             if (err) {
@@ -38,10 +38,10 @@ export const register = (email, password) => {
     })
 }
 
-export const confirm = (email, code) => {
+export const confirm = (email, code) => (dispatch) => {
     let cognitoUser = new CognitoUser({ 
         Username: email, 
-        Pool: COGNITO_POOLID
+        Pool: cognitoUserPool,
     })
 
     return new Promise((resolve, reject) => {
