@@ -13,7 +13,5 @@ export const INTENTS = {
     COPY: 'COPY',
 }
 
-export const COGNITO_DATA = {
-    UserPoolId: 'us-east-1_OhnX3yEY5',
-    ClientId: '18b132av2gkfgl3m793qcgjsd3'
-}
+export const COGNITO_POOLID = 'us-east-1_OhnX3yEY5'
+export const COGNITO_CLIENTID = '18b132av2gkfgl3m793qcgjsd3'

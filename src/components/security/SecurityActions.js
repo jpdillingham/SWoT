@@ -1,5 +1,5 @@
 import { CognitoUserPool } from 'amazon-cognito-identity-js'
-import { COGNITO_DATA } from '../../constants'
+import { COGNITO_POOLID, COGNITO_CLIENTID } from '../../constants'
 
 const loginAction = (user) => ({
     type: 'LOGIN',
@@ -18,8 +18,11 @@ export const logout = () => (dispatch) => {
     dispatch(logoutAction());
 }
 
-export const register = (email, password) => (dispatch) => {
-    let userPool = new CognitoUserPool(COGNITO_DATA);
+export const register = (email, password) => {
+    let userPool = new CognitoUserPool({ 
+        UserPoolId: COGNITO_POOLID, 
+        ClientId: COGNITO_CLIENTID 
+    });
     
     return new Promise((resolve, reject) => { 
         userPool.signUp(email, password, [], null, function(err, result) {
@@ -32,5 +35,12 @@ export const register = (email, password) => (dispatch) => {
                 resolve(result);
             }
         })
+    })
+}
+
+export const confirm = (email, code) => {
+    let user = new CognitoUser({ 
+        Username: email, 
+        Pool: COGNITO_POOLID
     })
 }
