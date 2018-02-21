@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { register } from './SecurityActions'
 
 import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
 import CommunicationEmail from 'material-ui/svg-icons/communication/email'
@@ -81,7 +84,12 @@ class Register extends Component {
     handleRegisterClick = () => {
         this.setState({ validationErrors: this.validateState() }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
-                this.props.onRegisterClick(this.state.info.email, this.state.info.password);
+                this.props.register(this.state.info.email, this.state.info.password)
+                .then((response) => {
+                    console.log(response)
+                }, (error) => {
+                    console.log(error)
+                })
             }
         })
     }
@@ -178,4 +186,13 @@ class Register extends Component {
     }
 }
 
-export default Register
+const mapStateToProps = (state, ownProps) => {
+    return { 
+    }
+}
+
+const mapDispatchToProps = {
+    register,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register)

@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { confirm } from './SecurityActions'
 
 import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { CardText, CardActions } from 'material-ui/Card'
 import SecurityCard from './SecurityCard';
+import CommunicationEmail from 'material-ui/svg-icons/communication/email'
 
 const styles = {
     group: {
@@ -35,7 +39,14 @@ const styles = {
 }
 
 const initialState = {
-    code: undefined,
+    info: {
+        email: undefined,
+        code: undefined,
+    },
+    validationErrors: {
+        email: undefined,
+        code: undefined,
+    },
     confirmed: false,
 }
 
@@ -47,18 +58,34 @@ class ConfirmRegistration extends Component {
     }
 
     handleConfirmClick = () => {
-        this.props.onConfirmClick(this.state.code);
-        this.setState({ confirmed: true })
+        this.props.confirm(this.state.info.email, this.state.info.code)
+        .then((response) => {
+            this.setState({ confirmed: true })
+        }, (error) => {
+            console.log(error)
+        })
+    }
+
+    handleEmailChange = (event, value) => {
+        this.setState({ info: { ...this.state.info, email: value } })
     }
 
     handleCodeChange = (event, value) => {
-        this.setState({ code: value })
+        this.setState({ info: { ...this.state.info, code: value }})
     }
 
     render() {
         return(
             <SecurityCard>
                 <CardText>
+                    <div style={styles.group}>
+                        <CommunicationEmail style={styles.icon}/>
+                        <TextField
+                            hintText="Email"
+                            floatingLabelText="Email"
+                            onChange={this.handleEmailChange}
+                        />
+                    </div>
                     <div style={styles.group}>
                         <ActionCheckCircle style={styles.icon}/>
                         <TextField
@@ -86,4 +113,13 @@ class ConfirmRegistration extends Component {
     }
 }
 
-export default ConfirmRegistration
+const mapStateToProps = (state, ownProps) => {
+    return { 
+    }
+}
+
+const mapDispatchToProps = {
+    confirm,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmRegistration)

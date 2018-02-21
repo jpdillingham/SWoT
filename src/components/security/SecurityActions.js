@@ -1,5 +1,5 @@
-import { CognitoUserPool } from 'amazon-cognito-identity-js'
-import { COGNITO_DATA } from '../../constants'
+import { CognitoUserPool, CognitoUser } from 'amazon-cognito-identity-js'
+import { COGNITO_POOLID, COGNITO_CLIENTID } from '../../constants'
 
 const loginAction = (user) => ({
     type: 'LOGIN',
@@ -10,6 +10,11 @@ const logoutAction = () => ({
     type: 'LOGOUT'
 })
 
+const cognitoUserPool = new CognitoUserPool({ 
+    UserPoolId: COGNITO_POOLID, 
+    ClientId: COGNITO_CLIENTID 
+});
+
 export const login = (user) => (dispatch) => {
     dispatch(loginAction(user));
 }
@@ -18,11 +23,9 @@ export const logout = () => (dispatch) => {
     dispatch(logoutAction());
 }
 
-export const register = (username, password) => (dispatch) => {
-    let userPool = new CognitoUserPool(COGNITO_DATA);
-    
+export const register = (email, password) => (dispatch) => {
     return new Promise((resolve, reject) => { 
-        userPool.signUp(username, password, [], null, function(err, result) {
+        cognitoUserPool.signUp(email, password, [], null, function(err, result) {
             if (err) {
                 console.log(err);
                 reject(err);
@@ -32,5 +35,25 @@ export const register = (username, password) => (dispatch) => {
                 resolve(result);
             }
         })
+    })
+}
+
+export const confirm = (email, code) => (dispatch) => {
+    let cognitoUser = new CognitoUser({ 
+        Username: email, 
+        Pool: cognitoUserPool,
+    })
+
+    return new Promise((resolve, reject) => {
+        cognitoUser.confirmRegistration(code, true, function(err, result) {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+            else {
+                console.log(result);
+                resolve(result);
+            }
+        });
     })
 }
