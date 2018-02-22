@@ -1,4 +1,4 @@
-import { CognitoUserPool, CognitoUser } from 'amazon-cognito-identity-js'
+import { CognitoUserPool, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js'
 import { COGNITO_POOLID, COGNITO_CLIENTID } from '../../constants'
 
 const loginAction = (user) => ({
@@ -24,8 +24,9 @@ export const logout = () => (dispatch) => {
 }
 
 export const authenticate = (email, password) => (dispatch) => {
+    console.log(email, password);
     let cognitoUser = new CognitoUser({
-        Usernamne: email,
+        Username: email,
         Pool: cognitoUserPool,
     })
 
@@ -34,15 +35,18 @@ export const authenticate = (email, password) => (dispatch) => {
         Password: password,
     }
 
+    let authDetails = new AuthenticationDetails(auth);
+
     return new Promise((resolve, reject) => {
-        cognitoUser.authenticateUser(auth, function(err, result) {
-            if (err) {
-                console.log(err);
-                reject(err);
-            }
-            else {
+        cognitoUser.authenticateUser(authDetails, {
+            onSuccess: function (result) {
                 console.log(result);
                 resolve(result);
+            },
+    
+            onFailure: function(err) {
+                console.log(err);
+                reject(err);
             }
         })
     })
