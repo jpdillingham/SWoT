@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
 import CommunicationEmail from 'material-ui/svg-icons/communication/email'
@@ -6,6 +7,9 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import { CardText, CardActions } from 'material-ui/Card'
 import SecurityCard from './SecurityCard';
+
+import { authenticate } from './SecurityActions';
+import { validateEmail } from '../../util';
 
 const styles = {
     group: {
@@ -35,9 +39,75 @@ const styles = {
     }
 }
 
+const initialState = {
+    info: {
+        email: undefined,
+        password: undefined,
+    },
+    validationErrors: {
+        email: undefined,
+        password: undefined,
+    }
+}
+
 class Login extends Component {
+    state = initialState;
+
     handleNavigateClick = (url) => {
         window.location.href = '/' + url
+    }
+
+    handleLoginClick = () => {
+        this.setState({ validationErrors: this.validateState() }, () => {
+            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
+                this.props.authenticate(this.state.info.email, this.state.info.password)
+                .then((response) => {
+                    console.log(response)
+                }, (error) => {
+                    console.log(error)
+                })
+            }
+        })
+    }
+
+    handleEmailChange = (event, value) => {
+        this.setState({ 
+            info: { ...this.state.info, email: value },
+            validationErrors: { ...this.state.validationErrors, email: undefined }
+        });
+    }
+
+    handlePasswordChange = (event, value) => {
+        this.setState({ 
+            info: { ...this.state.info, password: value },
+            validationErrors: { ...this.state.validationErrors, password: undefined }
+        });
+    }
+
+    validateState = () => {
+        let validationErrors = this.state.validationErrors;
+
+        if (!validateEmail(this.state.info.email)) {
+            validationErrors = {
+                ...validationErrors,
+                email: 'Invalid email.'
+            }
+        }
+
+        if (this.state.info.password === undefined || this.state.info.password === '') {
+            validationErrors = { 
+                ...validationErrors, 
+                password: 'The password can\'t be blank.' 
+            }
+        }
+        else if (this.state.info.password.length < 6) {
+            validationErrors = { 
+                ...validationErrors, 
+                password: 'The password must be at least 6 characters.',
+            }
+        }
+
+        return validationErrors;
     }
 
     render() {
@@ -49,6 +119,9 @@ class Login extends Component {
                         <TextField
                             hintText="Email"
                             floatingLabelText="Email"
+                            defaultValue={this.state.info.email}
+                            errorText={this.state.validationErrors.email}
+                            onChange={this.handleEmailChange}
                         />
                     </div>
                     <div style={styles.group}>
@@ -56,12 +129,15 @@ class Login extends Component {
                         <TextField
                             hintText="Password"
                             floatingLabelText="Password"
+                            defaultValue={this.state.info.password}
+                            errorText={this.state.validationErrors.password}
+                            onChange={this.handlePasswordChange}
                         />
                     </div>
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
-                        <RaisedButton style={styles.button} primary={true} label="Login" onClick={this.props.onLoginClick} />
+                        <RaisedButton style={styles.button} primary={true} label="Login" onClick={this.handleLoginClick} />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>No account?</span>
@@ -73,4 +149,13 @@ class Login extends Component {
     }
 }
 
-export default Login
+const mapStateToProps = (state, ownProps) => {
+    return { 
+    }
+}
+
+const mapDispatchToProps = {
+    authenticate,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login)
