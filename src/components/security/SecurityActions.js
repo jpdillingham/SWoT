@@ -23,6 +23,31 @@ export const logout = () => (dispatch) => {
     dispatch(logoutAction());
 }
 
+export const authenticate = (email, password) => (dispatch) => {
+    let cognitoUser = new CognitoUser({
+        Usernamne: email,
+        Pool: cognitoUserPool,
+    })
+
+    let auth = {
+        Usernane: email,
+        Password: password,
+    }
+
+    return new Promise((resolve, reject) => {
+        cognitoUser.authenticateUser(auth, function(err, result) {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+            else {
+                console.log(result);
+                resolve(result);
+            }
+        })
+    })
+}
+
 export const register = (email, password) => (dispatch) => {
     return new Promise((resolve, reject) => { 
         cognitoUserPool.signUp(email, password, [], null, function(err, result) {
