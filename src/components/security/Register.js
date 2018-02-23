@@ -151,6 +151,7 @@ class Register extends Component {
                         defaultValue={this.state.info.password}
                         errorText={this.state.validationErrors.password}
                         onChange={this.handlePasswordChange}
+                        type="password"
                     />
                 </div>
                 <div style={styles.group}>
@@ -161,6 +162,7 @@ class Register extends Component {
                         defaultValue={this.state.info.password2}
                         errorText={this.state.validationErrors.password2}
                         onChange={this.handlePassword2Change}
+                        type="password"
                     />
                 </div>
                 </CardText>
