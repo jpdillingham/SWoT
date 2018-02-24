@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import queryString from 'query-string';
 
 import { confirm } from './SecurityActions'
 
@@ -9,6 +10,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { CardText, CardActions } from 'material-ui/Card'
 import SecurityCard from './SecurityCard';
 import CommunicationEmail from 'material-ui/svg-icons/communication/email'
+
+import { validateEmail } from '../../util'
 
 const styles = {
     group: {
@@ -51,7 +54,32 @@ const initialState = {
 }
 
 class ConfirmRegistration extends Component {
-    state = initialState;
+    constructor(props) {
+        super(props)
+
+        this.state = initialState;
+
+        let params = queryString.parse(this.props.location.search);
+
+        if (params !== undefined) {
+            try {
+                let data = atob(params.code).split(';');
+                
+                if (data.length < 1) throw new Error('invalid code.');
+
+                if (!validateEmail(data[0])) throw new Error('invalid email.');
+                this.state.info.email = data[0];
+
+                if (data.length === 2) {
+                    let regex = new RegExp('^[0-9]{6}')
+                    if (!regex.test(data[1])) throw new Error('invalid code (' + data[1] + ')');
+                    this.state.info.code = data[1];
+                }
+            } catch(err) { 
+                console.log(err) 
+            }
+        }
+    }
 
     handleNavigateClick = (url) => {
         window.location.href = '/' + url
@@ -83,6 +111,7 @@ class ConfirmRegistration extends Component {
                         <TextField
                             hintText="Email"
                             floatingLabelText="Email"
+                            defaultValue={this.state.info.email}
                             onChange={this.handleEmailChange}
                         />
                     </div>
@@ -91,6 +120,7 @@ class ConfirmRegistration extends Component {
                         <TextField
                             hintText="Confirmation Code"
                             floatingLabelText="Confirmation Code"
+                            defaultValue={this.state.info.code}
                             onChange={this.handleCodeChange}
                         />
                     </div>

@@ -37,7 +37,7 @@ class App extends Component {
                             <Route path="/routines" component={Routines}/>
                             <Route path="/login" component={Login}/>
                             <Route path="/register" component={Register}/>
-                            <Route path="/confirm" component={ConfirmRegistration}/>
+                            <Route path="/confirm/:email?" component={ConfirmRegistration}/>
                         </Switch>
                     </div>
                     <Snackbar

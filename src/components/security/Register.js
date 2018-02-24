@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { register } from './SecurityActions'
+import { showSnackbar } from '../app/AppActions'
 
 import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
 import CommunicationEmail from 'material-ui/svg-icons/communication/email'
@@ -50,14 +51,19 @@ const initialState = {
         email: undefined,
         password: undefined,
         password2: undefined,
-    }
+    },
+    registered: false,
 }
 
 class Register extends Component {
     state = initialState;
 
+    navigate = (url) => {
+        window.location.href = '/' + url;
+    }
+
     handleNavigateClick = (url) => {
-        window.location.href = '/' + url
+        this.navigate(url);
     }
 
     handleEmailChange = (event, value) => {
@@ -86,9 +92,12 @@ class Register extends Component {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
                 this.props.register(this.state.info.email, this.state.info.password)
                 .then((response) => {
-                    console.log(response)
+                    this.setState({ registered: true }, () => {
+                        this.props.showSnackbar("Registration successful!")
+                        setTimeout(() => this.navigate('confirm?code=' + btoa(this.state.info.email)), 1000);
+                    })
                 }, (error) => {
-                    console.log(error)
+                    this.props.showSnackbar(error.message);
                 })
             }
         })
@@ -151,6 +160,7 @@ class Register extends Component {
                         defaultValue={this.state.info.password}
                         errorText={this.state.validationErrors.password}
                         onChange={this.handlePasswordChange}
+                        type="password"
                     />
                 </div>
                 <div style={styles.group}>
@@ -161,6 +171,7 @@ class Register extends Component {
                         defaultValue={this.state.info.password2}
                         errorText={this.state.validationErrors.password2}
                         onChange={this.handlePassword2Change}
+                        type="password"
                     />
                 </div>
                 </CardText>
@@ -168,13 +179,13 @@ class Register extends Component {
                     <div style={styles.center}>
                         <RaisedButton 
                             style={styles.button} 
-                            primary={true} 
+                            primary={!this.state.registered} 
                             label="Register" 
                             onClick={this.handleRegisterClick} />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Have a confirmation code?</span>
-                        <RaisedButton style={styles.button} label="Confirm Registration" onClick={() => this.handleNavigateClick('confirm')} />
+                        <RaisedButton style={styles.button} primary={this.state.registered} label="Confirm Registration" onClick={() => this.handleNavigateClick('confirm')} />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Already registered?</span>
@@ -193,6 +204,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = {
     register,
+    showSnackbar
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register)

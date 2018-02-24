@@ -132,6 +132,7 @@ class Login extends Component {
                             defaultValue={this.state.info.password}
                             errorText={this.state.validationErrors.password}
                             onChange={this.handlePasswordChange}
+                            type="password"
                         />
                     </div>
                 </CardText>
