@@ -22,6 +22,7 @@
     "amazon-cognito-identity-js": "^1.29.0",
     "axios": "^0.17.1",
     "material-ui": "^0.20.0",
+    "query-string": "^5.1.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
