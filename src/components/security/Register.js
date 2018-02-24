@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { register } from './SecurityActions'
+import { showSnackbar } from '../app/AppActions'
 
 import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
 import CommunicationEmail from 'material-ui/svg-icons/communication/email'
@@ -56,8 +57,12 @@ const initialState = {
 class Register extends Component {
     state = initialState;
 
+    navigate = (url) => {
+        window.location.href = '/' + url;
+    }
+
     handleNavigateClick = (url) => {
-        window.location.href = '/' + url
+        this.navigate(url);
     }
 
     handleEmailChange = (event, value) => {
@@ -86,9 +91,10 @@ class Register extends Component {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
                 this.props.register(this.state.info.email, this.state.info.password)
                 .then((response) => {
-                    console.log(response)
+                    this.props.showSnackbar("Registration successful!")
+                    setTimeout(() => this.navigate('confirm'), 1000);
                 }, (error) => {
-                    console.log(error)
+                    this.props.showSnackbar(error.message);
                 })
             }
         })
@@ -195,6 +201,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = {
     register,
+    showSnackbar
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register)
