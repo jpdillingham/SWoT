@@ -51,7 +51,8 @@ const initialState = {
         email: undefined,
         password: undefined,
         password2: undefined,
-    }
+    },
+    registered: false,
 }
 
 class Register extends Component {
@@ -91,8 +92,10 @@ class Register extends Component {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
                 this.props.register(this.state.info.email, this.state.info.password)
                 .then((response) => {
-                    this.props.showSnackbar("Registration successful!")
-                    setTimeout(() => this.navigate('confirm'), 1000);
+                    this.setState({ registered: true }, () => {
+                        this.props.showSnackbar("Registration successful!")
+                        setTimeout(() => this.navigate('confirm?code=' + btoa(this.state.info.email)), 1000);
+                    })
                 }, (error) => {
                     this.props.showSnackbar(error.message);
                 })
@@ -176,13 +179,13 @@ class Register extends Component {
                     <div style={styles.center}>
                         <RaisedButton 
                             style={styles.button} 
-                            primary={true} 
+                            primary={!this.state.registered} 
                             label="Register" 
                             onClick={this.handleRegisterClick} />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Have a confirmation code?</span>
-                        <RaisedButton style={styles.button} label="Confirm Registration" onClick={() => this.handleNavigateClick('confirm')} />
+                        <RaisedButton style={styles.button} primary={this.state.registered} label="Confirm Registration" onClick={() => this.handleNavigateClick('confirm')} />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Already registered?</span>
