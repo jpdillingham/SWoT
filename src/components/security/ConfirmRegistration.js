@@ -51,7 +51,20 @@ const initialState = {
 }
 
 class ConfirmRegistration extends Component {
-    state = initialState;
+    constructor(props) {
+        super(props)
+
+        this.state = initialState;
+
+        var decoded = atob(this.props.match.params.email).split(';');
+        console.log(decoded);
+        console.log(decoded[0]);
+        console.log(decoded[1]);
+
+
+        this.state.info.email = decoded[0];
+        this.state.info.code = decoded[1];
+    }
 
     handleNavigateClick = (url) => {
         window.location.href = '/' + url
@@ -75,6 +88,7 @@ class ConfirmRegistration extends Component {
     }
 
     render() {
+        console.log(this.props)
         return(
             <SecurityCard>
                 <CardText>
@@ -83,6 +97,7 @@ class ConfirmRegistration extends Component {
                         <TextField
                             hintText="Email"
                             floatingLabelText="Email"
+                            defaultValue={this.state.info.email}
                             onChange={this.handleEmailChange}
                         />
                     </div>
@@ -91,6 +106,7 @@ class ConfirmRegistration extends Component {
                         <TextField
                             hintText="Confirmation Code"
                             floatingLabelText="Confirmation Code"
+                            defaultValue={this.state.info.code}
                             onChange={this.handleCodeChange}
                         />
                     </div>
