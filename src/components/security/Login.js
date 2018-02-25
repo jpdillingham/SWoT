@@ -72,7 +72,6 @@ class Login extends Component {
                 }, (error) => {
                     this.setState({ info: { ...this.state.info, password: '' }}, () => {
                         this.props.showSnackbar(error.message);
-                        this.forceUpdate();
                     })
                 })
             }
