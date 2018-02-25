@@ -29,7 +29,9 @@ class LogoutButton extends Component {
 
     handleLogoutClick = () => {
         this.props.logout()
-        this.props.showSnackbar("Successfully logged out!");
+        .then(() => {
+            this.props.showSnackbar("Successfully logged out!");
+        });
     }
 
     render() {

@@ -16,7 +16,10 @@ const cognitoUserPool = new CognitoUserPool({
 });
 
 export const logout = () => (dispatch) => {
-    dispatch(logoutAction());
+    return new Promise((resolve, reject) => {
+        dispatch(logoutAction());
+        resolve();
+    })
 }
 
 export const authenticate = (email, password) => (dispatch) => {
