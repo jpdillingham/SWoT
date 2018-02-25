@@ -93,7 +93,10 @@ class ConfirmRegistration extends Component {
     handleConfirmClick = () => {
         this.props.confirm(this.state.info.email, this.state.info.code)
         .then((response) => {
-            this.setState({ confirmed: true })
+            this.setState({ confirmed: true }, () => {
+                this.props.showSnackbar("Account confirmed!");
+                setTimeout(() => this.navigate('login'));
+            })
         }, (error) => {
             console.log(error)
         })
