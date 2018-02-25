@@ -133,11 +133,25 @@ class ConfirmRegistration extends Component {
     }
 
     handleEmailChange = (event, value) => {
-        this.setState({ info: { ...this.state.info, email: value } })
+        this.setState({ 
+            validationErrors: {
+                ...this.state.validationErrors, email: undefined
+            },
+            info: { 
+                ...this.state.info, email: value 
+            } 
+        })
     }
 
     handleCodeChange = (event, value) => {
-        this.setState({ info: { ...this.state.info, code: value }})
+        this.setState({ 
+            validationErrors: {
+                ...this.state.validationErrors, code: undefined
+            },
+            info: { 
+                ...this.state.info, code: value 
+            }
+        })
     }
 
     render() {
@@ -150,6 +164,7 @@ class ConfirmRegistration extends Component {
                             hintText="Email"
                             floatingLabelText="Email"
                             defaultValue={this.state.info.email}
+                            errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
                         />
                     </div>
@@ -159,6 +174,7 @@ class ConfirmRegistration extends Component {
                             hintText="Confirmation Code"
                             floatingLabelText="Confirmation Code"
                             defaultValue={this.state.info.code}
+                            errorText={this.state.validationErrors.code}
                             onChange={this.handleCodeChange}
                         />
                     </div>
