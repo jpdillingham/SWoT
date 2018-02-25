@@ -97,10 +97,10 @@ class ConfirmRegistration extends Component {
                 .then((response) => {
                     this.setState({ confirmed: true }, () => {
                         this.props.showSnackbar("Account confirmed!");
-                        setTimeout(() => this.navigate('login'));
+                        setTimeout(() => this.navigate('login'), 1000);
                     })
                 }, (error) => {
-                    console.log(error)
+                    this.props.showSnackbar(error.message);
                 })
             }
         })
@@ -116,7 +116,7 @@ class ConfirmRegistration extends Component {
             }
         }
 
-        if (this.state.info.code.length !== 6) {
+        if (this.state.info.code === undefined || this.state.info.code.length !== 6) {
             validationErrors = { 
                 ...validationErrors, 
                 code: 'The code must be 6 characters.',
