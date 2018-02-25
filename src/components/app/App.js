@@ -38,8 +38,7 @@ class App extends Component {
 
     componentWillReceiveProps = (nextProps) => {
         if (this.props.user !== undefined && nextProps.user === undefined) {
-            console.log('nav')
-            this.navigate('login');
+            setTimeout(() => this.navigate('login'), 1000);
         }
     }
 
