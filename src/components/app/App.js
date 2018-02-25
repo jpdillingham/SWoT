@@ -26,6 +26,23 @@ class App extends Component {
         }
     })
 
+    navigate = (url) => {
+        this.props.history.push("/" + url);
+    }
+
+    componentWillMount = () => {
+        if (this.props.user === undefined) {
+            this.navigate('login');
+        }
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        if (this.props.user !== undefined && nextProps.user === undefined) {
+            console.log('nav')
+            this.navigate('login');
+        }
+    }
+
     render() {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
