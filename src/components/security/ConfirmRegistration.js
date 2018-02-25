@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 
 import { confirm } from './SecurityActions'
+import { showSnackbar } from '../app/AppActions'
 
 import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import TextField from 'material-ui/TextField'
@@ -154,6 +155,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = {
     confirm,
+    showSnackbar
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmRegistration)
