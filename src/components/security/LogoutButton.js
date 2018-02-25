@@ -33,11 +33,11 @@ class LogoutButton extends Component {
     render() {
         return (
             <div style={styles.container}>
-                <div style={styles.text}>{this.props.user ? this.props.user.name : ''}</div>
+                <div style={styles.text}>{this.props.user ? this.props.user : ''}</div>
 
-            <IconButton style={styles.button}>
-                <ActionExitToApp color={white} onClick={this.handleLogoutClick} />
-            </IconButton>
+                <IconButton style={styles.button}>
+                    <ActionExitToApp color={white} onClick={this.handleLogoutClick} />
+                </IconButton>
             </div>
         )
     }
