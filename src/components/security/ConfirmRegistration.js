@@ -44,8 +44,8 @@ const styles = {
 
 const initialState = {
     info: {
-        email: undefined,
-        code: undefined,
+        email: '',
+        code: '',
     },
     validationErrors: {
         email: undefined,
@@ -163,7 +163,7 @@ class ConfirmRegistration extends Component {
                         <TextField
                             hintText="Email"
                             floatingLabelText="Email"
-                            defaultValue={this.state.info.email}
+                            value={this.state.info.email}
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
                         />
@@ -173,7 +173,7 @@ class ConfirmRegistration extends Component {
                         <TextField
                             hintText="Confirmation Code"
                             floatingLabelText="Confirmation Code"
-                            defaultValue={this.state.info.code}
+                            value={this.state.info.code}
                             errorText={this.state.validationErrors.code}
                             onChange={this.handleCodeChange}
                         />
