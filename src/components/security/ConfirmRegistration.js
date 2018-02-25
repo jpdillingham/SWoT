@@ -62,7 +62,7 @@ class ConfirmRegistration extends Component {
 
         let params = queryString.parse(this.props.location.search);
 
-        if (params !== undefined) {
+        if (params !== undefined && params.code !== undefined) {
             try {
                 let data = atob(params.code).split(';');
                 
@@ -77,7 +77,7 @@ class ConfirmRegistration extends Component {
                     this.state.info.code = data[1];
                 }
             } catch(err) { 
-                console.log(err) 
+                this.navigate('confirm')
             }
         }
     }
