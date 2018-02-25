@@ -9,6 +9,7 @@ import { CardText, CardActions } from 'material-ui/Card'
 import SecurityCard from './SecurityCard';
 
 import { authenticate } from './SecurityActions';
+import { showSnackbar } from '../app/AppActions';
 import { validateEmail } from '../../util';
 
 const styles = {
@@ -41,8 +42,8 @@ const styles = {
 
 const initialState = {
     info: {
-        email: undefined,
-        password: undefined,
+        email: '',
+        password: '',
     },
     validationErrors: {
         email: undefined,
@@ -53,8 +54,12 @@ const initialState = {
 class Login extends Component {
     state = initialState;
 
+    navigate = (url) => {
+        window.location.href = "/" + url;
+    }
+
     handleNavigateClick = (url) => {
-        window.location.href = '/' + url
+        this.navigate(url);
     }
 
     handleLoginClick = () => {
@@ -62,9 +67,13 @@ class Login extends Component {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
                 this.props.authenticate(this.state.info.email, this.state.info.password)
                 .then((response) => {
-                    console.log(response)
+                    this.props.showSnackbar('Successfully logged in!');
+                    setTimeout(() => this.navigate(''), 1000);
                 }, (error) => {
-                    console.log(error)
+                    this.setState({ info: { ...this.state.info, password: '' }}, () => {
+                        this.props.showSnackbar(error.message);
+                        this.forceUpdate();
+                    })
                 })
             }
         })
@@ -119,7 +128,7 @@ class Login extends Component {
                         <TextField
                             hintText="Email"
                             floatingLabelText="Email"
-                            defaultValue={this.state.info.email}
+                            value={this.state.info.email}
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
                         />
@@ -129,7 +138,7 @@ class Login extends Component {
                         <TextField
                             hintText="Password"
                             floatingLabelText="Password"
-                            defaultValue={this.state.info.password}
+                            value={this.state.info.password}
                             errorText={this.state.validationErrors.password}
                             onChange={this.handlePasswordChange}
                             type="password"
@@ -157,6 +166,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = {
     authenticate,
+    showSnackbar
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)
