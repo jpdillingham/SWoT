@@ -83,7 +83,7 @@ class ConfirmRegistration extends Component {
     }
 
     navigate = (url) => {
-        window.location.href = '/' + url;
+        this.props.history.push("/" + url);
     }
 
     handleNavigateClick = (url) => {

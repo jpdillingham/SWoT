@@ -59,7 +59,7 @@ class Register extends Component {
     state = initialState;
 
     navigate = (url) => {
-        window.location.href = '/' + url;
+        this.props.history.push("/" + url);
     }
 
     handleNavigateClick = (url) => {
