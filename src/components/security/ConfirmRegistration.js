@@ -91,15 +91,45 @@ class ConfirmRegistration extends Component {
     }
 
     handleConfirmClick = () => {
-        this.props.confirm(this.state.info.email, this.state.info.code)
-        .then((response) => {
-            this.setState({ confirmed: true }, () => {
-                this.props.showSnackbar("Account confirmed!");
-                setTimeout(() => this.navigate('login'));
-            })
-        }, (error) => {
-            console.log(error)
+        this.setState({ validationErrors: this.validateState() }, () => {
+            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
+                this.props.confirm(this.state.info.email, this.state.info.code)
+                .then((response) => {
+                    this.setState({ confirmed: true }, () => {
+                        this.props.showSnackbar("Account confirmed!");
+                        setTimeout(() => this.navigate('login'));
+                    })
+                }, (error) => {
+                    console.log(error)
+                })
+            }
         })
+    }
+
+    validateState = () => {
+        let validationErrors = this.state.validationErrors;
+
+        if (!validateEmail(this.state.info.email)) {
+            validationErrors = {
+                ...validationErrors,
+                email: 'Invalid email.'
+            }
+        }
+
+        if (this.state.info.code.length !== 6) {
+            validationErrors = { 
+                ...validationErrors, 
+                code: 'The code must be 6 characters.',
+            }
+        }
+        else if (!/^\d+$/.test(this.state.info.code)) {
+            validationErrors = {
+                ...validationErrors,
+                code: 'The code must only contain numbers.',
+            }
+        }
+
+        return validationErrors;
     }
 
     handleEmailChange = (event, value) => {
