@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 
 import { confirm } from './SecurityActions'
+import { showSnackbar } from '../app/AppActions'
 
 import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import TextField from 'material-ui/TextField'
@@ -43,8 +44,8 @@ const styles = {
 
 const initialState = {
     info: {
-        email: undefined,
-        code: undefined,
+        email: '',
+        code: '',
     },
     validationErrors: {
         email: undefined,
@@ -61,7 +62,7 @@ class ConfirmRegistration extends Component {
 
         let params = queryString.parse(this.props.location.search);
 
-        if (params !== undefined) {
+        if (params !== undefined && params.code !== undefined) {
             try {
                 let data = atob(params.code).split(';');
                 
@@ -76,30 +77,81 @@ class ConfirmRegistration extends Component {
                     this.state.info.code = data[1];
                 }
             } catch(err) { 
-                console.log(err) 
+                this.navigate('confirm')
             }
         }
     }
 
+    navigate = (url) => {
+        this.props.history.push("/" + url);
+    }
+
     handleNavigateClick = (url) => {
-        window.location.href = '/' + url
+        this.navigate(url)
     }
 
     handleConfirmClick = () => {
-        this.props.confirm(this.state.info.email, this.state.info.code)
-        .then((response) => {
-            this.setState({ confirmed: true })
-        }, (error) => {
-            console.log(error)
+        this.setState({ validationErrors: this.validateState() }, () => {
+            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
+                this.props.confirm(this.state.info.email, this.state.info.code)
+                .then((response) => {
+                    this.setState({ confirmed: true }, () => {
+                        this.props.showSnackbar("Account confirmed!");
+                        setTimeout(() => this.navigate('login'), 1000);
+                    })
+                }, (error) => {
+                    this.props.showSnackbar(error.message);
+                })
+            }
         })
     }
 
+    validateState = () => {
+        let validationErrors = this.state.validationErrors;
+
+        if (!validateEmail(this.state.info.email)) {
+            validationErrors = {
+                ...validationErrors,
+                email: 'Invalid email.'
+            }
+        }
+
+        if (this.state.info.code === undefined || this.state.info.code.length !== 6) {
+            validationErrors = { 
+                ...validationErrors, 
+                code: 'The code must be 6 characters.',
+            }
+        }
+        else if (!/^\d+$/.test(this.state.info.code)) {
+            validationErrors = {
+                ...validationErrors,
+                code: 'The code must only contain numbers.',
+            }
+        }
+
+        return validationErrors;
+    }
+
     handleEmailChange = (event, value) => {
-        this.setState({ info: { ...this.state.info, email: value } })
+        this.setState({ 
+            validationErrors: {
+                ...this.state.validationErrors, email: undefined
+            },
+            info: { 
+                ...this.state.info, email: value 
+            } 
+        })
     }
 
     handleCodeChange = (event, value) => {
-        this.setState({ info: { ...this.state.info, code: value }})
+        this.setState({ 
+            validationErrors: {
+                ...this.state.validationErrors, code: undefined
+            },
+            info: { 
+                ...this.state.info, code: value 
+            }
+        })
     }
 
     render() {
@@ -111,7 +163,8 @@ class ConfirmRegistration extends Component {
                         <TextField
                             hintText="Email"
                             floatingLabelText="Email"
-                            defaultValue={this.state.info.email}
+                            value={this.state.info.email}
+                            errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
                         />
                     </div>
@@ -120,7 +173,8 @@ class ConfirmRegistration extends Component {
                         <TextField
                             hintText="Confirmation Code"
                             floatingLabelText="Confirmation Code"
-                            defaultValue={this.state.info.code}
+                            value={this.state.info.code}
+                            errorText={this.state.validationErrors.code}
                             onChange={this.handleCodeChange}
                         />
                     </div>
@@ -150,6 +204,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = {
     confirm,
+    showSnackbar
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmRegistration)

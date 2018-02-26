@@ -15,16 +15,14 @@ const cognitoUserPool = new CognitoUserPool({
     ClientId: COGNITO_CLIENTID 
 });
 
-export const login = (user) => (dispatch) => {
-    dispatch(loginAction(user));
-}
-
 export const logout = () => (dispatch) => {
-    dispatch(logoutAction());
+    return new Promise((resolve, reject) => {
+        dispatch(logoutAction());
+        resolve();
+    })
 }
 
 export const authenticate = (email, password) => (dispatch) => {
-    console.log(email, password);
     let cognitoUser = new CognitoUser({
         Username: email,
         Pool: cognitoUserPool,
@@ -40,7 +38,7 @@ export const authenticate = (email, password) => (dispatch) => {
     return new Promise((resolve, reject) => {
         cognitoUser.authenticateUser(authDetails, {
             onSuccess: function (result) {
-                console.log(result);
+                dispatch(loginAction(result.getIdToken().payload.email));
                 resolve(result);
             },
     

@@ -26,6 +26,22 @@ class App extends Component {
         }
     })
 
+    navigate = (url) => {
+        this.props.history.push("/" + url);
+    }
+
+    componentWillMount = () => {
+        if (this.props.user === undefined) {
+            this.navigate('login');
+        }
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        if (this.props.user !== undefined && nextProps.user === undefined) {
+            setTimeout(() => this.navigate('login'), 1000);
+        }
+    }
+
     render() {
         return (
             <MuiThemeProvider muiTheme={this.theme}>
@@ -37,7 +53,7 @@ class App extends Component {
                             <Route path="/routines" component={Routines}/>
                             <Route path="/login" component={Login}/>
                             <Route path="/register" component={Register}/>
-                            <Route path="/confirm/:email?" component={ConfirmRegistration}/>
+                            <Route path="/confirm/:code?" component={ConfirmRegistration}/>
                         </Switch>
                     </div>
                     <Snackbar

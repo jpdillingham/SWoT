@@ -43,9 +43,9 @@ const styles = {
 
 const initialState = {
     info: {
-        email: undefined,
-        password: undefined,
-        password2: undefined,
+        email: '',
+        password: '',
+        password2: '',
     },
     validationErrors: {
         email: undefined,
@@ -59,7 +59,7 @@ class Register extends Component {
     state = initialState;
 
     navigate = (url) => {
-        window.location.href = '/' + url;
+        this.props.history.push("/" + url);
     }
 
     handleNavigateClick = (url) => {
@@ -147,7 +147,7 @@ class Register extends Component {
                     <TextField
                         hintText="Email"
                         floatingLabelText="Email"
-                        defaultValue={this.state.info.email}
+                        value={this.state.info.email}
                         errorText={this.state.validationErrors.email}
                         onChange={this.handleEmailChange}
                     />
@@ -157,7 +157,7 @@ class Register extends Component {
                     <TextField
                         hintText="Password"
                         floatingLabelText="Password"
-                        defaultValue={this.state.info.password}
+                        value={this.state.info.password}
                         errorText={this.state.validationErrors.password}
                         onChange={this.handlePasswordChange}
                         type="password"
@@ -168,7 +168,7 @@ class Register extends Component {
                     <TextField
                         hintText="Repeat Password"
                         floatingLabelText="Repeat Password"
-                        defaultValue={this.state.info.password2}
+                        value={this.state.info.password2}
                         errorText={this.state.validationErrors.password2}
                         onChange={this.handlePassword2Change}
                         type="password"
