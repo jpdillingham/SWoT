@@ -1,9 +1,10 @@
 import { CognitoUserPool, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js'
 import { COGNITO_POOLID, COGNITO_CLIENTID } from '../../constants'
 
-const loginAction = (user) => ({
+const loginAction = (user, session) => ({
     type: 'LOGIN',
-    user: user
+    user: user,
+    session: session,
 })
 
 const logoutAction = () => ({
@@ -38,7 +39,7 @@ export const authenticate = (email, password) => (dispatch) => {
     return new Promise((resolve, reject) => {
         cognitoUser.authenticateUser(authDetails, {
             onSuccess: function (result) {
-                dispatch(loginAction(result.getIdToken().payload.email));
+                dispatch(loginAction(result.getIdToken().payload.email, result));
                 resolve(result);
             },
     
