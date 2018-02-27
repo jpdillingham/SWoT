@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux';
+import { loadState, saveState } from './localStorage';
 
 import App from './components/app/App'
 
@@ -19,9 +20,20 @@ const rootReducer = combineReducers({
     security: SecurityReducer,
 })
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const persistedState = loadState();
+
+const store = createStore(rootReducer, persistedState, applyMiddleware(thunk));
 
 store.subscribe(() => {
+    let state = store.getState();
+    saveState({ 
+        security: { 
+            ...state.security, 
+            user: state.security.user,
+            session: state.security.session,
+        }
+    });
+
     console.log('State Updated:', store.getState())
 })
 
