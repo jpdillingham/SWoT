@@ -9,7 +9,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Snackbar from 'material-ui/Snackbar'
 
-import Homepage from '../Homepage'
+import Main from '../main/Main'
 import Exercises from '../exercises/Exercises'
 import Routines from '../routines/Routines'
 
@@ -48,7 +48,7 @@ class App extends Component {
                 <div>
                     <div style={styles.content}>
                         <Switch>
-                            <Route exact path="/" component={Homepage}/>
+                            <Route exact path="/" component={Main}/>
                             <Route path="/exercises" component={Exercises}/>
                             <Route path="/routines" component={Routines}/>
                             <Route path="/login" component={Login}/>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Navigation from '../shared/Navigation'
 
-class Homepage extends Component {
+class Main extends Component {
     render() {
         return (
             <Navigation>
@@ -12,4 +12,4 @@ class Homepage extends Component {
     }
 }
 
-export default Homepage
+export default Main
