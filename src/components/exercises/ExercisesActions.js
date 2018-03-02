@@ -66,7 +66,7 @@ const exercisesDelete = (id) => ({
 
 export const deleteExercise = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.delete(endpoint, id, {
+        axios.delete(endpoint + "/" + id, {
             headers: {
                 "Authorization": getState().security.session.idToken.jwtToken
             } 

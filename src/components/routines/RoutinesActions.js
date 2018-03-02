@@ -83,8 +83,7 @@ const routinesDelete = (id) => ({
 
 export const deleteRoutine = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.delete(endpoint, {
-            data: id,
+        axios.delete(endpoint + "/" + id, {
             headers: {
                 "Authorization": getState().security.session.idToken.jwtToken
             } 
