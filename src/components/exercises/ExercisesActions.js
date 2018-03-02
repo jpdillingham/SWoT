@@ -78,9 +78,13 @@ const exercisesGet = (exercises) => ({
     exercises: exercises
 })
 
-export const fetchExercises = () => (dispatch) => {
+export const fetchExercises = () => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.get(endpoint)
+        axios.get(endpoint, {
+            headers: {
+                "Authorization": getState().security.session.idToken.jwtToken
+            } 
+        })
             .then(response => { 
                 dispatch(exercisesGet(response.data))
                 resolve(response)
