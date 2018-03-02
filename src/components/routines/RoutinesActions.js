@@ -7,9 +7,13 @@ const routinesPost = (routine) => ({
     routine: routine
 })
 
-export const addRoutine = (routine) => (dispatch) => {
+export const addRoutine = (routine) => (dispatch, getState) => {
     return new Promise((resolve, reject) => { 
-        axios.post(endpoint, routine)
+        axios.post(endpoint, routine, {
+            headers: {
+                "Authorization": getState().security.session.idToken.jwtToken
+            } 
+        })
             .then(response => {
                 if (response.status === 201) {
                     dispatch(routinesPost(response.data))
@@ -30,9 +34,13 @@ const routinesPut = (routine) => ({
     routine: routine
 })
 
-export const updateRoutine = (routine) => (dispatch) => {
+export const updateRoutine = (routine) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.put(endpoint, routine)
+        axios.put(endpoint, routine, {
+            headers: {
+                "Authorization": getState().security.session.idToken.jwtToken
+            } 
+        })
             .then(response => {
                 if (response.status === 200) {
                     dispatch(routinesPut(response.data))
@@ -52,9 +60,13 @@ const routinesGet = (routines) => ({
     routines: routines
 })
 
-export const fetchRoutines = () => (dispatch) => {
+export const fetchRoutines = () => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.get(endpoint)
+        axios.get(endpoint, {
+            headers: {
+                "Authorization": getState().security.session.idToken.jwtToken 
+            }
+        })
             .then(response => {
                 dispatch(routinesGet(response.data))
                 resolve(response)
@@ -69,9 +81,13 @@ const routinesDelete = (id) => ({
     id: id
 })
 
-export const deleteRoutine = (id) => (dispatch) => {
+export const deleteRoutine = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.delete(endpoint, id)
+        axios.delete(endpoint + "/" + id, {
+            headers: {
+                "Authorization": getState().security.session.idToken.jwtToken
+            } 
+        })
             .then(response => {
                 if (response.status === 204) {
                     dispatch(routinesDelete(id))
