@@ -41,8 +41,7 @@ export const authenticate = (email, password) => (dispatch) => {
             onSuccess: function (result) {
                 dispatch(loginAction(result.getIdToken().payload.email, result));
                 resolve(result);
-            },
-    
+            },    
             onFailure: function(err) {
                 console.log(err);
                 reject(err);
