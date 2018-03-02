@@ -7,13 +7,17 @@ const exercisesPost = (exercise) => ({
     exercise: exercise
 })
 
-export const addExercise = (exercise) => (dispatch) => {
+export const addExercise = (exercise) => (dispatch, getState) => {
     if (!exercise.url.toLowerCase().startsWith('http')) {
         exercise.url = 'https://www.bodybuilding.com/exercises/' + exercise.url
     }
 
     return new Promise((resolve, reject) => { 
-        axios.post(endpoint, exercise)
+        axios.post(endpoint, exercise, {
+            headers: {
+                "Authorization": getState().security.session.idToken.jwtToken
+            } 
+        })
             .then(response => {
                 if (response.status === 201) {
                     dispatch(exercisesPost(response.data))
@@ -34,9 +38,13 @@ const exercisesPut = (exercise) => ({
     exercise: exercise
 })
 
-export const updateExercise = (exercise) => (dispatch) => {
+export const updateExercise = (exercise) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.put(endpoint, exercise)
+        axios.put(endpoint, exercise, {
+            headers: {
+                "Authorization": getState().security.session.idToken.jwtToken
+            } 
+        })
             .then(response => {
                 if (response.status === 200) {
                     dispatch(exercisesPut(response.data))
@@ -56,9 +64,13 @@ const exercisesDelete = (id) => ({
     id: id
 })
 
-export const deleteExercise = (id) => (dispatch) => {
+export const deleteExercise = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.delete(endpoint, id)
+        axios.delete(endpoint, id, {
+            headers: {
+                "Authorization": getState().security.session.idToken.jwtToken
+            } 
+        })
             .then(response => {
                 if (response.status === 204) {
                     dispatch(exercisesDelete(id))
