@@ -52,9 +52,13 @@ const routinesGet = (routines) => ({
     routines: routines
 })
 
-export const fetchRoutines = () => (dispatch) => {
+export const fetchRoutines = () => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.get(endpoint)
+        axios.get(endpoint, {
+            headers: {
+                "Authorization": getState().security.session.idToken.jwtToken 
+            }
+        })
             .then(response => {
                 dispatch(routinesGet(response.data))
                 resolve(response)
