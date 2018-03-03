@@ -68,7 +68,7 @@ class Login extends Component {
                 this.props.authenticate(this.state.info.email, this.state.info.password)
                 .then((response) => {
                     this.props.showSnackbar('Successfully logged in!');
-                    setTimeout(() => this.navigate(''), 1000);
+                    setTimeout(() => this.navigate(''), 0);
                 }, (error) => {
                     this.setState({ info: { ...this.state.info, password: '' }}, () => {
                         this.props.showSnackbar(error.message);
