@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-
-import Navigation from '../shared/Navigation'
+import AppContainer from '../shared/AppContainer';
 
 class Workouts extends Component {
     render() {
         return (
-            <Navigation>
+            <div>
                 <h1>Workouts</h1>
-            </Navigation>
+            </div>
         )
     }
 }
