@@ -9,6 +9,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import Snackbar from 'material-ui/Snackbar'
 
+import AppContainer from '../shared/AppContainer'
+
 import Workouts from '../workouts/Workouts'
 import Exercises from '../exercises/Exercises'
 import Routines from '../routines/Routines'
@@ -38,7 +40,7 @@ class App extends Component {
 
     componentWillReceiveProps = (nextProps) => {
         if (this.props.user !== undefined && nextProps.user === undefined) {
-            setTimeout(() => this.navigate('login'), 1000);
+            setTimeout(() => this.navigate('login'), 0);
         }
     }
 
@@ -47,14 +49,16 @@ class App extends Component {
             <MuiThemeProvider muiTheme={this.theme}>
                 <div>
                     <div style={styles.content}>
-                        <Switch>
-                            <Route exact path="/" component={Workouts}/>
-                            <Route path="/exercises" component={Exercises}/>
-                            <Route path="/routines" component={Routines}/>
-                            <Route path="/login" component={Login}/>
-                            <Route path="/register" component={Register}/>
-                            <Route path="/confirm/:code?" component={ConfirmRegistration}/>
-                        </Switch>
+                        <AppContainer show={this.props.user !== undefined}>
+                            <Switch>
+                                <Route exact path="/" component={Workouts}/>
+                                <Route path="/exercises" component={Exercises}/>
+                                <Route path="/routines" component={Routines}/>
+                                <Route path="/login" component={Login}/>
+                                <Route path="/register" component={Register}/>
+                                <Route path="/confirm/:code?" component={ConfirmRegistration}/>
+                            </Switch>
+                        </AppContainer>
                     </div>
                     <Snackbar
                         open={this.props.snackbar.visible}

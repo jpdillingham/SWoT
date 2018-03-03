@@ -10,7 +10,6 @@ import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import AddFloatingActionButton from '../shared/AddFloatingActionButton'
 import ExerciseDialog from './ExerciseDialog'
-import Navigation from '../shared/Navigation'
 
 import { CARD_WIDTH, INTENTS } from '../../constants'
 
@@ -51,7 +50,7 @@ class Exercises extends Component {
 
     render() {
         return (
-            <Navigation>
+            <div>
                 { 
                     this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
                     this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
@@ -64,7 +63,7 @@ class Exercises extends Component {
                             </div>
                 }
                 <AddFloatingActionButton dialog={<ExerciseDialog intent={INTENTS.ADD} />} />
-            </Navigation>
+            </div>
         )
     }
 } 

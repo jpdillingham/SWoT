@@ -12,7 +12,6 @@ import RoutineCard from './RoutineCard'
 import AddFloatingActionButton from '../shared/AddFloatingActionButton'
 import { CARD_WIDTH, INTENTS } from '../../constants'
 import RoutineDialog from './RoutineDialog';
-import Navigation from '../shared/Navigation'
 
 const styles = {
     grid: {
@@ -51,7 +50,7 @@ class Routines extends Component {
 
     render() {
         return (
-            <Navigation>
+            <div>
                 { 
                     this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
                         this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
@@ -62,7 +61,7 @@ class Routines extends Component {
                             </div>
                 }
                 <AddFloatingActionButton dialog={<RoutineDialog intent={INTENTS.ADD} />} />
-            </Navigation>
+            </div>
         )
     }
 } 

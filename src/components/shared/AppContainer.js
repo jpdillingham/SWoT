@@ -6,7 +6,7 @@ import LogoutButton from '../security/LogoutButton';
 
 import Links from '../app/Links'
 
-class Navigation extends Component {
+class AppContainer extends Component {
     state = {
         drawerOpen: false,
     }
@@ -18,6 +18,8 @@ class Navigation extends Component {
     render() {
         return (
             <div>
+                {this.props.show ? 
+                    <div>
                 <AppBar 
                     title="SWoT" 
                     style={styles.appBar}
@@ -33,6 +35,8 @@ class Navigation extends Component {
                     <AppBar title="SWoT" showMenuIconButton={false}/>
                     <Links/>
                 </Drawer>
+                </div>
+                : ''}
                     {this.props.children}
             </div>
         );
@@ -47,4 +51,4 @@ const styles = {
     }
 }
 
-export default Navigation;
+export default AppContainer;
