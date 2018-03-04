@@ -10,7 +10,7 @@ import { addExercise, updateExercise } from './ExercisesActions'
 import { showSnackbar } from '../app/AppActions.js'
 
 import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
-import { getGuid } from '../../util';
+import { getGuid, swap } from '../../util';
 
 import ExerciseMetricDialog from './ExerciseMetricDialog';
 import ExerciseMetricList from './ExerciseMetricList';
@@ -104,6 +104,26 @@ class ExerciseDialog extends Component {
         }
 
         this.setState({ metricDialog: { open: false, intent: '', metric: {} } })
+    }
+
+    handleMoveUpMetricMenuClick = (index) => {
+        let arr = this.state.exercise.metrics.slice();
+
+        if (index > 0) {
+            arr = swap(arr, index, index - 1);     
+        }
+
+        this.setState({ exercise: { ...this.state.exercise, metrics: arr } }) 
+    }
+
+    handleMoveDownMetricMenuClick = (index) => {
+        let arr = this.state.exercise.metrics.slice();
+
+        if (index < arr.length - 1) {
+            arr = swap(arr, index, index + 1);
+        }
+
+        this.setState({ exercise: { ...this.state.exercise, metrics: arr } })
     }
 
     handleEditMetricMenuClick = (metric) => {
@@ -278,6 +298,8 @@ class ExerciseDialog extends Component {
                     /><br />
                     <ExerciseMetricList 
                         metrics={this.state.exercise.metrics} 
+                        onMoveUpClick={this.handleMoveUpMetricMenuClick}
+                        onMoveDownClick={this.handleMoveDownMetricMenuClick}
                         onEditClick={this.handleEditMetricMenuClick}
                         onDeleteClick={this.handleDeleteMetricMenuClick}
                     />
