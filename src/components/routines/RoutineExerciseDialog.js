@@ -21,7 +21,7 @@ const initialState = {
 class RoutineExerciseDialog extends Component {
     state = initialState;
 
-    handleSaveClick = (result) => {
+    handleAddClick = (result) => {
         this.props.handleClose({ added: true, exercise: this.state.exercise });
     }
 
@@ -50,8 +50,8 @@ class RoutineExerciseDialog extends Component {
                             onClick={this.handleCancelClick}
                         />
                         <FlatButton
-                            label="Save"
-                            onClick={this.handleSaveClick}
+                            label="Add"
+                            onClick={this.handleAddClick}
                         />
                     </div>
                 }
