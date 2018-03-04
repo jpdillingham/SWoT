@@ -182,7 +182,7 @@ class RoutineDialog extends Component {
         return (
             <div>
                 <Dialog
-                    title={(this.props.intent === INTENTS.ADD ? 'Add' : 'Edit') + ' Routine'} 
+                    title={(this.props.intent === INTENTS.ADD ? 'Add' : this.props.intent === INTENTS.EDIT ? 'Edit' : 'Duplicate') + ' Routine'} 
                     autoScrollBodyContent={true}
                     actions={
                         <div>
