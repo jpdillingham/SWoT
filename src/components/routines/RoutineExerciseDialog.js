@@ -50,7 +50,7 @@ class RoutineExerciseDialog extends Component {
                             onClick={this.handleCancelClick}
                         />
                         <FlatButton
-                            label="Add"
+                            label="Save"
                             onClick={this.handleAddClick}
                         />
                     </div>
