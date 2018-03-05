@@ -1,5 +1,18 @@
-import { CognitoUserPool, CognitoUser, AuthenticationDetails } from 'amazon-cognito-identity-js'
+import { 
+    CognitoUserPool, 
+    CognitoUser, 
+    AuthenticationDetails, 
+    CognitoUserSession, 
+    CognitoAccessToken, 
+    CognitoIdToken, 
+    CognitoRefreshToken 
+} from 'amazon-cognito-identity-js'
 import { COGNITO_POOLID, COGNITO_CLIENTID } from '../../constants'
+
+const cognitoUserPool = new CognitoUserPool({ 
+    UserPoolId: COGNITO_POOLID, 
+    ClientId: COGNITO_CLIENTID 
+});
 
 const loginAction = (user, session) => ({
     type: 'LOGIN',
@@ -11,13 +24,35 @@ const logoutAction = () => ({
     type: 'LOGOUT'
 })
 
-const cognitoUserPool = new CognitoUserPool({ 
-    UserPoolId: COGNITO_POOLID, 
-    ClientId: COGNITO_CLIENTID 
-});
+export const checkSession = () => (dispatch, getState) => {
+    let sessionData = getState().security.session;
 
-export const logout = () => (dispatch) => {
+    if (sessionData) {
+        let accessToken = new CognitoAccessToken({ AccessToken: sessionData.accessToken.jwtToken });
+        let idToken = new CognitoIdToken({ IdToken: sessionData.idToken.jwtToken });
+        let refreshToken = new CognitoRefreshToken({ RefreshToken: sessionData.refreshToken.token });
+
+        let session = new CognitoUserSession({
+            IdToken: idToken,
+            AccessToken: accessToken,
+            RefreshToken: refreshToken,
+            ClockDrift: sessionData.clockDrift
+        });
+
+        if (!session.isValid()) {
+            dispatch(logoutAction());
+        } 
+    }
+}
+
+export const logout = () => (dispatch, getState) => {
+    let cognitoUser = new CognitoUser({
+        Username: getState().security.user,
+        Pool: cognitoUserPool
+    })
+
     return new Promise((resolve, reject) => {
+        cognitoUser.signOut();
         dispatch(logoutAction());
         resolve();
     })

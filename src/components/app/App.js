@@ -19,6 +19,8 @@ import Login from '../security/Login'
 import Register from '../security/Register'
 import ConfirmRegistration from '../security/ConfirmRegistration'
 
+import { checkSession } from '../security/SecurityActions'
+
 class App extends Component {
     theme = getMuiTheme({
         palette: {
@@ -33,12 +35,16 @@ class App extends Component {
     }
 
     componentWillMount = () => {
+        this.props.checkSession();
+
         if (this.props.user === undefined) {
             this.navigate('login');
         }
     }
 
     componentWillReceiveProps = (nextProps) => {
+        this.props.checkSession();
+        
         if (this.props.user !== undefined && nextProps.user === undefined) {
             setTimeout(() => this.navigate('login'), 0);
         }
@@ -82,16 +88,13 @@ const mapStateToProps = (state, ownProps) => {
     return { 
         snackbar: state.app.snackbar,
         user: state.security.user,
+        session: state.security.session,
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-    showSnackbar: (message) => {
-        dispatch({ type: 'SNACKBAR_SHOW', snackbar: { visible: true, message: message ? message : '' }} )
-    },
-    hideSnackbar: () => {
-        dispatch({ type: 'SNACKBAR_HIDE' })
-    }
-})
+const mapDispatchToProps = {
+    checkSession
+}
+
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
