@@ -20,6 +20,7 @@ import Register from '../security/Register'
 import ConfirmRegistration from '../security/ConfirmRegistration'
 
 import { checkSession } from '../security/SecurityActions'
+import { hideSnackbar } from './AppActions'
 
 class App extends Component {
     theme = getMuiTheme({
@@ -44,7 +45,7 @@ class App extends Component {
 
     componentWillReceiveProps = (nextProps) => {
         this.props.checkSession();
-        
+
         if (this.props.user !== undefined && nextProps.user === undefined) {
             setTimeout(() => this.navigate('login'), 0);
         }
@@ -93,6 +94,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = {
+    hideSnackbar,
     checkSession
 }
 
