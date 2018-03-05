@@ -9,11 +9,6 @@ import {
 } from 'amazon-cognito-identity-js'
 import { COGNITO_POOLID, COGNITO_CLIENTID } from '../../constants'
 
-const cognitoUserPool = new CognitoUserPool({ 
-    UserPoolId: COGNITO_POOLID, 
-    ClientId: COGNITO_CLIENTID 
-});
-
 const loginAction = (user, session) => ({
     type: 'LOGIN',
     user: user,
@@ -23,6 +18,20 @@ const loginAction = (user, session) => ({
 const logoutAction = () => ({
     type: 'LOGOUT'
 })
+
+const getCognitoUserPool = () => {
+    return new CognitoUserPool({ 
+        UserPoolId: COGNITO_POOLID, 
+        ClientId: COGNITO_CLIENTID 
+    })
+}
+
+const getCognitoUser = (email) => {
+    return new CognitoUser({
+        Username: email,
+        Pool: getCognitoUserPool(),
+    })
+}
 
 export const checkSession = () => (dispatch, getState) => {
     let sessionData = getState().security.session;
@@ -45,11 +54,14 @@ export const checkSession = () => (dispatch, getState) => {
     }
 }
 
+export const refreshSession = () => (dispatch, getState) => {
+
+}
+
+
+
 export const logout = () => (dispatch, getState) => {
-    let cognitoUser = new CognitoUser({
-        Username: getState().security.user,
-        Pool: cognitoUserPool
-    })
+    let cognitoUser = getCognitoUser(getState().security.user);
 
     return new Promise((resolve, reject) => {
         cognitoUser.signOut();
@@ -59,10 +71,7 @@ export const logout = () => (dispatch, getState) => {
 }
 
 export const authenticate = (email, password) => (dispatch) => {
-    let cognitoUser = new CognitoUser({
-        Username: email,
-        Pool: cognitoUserPool,
-    })
+    let cognitoUser = getCognitoUser(email);
 
     let auth = {
         Usernane: email,
@@ -86,6 +95,8 @@ export const authenticate = (email, password) => (dispatch) => {
 }
 
 export const register = (email, password) => (dispatch) => {
+    let cognitoUserPool = getCognitoUserPool();
+
     return new Promise((resolve, reject) => { 
         cognitoUserPool.signUp(email, password, [], null, function(err, result) {
             if (err) {
@@ -101,10 +112,7 @@ export const register = (email, password) => (dispatch) => {
 }
 
 export const confirm = (email, code) => (dispatch) => {
-    let cognitoUser = new CognitoUser({ 
-        Username: email, 
-        Pool: cognitoUserPool,
-    })
+    let cognitoUser = getCognitoUser(email);
 
     return new Promise((resolve, reject) => {
         cognitoUser.confirmRegistration(code, true, function(err, result) {
