@@ -55,7 +55,7 @@ class Login extends Component {
     state = initialState;
 
     navigate = (url) => {
-        this.props.history.push("/" + url);
+        this.props.history.push(url);
     }
 
     handleNavigateClick = (url) => {
@@ -68,7 +68,7 @@ class Login extends Component {
                 this.props.authenticate(this.state.info.email, this.state.info.password)
                 .then((response) => {
                     this.props.showSnackbar('Successfully logged in!');
-                    setTimeout(() => this.navigate(''), 0);
+                    setTimeout(() => this.navigate('/'), 0);
                 }, (error) => {
                     this.setState({ info: { ...this.state.info, password: '' }}, () => {
                         this.props.showSnackbar(error.message);
