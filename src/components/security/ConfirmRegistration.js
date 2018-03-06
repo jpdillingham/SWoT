@@ -77,13 +77,13 @@ class ConfirmRegistration extends Component {
                     this.state.info.code = data[1];
                 }
             } catch(err) { 
-                this.navigate('confirm')
+                this.navigate('/confirm')
             }
         }
     }
 
     navigate = (url) => {
-        this.props.history.push("/" + url);
+        this.props.history.push(url);
     }
 
     handleNavigateClick = (url) => {
@@ -97,7 +97,7 @@ class ConfirmRegistration extends Component {
                 .then((response) => {
                     this.setState({ confirmed: true }, () => {
                         this.props.showSnackbar("Account confirmed!");
-                        setTimeout(() => this.navigate('login'), 1000);
+                        setTimeout(() => this.navigate('/login'), 1000);
                     })
                 }, (error) => {
                     this.props.showSnackbar(error.message);
@@ -189,7 +189,7 @@ class ConfirmRegistration extends Component {
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Ready to log in?</span>
-                        <RaisedButton style={styles.button} primary={this.state.confirmed} label="Login" onClick={() => this.handleNavigateClick('login')} />
+                        <RaisedButton style={styles.button} primary={this.state.confirmed} label="Login" onClick={() => this.handleNavigateClick('/login')} />
                     </div>
                 </CardActions>
             </SecurityCard>

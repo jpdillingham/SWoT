@@ -9,14 +9,14 @@ import {
 } from 'amazon-cognito-identity-js'
 import { COGNITO_POOLID, COGNITO_CLIENTID } from '../../constants'
 
-const cognitoUserPool = new CognitoUserPool({ 
-    UserPoolId: COGNITO_POOLID, 
-    ClientId: COGNITO_CLIENTID 
-});
-
 const loginAction = (user, session) => ({
     type: 'LOGIN',
     user: user,
+    session: session,
+})
+
+const refreshAction = (session) => ({
+    type: 'REFRESH',
     session: session,
 })
 
@@ -24,32 +24,77 @@ const logoutAction = () => ({
     type: 'LOGOUT'
 })
 
+const getCognitoUserPool = () => {
+    return new CognitoUserPool({ 
+        UserPoolId: COGNITO_POOLID, 
+        ClientId: COGNITO_CLIENTID 
+    })
+}
+
+const getCognitoUser = (email) => {
+    return new CognitoUser({
+        Username: email,
+        Pool: getCognitoUserPool(),
+    })
+}
+
 export const checkSession = () => (dispatch, getState) => {
     let sessionData = getState().security.session;
 
-    if (sessionData) {
-        let accessToken = new CognitoAccessToken({ AccessToken: sessionData.accessToken.jwtToken });
-        let idToken = new CognitoIdToken({ IdToken: sessionData.idToken.jwtToken });
-        let refreshToken = new CognitoRefreshToken({ RefreshToken: sessionData.refreshToken.token });
-
-        let session = new CognitoUserSession({
-            IdToken: idToken,
-            AccessToken: accessToken,
-            RefreshToken: refreshToken,
-            ClockDrift: sessionData.clockDrift
-        });
-
-        if (!session.isValid()) {
-            dispatch(logoutAction());
-        } 
-    }
+    return new Promise((resolve, reject) => {
+        if (sessionData) {
+            let accessToken = new CognitoAccessToken({ AccessToken: sessionData.accessToken.jwtToken });
+            let idToken = new CognitoIdToken({ IdToken: sessionData.idToken.jwtToken });
+            let refreshToken = new CognitoRefreshToken({ RefreshToken: sessionData.refreshToken.token });
+    
+            let session = new CognitoUserSession({
+                IdToken: idToken,
+                AccessToken: accessToken,
+                RefreshToken: refreshToken,
+                ClockDrift: sessionData.clockDrift
+            });
+    
+            if (!session.isValid()) {
+                refreshSession().then((response) => {
+                    resolve(response);
+                }, (err) => {
+                    reject(err);
+                })
+            }
+            else {
+                resolve(session);
+            }
+        }
+        else {
+            reject();
+        }
+    })
 }
 
-export const logout = () => (dispatch, getState) => {
-    let cognitoUser = new CognitoUser({
-        Username: getState().security.user,
-        Pool: cognitoUserPool
+export const refreshSession = () => (dispatch, getState) => {
+    let cognitoUser = getCognitoUser(getState().security.user);
+    let sessionData = getState().security.session;
+
+    return new Promise((resolve, reject) => {
+        cognitoUser.refreshSession(sessionData.refreshToken.token, function(err, result) {
+            if (err) {
+                console.log(err);
+                dispatch(logoutAction());
+                reject(err);
+            }
+            else {
+                dispatch(refreshAction(result))
+                resolve(result);
+            }
+        })
+
     })
+}
+
+
+
+export const logout = () => (dispatch, getState) => {
+    let cognitoUser = getCognitoUser(getState().security.user);
 
     return new Promise((resolve, reject) => {
         cognitoUser.signOut();
@@ -59,10 +104,7 @@ export const logout = () => (dispatch, getState) => {
 }
 
 export const authenticate = (email, password) => (dispatch) => {
-    let cognitoUser = new CognitoUser({
-        Username: email,
-        Pool: cognitoUserPool,
-    })
+    let cognitoUser = getCognitoUser(email);
 
     let auth = {
         Usernane: email,
@@ -86,6 +128,8 @@ export const authenticate = (email, password) => (dispatch) => {
 }
 
 export const register = (email, password) => (dispatch) => {
+    let cognitoUserPool = getCognitoUserPool();
+
     return new Promise((resolve, reject) => { 
         cognitoUserPool.signUp(email, password, [], null, function(err, result) {
             if (err) {
@@ -101,10 +145,7 @@ export const register = (email, password) => (dispatch) => {
 }
 
 export const confirm = (email, code) => (dispatch) => {
-    let cognitoUser = new CognitoUser({ 
-        Username: email, 
-        Pool: cognitoUserPool,
-    })
+    let cognitoUser = getCognitoUser(email);
 
     return new Promise((resolve, reject) => {
         cognitoUser.confirmRegistration(code, true, function(err, result) {

@@ -20,6 +20,7 @@ import Register from '../security/Register'
 import ConfirmRegistration from '../security/ConfirmRegistration'
 
 import { checkSession } from '../security/SecurityActions'
+import { hideSnackbar } from './AppActions'
 
 class App extends Component {
     theme = getMuiTheme({
@@ -31,22 +32,29 @@ class App extends Component {
     })
 
     navigate = (url) => {
-        this.props.history.push("/" + url);
+        this.props.history.push(url);
+    }
+
+    checkSession = () => {
+        this.props.checkSession()
+            .then((response) => {
+            }, (err) => {
+                this.navigate('/login');
+            }) 
     }
 
     componentWillMount = () => {
-        this.props.checkSession();
-
-        if (this.props.user === undefined) {
-            this.navigate('login');
-        }
+        this.checkSession();
     }
 
     componentWillReceiveProps = (nextProps) => {
-        this.props.checkSession();
-        
-        if (this.props.user !== undefined && nextProps.user === undefined) {
-            setTimeout(() => this.navigate('login'), 0);
+        if (this.props.session !== undefined) {
+            if (nextProps.session === undefined) {
+                this.navigate('/login');
+            }
+            else {
+                this.checkSession();
+            } 
         }
     }
 
@@ -93,6 +101,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = {
+    hideSnackbar,
     checkSession
 }
 

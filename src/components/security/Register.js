@@ -59,7 +59,7 @@ class Register extends Component {
     state = initialState;
 
     navigate = (url) => {
-        this.props.history.push("/" + url);
+        this.props.history.push(url);
     }
 
     handleNavigateClick = (url) => {
@@ -94,7 +94,7 @@ class Register extends Component {
                 .then((response) => {
                     this.setState({ registered: true }, () => {
                         this.props.showSnackbar("Registration successful!")
-                        setTimeout(() => this.navigate('confirm?code=' + btoa(this.state.info.email)), 1000);
+                        setTimeout(() => this.navigate('/confirm?code=' + btoa(this.state.info.email)), 1000);
                     })
                 }, (error) => {
                     this.props.showSnackbar(error.message);
