@@ -36,19 +36,30 @@ class App extends Component {
     }
 
     componentWillMount = () => {
-        this.props.checkSession();
-
-        if (this.props.user === undefined) {
-            this.navigate('login');
-        }
+        this.props.checkSession()
+            .then((response) => {
+            }, (err) => {
+                this.navigate('login');
+            }) 
     }
 
     componentWillReceiveProps = (nextProps) => {
-        this.props.checkSession();
-
-        if (this.props.user !== undefined && nextProps.user === undefined) {
+        if (this.props === nextProps) return;
+        console.log('props');
+ 
+/*         if (this.props.session !== undefined && nextProps.session === undefined) {
+            console.log('asdfasd')
             setTimeout(() => this.navigate('login'), 0);
-        }
+            return;
+        }  */
+
+        this.props.checkSession()
+            .then((response) => {
+                console.log("ok");
+            }, (err) => {
+                console.log("notok");
+                //setTimeout(() => this.navigate('login'), 0);
+            })  
     }
 
     render() {

@@ -15,6 +15,11 @@ const loginAction = (user, session) => ({
     session: session,
 })
 
+const refreshAction = (session) => ({
+    type: 'REFRESH',
+    session: session,
+})
+
 const logoutAction = () => ({
     type: 'LOGOUT'
 })
@@ -36,26 +41,54 @@ const getCognitoUser = (email) => {
 export const checkSession = () => (dispatch, getState) => {
     let sessionData = getState().security.session;
 
-    if (sessionData) {
-        let accessToken = new CognitoAccessToken({ AccessToken: sessionData.accessToken.jwtToken });
-        let idToken = new CognitoIdToken({ IdToken: sessionData.idToken.jwtToken });
-        let refreshToken = new CognitoRefreshToken({ RefreshToken: sessionData.refreshToken.token });
-
-        let session = new CognitoUserSession({
-            IdToken: idToken,
-            AccessToken: accessToken,
-            RefreshToken: refreshToken,
-            ClockDrift: sessionData.clockDrift
-        });
-
-        if (!session.isValid()) {
-            dispatch(logoutAction());
-        } 
-    }
+    return new Promise((resolve, reject) => {
+        if (sessionData) {
+            let accessToken = new CognitoAccessToken({ AccessToken: sessionData.accessToken.jwtToken });
+            let idToken = new CognitoIdToken({ IdToken: sessionData.idToken.jwtToken });
+            let refreshToken = new CognitoRefreshToken({ RefreshToken: sessionData.refreshToken.token });
+    
+            let session = new CognitoUserSession({
+                IdToken: idToken,
+                AccessToken: accessToken,
+                RefreshToken: refreshToken,
+                ClockDrift: sessionData.clockDrift
+            });
+    
+            if (!session.isValid()) {
+                refreshSession().then((response) => {
+                    resolve(response);
+                }, (err) => {
+                    reject(err);
+                })
+            }
+            else {
+                resolve(session);
+            }
+        }
+        else {
+            reject();
+        }
+    })
 }
 
 export const refreshSession = () => (dispatch, getState) => {
+    let cognitoUser = getCognitoUser(getState().security.user);
+    let sessionData = getState().security.session;
 
+    return new Promise((resolve, reject) => {
+        cognitoUser.refreshSession(sessionData.refreshToken.token, function(err, result) {
+            if (err) {
+                console.log(err);
+                dispatch(logoutAction());
+                reject(err);
+            }
+            else {
+                dispatch(refreshAction(result))
+                resolve(result);
+            }
+        })
+
+    })
 }
 
 
