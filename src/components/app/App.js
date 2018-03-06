@@ -35,7 +35,7 @@ class App extends Component {
         this.props.history.push(url);
     }
 
-    componentWillMount = () => {
+    checkSession = () => {
         this.props.checkSession()
             .then((response) => {
             }, (err) => {
@@ -43,14 +43,19 @@ class App extends Component {
             }) 
     }
 
+    componentWillMount = () => {
+        this.checkSession();
+    }
+
     componentWillReceiveProps = (nextProps) => {
-        this.props.checkSession()
-            .then((response) => {
-            }, (err) => {
-                if (this.props.location.pathname !== '/login') {
-                    this.navigate('/login');
-                }
-            })  
+        if (this.props.session !== undefined) {
+            if (nextProps.session === undefined) {
+                this.navigate('/login');
+            }
+            else {
+                this.checkSession();
+            } 
+        }
     }
 
     render() {
