@@ -32,33 +32,24 @@ class App extends Component {
     })
 
     navigate = (url) => {
-        this.props.history.push("/" + url);
+        this.props.history.push(url);
     }
 
     componentWillMount = () => {
         this.props.checkSession()
             .then((response) => {
             }, (err) => {
-                this.navigate('login');
+                this.navigate('/login');
             }) 
     }
 
     componentWillReceiveProps = (nextProps) => {
-        if (this.props === nextProps) return;
-        console.log('props');
- 
-/*         if (this.props.session !== undefined && nextProps.session === undefined) {
-            console.log('asdfasd')
-            setTimeout(() => this.navigate('login'), 0);
-            return;
-        }  */
-
         this.props.checkSession()
             .then((response) => {
-                console.log("ok");
             }, (err) => {
-                console.log("notok");
-                //setTimeout(() => this.navigate('login'), 0);
+                if (this.props.location.pathname !== '/login') {
+                    this.navigate('/login');
+                }
             })  
     }
 
