@@ -10,6 +10,8 @@ const SecurityReducer = (state = initialState, action) => {
             return { ...state, user: action.user, session: action.session };
         case 'LOGOUT':
             return { ...state, user: undefined, session: undefined };
+        case 'REFRESH':
+            return { ...state, session: action.session };
         default:
             return state;
     }

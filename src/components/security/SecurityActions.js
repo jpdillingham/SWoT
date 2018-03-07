@@ -55,14 +55,11 @@ export const checkSession = () => (dispatch, getState) => {
             });
     
             if (!session.isValid()) {
-                refreshSession().then((response) => {
-                    resolve(response);
-                }, (err) => {
-                    reject(err);
-                })
+                dispatch(refreshSession());
+                resolve();
             }
             else {
-                resolve(session);
+                resolve();
             }
         }
         else {
@@ -74,11 +71,11 @@ export const checkSession = () => (dispatch, getState) => {
 export const refreshSession = () => (dispatch, getState) => {
     let cognitoUser = getCognitoUser(getState().security.user);
     let sessionData = getState().security.session;
+    let refreshToken = new CognitoRefreshToken({ RefreshToken: sessionData.refreshToken.token });
 
     return new Promise((resolve, reject) => {
-        cognitoUser.refreshSession(sessionData.refreshToken.token, function(err, result) {
+        cognitoUser.refreshSession(refreshToken, function(err, result) {
             if (err) {
-                console.log(err);
                 dispatch(logoutAction());
                 reject(err);
             }
