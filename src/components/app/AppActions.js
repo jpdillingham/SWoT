@@ -6,3 +6,7 @@ export const showSnackbar = (message) => ({
 export const hideSnackbar = () => ({
     type: 'SNACKBAR_HIDE'
 })
+
+export const noop = () => ({
+    type: 'NOOP'
+})
