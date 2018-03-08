@@ -36,7 +36,10 @@ class App extends Component {
     }
 
     componentWillMount = () => {
-        this.props.checkSession();
+        this.props.checkSession()
+            .then((result) => { }, (err) => {
+                this.navigate('/login');
+            })
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -45,7 +48,10 @@ class App extends Component {
                 this.navigate('/login');
             }
             else {
-                this.props.checkSession();
+                this.props.checkSession()
+                    .then((result) => { }, (err) => {
+                        this.navigate('/login');
+                    })
             } 
         }
     }
