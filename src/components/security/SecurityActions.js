@@ -55,11 +55,14 @@ export const checkSession = () => (dispatch, getState) => {
             });
     
             if (!session.isValid()) {
-                dispatch(refreshSession());
-                resolve();
+                dispatch(refreshSession()).then((result) => {
+                    resolve(result);
+                }, (err) => {
+                    reject(err);
+                })
             }
             else {
-                resolve();
+                resolve(true);
             }
         }
         else {
@@ -84,7 +87,6 @@ export const refreshSession = () => (dispatch, getState) => {
                 resolve(result);
             }
         })
-
     })
 }
 
