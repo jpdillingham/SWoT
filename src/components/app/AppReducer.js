@@ -11,6 +11,8 @@ const AppReducer = (state = initialState, action) => {
             return { ...state, snackbar: { visible: true, message: action.message } };
         case 'SNACKBAR_HIDE':
             return { ...state, snackbar: { visible: false, message: '' } }
+        case 'NOOP':
+            return { ...state }
         default:
             return state;
     }
