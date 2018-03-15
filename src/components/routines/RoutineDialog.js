@@ -131,7 +131,7 @@ class RoutineDialog extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.open && !nextProps.open) {
-            this.setState(initialState)
+            this.setState({ ...initialState, routine: { ...initialState.routine, id: getGuid() }})
         }
   
         if (!this.props.open && nextProps.open) {
