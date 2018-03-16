@@ -40,7 +40,7 @@ const exercisesPut = (exercise) => ({
 
 export const updateExercise = (exercise) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.put(endpoint, exercise, {
+        axios.put(endpoint + "/" + exercise.id, exercise, {
             headers: {
                 "Authorization": getState().security.session.idToken.jwtToken
             } 
