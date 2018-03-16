@@ -36,7 +36,7 @@ const routinesPut = (routine) => ({
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.put(endpoint + "/" + id, routine, {
+        axios.put(endpoint + "/" + routine.id, routine, {
             headers: {
                 "Authorization": getState().security.session.idToken.jwtToken
             } 
