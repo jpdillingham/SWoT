@@ -208,7 +208,7 @@ class ExerciseDialog extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.props.open && !nextProps.open) {
-            this.setState(initialState)
+            this.setState({ ...initialState, exercise: { ...initialState.exercise, id: getGuid() }})
         }
   
         if (!this.props.open && nextProps.open) {
