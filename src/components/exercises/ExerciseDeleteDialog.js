@@ -3,9 +3,16 @@ import { connect } from 'react-redux';
 
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
+import AlertWarning from 'material-ui/svg-icons/alert/warning'
 
 import { deleteExercise } from './ExercisesActions'
 import { showSnackbar } from '../app/AppActions.js'
+
+const styles = {
+    icon: {
+        marginRight: 5,
+    }
+}
 
 class ExerciseDeleteDialog extends Component {
     state = {
@@ -56,7 +63,8 @@ class ExerciseDeleteDialog extends Component {
                     modal={true}
                     open={this.props.open}
                 >
-                    Are you sure you want to delete exercise '{this.props.exercise.name}'?
+                    <p>Are you sure you want to delete exercise '{this.props.exercise.name}'?</p>
+                    <p><AlertWarning style={styles.icon}/>If this exercise is used in any routines, it will be removed.</p>
                 </Dialog>
             </div>
         )
