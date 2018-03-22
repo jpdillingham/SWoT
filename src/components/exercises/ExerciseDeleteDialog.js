@@ -71,11 +71,14 @@ class ExerciseDeleteDialog extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+    routines: state.routines,
+})
 
 const mapDispatchToProps = {
     deleteExercise,
-    showSnackbar
+    showSnackbar,
+    fetchRoutines,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExerciseDeleteDialog)
