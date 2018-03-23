@@ -6,6 +6,7 @@ import Dialog from 'material-ui/Dialog'
 import AlertWarning from 'material-ui/svg-icons/alert/warning'
 
 import { deleteExercise } from './ExercisesActions'
+import { fetchRoutines } from '../routines/RoutinesActions'
 import { showSnackbar } from '../app/AppActions.js'
 
 const styles = {
@@ -42,6 +43,10 @@ class ExerciseDeleteDialog extends Component {
         this.props.handleClose();
     }
 
+    componentWillMount() {
+        this.props.fetchRoutines();
+    }
+
     render() {
         return (
             <div>
@@ -65,6 +70,13 @@ class ExerciseDeleteDialog extends Component {
                 >
                     <p>Are you sure you want to delete exercise '{this.props.exercise.name}'?</p>
                     <p><AlertWarning style={styles.icon}/>If this exercise is used in any routines, it will be removed.</p>
+                    <ul>
+                    {this.props.routines
+                        .filter(r => r.exercises.find(e => e.id === this.props.exercise.id))
+                            .map(r => 
+                                <li>{r.name}</li>
+                            )}
+                    </ul>
                 </Dialog>
             </div>
         )
