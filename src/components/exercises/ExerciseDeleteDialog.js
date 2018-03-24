@@ -69,7 +69,7 @@ class ExerciseDeleteDialog extends Component {
 
                     {routines.length > 0 ? 
                         <div>
-                            <p>This exercise is used in {routines.length} routines:</p>
+                            <p>This exercise is used in {routines.length} routine{routines.length === 1 ? '' : 's'}:</p>
 
                             <List>
                                 {routines.map(r => 
