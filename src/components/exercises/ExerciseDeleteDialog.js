@@ -76,6 +76,8 @@ class ExerciseDeleteDialog extends Component {
                                     <ListItem key={r.id} primaryText={r.name} />
                                 )}
                             </List>
+
+                            <p>Deleting the exercise will also delete it from any routines referencing it.</p>
                         </div>
                     : ''}
                 </Dialog>
