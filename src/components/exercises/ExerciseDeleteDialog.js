@@ -3,18 +3,11 @@ import { connect } from 'react-redux';
 
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
-import AlertWarning from 'material-ui/svg-icons/alert/warning'
 import {List, ListItem} from 'material-ui/List';
 
 import { deleteExercise } from './ExercisesActions'
 import { fetchRoutines } from '../routines/RoutinesActions'
 import { showSnackbar } from '../app/AppActions.js'
-
-const styles = {
-    icon: {
-        marginRight: 5,
-    }
-}
 
 class ExerciseDeleteDialog extends Component {
     state = {
