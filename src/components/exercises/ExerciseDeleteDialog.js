@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 import AlertWarning from 'material-ui/svg-icons/alert/warning'
+import {List, ListItem} from 'material-ui/List';
 
 import { deleteExercise } from './ExercisesActions'
 import { fetchRoutines } from '../routines/RoutinesActions'
@@ -48,6 +49,9 @@ class ExerciseDeleteDialog extends Component {
     }
 
     render() {
+        let routines = this.props.routines
+                        .filter(r => r.exercises.find(e => e.id === this.props.exercise.id));
+
         return (
             <div>
                 <Dialog
@@ -69,14 +73,18 @@ class ExerciseDeleteDialog extends Component {
                     open={this.props.open}
                 >
                     <p>Are you sure you want to delete exercise '{this.props.exercise.name}'?</p>
-                    <p><AlertWarning style={styles.icon}/>If this exercise is used in any routines, it will be removed.</p>
-                    <ul>
-                    {this.props.routines
-                        .filter(r => r.exercises.find(e => e.id === this.props.exercise.id))
-                            .map(r => 
-                                <li>{r.name}</li>
-                            )}
-                    </ul>
+
+                    {routines.length > 0 ? 
+                        <div>
+                            <p>This exercise is used in {routines.length} routines:</p>
+
+                            <List>
+                                {routines.map(r => 
+                                    <ListItem key={r.id} primaryText={r.name} />
+                                )}
+                            </List>
+                        </div>
+                    : ''}
                 </Dialog>
             </div>
         )
