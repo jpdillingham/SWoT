@@ -3,16 +3,11 @@ import { connect } from 'react-redux';
 
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
-import AlertWarning from 'material-ui/svg-icons/alert/warning'
+import {List, ListItem} from 'material-ui/List';
 
 import { deleteExercise } from './ExercisesActions'
+import { fetchRoutines } from '../routines/RoutinesActions'
 import { showSnackbar } from '../app/AppActions.js'
-
-const styles = {
-    icon: {
-        marginRight: 5,
-    }
-}
 
 class ExerciseDeleteDialog extends Component {
     state = {
@@ -42,7 +37,14 @@ class ExerciseDeleteDialog extends Component {
         this.props.handleClose();
     }
 
+    componentWillMount() {
+        this.props.fetchRoutines();
+    }
+
     render() {
+        let routines = this.props.routines
+                        .filter(r => r.exercises.find(e => e.id === this.props.exercise.id));
+
         return (
             <div>
                 <Dialog
@@ -64,18 +66,34 @@ class ExerciseDeleteDialog extends Component {
                     open={this.props.open}
                 >
                     <p>Are you sure you want to delete exercise '{this.props.exercise.name}'?</p>
-                    <p><AlertWarning style={styles.icon}/>If this exercise is used in any routines, it will be removed.</p>
+
+                    {routines.length > 0 ? 
+                        <div>
+                            <p>This exercise is used in {routines.length} routines:</p>
+
+                            <List>
+                                {routines.map(r => 
+                                    <ListItem key={r.id} primaryText={r.name} />
+                                )}
+                            </List>
+
+                            <p>Deleting the exercise will also delete it from any routines referencing it.</p>
+                        </div>
+                    : ''}
                 </Dialog>
             </div>
         )
     }
 }
 
-const mapStateToProps = (state) => ({})
+const mapStateToProps = (state) => ({
+    routines: state.routines,
+})
 
 const mapDispatchToProps = {
     deleteExercise,
-    showSnackbar
+    showSnackbar,
+    fetchRoutines,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExerciseDeleteDialog)
