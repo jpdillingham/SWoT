@@ -14,6 +14,30 @@ api.interceptors.request.use(function(config) {
   }
 );
 
+api.interceptors.response.use(function (response) {
+  return response;
+}, function (error) {
+
+  const originalRequest = error.config;
+
+  if (error.response.status === 401 && !originalRequest._retry) {
+    console.log('here is where we will refresh the token')
+    //originalRequest._retry = true;
+
+/*     const refreshToken = window.localStorage.getItem('refreshToken');
+    return axios.post('http://localhost:8000/auth/refresh', { refreshToken })
+      .then(({data}) => {
+        window.localStorage.setItem('token', data.token);
+        window.localStorage.setItem('refreshToken', data.refreshToken);
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + data.token;
+        originalRequest.headers['Authorization'] = 'Bearer ' + data.token;
+        return axios(originalRequest);
+      }); */
+  }
+
+  return Promise.reject(error);
+});
+
 const setTokenFromState = (getState) => {
     token = getState().security.session.idToken.jwtToken;  
 }
