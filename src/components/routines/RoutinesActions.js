@@ -1,17 +1,22 @@
 import axios from 'axios'
-var api = axios.create();
+let api = axios.create();
 
-var token;
+let token;
 
 api.interceptors.request.use(function(config) {
-    if ( token != null ) {
+    if (token) {
       config.headers.Authorization = token;
     }
   
     return config;
   }, function(err) {
     return Promise.reject(err);
-  });
+  }
+);
+
+const setToken = (getState) => {
+    token = getState().security.session.idToken.jwtToken;  
+}
 
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines'
 
@@ -21,8 +26,6 @@ const routinesPost = (routine) => ({
 })
 
 export const addRoutine = (routine) => (dispatch, getState) => {
-    token = getState().security.session.idToken.jwtToken;
-    
     return new Promise((resolve, reject) => { 
         api.post(endpoint, routine, {
             headers: {
@@ -76,12 +79,10 @@ const routinesGet = (routines) => ({
 })
 
 export const fetchRoutines = () => (dispatch, getState) => {
+    setToken(getState);
+
     return new Promise((resolve, reject) => {
-        api.get(endpoint, {
-            headers: {
-                "Authorization": getState().security.session.idToken.jwtToken 
-            }
-        })
+        api.get(endpoint)
             .then(response => {
                 dispatch(routinesGet(response.data))
                 resolve(response)
