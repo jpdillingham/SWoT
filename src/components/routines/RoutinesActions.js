@@ -1,4 +1,17 @@
 import axios from 'axios'
+var api = axios.create();
+
+var token;
+
+api.interceptors.request.use(function(config) {
+    if ( token != null ) {
+      config.headers.Authorization = token;
+    }
+  
+    return config;
+  }, function(err) {
+    return Promise.reject(err);
+  });
 
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines'
 
@@ -8,8 +21,10 @@ const routinesPost = (routine) => ({
 })
 
 export const addRoutine = (routine) => (dispatch, getState) => {
+    token = getState().security.session.idToken.jwtToken;
+    
     return new Promise((resolve, reject) => { 
-        axios.post(endpoint, routine, {
+        api.post(endpoint, routine, {
             headers: {
                 "Authorization": getState().security.session.idToken.jwtToken
             } 
@@ -36,7 +51,7 @@ const routinesPut = (routine) => ({
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.put(endpoint + "/" + routine.id, routine, {
+        api.put(endpoint + "/" + routine.id, routine, {
             headers: {
                 "Authorization": getState().security.session.idToken.jwtToken
             } 
@@ -62,7 +77,7 @@ const routinesGet = (routines) => ({
 
 export const fetchRoutines = () => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.get(endpoint, {
+        api.get(endpoint, {
             headers: {
                 "Authorization": getState().security.session.idToken.jwtToken 
             }
@@ -83,7 +98,7 @@ const routinesDelete = (id) => ({
 
 export const deleteRoutine = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.delete(endpoint + "/" + id, {
+        api.delete(endpoint + "/" + id, {
             headers: {
                 "Authorization": getState().security.session.idToken.jwtToken
             } 
