@@ -14,7 +14,7 @@ api.interceptors.request.use(function(config) {
   }
 );
 
-const setToken = (getState) => {
+const setTokenFromState = (getState) => {
     token = getState().security.session.idToken.jwtToken;  
 }
 
@@ -26,12 +26,10 @@ const routinesPost = (routine) => ({
 })
 
 export const addRoutine = (routine) => (dispatch, getState) => {
+    setTokenFromState(getState);
+
     return new Promise((resolve, reject) => { 
-        api.post(endpoint, routine, {
-            headers: {
-                "Authorization": getState().security.session.idToken.jwtToken
-            } 
-        })
+        api.post(endpoint, routine)
             .then(response => {
                 if (response.status === 201) {
                     dispatch(routinesPost(response.data))
@@ -53,12 +51,10 @@ const routinesPut = (routine) => ({
 })
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
+    setTokenFromState(getState);
+
     return new Promise((resolve, reject) => {
-        api.put(endpoint + "/" + routine.id, routine, {
-            headers: {
-                "Authorization": getState().security.session.idToken.jwtToken
-            } 
-        })
+        api.put(endpoint + "/" + routine.id, routine)
             .then(response => {
                 if (response.status === 200) {
                     dispatch(routinesPut(response.data))
@@ -79,7 +75,7 @@ const routinesGet = (routines) => ({
 })
 
 export const fetchRoutines = () => (dispatch, getState) => {
-    setToken(getState);
+    setTokenFromState(getState);
 
     return new Promise((resolve, reject) => {
         api.get(endpoint)
@@ -98,12 +94,10 @@ const routinesDelete = (id) => ({
 })
 
 export const deleteRoutine = (id) => (dispatch, getState) => {
+    setTokenFromState(getState);
+
     return new Promise((resolve, reject) => {
-        api.delete(endpoint + "/" + id, {
-            headers: {
-                "Authorization": getState().security.session.idToken.jwtToken
-            } 
-        })
+        api.delete(endpoint + "/" + id)
             .then(response => {
                 if (response.status === 204) {
                     dispatch(routinesDelete(id))
