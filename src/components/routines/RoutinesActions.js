@@ -53,24 +53,23 @@ const routinesPut = (routine) => ({
 })
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
-    setSessionFromState(getState);
-
     return new Promise((resolve, reject) => {
-        dispatch(checkSession()).then(() => {
-            api.put(endpoint + "/" + routine.id, routine)
-                .then(response => {
-                    if (response.status === 200) {
-                        dispatch(routinesPut(response.data))
-                        resolve(response)
-                    }
-                    else {
-                        reject("Unknown PUT response code (expected 200, received " + response.status + ").")
-                    }
-                }, error => {
-                    reject(error)
-                })
-            })
-        })
+        dispatch(checkSession())
+        .then(() => {
+            setSessionFromState(getState);
+
+            return api.put(endpoint + "/" + routine.id, routine);
+        }, err => reject('Invalid session: ' + err))
+        .then(response => {
+            if (response.status === 200) {
+                dispatch(routinesPut(response.data));
+                resolve(response);
+            }
+            else {
+                reject("API error: Unknown PUT response code (expected 200, received " + response.status + ").");
+            }
+        }, err => reject('API error: ' + err));
+    });
 }
 
 const routinesGet = (routines) => ({
