@@ -3,6 +3,8 @@ import { checkSession } from '../security/SecurityActions'
 
 let api = axios.create();
 
+let session;
+
 api.interceptors.request.use(function(config) {
     if (session && session.idToken) {
       config.headers.Authorization = session.idToken.jwtToken;
@@ -14,6 +16,10 @@ api.interceptors.request.use(function(config) {
   }
 );
 
+const setSessionFromState = (getState) => {
+    session = getState().security.session;  
+}
+
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines'
 
 const routinesPost = (routine) => ({
@@ -22,6 +28,8 @@ const routinesPost = (routine) => ({
 })
 
 export const addRoutine = (routine) => (dispatch, getState) => {
+    setSessionFromState(getState);
+
     return new Promise((resolve, reject) => { 
         api.post(endpoint, routine)
             .then(response => {
@@ -45,6 +53,8 @@ const routinesPut = (routine) => ({
 })
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
+    setSessionFromState(getState);
+
     return new Promise((resolve, reject) => {
         dispatch(checkSession()).then(() => {
             api.put(endpoint + "/" + routine.id, routine)
@@ -69,6 +79,8 @@ const routinesGet = (routines) => ({
 })
 
 export const fetchRoutines = () => (dispatch, getState) => {
+    setSessionFromState(getState);
+
     return new Promise((resolve, reject) => {
         api.get(endpoint)
             .then(response => {
@@ -86,6 +98,8 @@ const routinesDelete = (id) => ({
 })
 
 export const deleteRoutine = (id) => (dispatch, getState) => {
+    setSessionFromState(getState);
+
     return new Promise((resolve, reject) => {
         api.delete(endpoint + "/" + id)
             .then(response => {
