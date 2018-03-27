@@ -77,7 +77,6 @@ export const refreshSession = () => (dispatch, getState) => {
     let refreshToken = new CognitoRefreshToken({ RefreshToken: sessionData.refreshToken.token });
 
     return new Promise((resolve, reject) => {
-        reject();
         cognitoUser.refreshSession(refreshToken, function(err, result) {
             if (err) {
                 dispatch(logoutAction());
