@@ -47,12 +47,6 @@ class App extends Component {
             if (nextProps.session === undefined) {
                 this.navigate('/login');
             }
-            else {
-                this.props.checkSession()
-                    .then((result) => { }, (err) => {
-                        this.navigate('/login');
-                    })
-            } 
         }
     }
 
