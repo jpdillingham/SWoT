@@ -2,6 +2,7 @@ import axios from 'axios'
 import { checkSession } from '../security/SecurityActions'
 
 let api = axios.create();
+const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines'
 
 let session;
 
@@ -20,7 +21,17 @@ const setSessionFromState = (getState) => {
     session = getState().security.session;  
 }
 
-const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines'
+const invokeApi = (config) => {
+    return new Promise((resolve, reject) => {
+        config.dependencies.dispatch(checkSession())
+        .then(() => {
+            setSessionFromState(config.dependencies.getState);
+
+            return config.request();
+        }, err => reject('Invalid session: ' + err))
+        .then((response) => config.response(response, resolve, reject), err => reject('API error: ' + err));
+    });
+}
 
 const routinesPost = (routine) => ({
     type: 'ROUTINES_POST',
@@ -53,14 +64,13 @@ const routinesPut = (routine) => ({
 })
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
-    return new Promise((resolve, reject) => {
-        dispatch(checkSession())
-        .then(() => {
-            setSessionFromState(getState);
-
-            return api.put(endpoint + "/" + routine.id, routine);
-        }, err => reject('Invalid session: ' + err))
-        .then(response => {
+    return invokeApi({
+        dependencies: {
+            dispatch: dispatch, 
+            getState: getState, 
+        },
+        request: () => api.put(endpoint + "/" + routine.id, routine),
+        response: (response, resolve, reject) => {
             if (response.status === 200) {
                 dispatch(routinesPut(response.data));
                 resolve(response);
@@ -68,8 +78,8 @@ export const updateRoutine = (routine) => (dispatch, getState) => {
             else {
                 reject("API error: Unknown PUT response code (expected 200, received " + response.status + ").");
             }
-        }, err => reject('API error: ' + err));
-    });
+        }
+    })
 }
 
 const routinesGet = (routines) => ({
