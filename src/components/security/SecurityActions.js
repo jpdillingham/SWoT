@@ -66,7 +66,7 @@ export const checkSession = () => (dispatch, getState) => {
             }
         }
         else {
-            reject();
+            reject('no session data; cannot refresh.');
         }
     })
 }
