@@ -1,11 +1,11 @@
 import axios from 'axios'
 let api = axios.create();
 
-let token;
+let session;
 
 api.interceptors.request.use(function(config) {
-    if (token) {
-      config.headers.Authorization = token;
+    if (session && session.idToken) {
+      config.headers.Authorization = session.idToken.jwtToken;
     }
   
     return config;
@@ -38,8 +38,8 @@ api.interceptors.response.use(function (response) {
   return Promise.reject(error);
 });
 
-const setTokenFromState = (getState) => {
-    token = getState().security.session.idToken.jwtToken;  
+const setSessionFromState = (getState) => {
+    session = getState().security.session;  
 }
 
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines'
@@ -50,7 +50,7 @@ const routinesPost = (routine) => ({
 })
 
 export const addRoutine = (routine) => (dispatch, getState) => {
-    setTokenFromState(getState);
+    setSessionFromState(getState);
 
     return new Promise((resolve, reject) => { 
         api.post(endpoint, routine)
@@ -75,7 +75,7 @@ const routinesPut = (routine) => ({
 })
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
-    setTokenFromState(getState);
+    setSessionFromState(getState);
 
     return new Promise((resolve, reject) => {
         api.put(endpoint + "/" + routine.id, routine)
@@ -99,7 +99,7 @@ const routinesGet = (routines) => ({
 })
 
 export const fetchRoutines = () => (dispatch, getState) => {
-    setTokenFromState(getState);
+    setSessionFromState(getState);
 
     return new Promise((resolve, reject) => {
         api.get(endpoint)
@@ -118,7 +118,7 @@ const routinesDelete = (id) => ({
 })
 
 export const deleteRoutine = (id) => (dispatch, getState) => {
-    setTokenFromState(getState);
+    setSessionFromState(getState);
 
     return new Promise((resolve, reject) => {
         api.delete(endpoint + "/" + id)
