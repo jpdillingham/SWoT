@@ -76,10 +76,8 @@ export const refreshSession = () => (dispatch, getState) => {
     let sessionData = getState().security.session;
     let refreshToken = new CognitoRefreshToken({ RefreshToken: sessionData.refreshToken.token });
 
-    console.log('refresh blocked for testing (SecurityActions.js; line 79)');
-    return;
-    
     return new Promise((resolve, reject) => {
+        reject();
         cognitoUser.refreshSession(refreshToken, function(err, result) {
             if (err) {
                 dispatch(logoutAction());
