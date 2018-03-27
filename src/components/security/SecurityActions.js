@@ -58,6 +58,7 @@ export const checkSession = () => (dispatch, getState) => {
                 dispatch(refreshSession()).then((result) => {
                     resolve(result);
                 }, (err) => {
+                    //dispatch(logoutAction());
                     reject(err);
                 })
             }
@@ -66,7 +67,8 @@ export const checkSession = () => (dispatch, getState) => {
             }
         }
         else {
-            reject('no session data; cannot refresh.');
+            //dispatch(logoutAction());
+            reject('Invalid session');
         }
     })
 }
