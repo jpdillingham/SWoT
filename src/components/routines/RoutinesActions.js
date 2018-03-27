@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { checkSession } from '../security/SecurityActions'
+
 let api = axios.create();
 
 let session;
@@ -75,20 +77,20 @@ const routinesPut = (routine) => ({
 })
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
-    setSessionFromState(getState);
-
     return new Promise((resolve, reject) => {
-        api.put(endpoint + "/" + routine.id, routine)
-            .then(response => {
-                if (response.status === 200) {
-                    dispatch(routinesPut(response.data))
-                    resolve(response)
-                }
-                else {
-                    reject("Unknown PUT response code (expected 200, received " + response.status + ").")
-                }
-            }, error => {
-                reject(error)
+        dispatch(checkSession()).then(() => {
+            api.put(endpoint + "/" + routine.id, routine)
+                .then(response => {
+                    if (response.status === 200) {
+                        dispatch(routinesPut(response.data))
+                        resolve(response)
+                    }
+                    else {
+                        reject("Unknown PUT response code (expected 200, received " + response.status + ").")
+                    }
+                }, error => {
+                    reject(error)
+                })
             })
         })
 }
@@ -100,6 +102,8 @@ const routinesGet = (routines) => ({
 
 export const fetchRoutines = () => (dispatch, getState) => {
     setSessionFromState(getState);
+
+    //dispatch(checkSession());
 
     return new Promise((resolve, reject) => {
         api.get(endpoint)
