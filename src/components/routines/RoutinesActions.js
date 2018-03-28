@@ -1,6 +1,37 @@
 import axios from 'axios'
+import { checkSession } from '../security/SecurityActions'
 
+let api = axios.create();
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines'
+
+let session;
+
+api.interceptors.request.use(function(config) {
+    if (session && session.idToken) {
+      config.headers.Authorization = session.idToken.jwtToken;
+    }
+  
+    return config;
+  }, function(err) {
+    return Promise.reject(err);
+  }
+);
+
+const setSessionFromState = (getState) => {
+    session = getState().security.session;  
+}
+
+const invokeApi = (config) => {
+    return new Promise((resolve, reject) => {
+        config.dependencies.dispatch(checkSession())
+        .then(() => {
+            setSessionFromState(config.dependencies.getState);
+
+            return config.request();
+        }, err => reject('Invalid session: ' + err))
+        .then((response) => config.response(response, resolve, reject), err => reject('API error: ' + err));
+    });
+}
 
 const routinesPost = (routine) => ({
     type: 'ROUTINES_POST',
@@ -8,12 +39,10 @@ const routinesPost = (routine) => ({
 })
 
 export const addRoutine = (routine) => (dispatch, getState) => {
+    setSessionFromState(getState);
+
     return new Promise((resolve, reject) => { 
-        axios.post(endpoint, routine, {
-            headers: {
-                "Authorization": getState().security.session.idToken.jwtToken
-            } 
-        })
+        api.post(endpoint, routine)
             .then(response => {
                 if (response.status === 201) {
                     dispatch(routinesPost(response.data))
@@ -35,24 +64,22 @@ const routinesPut = (routine) => ({
 })
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
-    return new Promise((resolve, reject) => {
-        axios.put(endpoint + "/" + routine.id, routine, {
-            headers: {
-                "Authorization": getState().security.session.idToken.jwtToken
-            } 
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    dispatch(routinesPut(response.data))
-                    resolve(response)
-                }
-                else {
-                    reject("Unknown PUT response code (expected 200, received " + response.status + ").")
-                }
-            }, error => {
-                reject(error)
-            })
-        })
+    return invokeApi({
+        dependencies: {
+            dispatch: dispatch, 
+            getState: getState, 
+        },
+        request: () => api.put(endpoint + "/" + routine.id, routine),
+        response: (response, resolve, reject) => {
+            if (response.status === 200) {
+                dispatch(routinesPut(response.data));
+                resolve(response);
+            }
+            else {
+                reject("API error: Unknown PUT response code (expected 200, received " + response.status + ").");
+            }
+        }
+    })
 }
 
 const routinesGet = (routines) => ({
@@ -61,12 +88,10 @@ const routinesGet = (routines) => ({
 })
 
 export const fetchRoutines = () => (dispatch, getState) => {
+    setSessionFromState(getState);
+
     return new Promise((resolve, reject) => {
-        axios.get(endpoint, {
-            headers: {
-                "Authorization": getState().security.session.idToken.jwtToken 
-            }
-        })
+        api.get(endpoint)
             .then(response => {
                 dispatch(routinesGet(response.data))
                 resolve(response)
@@ -82,12 +107,10 @@ const routinesDelete = (id) => ({
 })
 
 export const deleteRoutine = (id) => (dispatch, getState) => {
+    setSessionFromState(getState);
+
     return new Promise((resolve, reject) => {
-        axios.delete(endpoint + "/" + id, {
-            headers: {
-                "Authorization": getState().security.session.idToken.jwtToken
-            } 
-        })
+        api.delete(endpoint + "/" + id)
             .then(response => {
                 if (response.status === 204) {
                     dispatch(routinesDelete(id))
