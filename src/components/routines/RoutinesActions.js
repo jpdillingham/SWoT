@@ -21,7 +21,7 @@ api.invoke = (config) => {
     return new Promise((resolve, reject) => {
         config.dependencies.dispatch(checkSession())
         .then(() => {
-            session = getState().security.session;  
+            session = config.dependencies.getState().security.session;  
 
             return config.request();
         }, err => reject('Invalid session: ' + err))
@@ -35,7 +35,7 @@ const routinesPost = (routine) => ({
 })
 
 export const addRoutine = (routine) => (dispatch, getState) => {
-    setSessionFromState(getState);
+    //setSessionFromState(getState);
 
     return new Promise((resolve, reject) => { 
         api.post(endpoint, routine)
@@ -84,16 +84,21 @@ const routinesGet = (routines) => ({
 })
 
 export const fetchRoutines = () => (dispatch, getState) => {
-    setSessionFromState(getState);
-
-    return new Promise((resolve, reject) => {
-        api.get(endpoint)
-            .then(response => {
-                dispatch(routinesGet(response.data))
-                resolve(response)
-            }, error => {
-                reject(error)
-            })    
+    return api.invoke({
+        dependencies: {
+            dispatch: dispatch, 
+            getState: getState, 
+        },
+        request: () => api.get(endpoint),
+        response: (response, resolve, reject) => {
+            if (response.status === 200) {
+                dispatch(routinesGet(response.data));
+                resolve(response);
+            }
+            else {
+                reject("API error: Unknown GET response code (expected 200, received " + response.status + ").")
+            }
+        }       
     })
 }
 
@@ -103,7 +108,7 @@ const routinesDelete = (id) => ({
 })
 
 export const deleteRoutine = (id) => (dispatch, getState) => {
-    setSessionFromState(getState);
+    //setSessionFromState(getState);
 
     return new Promise((resolve, reject) => {
         api.delete(endpoint + "/" + id)
