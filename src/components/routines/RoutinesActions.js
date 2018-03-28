@@ -17,15 +17,11 @@ api.interceptors.request.use(function(config) {
   }
 );
 
-const setSessionFromState = (getState) => {
-    session = getState().security.session;  
-}
-
 api.invoke = (config) => {
     return new Promise((resolve, reject) => {
         config.dependencies.dispatch(checkSession())
         .then(() => {
-            setSessionFromState(config.dependencies.getState);
+            session = getState().security.session;  
 
             return config.request();
         }, err => reject('Invalid session: ' + err))
