@@ -32,21 +32,17 @@ const routinesPut = (routine) => ({
 })
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
-    return api.invoke({
-        dependencies: {
-            dispatch: dispatch, 
-            getState: getState, 
-        },
-        request: () => api.put(endpoint + "/" + routine.id, routine),
-        response: (response, resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        api.put(endpoint + "/" + routine.id, routine)
+        .then(response => {
             if (response.status === 200) {
                 dispatch(routinesPut(response.data));
                 resolve(response);
             }
             else {
                 reject("API error: Unknown PUT response code (expected 200, received " + response.status + ").");
-            }
-        }
+            }            
+        })
     });
 }
 
@@ -56,21 +52,14 @@ const routinesGet = (routines) => ({
 })
 
 export const fetchRoutines = () => (dispatch, getState) => {
-    return api.invoke({
-        dependencies: {
-            dispatch: dispatch, 
-            getState: getState, 
-        },
-        request: () => api.get(endpoint),
-        response: (response, resolve, reject) => {
-            if (response.status === 200) {
-                dispatch(routinesGet(response.data));
-                resolve(response);
-            }
-            else {
-                reject("API error: Unknown GET response code (expected 200, received " + response.status + ").")
-            }
-        }       
+    return new Promise((resolve, reject) => {
+        api.get(endpoint)
+            .then(response => {
+                dispatch(routinesGet(response.data))
+                resolve(response)
+            }, error => {
+                reject(error)
+            })    
     })
 }
 
