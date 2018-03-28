@@ -1,28 +1,28 @@
 import axios from 'axios'
+import { store } from './index'
 import { checkSession } from './components/security/SecurityActions'
 
 export const api = axios.create();
-let session;
 
-api.interceptors.request.use(function(config) {
-    if (session && session.idToken) {
-      config.headers.Authorization = session.idToken.jwtToken;
+api.interceptors.request.use(config => {
+        return store.dispatch(checkSession()).then(() => {
+            config.headers.Authorization = store.getState().security.session.idToken.jwtToken;
+
+            return Promise.resolve(config);
+        })
+    }, err => {
+        return Promise.reject(err);
     }
-  
-    return config;
-  }, function(err) {
-    return Promise.reject(err);
-  }
 );
 
-api.invoke = (config) => {
+api.invoke = (request) => {
     return new Promise((resolve, reject) => {
-        config.dependencies.dispatch(checkSession())
+        store.dispatch(checkSession())
         .then(() => {
-            session = config.dependencies.getState().security.session;  
-
-            return config.request();
+            return request();
         }, err => reject('Invalid session: ' + err))
-        .then((response) => config.response(response, resolve, reject), err => reject('API error: ' + err));
+        .then((response) => {
+            resolve(response)
+        }, err => reject('API error: ' + err));
     });
 }
