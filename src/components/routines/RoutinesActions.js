@@ -1,33 +1,6 @@
-import axios from 'axios'
-import { checkSession } from '../security/SecurityActions'
+import { api } from '../../api';
 
-let api = axios.create();
-const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines'
-
-let session;
-
-api.interceptors.request.use(function(config) {
-    if (session && session.idToken) {
-      config.headers.Authorization = session.idToken.jwtToken;
-    }
-  
-    return config;
-  }, function(err) {
-    return Promise.reject(err);
-  }
-);
-
-api.invoke = (config) => {
-    return new Promise((resolve, reject) => {
-        config.dependencies.dispatch(checkSession())
-        .then(() => {
-            session = config.dependencies.getState().security.session;  
-
-            return config.request();
-        }, err => reject('Invalid session: ' + err))
-        .then((response) => config.response(response, resolve, reject), err => reject('API error: ' + err));
-    });
-}
+const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines';
 
 const routinesPost = (routine) => ({
     type: 'ROUTINES_POST',
