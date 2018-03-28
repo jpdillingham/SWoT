@@ -1,37 +1,6 @@
-import axios from 'axios'
-import { checkSession } from '../security/SecurityActions'
+import { api } from '../../api';
 
-let api = axios.create();
-const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines'
-
-let session;
-
-api.interceptors.request.use(function(config) {
-    if (session && session.idToken) {
-      config.headers.Authorization = session.idToken.jwtToken;
-    }
-  
-    return config;
-  }, function(err) {
-    return Promise.reject(err);
-  }
-);
-
-const setSessionFromState = (getState) => {
-    session = getState().security.session;  
-}
-
-const invokeApi = (config) => {
-    return new Promise((resolve, reject) => {
-        config.dependencies.dispatch(checkSession())
-        .then(() => {
-            setSessionFromState(config.dependencies.getState);
-
-            return config.request();
-        }, err => reject('Invalid session: ' + err))
-        .then((response) => config.response(response, resolve, reject), err => reject('API error: ' + err));
-    });
-}
+const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/routines';
 
 const routinesPost = (routine) => ({
     type: 'ROUTINES_POST',
@@ -39,23 +8,22 @@ const routinesPost = (routine) => ({
 })
 
 export const addRoutine = (routine) => (dispatch, getState) => {
-    setSessionFromState(getState);
-
-    return new Promise((resolve, reject) => { 
-        api.post(endpoint, routine)
-            .then(response => {
-                if (response.status === 201) {
-                    dispatch(routinesPost(response.data))
-                    resolve(response)
-                }
-                else {
-                    reject("Unknown POST response code (expected 201, received " + response.status + ").")
-                }
-                
-            }, error => {
-                reject(error)
-            })
-        })
+    return api.invoke({
+        dependencies: {
+            dispatch: dispatch, 
+            getState: getState, 
+        },
+        request: () => api.post(endpoint, routine),
+        response: (response, resolve, reject) => {
+            if (response.status === 201) {
+                dispatch(routinesPost(response.data))
+                resolve(response)
+            }
+            else {
+                reject("Unknown POST response code (expected 201, received " + response.status + ").")
+            }            
+        }
+    });
 }
 
 const routinesPut = (routine) => ({
@@ -64,7 +32,7 @@ const routinesPut = (routine) => ({
 })
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
-    return invokeApi({
+    return api.invoke({
         dependencies: {
             dispatch: dispatch, 
             getState: getState, 
@@ -79,7 +47,7 @@ export const updateRoutine = (routine) => (dispatch, getState) => {
                 reject("API error: Unknown PUT response code (expected 200, received " + response.status + ").");
             }
         }
-    })
+    });
 }
 
 const routinesGet = (routines) => ({
@@ -88,16 +56,21 @@ const routinesGet = (routines) => ({
 })
 
 export const fetchRoutines = () => (dispatch, getState) => {
-    setSessionFromState(getState);
-
-    return new Promise((resolve, reject) => {
-        api.get(endpoint)
-            .then(response => {
-                dispatch(routinesGet(response.data))
-                resolve(response)
-            }, error => {
-                reject(error)
-            })    
+    return api.invoke({
+        dependencies: {
+            dispatch: dispatch, 
+            getState: getState, 
+        },
+        request: () => api.get(endpoint),
+        response: (response, resolve, reject) => {
+            if (response.status === 200) {
+                dispatch(routinesGet(response.data));
+                resolve(response);
+            }
+            else {
+                reject("API error: Unknown GET response code (expected 200, received " + response.status + ").")
+            }
+        }       
     })
 }
 
@@ -107,20 +80,20 @@ const routinesDelete = (id) => ({
 })
 
 export const deleteRoutine = (id) => (dispatch, getState) => {
-    setSessionFromState(getState);
-
-    return new Promise((resolve, reject) => {
-        api.delete(endpoint + "/" + id)
-            .then(response => {
-                if (response.status === 204) {
-                    dispatch(routinesDelete(id))
-                    resolve(response)
-                }
-                else {
-                    reject("Unknown DELETE response code (expected 204, received " + response.status + ").")
-                }
-            }, error => {
-                reject(error)
-            })
+    return api.invoke({
+        dependencies: {
+            dispatch: dispatch, 
+            getState: getState, 
+        },
+        request: () => api.delete(endpoint + '/' + id),
+        response: (response, resolve, reject) => {
+            if (response.status === 204) {
+                dispatch(routinesDelete(id))
+                resolve(response)
+            }
+            else {
+                reject("Unknown DELETE response code (expected 204, received " + response.status + ").")
+            }          
+        }
     })
 }
