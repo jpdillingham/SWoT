@@ -21,7 +21,7 @@ const setSessionFromState = (getState) => {
     session = getState().security.session;  
 }
 
-const invokeApi = (config) => {
+api.invoke = (config) => {
     return new Promise((resolve, reject) => {
         config.dependencies.dispatch(checkSession())
         .then(() => {
@@ -64,7 +64,7 @@ const routinesPut = (routine) => ({
 })
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
-    return invokeApi({
+    return api.invoke({
         dependencies: {
             dispatch: dispatch, 
             getState: getState, 
