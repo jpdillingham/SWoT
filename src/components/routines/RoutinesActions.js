@@ -8,13 +8,9 @@ const routinesPost = (routine) => ({
 })
 
 export const addRoutine = (routine) => (dispatch, getState) => {
-    return api.invoke({
-        dependencies: {
-            dispatch: dispatch, 
-            getState: getState, 
-        },
-        request: () => api.post(endpoint, routine),
-        response: (response, resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        api.post(endpoint, routine)
+        .then(response => {
             if (response.status === 201) {
                 dispatch(routinesPost(response.data))
                 resolve(response)
@@ -22,7 +18,9 @@ export const addRoutine = (routine) => (dispatch, getState) => {
             else {
                 reject("Unknown POST response code (expected 201, received " + response.status + ").")
             }            
-        }
+        }, error => {
+            reject('API error: ' + error);
+        })
     });
 }
 
