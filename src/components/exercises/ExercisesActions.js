@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../../api'
 
 const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/exercises'
 
@@ -13,11 +13,7 @@ export const addExercise = (exercise) => (dispatch, getState) => {
     }
 
     return new Promise((resolve, reject) => { 
-        axios.post(endpoint, exercise, {
-            headers: {
-                "Authorization": getState().security.session.idToken.jwtToken
-            } 
-        })
+        api.post(endpoint, exercise)
             .then(response => {
                 if (response.status === 201) {
                     dispatch(exercisesPost(response.data))
@@ -26,7 +22,6 @@ export const addExercise = (exercise) => (dispatch, getState) => {
                 else {
                     reject("Unknown POST response code (expected 201, received " + response.status + ").")
                 }
-                
             }, error => {
                 reject(error)
             })
@@ -40,11 +35,7 @@ const exercisesPut = (exercise) => ({
 
 export const updateExercise = (exercise) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.put(endpoint + "/" + exercise.id, exercise, {
-            headers: {
-                "Authorization": getState().security.session.idToken.jwtToken
-            } 
-        })
+        api.put(endpoint + "/" + exercise.id, exercise)
             .then(response => {
                 if (response.status === 200) {
                     dispatch(exercisesPut(response.data))
@@ -66,11 +57,7 @@ const exercisesDelete = (id) => ({
 
 export const deleteExercise = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.delete(endpoint + "/" + id, {
-            headers: {
-                "Authorization": getState().security.session.idToken.jwtToken
-            } 
-        })
+        api.delete(endpoint + "/" + id)
             .then(response => {
                 if (response.status === 204) {
                     dispatch(exercisesDelete(id))
@@ -92,11 +79,7 @@ const exercisesGet = (exercises) => ({
 
 export const fetchExercises = () => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        axios.get(endpoint, {
-            headers: {
-                "Authorization": getState().security.session.idToken.jwtToken
-            } 
-        })
+        api.get(endpoint)
             .then(response => { 
                 dispatch(exercisesGet(response.data))
                 resolve(response)
