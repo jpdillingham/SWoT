@@ -16,15 +16,3 @@ api.interceptors.request.use(config => {
         return Promise.reject('API subsystem error: ' + err);
     }
 );
-
-api.invoke = (request) => {
-    return new Promise((resolve, reject) => {
-        store.dispatch(checkSession())
-        .then(() => {
-            return request();
-        }, err => reject('Invalid session: ' + err))
-        .then((response) => {
-            resolve(response)
-        }, err => reject('API error: ' + err));
-    });
-}
