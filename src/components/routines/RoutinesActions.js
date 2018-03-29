@@ -20,7 +20,7 @@ export const addRoutine = (routine) => (dispatch, getState) => {
             }            
         }, error => {
             reject('API error: ' + error);
-        })
+        });
     });
 }
 
@@ -42,7 +42,7 @@ export const updateRoutine = (routine) => (dispatch, getState) => {
             }            
         }, error => {
             reject('API error: ' + error);
-        })
+        });
     });
 }
 
@@ -54,13 +54,13 @@ const routinesGet = (routines) => ({
 export const fetchRoutines = () => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         api.get(endpoint)
-            .then(response => {
-                dispatch(routinesGet(response.data));
-                resolve(response);
-            }, error => {
-                reject('API error: ' + error);
-            })    
-    })
+        .then(response => {
+            dispatch(routinesGet(response.data));
+            resolve(response);
+        }, error => {
+            reject('API error: ' + error);
+        });    
+    });
 }
 
 const routinesDelete = (id) => ({
@@ -71,17 +71,16 @@ const routinesDelete = (id) => ({
 export const deleteRoutine = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         api.delete(endpoint + '/' + id)
-            .then(response => {
-                if (response.status === 204) {
-                    dispatch(routinesDelete(id));
-                    resolve(response);
-                }
-                else {
-                    reject("Unknown DELETE response code (expected 204, received " + response.status + ").");
-                } 
-            }, error => {
-                reject('API error: ' + error);
+        .then(response => {
+            if (response.status === 204) {
+                dispatch(routinesDelete(id));
+                resolve(response);
             }
-        )
-    })
+            else {
+                reject("Unknown DELETE response code (expected 204, received " + response.status + ").");
+            } 
+        }, error => {
+            reject('API error: ' + error);
+        });
+    });
 }
