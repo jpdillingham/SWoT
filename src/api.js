@@ -2,7 +2,7 @@ import axios from 'axios'
 import { store } from './index'
 import { ensureSession } from './components/security/SecurityActions'
 
-export const api = axios.create();
+const api = axios.create();
 
 api.interceptors.request.use(config => {
         return store.dispatch(ensureSession()).then(() => {
@@ -16,3 +16,5 @@ api.interceptors.request.use(config => {
         return Promise.reject('API subsystem error: ' + err);
     }
 );
+
+export default api;
