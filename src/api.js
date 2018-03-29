@@ -9,9 +9,11 @@ api.interceptors.request.use(config => {
             config.headers.Authorization = store.getState().security.session.idToken.jwtToken;
 
             return Promise.resolve(config);
+        }, err => {
+            return Promise.reject('Invalid session: ' + err);
         })
     }, err => {
-        return Promise.reject(err);
+        return Promise.reject('API subsystem error: ' + err);
     }
 );
 
