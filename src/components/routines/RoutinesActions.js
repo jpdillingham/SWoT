@@ -55,10 +55,10 @@ export const fetchRoutines = () => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         api.get(endpoint)
             .then(response => {
-                dispatch(routinesGet(response.data))
-                resolve(response)
+                dispatch(routinesGet(response.data));
+                resolve(response);
             }, error => {
-                reject(error)
+                reject('API error: ' + error);
             })    
     })
 }
@@ -69,20 +69,19 @@ const routinesDelete = (id) => ({
 })
 
 export const deleteRoutine = (id) => (dispatch, getState) => {
-    return api.invoke({
-        dependencies: {
-            dispatch: dispatch, 
-            getState: getState, 
-        },
-        request: () => api.delete(endpoint + '/' + id),
-        response: (response, resolve, reject) => {
-            if (response.status === 204) {
-                dispatch(routinesDelete(id))
-                resolve(response)
+    return new Promise((resolve, reject) => {
+        api.delete(endpoint + '/' + id)
+            .then(response => {
+                if (response.status === 204) {
+                    dispatch(routinesDelete(id));
+                    resolve(response);
+                }
+                else {
+                    reject("Unknown DELETE response code (expected 204, received " + response.status + ").");
+                } 
+            }, error => {
+                reject('API error: ' + error);
             }
-            else {
-                reject("Unknown DELETE response code (expected 204, received " + response.status + ").")
-            }          
-        }
+        )
     })
 }
