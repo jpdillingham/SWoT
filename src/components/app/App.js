@@ -19,7 +19,7 @@ import Login from '../security/Login'
 import Register from '../security/Register'
 import ConfirmRegistration from '../security/ConfirmRegistration'
 
-import { checkSession } from '../security/SecurityActions'
+import { ensureSession } from '../security/SecurityActions'
 import { hideSnackbar } from './AppActions'
 
 class App extends Component {
@@ -36,7 +36,7 @@ class App extends Component {
     }
 
     componentWillMount = () => {
-        this.props.checkSession()
+        this.props.ensureSession()
             .then((result) => { }, (err) => {
                 this.navigate('/login');
             })
@@ -94,7 +94,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = {
     hideSnackbar,
-    checkSession
+    ensureSession
 }
 
 

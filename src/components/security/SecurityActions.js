@@ -38,7 +38,7 @@ const getCognitoUser = (email) => {
     })
 }
 
-export const checkSession = () => (dispatch, getState) => {
+export const ensureSession = () => (dispatch, getState) => {
     let sessionData = getState().security.session;
 
     return new Promise((resolve, reject) => {
