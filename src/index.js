@@ -22,7 +22,7 @@ const rootReducer = combineReducers({
 
 const persistedState = loadState();
 
-const store = createStore(rootReducer, persistedState, applyMiddleware(thunk));
+export const store = createStore(rootReducer, persistedState, applyMiddleware(thunk));
 
 store.subscribe(() => {
     let state = store.getState();

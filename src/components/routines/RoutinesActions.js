@@ -8,13 +8,9 @@ const routinesPost = (routine) => ({
 })
 
 export const addRoutine = (routine) => (dispatch, getState) => {
-    return api.invoke({
-        dependencies: {
-            dispatch: dispatch, 
-            getState: getState, 
-        },
-        request: () => api.post(endpoint, routine),
-        response: (response, resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        api.post(endpoint, routine)
+        .then(response => {
             if (response.status === 201) {
                 dispatch(routinesPost(response.data))
                 resolve(response)
@@ -22,7 +18,9 @@ export const addRoutine = (routine) => (dispatch, getState) => {
             else {
                 reject("Unknown POST response code (expected 201, received " + response.status + ").")
             }            
-        }
+        }, error => {
+            reject('API error: ' + error);
+        });
     });
 }
 
@@ -32,21 +30,19 @@ const routinesPut = (routine) => ({
 })
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
-    return api.invoke({
-        dependencies: {
-            dispatch: dispatch, 
-            getState: getState, 
-        },
-        request: () => api.put(endpoint + "/" + routine.id, routine),
-        response: (response, resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        api.put(endpoint + "/" + routine.id, routine)
+        .then(response => {
             if (response.status === 200) {
                 dispatch(routinesPut(response.data));
                 resolve(response);
             }
             else {
                 reject("API error: Unknown PUT response code (expected 200, received " + response.status + ").");
-            }
-        }
+            }            
+        }, error => {
+            reject('API error: ' + error);
+        });
     });
 }
 
@@ -56,22 +52,15 @@ const routinesGet = (routines) => ({
 })
 
 export const fetchRoutines = () => (dispatch, getState) => {
-    return api.invoke({
-        dependencies: {
-            dispatch: dispatch, 
-            getState: getState, 
-        },
-        request: () => api.get(endpoint),
-        response: (response, resolve, reject) => {
-            if (response.status === 200) {
-                dispatch(routinesGet(response.data));
-                resolve(response);
-            }
-            else {
-                reject("API error: Unknown GET response code (expected 200, received " + response.status + ").")
-            }
-        }       
-    })
+    return new Promise((resolve, reject) => {
+        api.get(endpoint)
+        .then(response => {
+            dispatch(routinesGet(response.data));
+            resolve(response);
+        }, error => {
+            reject('API error: ' + error);
+        });    
+    });
 }
 
 const routinesDelete = (id) => ({
@@ -80,20 +69,18 @@ const routinesDelete = (id) => ({
 })
 
 export const deleteRoutine = (id) => (dispatch, getState) => {
-    return api.invoke({
-        dependencies: {
-            dispatch: dispatch, 
-            getState: getState, 
-        },
-        request: () => api.delete(endpoint + '/' + id),
-        response: (response, resolve, reject) => {
+    return new Promise((resolve, reject) => {
+        api.delete(endpoint + '/' + id)
+        .then(response => {
             if (response.status === 204) {
-                dispatch(routinesDelete(id))
-                resolve(response)
+                dispatch(routinesDelete(id));
+                resolve(response);
             }
             else {
-                reject("Unknown DELETE response code (expected 204, received " + response.status + ").")
-            }          
-        }
-    })
+                reject("Unknown DELETE response code (expected 204, received " + response.status + ").");
+            } 
+        }, error => {
+            reject('API error: ' + error);
+        });
+    });
 }
