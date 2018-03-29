@@ -42,6 +42,8 @@ export const updateRoutine = (routine) => (dispatch, getState) => {
             else {
                 reject("API error: Unknown PUT response code (expected 200, received " + response.status + ").");
             }            
+        }, error => {
+            reject('API error: ' + error);
         })
     });
 }
