@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import { showSnackbar } from '../app/AppActions.js'
 
 import { getGuid } from '../../util';

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import {Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
-import Paper from 'material-ui/Paper'
 import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
 import ActionDateRange from 'material-ui/svg-icons/action/date-range'
