@@ -44,7 +44,7 @@ const initialState = {
     routine: {
         id: undefined,
     },
-    date: undefined,
+    date: new Date(),
     validationErrors: {
         routine: '',
     },
@@ -64,6 +64,10 @@ class WorkoutDialog extends Component {
 
     handleRoutineChange = (event, index, value) => {
         this.setState({ routine: { id: value } })
+    }
+
+    handleDateChange = (event, value) => {
+        this.setState({ date: value })
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -98,6 +102,8 @@ class WorkoutDialog extends Component {
                         floatingLabelText="Date"
                         hintText="Date"
                         textFieldStyle={styles.date}
+                        onChange={this.handleDateChange}
+                        value={this.state.date}
                     />
                     <SelectField
                         floatingLabelText="Routine"
