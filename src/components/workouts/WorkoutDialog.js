@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { fetchRoutines } from '../routines/RoutinesActions'
+
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem'
 import { showSnackbar } from '../app/AppActions.js'
 
 import { getGuid } from '../../util';
@@ -25,25 +29,17 @@ const styles = {
     addMetric: {
         float: 'left'
     },
+    routine: {
+        width: '100%',
+    }
 }
 
 const initialState = {
-    exercise: {
-        id: getGuid(),
-        name: '',
-        type: '',
-        url: '',
-        metrics: []
-    },
-    metricDialog: {
-        open: false,
-        intent: '',
-        metric: {}
+    routine: {
+        id: undefined,
     },
     validationErrors: {
-        name: '',
-        type: '',
-        url: '',
+        routine: '',
     },
     api: {
         isExecuting: false,
@@ -59,6 +55,18 @@ class WorkoutDialog extends Component {
         this.props.handleClose()
     }
 
+    handleRoutineChange = (event, index, value) => {
+        console.log(event, index, value);
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        if (!this.props.open && nextProps.open) {
+            this.props.fetchRoutines()
+                .then(
+                    this.setState(initialState)
+                );
+        }
+    }
     render() {
         return (
             <div>
@@ -79,6 +87,20 @@ class WorkoutDialog extends Component {
                     open={this.props.open}
                     contentStyle={styles.dialogContent}
                 >
+                    <SelectField
+                        floatingLabelText="Routine"
+                        value={this.state.routine.id}
+                        onChange={this.handleRoutineChange}
+                        style={styles.routine}
+                    >
+                        {this.props.routines.map(r => 
+                            <MenuItem 
+                                key={r.id} 
+                                value={r.id} 
+                                primaryText={r.name}
+                            />
+                        )}
+                    </SelectField>
                 </Dialog>
             </div>
         )
@@ -86,10 +108,12 @@ class WorkoutDialog extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    routines: state.routines
 })
 
 const mapDispatchToProps = {
-    showSnackbar
+    showSnackbar,
+    fetchRoutines
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutDialog)
