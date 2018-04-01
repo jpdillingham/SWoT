@@ -8,6 +8,7 @@ import Dialog from 'material-ui/Dialog';
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
+import DatePicker from 'material-ui/DatePicker'
 
 import { showSnackbar } from '../app/AppActions.js'
 
@@ -40,6 +41,7 @@ const initialState = {
     routine: {
         id: undefined,
     },
+    date: undefined,
     validationErrors: {
         routine: '',
     },
@@ -89,6 +91,10 @@ class WorkoutDialog extends Component {
                     open={this.props.open}
                     contentStyle={styles.dialogContent}
                 >
+                    <DatePicker 
+                        floatingLabelText="Date"
+                        hintText="Date"
+                    />
                     <SelectField
                         floatingLabelText="Routine"
                         value={this.state.routine.id}
