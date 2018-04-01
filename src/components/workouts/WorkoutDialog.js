@@ -34,6 +34,9 @@ const styles = {
     },
     routine: {
         width: '100%',
+    },
+    date: {
+        width: '100%',
     }
 }
 
@@ -94,6 +97,7 @@ class WorkoutDialog extends Component {
                     <DatePicker 
                         floatingLabelText="Date"
                         hintText="Date"
+                        textFieldStyle={styles.date}
                     />
                     <SelectField
                         floatingLabelText="Routine"
