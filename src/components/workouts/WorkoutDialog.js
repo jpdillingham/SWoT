@@ -7,6 +7,8 @@ import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
+import ActionAssignment from 'material-ui/svg-icons/action/assignment';
+
 import { showSnackbar } from '../app/AppActions.js'
 
 import { getGuid } from '../../util';
@@ -56,7 +58,7 @@ class WorkoutDialog extends Component {
     }
 
     handleRoutineChange = (event, index, value) => {
-        console.log(event, index, value);
+        this.setState({ routine: { id: value } })
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -98,6 +100,7 @@ class WorkoutDialog extends Component {
                                 key={r.id} 
                                 value={r.id} 
                                 primaryText={r.name}
+                                leftIcon={<ActionAssignment />}
                             />
                         )}
                     </SelectField>
