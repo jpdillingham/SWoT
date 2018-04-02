@@ -40,11 +40,12 @@ const styles = {
     }
 }
 
-const initialState = {
-    routine: {
-        id: undefined,
+const getInitialState = () => ({
+    workout: {
+        id: getGuid(),
+        routineId: undefined,
+        date: new Date(),
     },
-    date: new Date(),
     validationErrors: {
         routine: '',
     },
@@ -52,10 +53,10 @@ const initialState = {
         isExecuting: false,
         isErrored: false,
     }
-}
+})
 
 class WorkoutDialog extends Component {
-    state = initialState
+    state = getInitialState();
 
     handleCancelClick = () => {
         this.setState({ api: { isExecuting: false, isErrored: false }})
@@ -73,9 +74,10 @@ class WorkoutDialog extends Component {
     componentWillReceiveProps = (nextProps) => {
         if (!this.props.open && nextProps.open) {
             this.props.fetchRoutines()
-                .then(
-                    this.setState(initialState)
-                );
+                .then(routines => {
+                    console.log(routines);
+                    this.setState(getInitialState())
+                });
         }
     }
     render() {
