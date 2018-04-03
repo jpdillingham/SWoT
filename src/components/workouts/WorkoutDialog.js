@@ -59,27 +59,27 @@ class WorkoutDialog extends Component {
     state = getInitialState();
 
     handleCancelClick = () => {
-        this.setState({ api: { isExecuting: false, isErrored: false }})
-        this.props.handleClose()
+        this.setState({ api: { isExecuting: false, isErrored: false }});
+        this.props.handleClose();
     }
 
     handleRoutineChange = (event, index, value) => {
-        this.setState({ routine: { id: value } })
+        this.setState({ workout: { ...this.state.workout, routineId: value } });
     }
 
     handleDateChange = (event, value) => {
-        this.setState({ date: value })
+        this.setState({ workout: { ...this.state.workout, date: value }});
     }
 
     componentWillReceiveProps = (nextProps) => {
-        if (!this.props.open && nextProps.open) {
-            this.props.fetchRoutines()
-                .then(routines => {
-                    console.log(routines);
-                    this.setState(getInitialState())
-                });
+        if (this.props.open && !nextProps.open) {
+            this.setState(getInitialState());
+        }
+        else if (!this.props.open && nextProps.open) {
+            this.props.fetchRoutines();
         }
     }
+
     render() {
         return (
             <div>
@@ -105,11 +105,11 @@ class WorkoutDialog extends Component {
                         hintText="Date"
                         textFieldStyle={styles.date}
                         onChange={this.handleDateChange}
-                        value={this.state.date}
+                        value={this.state.workout.date}
                     />
                     <SelectField
                         floatingLabelText="Routine"
-                        value={this.state.routine.id}
+                        value={this.state.workout.routineId}
                         onChange={this.handleRoutineChange}
                         style={styles.routine}
                     >
