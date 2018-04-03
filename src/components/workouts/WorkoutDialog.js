@@ -47,7 +47,7 @@ const getInitialState = () => ({
         date: new Date(),
     },
     validationErrors: {
-        routine: '',
+        routineId: '',
     },
     api: {
         isExecuting: false,
@@ -61,6 +61,16 @@ class WorkoutDialog extends Component {
     handleCancelClick = () => {
         this.setState({ api: { isExecuting: false, isErrored: false }});
         this.props.handleClose();
+    }
+
+    handleSaveClick = () => {
+        this.setState({
+            validationErrors: {
+                routineId: this.state.workout.routineId === undefined ? 'A Routine must be selected.' : ''
+            }
+        }, () => {
+            console.log(this.state.workout);
+        })
     }
 
     handleRoutineChange = (event, index, value) => {
@@ -111,6 +121,7 @@ class WorkoutDialog extends Component {
                         floatingLabelText="Routine"
                         value={this.state.workout.routineId}
                         onChange={this.handleRoutineChange}
+                        errorText={this.state.validationErrors.routineId}
                         style={styles.routine}
                     >
                         {this.props.routines.map(r => 
