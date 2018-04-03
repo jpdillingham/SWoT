@@ -116,6 +116,7 @@ class WorkoutDialog extends Component {
                         textFieldStyle={styles.date}
                         onChange={this.handleDateChange}
                         value={this.state.workout.date}
+                        autoOk={true}
                     />
                     <SelectField
                         floatingLabelText="Routine"
