@@ -79,7 +79,7 @@ class Workouts extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    workouts: state.workous
+    workouts: state.workouts
 })
 
 const mapDispatchToProps = {
