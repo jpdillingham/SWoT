@@ -8,7 +8,7 @@ import Avatar from 'material-ui/Avatar'
 import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
 import ActionDateRange from 'material-ui/svg-icons/action/date-range'
-import { GridList, GridTile } from 'material-ui/GridList'
+//import { GridList, GridTile } from 'material-ui/GridList'
 import { black } from 'material-ui/styles/colors'
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
