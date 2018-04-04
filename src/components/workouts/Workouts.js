@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { fetchWorkouts } from '../workouts/WorkoutsActions'
 
 import {Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
@@ -46,19 +49,7 @@ class Workouts extends Component {
                         avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionDateRange/>}></Avatar>}
                     />
                     <CardText style={styles.text}>
-                        <GridList 
-                            cellHeight={'auto'}
-                            cols={7}
-                            padding={0}
-                        >
-                            <GridTile style={styles.tile}>1</GridTile>
-                            <GridTile style={styles.tile}>2</GridTile>
-                            <GridTile style={styles.tile}>3</GridTile>
-                            <GridTile style={styles.tile}>4</GridTile>
-                            <GridTile style={styles.tile}>5</GridTile>
-                            <GridTile style={styles.tile}>6</GridTile>
-                            <GridTile style={styles.tile}>7</GridTile>
-                        </GridList>
+                        {JSON.stringify(this.props.workouts)}
                     </CardText>
                 </Card>
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
@@ -67,4 +58,12 @@ class Workouts extends Component {
     }
 }
 
-export default Workouts
+const mapStateToProps = (state) => ({
+    workouts: state.workous
+})
+
+const mapDispatchToProps = {
+    fetchWorkouts
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Workouts)
