@@ -67,3 +67,20 @@ export const updateWorkout = (workout) => (dispatch, getState) => {
         });
     });
 }
+
+export const deleteWorkout = (id) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        api.delete(endpoint + '/' + id)
+        .then(response => {
+            if (response.status === 204) {
+                dispatch(routinesDelete(id));
+                resolve(response);
+            }
+            else {
+                reject("Unknown DELETE response code (expected 204, received " + response.status + ").");
+            } 
+        }, error => {
+            reject('API error: ' + error);
+        });
+    });
+}
