@@ -50,3 +50,20 @@ export const addWorkout = (workout) => (dispatch, getState) => {
         });
     });
 }
+
+export const updateWorkout = (workout) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        api.put(endpoint + "/" + workout.id, workout)
+        .then(response => {
+            if (response.status === 200) {
+                dispatch(routinesPut(response.data));
+                resolve(response);
+            }
+            else {
+                reject("API error: Unknown PUT response code (expected 200, received " + response.status + ").");
+            }            
+        }, error => {
+            reject('API error: ' + error);
+        });
+    });
+}
