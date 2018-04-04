@@ -37,7 +37,27 @@ const styles = {
     }
 }
 
+const initialState = {
+    api: {
+        isExecuting: false,
+        isErrored: false,
+    }
+}
+
 class Workouts extends Component {
+    state = initialState;
+
+    componentWillMount() {
+        this.setState({ api: { ...this.state.api, isExecuting: true }})
+
+        this.props.fetchWorkouts()
+            .then(response => {
+                this.setState({ api: { isExecuting: false, isErrored: false }})
+            }, error => {
+                this.setState({ api: { isExecuting: false, isErrored: true }})
+            })
+    }
+
     render() {
         return (
             <div>
