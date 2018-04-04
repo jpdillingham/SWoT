@@ -56,7 +56,7 @@ export const updateWorkout = (workout) => (dispatch, getState) => {
         api.put(endpoint + "/" + workout.id, workout)
         .then(response => {
             if (response.status === 200) {
-                dispatch(routinesPut(response.data));
+                dispatch(workoutsPut(response.data));
                 resolve(response);
             }
             else {
@@ -73,7 +73,7 @@ export const deleteWorkout = (id) => (dispatch, getState) => {
         api.delete(endpoint + '/' + id)
         .then(response => {
             if (response.status === 204) {
-                dispatch(routinesDelete(id));
+                dispatch(workoutsDelete(id));
                 resolve(response);
             }
             else {
