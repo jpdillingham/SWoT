@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchRoutines } from '../routines/RoutinesActions'
+import { addWorkout } from '../workouts/WorkoutsActions'
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -69,8 +70,37 @@ class WorkoutDialog extends Component {
                 routineId: this.state.workout.routineId === undefined ? 'A Routine must be selected.' : ''
             }
         }, () => {
-            console.log(this.state.workout);
+            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
+                this.setState({ api: { ...this.state.api, isExecuting: true } })
+
+                this.props.addWorkout(this.state.workout)
+                .then(response => {
+                    this.handleApiSuccess('Added Workout \'' + response.data.id + '\'.')
+                }, error => {
+                    this.handleApiError(error);
+                })
+            }
         })
+    }
+
+    handleApiSuccess = (message) => {
+        this.setState({ ...this.state.api, isExecuting: false })
+        this.props.showSnackbar(message)
+        this.props.handleClose();
+    }
+
+    handleApiError = (error) => {
+        let message = 'Error saving Workout: '
+
+        if (error.response) {
+            message += JSON.stringify(error.response.data).replace(/"/g, "")
+        }
+        else {
+            message += error
+        }
+
+        this.setState({ api: { isExecuting: false, isErrored: true }})
+        this.props.showSnackbar(message);
     }
 
     handleRoutineChange = (event, index, value) => {
@@ -146,7 +176,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     showSnackbar,
-    fetchRoutines
+    fetchRoutines,
+    addWorkout
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutDialog)
