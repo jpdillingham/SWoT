@@ -104,7 +104,6 @@ class WorkoutDialog extends Component {
     }
 
     handleRoutineChange = (event, index, value) => {
-        console.log(value);
         this.setState({ 
             workout: { 
                 ...this.state.workout, 
