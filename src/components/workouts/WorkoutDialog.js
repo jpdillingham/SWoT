@@ -67,7 +67,7 @@ class WorkoutDialog extends Component {
     handleSaveClick = () => {
         this.setState({
             validationErrors: {
-                routineId: this.state.workout.routine === undefined ? 'A Routine must be selected.' : ''
+                routine: this.state.workout.routine.id === undefined ? 'A Routine must be selected.' : ''
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
