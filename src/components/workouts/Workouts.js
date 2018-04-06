@@ -69,7 +69,9 @@ class Workouts extends Component {
                         avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionDateRange/>}></Avatar>}
                     />
                     <CardText style={styles.text}>
-                        {JSON.stringify(this.props.workouts)}
+                        {this.props.workouts.map(w => 
+                            <div>{JSON.stringify(w)}</div>
+                        )}
                     </CardText>
                 </Card>
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
