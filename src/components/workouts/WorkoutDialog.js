@@ -44,11 +44,11 @@ const styles = {
 const getInitialState = () => ({
     workout: {
         id: getGuid(),
-        routineId: undefined,
+        routine: { id: undefined },
         date: new Date(),
     },
     validationErrors: {
-        routineId: '',
+        routine: '',
     },
     api: {
         isExecuting: false,
@@ -67,7 +67,7 @@ class WorkoutDialog extends Component {
     handleSaveClick = () => {
         this.setState({
             validationErrors: {
-                routineId: this.state.workout.routineId === undefined ? 'A Routine must be selected.' : ''
+                routineId: this.state.workout.routine === undefined ? 'A Routine must be selected.' : ''
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
@@ -104,7 +104,13 @@ class WorkoutDialog extends Component {
     }
 
     handleRoutineChange = (event, index, value) => {
-        this.setState({ workout: { ...this.state.workout, routineId: value } });
+        console.log(value);
+        this.setState({ 
+            workout: { 
+                ...this.state.workout, 
+                routine: this.props.routines.find(r => r.id === value)
+            } 
+        });
     }
 
     handleDateChange = (event, value) => {
@@ -150,9 +156,9 @@ class WorkoutDialog extends Component {
                     />
                     <SelectField
                         floatingLabelText="Routine"
-                        value={this.state.workout.routineId}
+                        value={this.state.workout.routine.id}
                         onChange={this.handleRoutineChange}
-                        errorText={this.state.validationErrors.routineId}
+                        errorText={this.state.validationErrors.routine}
                         style={styles.routine}
                     >
                         {this.props.routines.map(r => 
