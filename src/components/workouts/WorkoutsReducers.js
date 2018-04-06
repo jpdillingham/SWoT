@@ -16,3 +16,5 @@ const WorkoutsReducer = (state = initialState, action) => {
             return state;
     }
 }
+
+export default WorkoutsReducer

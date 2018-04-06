@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchRoutines } from '../routines/RoutinesActions'
+import { addWorkout } from '../workouts/WorkoutsActions'
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -43,11 +44,11 @@ const styles = {
 const getInitialState = () => ({
     workout: {
         id: getGuid(),
-        routineId: undefined,
+        routine: { id: undefined },
         date: new Date(),
     },
     validationErrors: {
-        routineId: '',
+        routine: '',
     },
     api: {
         isExecuting: false,
@@ -66,15 +67,49 @@ class WorkoutDialog extends Component {
     handleSaveClick = () => {
         this.setState({
             validationErrors: {
-                routineId: this.state.workout.routineId === undefined ? 'A Routine must be selected.' : ''
+                routine: this.state.workout.routine.id === undefined ? 'A Routine must be selected.' : ''
             }
         }, () => {
-            console.log(this.state.workout);
+            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
+                this.setState({ api: { ...this.state.api, isExecuting: true } })
+
+                this.props.addWorkout(this.state.workout)
+                .then(response => {
+                    this.handleApiSuccess('Added Workout \'' + response.data.id + '\'.')
+                }, error => {
+                    this.handleApiError(error);
+                })
+            }
         })
     }
 
+    handleApiSuccess = (message) => {
+        this.setState({ ...this.state.api, isExecuting: false })
+        this.props.showSnackbar(message)
+        this.props.handleClose();
+    }
+
+    handleApiError = (error) => {
+        let message = 'Error saving Workout: '
+
+        if (error.response) {
+            message += JSON.stringify(error.response.data).replace(/"/g, "")
+        }
+        else {
+            message += error
+        }
+
+        this.setState({ api: { isExecuting: false, isErrored: true }})
+        this.props.showSnackbar(message);
+    }
+
     handleRoutineChange = (event, index, value) => {
-        this.setState({ workout: { ...this.state.workout, routineId: value } });
+        this.setState({ 
+            workout: { 
+                ...this.state.workout, 
+                routine: this.props.routines.find(r => r.id === value)
+            } 
+        });
     }
 
     handleDateChange = (event, value) => {
@@ -120,9 +155,9 @@ class WorkoutDialog extends Component {
                     />
                     <SelectField
                         floatingLabelText="Routine"
-                        value={this.state.workout.routineId}
+                        value={this.state.workout.routine.id}
                         onChange={this.handleRoutineChange}
-                        errorText={this.state.validationErrors.routineId}
+                        errorText={this.state.validationErrors.routine}
                         style={styles.routine}
                     >
                         {this.props.routines.map(r => 
@@ -146,7 +181,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     showSnackbar,
-    fetchRoutines
+    fetchRoutines,
+    addWorkout
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutDialog)

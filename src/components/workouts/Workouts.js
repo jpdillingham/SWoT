@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { fetchWorkouts } from '../workouts/WorkoutsActions'
 
 import {Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
 import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
 import ActionDateRange from 'material-ui/svg-icons/action/date-range'
-import { GridList, GridTile } from 'material-ui/GridList'
+//import { GridList, GridTile } from 'material-ui/GridList'
 import { black } from 'material-ui/styles/colors'
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
@@ -34,7 +37,27 @@ const styles = {
     }
 }
 
+const initialState = {
+    api: {
+        isExecuting: false,
+        isErrored: false,
+    }
+}
+
 class Workouts extends Component {
+    state = initialState;
+
+    componentWillMount() {
+        this.setState({ api: { ...this.state.api, isExecuting: true }})
+
+        this.props.fetchWorkouts()
+            .then(response => {
+                this.setState({ api: { isExecuting: false, isErrored: false }})
+            }, error => {
+                this.setState({ api: { isExecuting: false, isErrored: true }})
+            })
+    }
+
     render() {
         return (
             <div>
@@ -46,19 +69,9 @@ class Workouts extends Component {
                         avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionDateRange/>}></Avatar>}
                     />
                     <CardText style={styles.text}>
-                        <GridList 
-                            cellHeight={'auto'}
-                            cols={7}
-                            padding={0}
-                        >
-                            <GridTile style={styles.tile}>1</GridTile>
-                            <GridTile style={styles.tile}>2</GridTile>
-                            <GridTile style={styles.tile}>3</GridTile>
-                            <GridTile style={styles.tile}>4</GridTile>
-                            <GridTile style={styles.tile}>5</GridTile>
-                            <GridTile style={styles.tile}>6</GridTile>
-                            <GridTile style={styles.tile}>7</GridTile>
-                        </GridList>
+                        {this.props.workouts.map(w => 
+                            <div>{JSON.stringify(w)}</div>
+                        )}
                     </CardText>
                 </Card>
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
@@ -67,4 +80,12 @@ class Workouts extends Component {
     }
 }
 
-export default Workouts
+const mapStateToProps = (state) => ({
+    workouts: state.workouts
+})
+
+const mapDispatchToProps = {
+    fetchWorkouts
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Workouts)
