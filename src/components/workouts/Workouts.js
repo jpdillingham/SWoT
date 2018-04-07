@@ -13,6 +13,7 @@ import ActionDateRange from 'material-ui/svg-icons/action/date-range'
 import { black } from 'material-ui/styles/colors'
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
+import WorkoutCard from './WorkoutCard';
 
 const styles = {
     cardHeader: {
@@ -60,6 +61,7 @@ class Workouts extends Component {
     }
 
     render() {
+        console.log(this.props.workouts)
         return (
             <div>
                 <Card zDepth={2} style={styles.card}>
@@ -70,25 +72,16 @@ class Workouts extends Component {
                         avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionDateRange/>}></Avatar>}
                     />
                     <CardText style={styles.text}>
-                        {this.props.workouts.map(w => 
-                            <div>{JSON.stringify(w)}</div>
+
+                    </CardText>
+                </Card>
+                {this.props.workouts.map(w => 
+                            <WorkoutCard 
+                                key={w.id}
+                                title={w.routine.name}
+                                subtitle={w.date}
+                            />
                         )}
-                    </CardText>
-                </Card>
-                <Card>
-                    <CardHeader
-                        title="Without Avatar"
-                        subtitle="Subtitle"
-                        actAsExpander={true}
-                        showExpandableButton={true}
-                    />
-                    <CardText expandable={true}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                        Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                        Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
-                    </CardText>
-                </Card>
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
             </div>
         )
