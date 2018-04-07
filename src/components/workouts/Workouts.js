@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchWorkouts } from '../workouts/WorkoutsActions'
 
-import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton'
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
 import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
