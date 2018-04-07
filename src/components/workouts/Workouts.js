@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import { fetchWorkouts } from '../workouts/WorkoutsActions'
 
-import {Card, CardHeader, CardText } from 'material-ui/Card';
+import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton'
 import Avatar from 'material-ui/Avatar'
 import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
@@ -72,6 +73,20 @@ class Workouts extends Component {
                         {this.props.workouts.map(w => 
                             <div>{JSON.stringify(w)}</div>
                         )}
+                    </CardText>
+                </Card>
+                <Card>
+                    <CardHeader
+                        title="Without Avatar"
+                        subtitle="Subtitle"
+                        actAsExpander={true}
+                        showExpandableButton={true}
+                    />
+                    <CardText expandable={true}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
+                        Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
+                        Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
                     </CardText>
                 </Card>
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
