@@ -77,8 +77,7 @@ class Workouts extends Component {
                 {this.props.workouts.map(w => 
                             <WorkoutCard 
                                 key={w.id}
-                                title={w.routine.name}
-                                subtitle={w.date}
+                                workout={w}
                             />
                         )}
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
