@@ -3,16 +3,12 @@ import React, { Component } from 'react'
 import { Card, CardHeader, CardText } from 'material-ui/Card'
 
 class WorkoutCard extends Component {
-    handleExpandChange = (expanded) => {
-        console.log(expanded)
-    }
-
     render() {
         return (
             <Card onExpandChange={this.handleExpandChange}>
                 <CardHeader
-                    title={this.props.title}
-                    subtitle={this.props.subtitle}
+                    title={this.props.workout.routine.name}
+                    subtitle={this.props.workout.date}
                     actAsExpander={true}
                     showExpandableButton={true}
                 />
