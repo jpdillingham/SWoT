@@ -30,7 +30,6 @@ class WorkoutCard extends Component {
                             />
                         )}
                     </List>
-                    {JSON.stringify(this.props.workout.routine)}
                 </CardText>
             </Card>
         )
