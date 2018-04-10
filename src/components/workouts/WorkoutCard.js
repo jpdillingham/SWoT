@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
 import { Card, CardHeader, CardText } from 'material-ui/Card'
+import List from 'material-ui/List/List';
+import ListItem from 'material-ui/List/ListItem';
 
 class WorkoutCard extends Component {
     render() {
@@ -15,10 +17,20 @@ class WorkoutCard extends Component {
                 <CardText 
                     expandable={true}
                 >
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Donec mattis pretium massa. Aliquam erat volutpat. Nulla facilisi.
-                    Donec vulputate interdum sollicitudin. Nunc lacinia auctor quam sed pellentesque.
-                    Aliquam dui mauris, mattis quis lacus id, pellentesque lobortis odio.
+                    <List>
+                        {this.props.workout.routine.exercises.map((e, index) => 
+                            <ListItem 
+                                key={index}
+                                primaryText={e.name}
+                                nestedItems={e.metrics.map((m, index) => 
+                                    <ListItem 
+                                        key={index}
+                                        primaryText={m.name}/>
+                                    )}
+                            />
+                        )}
+                    </List>
+                    {JSON.stringify(this.props.workout.routine)}
                 </CardText>
             </Card>
         )
