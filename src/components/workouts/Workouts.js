@@ -26,10 +26,10 @@ const styles = {
     card: {
         width: '100%',
         height: '100%',
-        position: 'relative'
+        position: 'relative',
     },
     text: {
-        /* marginBottom: 40 */
+        padding: '0px',
     },
     tile: {
         border: '1px solid black',
@@ -60,26 +60,22 @@ class Workouts extends Component {
     }
 
     render() {
-        console.log(this.props.workouts)
         return (
             <div>
-                <Card zDepth={2} style={styles.card}>
+                <Card className={'test'} zDepth={2} style={styles.card}>
                     <CardHeader
                         title={'Past Workouts'}
                         titleStyle={styles.cardTitle}
                         style={styles.cardHeader}
                         avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionDateRange/>}></Avatar>}
                     />
-                    <CardText style={styles.text}>
-
-                    </CardText>
+                    {this.props.workouts.map(w => 
+                        <WorkoutCard 
+                            key={w.id}
+                            workout={w}
+                        />
+                    )}
                 </Card>
-                {this.props.workouts.map(w => 
-                            <WorkoutCard 
-                                key={w.id}
-                                workout={w}
-                            />
-                        )}
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
             </div>
         )
