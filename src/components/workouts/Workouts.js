@@ -62,7 +62,7 @@ class Workouts extends Component {
     render() {
         return (
             <div>
-                <Card className={'test'} zDepth={2} style={styles.card}>
+                <Card zDepth={2} style={styles.card}>
                     <CardHeader
                         title={'Past Workouts'}
                         titleStyle={styles.cardTitle}
