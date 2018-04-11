@@ -7,12 +7,12 @@ import { Card, CardHeader } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
 import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
-import ActionDateRange from 'material-ui/svg-icons/action/date-range'
-//import { GridList, GridTile } from 'material-ui/GridList'
+import ActionRestore from 'material-ui/svg-icons/action/restore'
 import { black } from 'material-ui/styles/colors'
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 import WorkoutCard from './WorkoutCard';
+import WorkoutResumeCard from './WorkoutResumeCard'
 
 const styles = {
     cardHeader: {
@@ -62,20 +62,7 @@ class Workouts extends Component {
     render() {
         return (
             <div>
-                <Card zDepth={2} style={styles.card}>
-                    <CardHeader
-                        title={'Past Workouts'}
-                        titleStyle={styles.cardTitle}
-                        style={styles.cardHeader}
-                        avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionDateRange/>}></Avatar>}
-                    />
-                    {this.props.workouts.map(w => 
-                        <WorkoutCard 
-                            key={w.id}
-                            workout={w}
-                        />
-                    )}
-                </Card>
+                <WorkoutResumeCard workouts={this.props.workouts}/>
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
             </div>
         )
