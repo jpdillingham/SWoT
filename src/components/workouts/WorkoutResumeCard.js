@@ -3,10 +3,12 @@ import React, { Component } from 'react';
 import { Card, CardHeader } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
 import ActionRestore from 'material-ui/svg-icons/action/restore'
+import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
 import { black } from 'material-ui/styles/colors'
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 import WorkoutCard from './WorkoutCard';
+import { List, ListItem } from 'material-ui/List';
 
 const styles = {
     cardHeader: {
@@ -35,12 +37,16 @@ class WorkoutResumeCard extends Component {
                         style={styles.cardHeader}
                         avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionRestore/>}></Avatar>}
                     />
-                    {this.props.workouts.map(w => 
-                        <WorkoutCard 
-                            key={w.id}
-                            workout={w}
-                        />
-                    )}
+                    <List>
+                        {this.props.workouts.map(w => 
+                            <ListItem
+                                key={w.id}
+                                primaryText={w.routine.name}
+                                secondaryText={w.date}
+                                rightIcon={<AVPlayArrow/>}
+                            />
+                        )}
+                    </List>
                 </Card>
             </div>
         )
