@@ -7,7 +7,6 @@ import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
 import { black } from 'material-ui/styles/colors'
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
-import WorkoutCard from './WorkoutCard';
 import { List, ListItem } from 'material-ui/List';
 
 const styles = {
