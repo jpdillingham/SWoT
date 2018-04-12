@@ -11,12 +11,20 @@ import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
 import ActionInfo from 'material-ui/svg-icons/action/info'
 
 import WorkoutList from './WorkoutList'
+import { CARD_WIDTH } from '../../constants'
 
 const initialState = {
     api: {
         isExecuting: false,
         isErrored: false,
     }
+}
+
+const styles = {
+    grid: {
+        display: 'grid',
+        gridGap: 10,
+    },
 }
 
 class Workouts extends Component {
@@ -35,7 +43,7 @@ class Workouts extends Component {
 
     render() {
         return (
-            <div>
+            <div style={styles.grid}>
                 <WorkoutList 
                     title={'Active Workouts'}
                     icon={<ActionSchedule/>}
