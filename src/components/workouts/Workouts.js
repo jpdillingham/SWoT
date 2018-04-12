@@ -48,12 +48,16 @@ class Workouts extends Component {
                     icon={<ActionSchedule/>}
                     itemRightIcon={<AVPlayArrow/>}
                     workouts={this.props.workouts.filter(workout => workout.endTime === undefined)}
+                    timePrefix={'Started'}
+                    timeField={'startTime'}
                 />
                 <WorkoutList 
                     title={'Completed Workouts'}
                     icon={<ActionDone/>}
                     itemRightIcon={<ActionInfo/>}
                     workouts={this.props.workouts.filter(workout => workout.endTime !== undefined)}
+                    timePrefix={'Completed'}
+                    timeField={'endTime'}
                 />
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
             </div>
