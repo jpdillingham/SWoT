@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { Card, CardHeader } from 'material-ui/Card';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
 import ActionRestore from 'material-ui/svg-icons/action/restore'
 import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
@@ -29,24 +29,28 @@ class WorkoutList extends Component {
     render() {
         return (
             <div>
-                <Card zDepth={2} style={styles.card}>
-                    <CardHeader
-                        title={'Active Workouts'}
-                        titleStyle={styles.cardTitle}
-                        style={styles.cardHeader}
-                        avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionRestore/>}></Avatar>}
-                    />
-                    <List>
-                        {this.props.workouts.map(w => 
-                            <ListItem
-                                key={w.id}
-                                primaryText={w.routine.name}
-                                secondaryText={w.date}
-                                rightIcon={<AVPlayArrow/>}
-                            />
-                        )}
-                    </List>
-                </Card>
+                {this.props.workouts && this.props.workouts.length > 0 ? 
+                    <Card zDepth={2} style={styles.card}>
+                        <CardHeader
+                            title={'Active Workouts'}
+                            titleStyle={styles.cardTitle}
+                            style={styles.cardHeader}
+                            avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionRestore/>}></Avatar>}
+                        />
+                        <CardText>
+                            <List>
+                                {this.props.workouts.map(w => 
+                                    <ListItem
+                                        key={w.id}
+                                        primaryText={w.routine.name}
+                                        secondaryText={w.date}
+                                        rightIcon={<AVPlayArrow/>}
+                                    />
+                                )}
+                            </List>
+                        </CardText>
+                    </Card>
+                : '' }
             </div>
         )
     }
