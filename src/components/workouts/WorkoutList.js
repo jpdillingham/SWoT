@@ -44,7 +44,7 @@ class WorkoutList extends Component {
                                         key={w.id}
                                         primaryText={w.routine.name}
                                         secondaryText={w.startTime}
-                                        rightIcon={<AVPlayArrow/>}
+                                        rightIcon={this.props.itemRightIcon}
                                     />
                                 )}
                             </List>
