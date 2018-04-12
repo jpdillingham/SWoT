@@ -11,7 +11,6 @@ import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
 import ActionInfo from 'material-ui/svg-icons/action/info'
 
 import WorkoutList from './WorkoutList'
-import { CARD_WIDTH } from '../../constants'
 
 const initialState = {
     api: {
