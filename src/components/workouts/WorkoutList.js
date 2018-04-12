@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
@@ -42,7 +43,7 @@ class WorkoutList extends Component {
                                     <ListItem
                                         key={w.id}
                                         primaryText={w.routine.name}
-                                        secondaryText={w.startTime}
+                                        secondaryText={this.props.timePrefix + ' ' + moment(w[this.props.timeField]).calendar()}
                                         leftIcon={<ActionAssignmentTurnedIn/>}
                                         rightIcon={this.props.itemRightIcon}
                                     />
