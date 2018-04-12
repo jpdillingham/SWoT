@@ -6,7 +6,7 @@ import { fetchWorkouts } from '../workouts/WorkoutsActions'
 import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
 
-import WorkoutResumeCard from './WorkoutResumeCard'
+import WorkoutList from './WorkoutList'
 
 const initialState = {
     api: {
@@ -32,7 +32,7 @@ class Workouts extends Component {
     render() {
         return (
             <div>
-                <WorkoutResumeCard workouts={this.props.workouts}/>
+                <WorkoutList workouts={this.props.workouts}/>
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
             </div>
         )
