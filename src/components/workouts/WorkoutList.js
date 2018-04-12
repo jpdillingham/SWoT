@@ -32,10 +32,10 @@ class WorkoutList extends Component {
                 {this.props.workouts && this.props.workouts.length > 0 ? 
                     <Card zDepth={2} style={styles.card}>
                         <CardHeader
-                            title={'Active Workouts'}
+                            title={this.props.title}
                             titleStyle={styles.cardTitle}
                             style={styles.cardHeader}
-                            avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionRestore/>}></Avatar>}
+                            avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={this.props.icon}></Avatar>}
                         />
                         <CardText>
                             <List>
