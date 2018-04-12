@@ -5,6 +5,8 @@ import { fetchWorkouts } from '../workouts/WorkoutsActions'
 
 import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
+import ActionSchedule from 'material-ui/svg-icons/action/schedule'
+import ActionDone from 'material-ui/svg-icons/action/done'
 
 import WorkoutList from './WorkoutList'
 
@@ -32,7 +34,16 @@ class Workouts extends Component {
     render() {
         return (
             <div>
-                <WorkoutList workouts={this.props.workouts}/>
+                <WorkoutList 
+                    title={'Active Workouts'}
+                    icon={<ActionSchedule/>}
+                    workouts={this.props.workouts.filter(workout => workout.endTime === undefined)}
+                />
+                <WorkoutList 
+                    title={'Completed Workouts'}
+                    icon={<ActionDone/>}
+                    workouts={this.props.workouts.filter(workout => workout.endTime !== undefined)}
+                />
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
             </div>
         )
