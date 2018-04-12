@@ -43,7 +43,7 @@ class WorkoutList extends Component {
                                     <ListItem
                                         key={w.id}
                                         primaryText={w.routine.name}
-                                        secondaryText={w.date}
+                                        secondaryText={w.startTime}
                                         rightIcon={<AVPlayArrow/>}
                                     />
                                 )}
