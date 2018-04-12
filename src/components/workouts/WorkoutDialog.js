@@ -45,7 +45,8 @@ const getInitialState = () => ({
     workout: {
         id: getGuid(),
         routine: { id: undefined },
-        date: new Date(),
+        startTime: new Date(),
+        endTime: undefined,
     },
     validationErrors: {
         routine: '',
