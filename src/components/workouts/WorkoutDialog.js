@@ -46,6 +46,7 @@ const getInitialState = () => ({
         id: getGuid(),
         routine: { id: undefined },
         date: new Date(),
+        status: 'undone',
     },
     validationErrors: {
         routine: '',
