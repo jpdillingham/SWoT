@@ -7,6 +7,8 @@ import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
 import ActionSchedule from 'material-ui/svg-icons/action/schedule'
 import ActionDone from 'material-ui/svg-icons/action/done'
+import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
+import ActionInfo from 'material-ui/svg-icons/action/info'
 
 import WorkoutList from './WorkoutList'
 
@@ -37,11 +39,13 @@ class Workouts extends Component {
                 <WorkoutList 
                     title={'Active Workouts'}
                     icon={<ActionSchedule/>}
+                    itemRightIcon={<AVPlayArrow/>}
                     workouts={this.props.workouts.filter(workout => workout.endTime === undefined)}
                 />
                 <WorkoutList 
                     title={'Completed Workouts'}
                     icon={<ActionDone/>}
+                    itemRightIcon={<ActionInfo/>}
                     workouts={this.props.workouts.filter(workout => workout.endTime !== undefined)}
                 />
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
