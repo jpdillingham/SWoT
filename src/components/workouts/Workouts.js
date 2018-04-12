@@ -5,6 +5,10 @@ import { fetchWorkouts } from '../workouts/WorkoutsActions'
 
 import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
+import ActionSchedule from 'material-ui/svg-icons/action/schedule'
+import ActionDone from 'material-ui/svg-icons/action/done'
+import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
+import ActionInfo from 'material-ui/svg-icons/action/info'
 
 import WorkoutList from './WorkoutList'
 
@@ -13,6 +17,13 @@ const initialState = {
         isExecuting: false,
         isErrored: false,
     }
+}
+
+const styles = {
+    grid: {
+        display: 'grid',
+        gridGap: 10,
+    },
 }
 
 class Workouts extends Component {
@@ -31,8 +42,23 @@ class Workouts extends Component {
 
     render() {
         return (
-            <div>
-                <WorkoutList workouts={this.props.workouts}/>
+            <div style={styles.grid}>
+                <WorkoutList 
+                    title={'Active Workouts'}
+                    icon={<ActionSchedule/>}
+                    itemRightIcon={<AVPlayArrow/>}
+                    workouts={this.props.workouts.filter(workout => workout.endTime === undefined)}
+                    timePrefix={'Started'}
+                    timeField={'startTime'}
+                />
+                <WorkoutList 
+                    title={'Completed Workouts'}
+                    icon={<ActionDone/>}
+                    itemRightIcon={<ActionInfo/>}
+                    workouts={this.props.workouts.filter(workout => workout.endTime !== undefined)}
+                    timePrefix={'Completed'}
+                    timeField={'endTime'}
+                />
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
             </div>
         )

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
-import ActionRestore from 'material-ui/svg-icons/action/restore'
-import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
+import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
 import { black } from 'material-ui/styles/colors'
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
@@ -32,10 +32,10 @@ class WorkoutList extends Component {
                 {this.props.workouts && this.props.workouts.length > 0 ? 
                     <Card zDepth={2} style={styles.card}>
                         <CardHeader
-                            title={'Active Workouts'}
+                            title={this.props.title}
                             titleStyle={styles.cardTitle}
                             style={styles.cardHeader}
-                            avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionRestore/>}></Avatar>}
+                            avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={this.props.icon}></Avatar>}
                         />
                         <CardText>
                             <List>
@@ -43,8 +43,9 @@ class WorkoutList extends Component {
                                     <ListItem
                                         key={w.id}
                                         primaryText={w.routine.name}
-                                        secondaryText={w.startTime}
-                                        rightIcon={<AVPlayArrow/>}
+                                        secondaryText={this.props.timePrefix + ' ' + moment(w[this.props.timeField]).calendar()}
+                                        leftIcon={<ActionAssignmentTurnedIn/>}
+                                        rightIcon={this.props.itemRightIcon}
                                     />
                                 )}
                             </List>
