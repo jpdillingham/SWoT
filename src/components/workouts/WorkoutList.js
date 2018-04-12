@@ -25,13 +25,13 @@ const styles = {
     },
 }
 
-class WorkoutResumeCard extends Component {
+class WorkoutList extends Component {
     render() {
         return (
             <div>
                 <Card zDepth={2} style={styles.card}>
                     <CardHeader
-                        title={'Resume Workout'}
+                        title={'Active Workouts'}
                         titleStyle={styles.cardTitle}
                         style={styles.cardHeader}
                         avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionRestore/>}></Avatar>}
@@ -52,4 +52,4 @@ class WorkoutResumeCard extends Component {
     }
 }
 
-export default WorkoutResumeCard
+export default WorkoutList
