@@ -50,18 +50,16 @@ class Routines extends Component {
 
     render() {
         return (
-            <div>
-                { 
-                    this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
-                        this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                            <div style={styles.grid}>
-                                {this.props.routines.map(r =>  
-                                    <RoutineCard key={r.id} routine={r} />
-                                )}
-                            </div>
-                }
-                <AddFloatingActionButton dialog={<RoutineDialog intent={INTENTS.ADD} />} />
-            </div>
+            this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
+                this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
+                    <div>
+                        <div style={styles.grid}>
+                            {this.props.routines.map(r =>  
+                                <RoutineCard key={r.id} routine={r} />
+                            )}
+                        </div>
+                        <AddFloatingActionButton dialog={<RoutineDialog intent={INTENTS.ADD} />} />
+                    </div>
         )
     }
 } 
