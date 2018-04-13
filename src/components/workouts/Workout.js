@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { red500 } from 'material-ui/styles/colors'
+import CircularProgress from 'material-ui/CircularProgress'
+import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
+
 import { fetchWorkouts } from '../workouts/WorkoutsActions'
 
 const initialState = {
@@ -9,6 +13,17 @@ const initialState = {
         isExecuting: false,
         isErrored: false,
     }
+}
+
+const styles = {
+    icon: {
+        height: 48,
+        width: 48,
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)'
+    },
 }
 
 class Workout extends Component {
@@ -31,12 +46,14 @@ class Workout extends Component {
     render() {
         return (
             <div>
-                {this.state.workout === undefined ? 
-                    <span>Invalid Workout Id.</span> : 
-                    <div>
-                        <span>{this.state.workout.endTime === undefined ? 'ACTIVE' : 'COMPLETE'}</span>
-                        {JSON.stringify(this.state.workout)}
-                    </div>
+                { 
+                    this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
+                        this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
+                            this.state.workout === undefined ? <span>Invalid Workout Id.</span> : 
+                                <div>
+                                    <span>{this.state.workout.endTime === undefined ? 'ACTIVE' : 'COMPLETE'}</span>
+                                    {JSON.stringify(this.state.workout)}
+                                </div>
                 }
             </div>
         )
