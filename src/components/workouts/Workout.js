@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { fetchWorkouts } from '../workouts/WorkoutsActions'
+
 class Workout extends Component {
     render() {
         console.log(this.props.match.params)
