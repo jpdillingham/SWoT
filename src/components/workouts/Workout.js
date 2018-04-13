@@ -3,10 +3,32 @@ import { connect } from 'react-redux';
 
 import { fetchWorkouts } from '../workouts/WorkoutsActions'
 
-class Workout extends Component {
-    render() {
-        console.log(this.props.match.params)
+const initialState = {
+    workout: undefined,
+    api: {
+        isExecuting: false,
+        isErrored: false,
+    }
+}
 
+class Workout extends Component {
+    state = initialState;
+
+    componentWillMount = () => {
+        this.setState({ api: { ...this.state.api, isExecuting: true }})
+        
+        this.props.fetchWorkouts()
+            .then(response => {
+                this.setState({ 
+                    workout: this.props.workouts.find(w => w.id === this.props.match.params.id),
+                    api: { isExecuting: false, isErrored: false }
+                })
+            }, error => {
+                this.setState({ api: { isExecuting: false, isErrored: true }})
+            })
+    }
+
+    render() {
         return (
             <div>
                 {this.props.match.params.id}
