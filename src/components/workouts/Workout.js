@@ -31,7 +31,10 @@ class Workout extends Component {
     render() {
         return (
             <div>
-                {this.props.match.params.id}
+                {this.state.workout === undefined ? 
+                    <span>Invalid Workout Id.</span> : 
+                    JSON.stringify(this.state.workout)
+                }
             </div>
         )
     }
