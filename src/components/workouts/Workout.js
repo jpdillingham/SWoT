@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 class Workout extends Component {
     render() {
@@ -12,4 +13,12 @@ class Workout extends Component {
     }
 }
 
-export default Workout
+const mapStateToProps = (state) => ({
+    workouts: state.workouts
+})
+
+const mapDispatchToProps = {
+    fetchWorkouts
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Workout)
