@@ -59,7 +59,7 @@ class App extends Component {
                         <AppContainer show={this.props.user !== undefined}>
                             <Switch>
                                 <Route exact path="/" component={Workouts}/>
-                                <Route exact path="/workouts" render={() => <Redirect to='/'/>}/>
+                                <Route exact path="/workouts" component={Workouts}/>
                                 <Route path="/workouts/:id" component={Workout}/>
                                 <Route path="/exercises" component={Exercises}/>
                                 <Route path="/routines" component={Routines}/>
