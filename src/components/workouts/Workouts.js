@@ -40,6 +40,14 @@ class Workouts extends Component {
             })
     }
 
+    navigate = (url) => {
+        this.props.history.push(url);
+    }
+
+    handleClick = (workoutId) => {
+        this.navigate('/workouts/' + workoutId)
+    }
+
     render() {
         return (
             <div style={styles.grid}>
@@ -50,6 +58,7 @@ class Workouts extends Component {
                     workouts={this.props.workouts.filter(workout => workout.endTime === undefined)}
                     timePrefix={'Started'}
                     timeField={'startTime'}
+                    onClick={this.handleClick}
                 />
                 <WorkoutList 
                     title={'Completed Workouts'}
@@ -58,6 +67,7 @@ class Workouts extends Component {
                     workouts={this.props.workouts.filter(workout => workout.endTime !== undefined)}
                     timePrefix={'Completed'}
                     timeField={'endTime'}
+                    onClick={this.handleClick}
                 />
                 <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
             </div>
