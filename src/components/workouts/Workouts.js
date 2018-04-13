@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 
 import { fetchWorkouts } from '../workouts/WorkoutsActions'
 
+import { red500 } from 'material-ui/styles/colors'
+import CircularProgress from 'material-ui/CircularProgress'
+import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
+
 import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
 import ActionSchedule from 'material-ui/svg-icons/action/schedule'
@@ -23,6 +27,14 @@ const styles = {
     grid: {
         display: 'grid',
         gridGap: 10,
+    },
+    icon: {
+        height: 48,
+        width: 48,
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)'
     },
 }
 
@@ -50,27 +62,29 @@ class Workouts extends Component {
 
     render() {
         return (
-            <div style={styles.grid}>
-                <WorkoutList 
-                    title={'Active Workouts'}
-                    icon={<ActionSchedule/>}
-                    itemRightIcon={<AVPlayArrow/>}
-                    workouts={this.props.workouts.filter(workout => workout.endTime === undefined)}
-                    timePrefix={'Started'}
-                    timeField={'startTime'}
-                    onClick={this.handleClick}
-                />
-                <WorkoutList 
-                    title={'Completed Workouts'}
-                    icon={<ActionDone/>}
-                    itemRightIcon={<ActionInfo/>}
-                    workouts={this.props.workouts.filter(workout => workout.endTime !== undefined)}
-                    timePrefix={'Completed'}
-                    timeField={'endTime'}
-                    onClick={this.handleClick}
-                />
-                <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
-            </div>
+            this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
+                this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
+                    <div style={styles.grid}>
+                        <WorkoutList 
+                            title={'Active Workouts'}
+                            icon={<ActionSchedule/>}
+                            itemRightIcon={<AVPlayArrow/>}
+                            workouts={this.props.workouts.filter(workout => workout.endTime === undefined)}
+                            timePrefix={'Started'}
+                            timeField={'startTime'}
+                            onClick={this.handleClick}
+                        />
+                        <WorkoutList 
+                            title={'Completed Workouts'}
+                            icon={<ActionDone/>}
+                            itemRightIcon={<ActionInfo/>}
+                            workouts={this.props.workouts.filter(workout => workout.endTime !== undefined)}
+                            timePrefix={'Completed'}
+                            timeField={'endTime'}
+                            onClick={this.handleClick}
+                        />
+                        <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
+                    </div>
         )
     }
 }
