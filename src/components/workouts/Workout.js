@@ -33,7 +33,10 @@ class Workout extends Component {
             <div>
                 {this.state.workout === undefined ? 
                     <span>Invalid Workout Id.</span> : 
-                    JSON.stringify(this.state.workout)
+                    <div>
+                        <span>{this.state.workout.endTime === undefined ? 'ACTIVE' : 'COMPLETE'}</span>
+                        {JSON.stringify(this.state.workout)}
+                    </div>
                 }
             </div>
         )
