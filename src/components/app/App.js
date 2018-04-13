@@ -12,6 +12,7 @@ import Snackbar from 'material-ui/Snackbar'
 import AppContainer from '../shared/AppContainer'
 
 import Workouts from '../workouts/Workouts'
+import Workout from '../workouts/Workout'
 import Exercises from '../exercises/Exercises'
 import Routines from '../routines/Routines'
 
@@ -58,6 +59,8 @@ class App extends Component {
                         <AppContainer show={this.props.user !== undefined}>
                             <Switch>
                                 <Route exact path="/" component={Workouts}/>
+                                <Route exact path="/workouts" component={Workouts}/>
+                                <Route path="/workouts/:id" component={Workout}/>
                                 <Route path="/exercises" component={Exercises}/>
                                 <Route path="/routines" component={Routines}/>
                                 <Route path="/login" component={Login}/>
