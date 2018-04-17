@@ -50,20 +50,18 @@ class Exercises extends Component {
 
     render() {
         return (
-            <div>
-                { 
-                    this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
-                    this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    <div style={styles.grid}>
-                                {this.props.exercises.map(e =>  
-                                    <div key={e.id}>
-                                        <ExercizeCard exercise={e} />
-                                    </div>
-                                )}
-                            </div>
-                }
-                <AddFloatingActionButton dialog={<ExerciseDialog intent={INTENTS.ADD} />} />
-            </div>
+            this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
+                this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
+                    <div>
+                        <div style={styles.grid}>
+                            {this.props.exercises.map(e =>  
+                                <div key={e.id}>
+                                    <ExercizeCard exercise={e} />
+                                </div>
+                            )}
+                        </div>
+                        <AddFloatingActionButton dialog={<ExerciseDialog intent={INTENTS.ADD} />} />
+                    </div>
         )
     }
 } 

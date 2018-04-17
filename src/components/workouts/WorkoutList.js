@@ -46,6 +46,7 @@ class WorkoutList extends Component {
                                         secondaryText={this.props.timePrefix + ' ' + moment(w[this.props.timeField]).calendar()}
                                         leftIcon={<ActionAssignmentTurnedIn/>}
                                         rightIcon={this.props.itemRightIcon}
+                                        onClick={() => this.props.onClick(w.id)}
                                     />
                                 )}
                             </List>
