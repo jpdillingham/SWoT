@@ -1,6 +1,7 @@
 import api from '../../api'
+import { API_ROOT } from "../../constants"
 
-const endpoint = 'https://16xkdlfrol.execute-api.us-east-1.amazonaws.com/deployment/exercises'
+const endpoint = API_ROOT + '/exercises';
 
 const exercisesPost = (exercise) => ({
     type: 'EXERCISES_POST',
