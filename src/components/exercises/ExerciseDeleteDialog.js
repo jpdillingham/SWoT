@@ -37,8 +37,10 @@ class ExerciseDeleteDialog extends Component {
         this.props.handleClose();
     }
 
-    componentWillMount() {
-        this.props.fetchRoutines();
+    componentWillReceiveProps(nextProps) {
+        if (!this.props.open && nextProps.open) {
+            this.props.fetchRoutines();
+        }
     }
 
     render() {
