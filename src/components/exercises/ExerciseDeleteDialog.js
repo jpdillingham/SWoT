@@ -14,10 +14,6 @@ class ExerciseDeleteDialog extends Component {
         deleteApi: {
             isExecuting: false,
             isErrored: false,
-        },
-        fetchApi: {
-            isExecuting: false,
-            isErrored: false,
         }
     }
 
