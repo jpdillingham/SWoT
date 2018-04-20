@@ -5,24 +5,9 @@ import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 import {List, ListItem} from 'material-ui/List';
 
-import { red500 } from 'material-ui/styles/colors'
-import CircularProgress from 'material-ui/CircularProgress'
-import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
-
 import { deleteExercise } from './ExercisesActions'
 import { fetchRoutines } from '../routines/RoutinesActions'
 import { showSnackbar } from '../app/AppActions.js'
-
-const styles = {
-    icon: {
-        height: 24,
-        width: 24,
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)'
-    },
-}
 
 class ExerciseDeleteDialog extends Component {
     state = {
@@ -58,14 +43,7 @@ class ExerciseDeleteDialog extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (!this.props.open && nextProps.open) {
-            this.setState({ fetchApi: { ...this.state.fetchApi, isExecuting: true }})
-
-            this.props.fetchRoutines()
-            .then(() => {
-                this.setState({ fetchApi: { ...this.state.fetchApi, isExecuting: false }})
-            }, error => {
-                this.setState({ fetchApi: { isExecuting: false, isErrored: true }})
-            })
+            this.props.fetchRoutines();
         }
     }
 
@@ -93,25 +71,21 @@ class ExerciseDeleteDialog extends Component {
                     modal={true}
                     open={this.props.open}
                 >
-                {this.state.fetchApi.isExecuting ? <CircularProgress style={styles.icon} /> : 
-                    this.state.fetchApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
+                    <p>Are you sure you want to delete exercise '{this.props.exercise.name}'?</p>
+
+                    {routines.length > 0 ? 
                         <div>
-                            <p>Are you sure you want to delete exercise '{this.props.exercise.name}'?</p>
+                            <p>This exercise is used in {routines.length} routine{routines.length === 1 ? '' : 's'}:</p>
 
-                            {routines.length > 0 ? 
-                                <div>
-                                    <p>This exercise is used in {routines.length} routine{routines.length === 1 ? '' : 's'}:</p>
+                            <List>
+                                {routines.map(r => 
+                                    <ListItem key={r.id} primaryText={r.name} />
+                                )}
+                            </List>
 
-                                    <List>
-                                        {routines.map(r => 
-                                            <ListItem key={r.id} primaryText={r.name} />
-                                        )}
-                                    </List>
-
-                                    <p>Deleting the exercise will also delete it from any routines referencing it.</p>
-                                </div>
-                            : ''}
-                        </div>} 
+                            <p>Deleting the exercise will also delete it from any routines referencing it.</p>
+                        </div>
+                    : ''}
                 </Dialog>
             </div>
         )
