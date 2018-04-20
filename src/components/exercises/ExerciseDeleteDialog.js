@@ -5,20 +5,39 @@ import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 import {List, ListItem} from 'material-ui/List';
 
+import { red500 } from 'material-ui/styles/colors'
+import CircularProgress from 'material-ui/CircularProgress'
+import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
+
 import { deleteExercise } from './ExercisesActions'
 import { fetchRoutines } from '../routines/RoutinesActions'
 import { showSnackbar } from '../app/AppActions.js'
 
+const styles = {
+    icon: {
+        height: 24,
+        width: 24,
+        position: 'fixed',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)'
+    },
+}
+
 class ExerciseDeleteDialog extends Component {
     state = {
-        api: {
+        deleteApi: {
+            isExecuting: false,
+            isErrored: false,
+        },
+        fetchApi: {
             isExecuting: false,
             isErrored: false,
         }
     }
 
     handleDeleteClick = () => {
-        this.setState({ api: { ...this.state.api, isExecuting: true }})
+        this.setState({ deleteApi: { ...this.state.deleteApi, isExecuting: true }})
 
         this.props.deleteExercise(this.props.exercise.id)
             .then(response => {
@@ -27,19 +46,26 @@ class ExerciseDeleteDialog extends Component {
                 let message = 'Error deleting Exercise'
                 message += error.response ? ': ' + JSON.stringify(error.response.data).replace(/"/g, "") : '.'
         
-                this.setState({ api: { isExecuting: false, isErrored: true }})
+                this.setState({ deleteApi: { isExecuting: false, isErrored: true }})
                 this.props.showSnackbar(message);
             })
     }
 
     handleCancelClick = () => {
-        this.setState({ api: { isExecuting: false, isErrored: false }})
+        this.setState({ deleteApi: { isExecuting: false, isErrored: false }})
         this.props.handleClose();
     }
 
     componentWillReceiveProps(nextProps) {
         if (!this.props.open && nextProps.open) {
-            this.props.fetchRoutines();
+            this.setState({ fetchApi: { ...this.state.fetchApi, isExecuting: true }})
+
+            this.props.fetchRoutines()
+            .then(() => {
+                this.setState({ fetchApi: { ...this.state.fetchApi, isExecuting: false }})
+            }, error => {
+                this.setState({ fetchApi: { isExecuting: false, isErrored: true }})
+            })
         }
     }
 
@@ -58,8 +84,8 @@ class ExerciseDeleteDialog extends Component {
                                 onClick={() => this.handleCancelClick()}
                             />
                             <FlatButton
-                                label={this.state.api.isErrored ? 'Retry' : 'Delete' }
-                                disabled={this.state.api.isExecuting}
+                                label={this.state.deleteApi.isErrored ? 'Retry' : 'Delete' }
+                                disabled={this.state.deleteApi.isExecuting}
                                 onClick={() => this.handleDeleteClick()}
                             />
                         </div>
@@ -67,21 +93,25 @@ class ExerciseDeleteDialog extends Component {
                     modal={true}
                     open={this.props.open}
                 >
-                    <p>Are you sure you want to delete exercise '{this.props.exercise.name}'?</p>
-
-                    {routines.length > 0 ? 
+                {this.state.fetchApi.isExecuting ? <CircularProgress style={styles.icon} /> : 
+                    this.state.fetchApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                         <div>
-                            <p>This exercise is used in {routines.length} routine{routines.length === 1 ? '' : 's'}:</p>
+                            <p>Are you sure you want to delete exercise '{this.props.exercise.name}'?</p>
 
-                            <List>
-                                {routines.map(r => 
-                                    <ListItem key={r.id} primaryText={r.name} />
-                                )}
-                            </List>
+                            {routines.length > 0 ? 
+                                <div>
+                                    <p>This exercise is used in {routines.length} routine{routines.length === 1 ? '' : 's'}:</p>
 
-                            <p>Deleting the exercise will also delete it from any routines referencing it.</p>
-                        </div>
-                    : ''}
+                                    <List>
+                                        {routines.map(r => 
+                                            <ListItem key={r.id} primaryText={r.name} />
+                                        )}
+                                    </List>
+
+                                    <p>Deleting the exercise will also delete it from any routines referencing it.</p>
+                                </div>
+                            : ''}
+                        </div>} 
                 </Dialog>
             </div>
         )
