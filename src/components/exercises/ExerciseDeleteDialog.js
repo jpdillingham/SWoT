@@ -11,14 +11,14 @@ import { showSnackbar } from '../app/AppActions.js'
 
 class ExerciseDeleteDialog extends Component {
     state = {
-        api: {
+        deleteApi: {
             isExecuting: false,
             isErrored: false,
         }
     }
 
     handleDeleteClick = () => {
-        this.setState({ api: { ...this.state.api, isExecuting: true }})
+        this.setState({ deleteApi: { ...this.state.deleteApi, isExecuting: true }})
 
         this.props.deleteExercise(this.props.exercise.id)
             .then(response => {
@@ -27,13 +27,13 @@ class ExerciseDeleteDialog extends Component {
                 let message = 'Error deleting Exercise'
                 message += error.response ? ': ' + JSON.stringify(error.response.data).replace(/"/g, "") : '.'
         
-                this.setState({ api: { isExecuting: false, isErrored: true }})
+                this.setState({ deleteApi: { isExecuting: false, isErrored: true }})
                 this.props.showSnackbar(message);
             })
     }
 
     handleCancelClick = () => {
-        this.setState({ api: { isExecuting: false, isErrored: false }})
+        this.setState({ deleteApi: { isExecuting: false, isErrored: false }})
         this.props.handleClose();
     }
 
@@ -58,8 +58,8 @@ class ExerciseDeleteDialog extends Component {
                                 onClick={() => this.handleCancelClick()}
                             />
                             <FlatButton
-                                label={this.state.api.isErrored ? 'Retry' : 'Delete' }
-                                disabled={this.state.api.isExecuting}
+                                label={this.state.deleteApi.isErrored ? 'Retry' : 'Delete' }
+                                disabled={this.state.deleteApi.isExecuting}
                                 onClick={() => this.handleDeleteClick()}
                             />
                         </div>
