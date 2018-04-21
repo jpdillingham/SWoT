@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Card, CardHeader, CardText } from 'material-ui/Card';
+import {Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
 import { List, ListItem } from 'material-ui/List';
 import IconButton from 'material-ui/IconButton';
 import ActionHistory from 'material-ui/svg-icons/action/history';
@@ -16,7 +16,10 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 
+import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
+
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR, INTENTS } from '../../constants';
+import FlatButton from 'material-ui/FlatButton/FlatButton';
 
 const styles = {
     deleteDialog: {
@@ -61,10 +64,20 @@ const styles = {
 }
 
 const initialState = {
+    exercise: undefined,
+    api: {
+        isExecuting: false,
+        isErrored: false,
+    },
+    validationErrors: {}
 }
 
 class ExerciseForm extends Component {
-    state = this.props.exercise;
+    state = initialState;
+
+    componentWillMount = () => {
+        this.setState({ ...this.state, exercise: this.props.exercise });
+    }
 
     handleHistoryClick = () => {
 
@@ -73,14 +86,42 @@ class ExerciseForm extends Component {
     handleMetricChange = (event, value, metric) => {
         this.setState({ 
             ...this.state, 
-            metrics: this.state.metrics.map(m => {
-                return m.name === metric.name ? { ...metric, value: value } : m;
-            })
+            exercise: { 
+                ...this.state.exercise,
+                metrics: this.state.exercise.metrics.map(m => {
+                    return m.name === metric.name ? { ...metric, value: value } : m;
+                })
+            },
+            validationErrors: {
+                ...this.state.validationErrors,
+                [metric.name]: ''
+            }
+        }, () => {
+            console.log(this.state.validationErrors)
+        });
+    }
+
+    getValidationErrors = (state) => {
+        let errors = {};
+        state.exercise.metrics.forEach(m => {
+            errors[m.name] = !m.value || m.value === '' ? m.name + ' must be specified' : '';
         })
+        return errors;
+    }
+
+    handleNotesChange = (event, value) => {
+        this.setState({ ...this.state, notes: value });
     }
     
-    handleSave = () => {
-
+    handleSaveClick = () => {
+        this.setState({
+            ...this.state,
+            validationErrors: this.getValidationErrors(this.state)
+        }, () => {
+            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
+                console.log('save goes here');
+            }
+        })
     }
 
     getMetricDisplayName = (metric) => {
@@ -131,11 +172,34 @@ class ExerciseForm extends Component {
                                     key={index}
                                     hintText={this.getMetricDisplayName(m)}
                                     defaultValue={m.value}
+                                    errorText={this.state.validationErrors[m.name]}
                                     floatingLabelText={this.getMetricDisplayName(m)}
                                     onChange={(e,v) => this.handleMetricChange(e,v,m)}
                                 />
                             ) : ''}
+                            <TextField
+                                hintText={'Notes'}
+                                floatingLabelText={'Notes'}
+                                multiLine={true}
+                                onChange={this.handleNotesChange}
+                            />
+                            {JSON.stringify(this.state.validationErrors)}
                     </CardText>
+                    <CardActions>
+                        <SaveRetryFlatButton 
+                            label={'Complete'}
+                            onClick={this.handleSaveClick} 
+                            api={this.state.api} 
+                            validation={this.state.validationErrors} 
+                        />
+                        <SaveRetryFlatButton 
+                            label={'Revise'}
+                            onClick={this.handleSaveClick} 
+                            api={this.state.api} 
+                            validation={this.state.validationErrors} 
+                        />
+                        <FlatButton label={' '} disabled={true}/> {/* lazy fix for positioning */}
+                    </CardActions>
                 </Card>
             </div>
         )
