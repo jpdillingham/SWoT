@@ -14,6 +14,7 @@ import ContentCreate from 'material-ui/svg-icons/content/create';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
+import TextField from 'material-ui/TextField';
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR, INTENTS } from '../../constants';
 
@@ -60,21 +61,30 @@ const styles = {
 }
 
 const initialState = {
-    deleteDialog: {
-        open: false,
-    },
-    exerciseDialog: {
-        open: false,
-        exercise: {},
-        intent: INTENTS.EDIT
-    }    
 }
 
 class ExerciseForm extends Component {
-    state = initialState
+    state = this.props.exercise;
 
     handleHistoryClick = () => {
 
+    }
+
+    handleMetricChange = (event, value, metric) => {
+        this.setState({ 
+            ...this.state, 
+            metrics: this.state.metrics.map(m => {
+                return m.name === metric.name ? { ...metric, value: value } : m;
+            })
+        })
+    }
+    
+    handleSave = () => {
+
+    }
+
+    getMetricDisplayName = (metric) => {
+        return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
     }
 
     render() {
@@ -116,24 +126,17 @@ class ExerciseForm extends Component {
                         </FloatingActionButton>
                     </CardHeader>
                     <CardText style={styles.text}>
-                        <List>
-                            {this.props.exercise.metrics ? this.props.exercise.metrics.map(m =>                     
-                                <ListItem
-                                    key={m.name}
-                                    leftIcon={<ActionAssessment color={'#000000'}/>}
-                                    primaryText={m.name}
-                                    secondaryText={m.uom ? m.uom : ''}
+                            {this.props.exercise.metrics ? this.props.exercise.metrics.map((m, index) =>    
+                                <TextField
+                                    key={index}
+                                    hintText={this.getMetricDisplayName(m)}
+                                    defaultValue={m.value}
+                                    floatingLabelText={this.getMetricDisplayName(m)}
+                                    onChange={(e,v) => this.handleMetricChange(e,v,m)}
                                 />
                             ) : ''}
-                        </List>
                     </CardText>
                 </Card>
-                <ExerciseDeleteDialog 
-                    open={this.state.deleteDialog.open} 
-                    handleClose={this.handleDeleteDialogClose}
-                    exercise={this.props.exercise}
-                    style={styles.deleteDialog}
-                />
             </div>
         )
     }
