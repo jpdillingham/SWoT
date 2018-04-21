@@ -8,9 +8,11 @@ import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { fetchWorkouts } from '../workouts/WorkoutsActions'
+import ExerciseCard from '../exercises/ExerciseCard';
 
 const initialState = {
     workout: undefined,
+    stepIndex: 0,
     api: {
         isExecuting: false,
         isErrored: false,
@@ -54,7 +56,23 @@ class Workout extends Component {
                             this.state.workout === undefined ? <span>Invalid Workout Id.</span> : 
                                 <div>
                                     <span>{this.state.workout.endTime === undefined ? 'ACTIVE' : 'COMPLETE'}</span>
-                                    {JSON.stringify(this.state.workout)}
+                                    
+                                    <Stepper
+                                        activeStep={0}
+                                        linear={false}
+                                        orientation={'vertical'}
+                                    >
+                                    {this.state.workout.routine.exercises.map((exercise, index) =>
+                                        <Step key={index}>
+                                            <StepButton onClick={() => this.setState({ stepIndex: index })}>
+                                                {exercise.name}
+                                            </StepButton>
+                                            <StepContent>
+                                                <ExerciseCard exercise={exercise}/>
+                                            </StepContent>
+                                        </Step>
+                                    )}
+                                    </Stepper>
                                 </div>
                 }
             </div>
