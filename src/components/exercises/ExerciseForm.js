@@ -22,9 +22,6 @@ import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR, INTENTS } from '../.
 import FlatButton from 'material-ui/FlatButton/FlatButton';
 
 const styles = {
-    deleteDialog: {
-        zIndex: 2000,
-    },
     container: {
         height: '100%'
     },
@@ -58,9 +55,9 @@ const styles = {
         position: 'absolute',
         zIndex: 1000,
     },
-    link: {
-        cursor: 'pointer',
-    },
+    button: {
+        float: 'right',
+    }
 }
 
 const initialState = {
@@ -167,23 +164,24 @@ class ExerciseForm extends Component {
                         </FloatingActionButton>
                     </CardHeader>
                     <CardText style={styles.text}>
-                            {this.props.exercise.metrics ? this.props.exercise.metrics.map((m, index) =>    
-                                <TextField
-                                    key={index}
-                                    hintText={this.getMetricDisplayName(m)}
-                                    defaultValue={m.value}
-                                    errorText={this.state.validationErrors[m.name]}
-                                    floatingLabelText={this.getMetricDisplayName(m)}
-                                    onChange={(e,v) => this.handleMetricChange(e,v,m)}
-                                />
-                            ) : ''}
+                            {this.props.exercise.metrics ? 
+                                this.props.exercise.metrics.map((m, index) =>    
+                                    <TextField
+                                        key={index}
+                                        hintText={this.getMetricDisplayName(m)}
+                                        defaultValue={m.value}
+                                        errorText={this.state.validationErrors[m.name]}
+                                        floatingLabelText={this.getMetricDisplayName(m)}
+                                        onChange={(e,v) => this.handleMetricChange(e,v,m)}
+                                    />
+                                ) : ''
+                            }
                             <TextField
                                 hintText={'Notes'}
                                 floatingLabelText={'Notes'}
                                 multiLine={true}
                                 onChange={this.handleNotesChange}
                             />
-                            {JSON.stringify(this.state.validationErrors)}
                     </CardText>
                     <CardActions>
                         <SaveRetryFlatButton 
@@ -191,12 +189,14 @@ class ExerciseForm extends Component {
                             onClick={this.handleSaveClick} 
                             api={this.state.api} 
                             validation={this.state.validationErrors} 
+                            style={styles.button}
                         />
                         <SaveRetryFlatButton 
                             label={'Revise'}
                             onClick={this.handleSaveClick} 
                             api={this.state.api} 
                             validation={this.state.validationErrors} 
+                            style={styles.button}
                         />
                         <FlatButton label={' '} disabled={true}/> {/* lazy fix for positioning */}
                     </CardActions>
