@@ -8,7 +8,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { fetchWorkouts } from '../workouts/WorkoutsActions'
-import ExerciseCard from '../exercises/ExerciseCard';
+import ExerciseForm from '../exercises/ExerciseForm';
 
 const initialState = {
     workout: undefined,
@@ -47,6 +47,11 @@ class Workout extends Component {
             })
     }
 
+    handleStepClick = (index) => {
+        console.log(index);
+        this.setState({ stepIndex: index })
+    }
+
     render() {
         return (
             <div>
@@ -58,17 +63,17 @@ class Workout extends Component {
                                     <span>{this.state.workout.endTime === undefined ? 'ACTIVE' : 'COMPLETE'}</span>
                                     
                                     <Stepper
-                                        activeStep={0}
+                                        activeStep={this.state.stepIndex}
                                         linear={false}
                                         orientation={'vertical'}
                                     >
                                     {this.state.workout.routine.exercises.map((exercise, index) =>
                                         <Step key={index}>
-                                            <StepButton onClick={() => this.setState({ stepIndex: index })}>
+                                            <StepButton onClick={() => this.handleStepClick(index)}>
                                                 {exercise.name}
                                             </StepButton>
                                             <StepContent>
-                                                <ExerciseCard exercise={exercise}/>
+                                                <ExerciseForm exercise={exercise}/>
                                             </StepContent>
                                         </Step>
                                     )}
