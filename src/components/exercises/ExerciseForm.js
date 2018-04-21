@@ -76,12 +76,10 @@ class ExerciseForm extends Component {
     state = initialState;
 
     componentWillMount = () => {
-        this.setState({ ...this.state, exercise: this.props.exercise });
+        this.setState({ ...this.state, exercise: { ...this.props.exercise }});
     }
 
-    handleHistoryClick = () => {
-
-    }
+    handleHistoryClick = () => { }
 
     handleMetricChange = (event, value, metric) => {
         this.setState({ 
@@ -96,16 +94,16 @@ class ExerciseForm extends Component {
                 ...this.state.validationErrors,
                 [metric.name]: ''
             }
-        }, () => {
-            console.log(this.state.validationErrors)
         });
     }
 
     getValidationErrors = (state) => {
         let errors = {};
+
         state.exercise.metrics.forEach(m => {
-            errors[m.name] = !m.value || m.value === '' ? m.name + ' must be specified' : '';
+            errors[m.name] = !m.value || m.value === '' ? 'A value for ' + m.name + ' must be provided.' : '';
         })
+
         return errors;
     }
 
