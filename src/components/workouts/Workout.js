@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { Step, Stepper, StepButton, StepContent } from 'material-ui/Stepper';
+
 import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { fetchWorkouts } from '../workouts/WorkoutsActions'
+import ExerciseForm from '../exercises/ExerciseForm';
 
 const initialState = {
     workout: undefined,
+    stepIndex: 0,
     api: {
         isExecuting: false,
         isErrored: false,
@@ -43,6 +47,15 @@ class Workout extends Component {
             })
     }
 
+    handleStepClick = (index) => {
+        console.log(index);
+        this.setState({ stepIndex: index })
+    }
+
+    handleExerciseChange = (exercise) => {
+        console.log(exercise);
+    }
+
     render() {
         return (
             <div>
@@ -52,7 +65,26 @@ class Workout extends Component {
                             this.state.workout === undefined ? <span>Invalid Workout Id.</span> : 
                                 <div>
                                     <span>{this.state.workout.endTime === undefined ? 'ACTIVE' : 'COMPLETE'}</span>
-                                    {JSON.stringify(this.state.workout)}
+                                    
+                                    <Stepper
+                                        activeStep={this.state.stepIndex}
+                                        linear={false}
+                                        orientation={'vertical'}
+                                    >
+                                    {this.state.workout.routine.exercises.map((exercise, index) =>
+                                        <Step key={index}>
+                                            <StepButton onClick={() => this.handleStepClick(index)}>
+                                                {exercise.name}
+                                            </StepButton>
+                                            <StepContent>
+                                                <ExerciseForm 
+                                                    exercise={exercise}
+                                                    onChange={this.handleExerciseChange}
+                                                />
+                                            </StepContent>
+                                        </Step>
+                                    )}
+                                    </Stepper>
                                 </div>
                 }
             </div>
