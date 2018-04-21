@@ -55,9 +55,12 @@ const styles = {
         position: 'absolute',
         zIndex: 1000,
     },
+    link: {
+        cursor: 'pointer',
+    },
     button: {
         float: 'right',
-    }
+    },
 }
 
 const initialState = {
@@ -192,7 +195,7 @@ class ExerciseForm extends Component {
                             style={styles.button}
                         />
                         <SaveRetryFlatButton 
-                            label={'Revise'}
+                            label={'Start'}
                             onClick={this.handleSaveClick} 
                             api={this.state.api} 
                             validation={this.state.validationErrors} 
