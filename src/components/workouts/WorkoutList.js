@@ -41,8 +41,9 @@ class WorkoutList extends Component {
                             <List>
                                 {this.props.workouts
                                     .sort((a, b) => { 
-                                        return a[this.props.timeField] > b[this.props.timeField] ? -1 : 
-                                            a[this.props.timeField] === b[this.props.timeField] ? 0 : 1 
+                                        let f = this.props.timeField;
+                                        return a[f] > b[f] ? -1 : 
+                                            a[f] === b[f] ? 0 : 1 
                                     })
                                     .map(w => 
                                     <ListItem
