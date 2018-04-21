@@ -52,6 +52,10 @@ class Workout extends Component {
         this.setState({ stepIndex: index })
     }
 
+    handleExerciseChange = (exercise) => {
+        console.log(exercise);
+    }
+
     render() {
         return (
             <div>
@@ -73,7 +77,10 @@ class Workout extends Component {
                                                 {exercise.name}
                                             </StepButton>
                                             <StepContent>
-                                                <ExerciseForm exercise={exercise}/>
+                                                <ExerciseForm 
+                                                    exercise={exercise}
+                                                    onChange={this.handleExerciseChange}
+                                                />
                                             </StepContent>
                                         </Step>
                                     )}
