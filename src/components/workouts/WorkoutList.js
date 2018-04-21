@@ -39,7 +39,13 @@ class WorkoutList extends Component {
                         />
                         <CardText>
                             <List>
-                                {this.props.workouts.map(w => 
+                                {this.props.workouts
+                                    .sort((a, b) => { 
+                                        let f = this.props.timeField;
+                                        return a[f] > b[f] ? -1 : 
+                                            a[f] === b[f] ? 0 : 1 
+                                    })
+                                    .map(w => 
                                     <ListItem
                                         key={w.id}
                                         primaryText={w.routine.name}
