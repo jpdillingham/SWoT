@@ -1,24 +1,15 @@
 import React, { Component } from 'react';
 
 import {Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
-import { List, ListItem } from 'material-ui/List';
-import IconButton from 'material-ui/IconButton';
 import ActionHistory from 'material-ui/svg-icons/action/history';
-import ActionAssessment from 'material-ui/svg-icons/action/assessment';
 import Avatar from 'material-ui/Avatar';
 
-import ExerciseDialog from './ExerciseDialog'
-import ExerciseDeleteDialog from './ExerciseDeleteDialog';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentCreate from 'material-ui/svg-icons/content/create';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
 
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 
-import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR, INTENTS } from '../../constants';
+import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
 import FlatButton from 'material-ui/FlatButton/FlatButton';
 
 const styles = {
