@@ -63,7 +63,7 @@ const initialState = {
     validationErrors: {}
 }
 
-class ExerciseForm extends Component {
+class WorkoutExerciseForm extends Component {
     state = initialState;
 
     componentWillMount = () => {
@@ -108,7 +108,17 @@ class ExerciseForm extends Component {
             validationErrors: this.getValidationErrors(this.state)
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                console.log('save goes here');
+                this.setState({ 
+                    api: { ...this.state.api, isExecuting: true },
+                    exercise: { ...this.state.exercise, endDate: Date.now() }
+                }, () => {
+                    this.props.onChange(this.state.exercise)
+                    .then((response) => {
+                        this.setState({ ...this.state.api, isExecuting: false })
+                    }, (error) => {
+                        this.setState({ api: { isExecuting: false, isErrored: true }})
+                    })
+                })
             }
         })
     }
@@ -198,4 +208,4 @@ class ExerciseForm extends Component {
     }
 }
 
-export default ExerciseForm
+export default WorkoutExerciseForm
