@@ -7,8 +7,8 @@ import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
-import { fetchWorkouts } from '../workouts/WorkoutsActions'
-import ExerciseForm from '../exercises/ExerciseForm';
+import { fetchWorkouts, updateWorkout } from '../workouts/WorkoutsActions'
+import WorkoutExerciseForm from './WorkoutExerciseForm';
 
 const initialState = {
     workout: undefined,
@@ -54,6 +54,7 @@ class Workout extends Component {
 
     handleExerciseChange = (exercise) => {
         console.log(exercise);
+        return new Promise((resolve, reject) => { resolve({ data: { name: exercise.name } }) })
     }
 
     render() {
@@ -77,7 +78,7 @@ class Workout extends Component {
                                                 {exercise.name}
                                             </StepButton>
                                             <StepContent>
-                                                <ExerciseForm 
+                                                <WorkoutExerciseForm 
                                                     exercise={exercise}
                                                     onChange={this.handleExerciseChange}
                                                 />
@@ -97,7 +98,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    fetchWorkouts
+    fetchWorkouts,
+    updateWorkout
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workout)
