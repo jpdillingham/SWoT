@@ -6,6 +6,10 @@ import { Step, Stepper, StepButton, StepContent } from 'material-ui/Stepper';
 import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
+import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
+import ActionWatchLater from 'material-ui/svg-icons/action/watch-later'
+import AVPlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled'
+import ImageLens from 'material-ui/svg-icons/image/lens'
 
 import { fetchWorkouts, updateWorkout } from '../workouts/WorkoutsActions'
 import { showSnackbar } from '../app/AppActions';
@@ -97,21 +101,30 @@ class Workout extends Component {
                                         linear={false}
                                         orientation={'vertical'}
                                     >
-                                    {this.state.workout.routine.exercises.map((exercise, index) =>
-                                        <Step key={index}>
-                                            <StepButton onClick={() => this.handleStepClick(index)}>
-                                                {exercise.name}
-                                            </StepButton>
-                                            <StepContent>
-                                                <WorkoutExerciseForm 
-                                                    stepIndex={index}
-                                                    exercise={exercise}
-                                                    onChange={this.handleExerciseChange}
-                                                    onComplete={this.handleExerciseComplete}
-                                                />
-                                            </StepContent>
-                                        </Step>
-                                    )}
+                                        {this.state.workout.routine.exercises.map((exercise, index) =>
+                                            <Step key={index}>
+                                                <StepButton 
+                                                    completed={exercise.endTime !== undefined}
+                                                    onClick={() => this.handleStepClick(index)}
+                                                    icon={exercise.endTime !== undefined ? 
+                                                        <ActionCheckCircle/> :
+                                                        exercise.startTime !== undefined ?
+                                                            <AVPlayCircleFilled/> :
+                                                            <ImageLens/>
+                                                    }
+                                                >
+                                                    {exercise.name}
+                                                </StepButton>
+                                                <StepContent>
+                                                    <WorkoutExerciseForm 
+                                                        stepIndex={index}
+                                                        exercise={exercise}
+                                                        onChange={this.handleExerciseChange}
+                                                        onComplete={this.handleExerciseComplete}
+                                                    />
+                                                </StepContent>
+                                            </Step>
+                                        )}
                                     </Stepper>
                                 </div>
                 }
