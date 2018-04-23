@@ -82,6 +82,8 @@ class RoutineDialog extends Component {
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
+                this.state.routine.exercises.map((e, index) => e.sequence = index); // add strict ordering based on array position
+
                 this.setState({ api: { ...this.state.api, isExecuting: true } })
 
                 if (this.props.intent === INTENTS.EDIT) {
