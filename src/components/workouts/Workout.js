@@ -66,7 +66,7 @@ class Workout extends Component {
                     routine: { 
                         ...this.state.workout.routine,
                         exercises: this.state.workout.routine.exercises.map(e => {
-                            return e.id === exercise.id ? exercise : e;
+                            return e.sequence === exercise.sequence && e.id === exercise.id ? exercise : e;
                         })
                     } 
                 }
