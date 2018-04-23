@@ -110,13 +110,13 @@ class WorkoutExerciseForm extends Component {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
                 this.setState({ 
                     api: { ...this.state.api, isExecuting: true },
-                    exercise: { ...this.state.exercise, endDate: Date.now() }
+                    exercise: { ...this.state.exercise, endTime: Date.now() }
                 }, () => {
                     this.props.onChange(this.state.exercise)
-                    .then((response) => {
+                    .then(() => {
                         this.setState({ api: { ...this.state.api, isExecuting: false }})
-                    }, (error) => {
-                        this.setState({ api: { isExecuting: false, isErrored: true }})
+                    }, error => {
+                       this.setState({ api: { isExecuting: false, isErrored: true }})
                     })
                 })
             }
@@ -166,24 +166,24 @@ class WorkoutExerciseForm extends Component {
                         </FloatingActionButton>
                     </CardHeader>
                     <CardText style={styles.text}>
-                            {this.props.exercise.metrics ? 
-                                this.props.exercise.metrics.map((m, index) =>    
-                                    <TextField
-                                        key={index}
-                                        hintText={this.getMetricDisplayName(m)}
-                                        defaultValue={m.value}
-                                        errorText={this.state.validationErrors[m.name]}
-                                        floatingLabelText={this.getMetricDisplayName(m)}
-                                        onChange={(e,v) => this.handleMetricChange(e,v,m)}
-                                    />
-                                ) : ''
-                            }
-                            <TextField
-                                hintText={'Notes'}
-                                floatingLabelText={'Notes'}
-                                multiLine={true}
-                                onChange={this.handleNotesChange}
-                            />
+                        {this.props.exercise.metrics ? 
+                            this.props.exercise.metrics.map((m, index) =>    
+                                <TextField
+                                    key={index}
+                                    hintText={this.getMetricDisplayName(m)}
+                                    defaultValue={m.value}
+                                    errorText={this.state.validationErrors[m.name]}
+                                    floatingLabelText={this.getMetricDisplayName(m)}
+                                    onChange={(e,v) => this.handleMetricChange(e,v,m)}
+                                />
+                            ) : ''
+                        }
+                        <TextField
+                            hintText={'Notes'}
+                            floatingLabelText={'Notes'}
+                            multiLine={true}
+                            onChange={this.handleNotesChange}
+                        />
                     </CardText>
                     <CardActions>
                         <SaveRetryFlatButton 
