@@ -93,8 +93,6 @@ class Workout extends Component {
                         this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                             this.state.workout === undefined ? <span>Invalid Workout Id.</span> : 
                                 <div>
-                                    <span>{this.state.workout.endTime === undefined ? 'ACTIVE' : 'COMPLETE'}</span>
-                                    
                                     <Stepper
                                         activeStep={this.state.stepIndex}
                                         linear={false}
