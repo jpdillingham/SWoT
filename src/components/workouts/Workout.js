@@ -8,6 +8,8 @@ import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { fetchWorkouts, updateWorkout } from '../workouts/WorkoutsActions'
+import { showSnackbar } from '../app/AppActions';
+
 import WorkoutExerciseForm from './WorkoutExerciseForm';
 
 const initialState = {
@@ -53,23 +55,27 @@ class Workout extends Component {
     }
 
     handleExerciseChange = (exercise) => {
-        this.setState({ 
-            workout: { 
-                ...this.state.workout, 
-                routine: { 
-                    ...this.state.workout.routine,
-                    exercises: this.state.workout.routine.exercises.map(e => {
-                        return e.id === exercise.id ? exercise : e;
-                    })
-                } 
-            }
-        }, () => {
-            this.props.updateWorkout(this.state.workout)
-            .then(response => {
-                console.log('done');
+        return new Promise((resolve, reject) => {
+            this.setState({ 
+                workout: { 
+                    ...this.state.workout, 
+                    routine: { 
+                        ...this.state.workout.routine,
+                        exercises: this.state.workout.routine.exercises.map(e => {
+                            return e.id === exercise.id ? exercise : e;
+                        })
+                    } 
+                }
+            }, () => {
+                this.props.updateWorkout(this.state.workout)
+                .then(response => {
+                    this.props.showSnackbar('Updated Workout')
+                    resolve();
+                }, error => {
+                    reject();
+                })
             })
         })
-        return new Promise((resolve, reject) => { resolve({ data: { name: exercise.name } }) })
     }
 
     render() {
@@ -114,7 +120,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     fetchWorkouts,
-    updateWorkout
+    updateWorkout,
+    showSnackbar,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workout)
