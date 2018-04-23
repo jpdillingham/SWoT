@@ -200,7 +200,7 @@ class WorkoutExerciseForm extends Component {
                                     errorText={this.state.validationErrors[m.name]}
                                     floatingLabelText={this.getMetricDisplayName(m)}
                                     onChange={(e,v) => this.handleMetricChange(e,v,m)}
-                                    disabled={this.state.exercise.endTime !== undefined}
+                                    disabled={this.state.exercise.endTime !== undefined || this.state.exercise.startTime === undefined}
                                 />
                             ) : ''
                         }
@@ -210,7 +210,7 @@ class WorkoutExerciseForm extends Component {
                             defaultValue={this.state.exercise.notes}
                             multiLine={true}
                             onChange={this.handleNotesChange}
-                            disabled={this.state.exercise.endTime !== undefined}
+                            disabled={this.state.exercise.endTime !== undefined  || this.state.exercise.startTime === undefined}
                         />
                     </CardText>
                     <CardActions>
