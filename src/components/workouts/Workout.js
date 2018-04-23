@@ -53,7 +53,22 @@ class Workout extends Component {
     }
 
     handleExerciseChange = (exercise) => {
-        console.log(exercise);
+        this.setState({ 
+            workout: { 
+                ...this.state.workout, 
+                routine: { 
+                    ...this.state.workout.routine,
+                    exercises: this.state.workout.routine.exercises.map(e => {
+                        return e.id === exercise.id ? exercise : e;
+                    })
+                } 
+            }
+        }, () => {
+            this.props.updateWorkout(this.state.workout)
+            .then(response => {
+                console.log('done');
+            })
+        })
         return new Promise((resolve, reject) => { resolve({ data: { name: exercise.name } }) })
     }
 
