@@ -54,6 +54,10 @@ class Workout extends Component {
         this.setState({ stepIndex: index })
     }
 
+    handleExerciseComplete = (index) => {
+        this.setState({ stepIndex: index + 1 })
+    }
+
     handleExerciseChange = (exercise) => {
         return new Promise((resolve, reject) => {
             this.setState({ 
@@ -100,8 +104,10 @@ class Workout extends Component {
                                             </StepButton>
                                             <StepContent>
                                                 <WorkoutExerciseForm 
+                                                    stepIndex={index}
                                                     exercise={exercise}
                                                     onChange={this.handleExerciseChange}
+                                                    onComplete={this.handleExerciseComplete}
                                                 />
                                             </StepContent>
                                         </Step>
