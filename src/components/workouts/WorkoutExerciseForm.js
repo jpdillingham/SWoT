@@ -64,11 +64,7 @@ const initialState = {
 }
 
 class WorkoutExerciseForm extends Component {
-    state = initialState;
-
-    componentWillMount = () => {
-        this.setState({ ...this.state, exercise: { ...this.props.exercise }});
-    }
+    state = { ...initialState, exercise: { ...this.props.exercise }};
 
     handleHistoryClick = () => { }
 
@@ -99,10 +95,10 @@ class WorkoutExerciseForm extends Component {
     }
 
     handleNotesChange = (event, value) => {
-        this.setState({ ...this.state, notes: value });
+        this.setState({ exercise: { ...this.state.exercise, notes: value }});
     }
     
-    handleSaveClick = () => {
+    handleCompleteClick = () => {
         this.setState({
             ...this.state,
             validationErrors: this.getValidationErrors(this.state)
@@ -115,11 +111,40 @@ class WorkoutExerciseForm extends Component {
                     this.props.onChange(this.state.exercise)
                     .then(() => {
                         this.setState({ api: { ...this.state.api, isExecuting: false }})
+                        this.props.onComplete(this.props.stepIndex);
                     }, error => {
                        this.setState({ api: { isExecuting: false, isErrored: true }})
                     })
                 })
             }
+        })
+    }
+
+    handleStartClick = () => {
+        this.setState({ 
+            api: { ...this.state.api, isExecuting: true },
+            exercise: { ...this.state.exercise, startTime: Date.now() }
+        }, () => {
+            this.props.onChange(this.state.exercise)
+            .then(() => {
+                this.setState({ api: { ...this.state.api, isExecuting: false }})
+            }, error => {
+                this.setState({ api: { isExecuting: false, isErrored: true }})
+            })
+        })
+    }
+
+    handleRestartClick = () => {
+        this.setState({ 
+            api: { ...this.state.api, isExecuting: true },
+            exercise: { ...this.state.exercise, startTime: Date.now(), endTime: undefined }
+        }, () => {
+            this.props.onChange(this.state.exercise)
+            .then(() => {
+                this.setState({ api: { ...this.state.api, isExecuting: false }})
+            }, error => {
+                this.setState({ api: { isExecuting: false, isErrored: true }})
+            })
         })
     }
 
@@ -175,31 +200,43 @@ class WorkoutExerciseForm extends Component {
                                     errorText={this.state.validationErrors[m.name]}
                                     floatingLabelText={this.getMetricDisplayName(m)}
                                     onChange={(e,v) => this.handleMetricChange(e,v,m)}
+                                    disabled={this.state.exercise.endTime !== undefined}
                                 />
                             ) : ''
                         }
                         <TextField
                             hintText={'Notes'}
                             floatingLabelText={'Notes'}
+                            defaultValue={this.state.exercise.notes}
                             multiLine={true}
                             onChange={this.handleNotesChange}
+                            disabled={this.state.exercise.endTime !== undefined}
                         />
                     </CardText>
                     <CardActions>
-                        <SaveRetryFlatButton 
-                            label={'Complete'}
-                            onClick={this.handleSaveClick} 
-                            api={this.state.api} 
-                            validation={this.state.validationErrors} 
-                            style={styles.button}
-                        />
-                        <SaveRetryFlatButton 
-                            label={'Start'}
-                            onClick={this.handleSaveClick} 
-                            api={this.state.api} 
-                            validation={this.state.validationErrors} 
-                            style={styles.button}
-                        />
+                        {!this.state.exercise.startTime ? 
+                            <SaveRetryFlatButton 
+                                label={'Start'}
+                                onClick={this.handleStartClick} 
+                                api={this.state.api} 
+                                validation={this.state.validationErrors} 
+                                style={styles.button}
+                            /> : !this.state.exercise.endTime ?
+                            <SaveRetryFlatButton 
+                                label={'Complete'}
+                                onClick={this.handleCompleteClick} 
+                                api={this.state.api} 
+                                validation={this.state.validationErrors} 
+                                style={styles.button}
+                            /> : 
+                            <SaveRetryFlatButton 
+                                label={'Restart'}
+                                onClick={this.handleRestartClick} 
+                                api={this.state.api} 
+                                validation={this.state.validationErrors} 
+                                style={styles.button}
+                            /> 
+                        }
                         <FlatButton label={' '} disabled={true}/> {/* lazy fix for positioning */}
                     </CardActions>
                 </Card>
