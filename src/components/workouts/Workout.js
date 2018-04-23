@@ -7,7 +7,6 @@ import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
-import ActionWatchLater from 'material-ui/svg-icons/action/watch-later'
 import AVPlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled'
 import ImageLens from 'material-ui/svg-icons/image/lens'
 
