@@ -1,24 +1,11 @@
 import React, { Component } from 'react';
 
-import {Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
-import ActionHistory from 'material-ui/svg-icons/action/history';
-import Avatar from 'material-ui/Avatar';
-
 import { Step, Stepper, StepButton, StepContent } from 'material-ui/Stepper';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import TextField from 'material-ui/TextField';
 import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import AVPlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled'
 import ImageLens from 'material-ui/svg-icons/image/lens'
 
 import WorkoutExerciseForm from './WorkoutExerciseForm'
-
-import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
-
-import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
-import FlatButton from 'material-ui/FlatButton/FlatButton';
-
-const styles = { }
 
 const initialState = {
     stepIndex: 0,
