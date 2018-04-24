@@ -30,7 +30,7 @@ const styles = {
         top: 10,
     },
     card: {
-        width: CARD_WIDTH - 40,
+        width: CARD_WIDTH - 100,
         height: '100%',
         position: 'relative',
         marginBottom: 5,

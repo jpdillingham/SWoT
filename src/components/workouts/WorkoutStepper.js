@@ -18,47 +18,7 @@ import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
 import FlatButton from 'material-ui/FlatButton/FlatButton';
 
-const styles = {
-    container: {
-        height: '100%'
-    },
-    cardHeader: {
-        backgroundColor: EXERCISE_AVATAR_COLOR,
-        marginBottom: 0,
-    },
-    cardTitle: {
-        fontSize: '20px',
-        marginTop: 6,
-    },
-    iconMenu: {
-        position: 'absolute',
-        right: 0,
-        top: 10,
-    },
-    card: {
-        width: CARD_WIDTH - 40,
-        height: '100%',
-        position: 'relative',
-        marginBottom: 5,
-        marginLeft: 5,
-        marginTop: 20
-    },
-    fab: {
-        margin: 0,
-        top: 47,
-        right: 20,
-        bottom: 'auto',
-        left: 'auto',
-        position: 'absolute',
-        zIndex: 1000,
-    },
-    link: {
-        cursor: 'pointer',
-    },
-    button: {
-        float: 'right',
-    },
-}
+const styles = { }
 
 const initialState = {
     stepIndex: 0,
@@ -66,6 +26,10 @@ const initialState = {
 
 class WorkoutStepper extends Component {
     state = initialState;
+
+    handleStepClick = (index) => {
+        this.setState({ stepIndex: index })
+    }
 
     render() {
         return (

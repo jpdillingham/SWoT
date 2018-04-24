@@ -10,6 +10,12 @@ import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import AVPlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled'
 import ImageLens from 'material-ui/svg-icons/image/lens'
 import Paper from 'material-ui/Paper'
+import {Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
+import Avatar from 'material-ui/Avatar';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ActionHistory from 'material-ui/svg-icons/action/history';
+
+import { WORKOUT_AVATAR_COLOR, CARD_WIDTH } from '../../constants'
 
 import { fetchWorkouts, updateWorkout } from '../workouts/WorkoutsActions'
 import { showSnackbar } from '../app/AppActions';
@@ -27,6 +33,43 @@ const initialState = {
 }
 
 const styles = {
+    container: {
+        height: '100%'
+    },
+    cardHeader: {
+        backgroundColor: WORKOUT_AVATAR_COLOR,
+        marginBottom: 0,
+    },
+    cardTitle: {
+        fontSize: '20px',
+        marginTop: 6,
+    },
+    iconMenu: {
+        position: 'absolute',
+        right: 0,
+        top: 10,
+    },
+    card: {
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+    },
+    fab: {
+        margin: 0,
+        top: 47,
+        right: 20,
+        bottom: 'auto',
+        left: 'auto',
+        position: 'absolute',
+        zIndex: 1000,
+    },
+    link: {
+        cursor: 'pointer',
+    },
+    stepper: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+    },
     icon: {
         height: 48,
         width: 48,
@@ -52,11 +95,6 @@ class Workout extends Component {
             }, error => {
                 this.setState({ api: { isExecuting: false, isErrored: true }})
             })
-    }
-
-    handleStepClick = (index) => {
-        console.log(index);
-        this.setState({ stepIndex: index })
     }
 
     handleExerciseComplete = (index) => {
@@ -94,13 +132,44 @@ class Workout extends Component {
                     this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
                         this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                             this.state.workout === undefined ? <span>Invalid Workout Id.</span> : 
-                                <Paper>
-                                    <WorkoutStepper
-                                        workout={this.state.workout}
-                                        onExerciseChange={this.handleExerciseChange}
-                                        onExerciseComplete={this.handleExerciseComplete}
-                                    />
-                                </Paper>
+                                <Card zDepth={2} style={styles.card}>
+                                    <CardHeader                        
+                                        titleStyle={styles.cardTitle}
+                                        style={styles.cardHeader}
+                                        title={
+                                            <span 
+
+                                            >
+                                                {this.state.workout.routine.name}
+                                            </span>
+                                        }
+                                        avatar={
+                                            <Avatar 
+                                                backgroundColor={WORKOUT_AVATAR_COLOR} 
+                                                size={32} 
+                                                src={<CircularProgress/>} 
+                                            />
+                                        }
+                                    >
+                                        <FloatingActionButton 
+                                            secondary={false} 
+                                            zDepth={2} 
+                                            style={styles.fab}
+                                            mini={true}
+                                            onClick={this.handleHistoryClick}
+                                        >
+                                            <ActionHistory />
+                                        </FloatingActionButton>
+                                    </CardHeader>
+                                    <CardText style={styles.text}>
+                                        <WorkoutStepper
+                                            style={styles.stepper}
+                                            workout={this.state.workout}
+                                            onExerciseChange={this.handleExerciseChange}
+                                            onExerciseComplete={this.handleExerciseComplete}
+                                        />
+                                    </CardText>
+                                </Card>
                 }
             </div>
         )
