@@ -111,7 +111,7 @@ class WorkoutExerciseForm extends Component {
                     this.props.onChange(this.state.exercise)
                     .then(() => {
                         this.setState({ api: { ...this.state.api, isExecuting: false }})
-                        this.props.onComplete(this.props.stepIndex);
+                        this.props.onComplete();
                     }, error => {
                        this.setState({ api: { isExecuting: false, isErrored: true }})
                     })
