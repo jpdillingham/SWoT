@@ -79,10 +79,6 @@ class Workout extends Component {
             })
     }
 
-    handleExerciseComplete = (index) => {
-        this.setState({ stepIndex: index + 1 })
-    }
-
     handleExerciseChange = (exercise) => {
         return new Promise((resolve, reject) => {
             this.setState({ 

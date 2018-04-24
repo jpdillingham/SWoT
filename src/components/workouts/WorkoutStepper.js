@@ -18,6 +18,10 @@ class WorkoutStepper extends Component {
         this.setState({ stepIndex: index })
     }
 
+    handleExerciseComplete = () => {
+        this.setState({ stepIndex: this.state.stepIndex + 1 })
+    }
+
     render() {
         return (
             <Stepper
@@ -44,7 +48,7 @@ class WorkoutStepper extends Component {
                                 stepIndex={index}
                                 exercise={exercise}
                                 onChange={this.props.onExerciseChange}
-                                onComplete={this.props.onExerciseComplete}
+                                onComplete={this.handleExerciseComplete}
                             />
                         </StepContent>
                     </Step>
