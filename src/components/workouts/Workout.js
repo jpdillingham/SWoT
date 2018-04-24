@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { red500 } from 'material-ui/styles/colors'
+import { red500, black } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import {Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ActionHistory from 'material-ui/svg-icons/action/history';
+import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
@@ -32,21 +34,11 @@ const styles = {
     },
     cardTitle: {
         fontSize: '20px',
-        marginTop: 6,
     },
     card: {
         width: '100%',
         height: '100%',
         position: 'relative',
-    },
-    fab: {
-        margin: 0,
-        top: 47,
-        right: 20,
-        bottom: 'auto',
-        left: 'auto',
-        position: 'absolute',
-        zIndex: 1000,
     },
     stepper: {
         marginLeft: 'auto',
@@ -114,30 +106,17 @@ class Workout extends Component {
                                     <CardHeader                        
                                         titleStyle={styles.cardTitle}
                                         style={styles.cardHeader}
-                                        title={
-                                            <span 
-
-                                            >
-                                                {this.state.workout.routine.name}
-                                            </span>
-                                        }
+                                        title={this.state.workout.routine.name}
+                                        subtitle={'Started ' + moment(this.state.workout[this.props.timeField]).calendar()}
                                         avatar={
                                             <Avatar 
                                                 backgroundColor={WORKOUT_AVATAR_COLOR} 
-                                                size={32} 
-                                                src={<CircularProgress/>} 
+                                                size={40} 
+                                                color={black}
+                                                icon={<ActionAssignmentTurnedIn/>} 
                                             />
                                         }
                                     >
-                                        <FloatingActionButton 
-                                            secondary={false} 
-                                            zDepth={2} 
-                                            style={styles.fab}
-                                            mini={true}
-                                            onClick={this.handleHistoryClick}
-                                        >
-                                            <ActionHistory />
-                                        </FloatingActionButton>
                                     </CardHeader>
                                     <CardText style={styles.text}>
                                         <WorkoutStepper
