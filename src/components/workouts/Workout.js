@@ -1,26 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { Step, Stepper, StepButton, StepContent } from 'material-ui/Stepper';
-
 import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
-import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
-import AVPlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled'
-import ImageLens from 'material-ui/svg-icons/image/lens'
-import Paper from 'material-ui/Paper'
-import {Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
+import {Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ActionHistory from 'material-ui/svg-icons/action/history';
 
-import { WORKOUT_AVATAR_COLOR, CARD_WIDTH } from '../../constants'
+import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
 import { fetchWorkouts, updateWorkout } from '../workouts/WorkoutsActions'
 import { showSnackbar } from '../app/AppActions';
 
-import WorkoutExerciseForm from './WorkoutExerciseForm';
 import WorkoutStepper from './WorkoutStepper';
 
 const initialState = {
