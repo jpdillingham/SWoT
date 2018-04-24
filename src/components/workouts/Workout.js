@@ -47,7 +47,7 @@ class Workout extends Component {
             })
     }
 
-    handleExerciseChange = (exercise) => {
+    handleWorkoutChange = (exercise) => {
         return new Promise((resolve, reject) => {
             this.setState({ 
                 workout: { 
@@ -80,7 +80,7 @@ class Workout extends Component {
                             this.state.workout === undefined ? <span>Invalid Workout Id.</span> : 
                                 <WorkoutCard
                                     workout={this.state.workout}
-                                    onExerciseChange={this.handleExerciseChange}
+                                    onChange={this.handleWorkoutChange}
                                 />
                 }
             </div>
