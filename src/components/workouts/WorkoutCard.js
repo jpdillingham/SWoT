@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { connect } from 'react-redux';
 
-import { red500, black } from 'material-ui/styles/colors'
-import CircularProgress from 'material-ui/CircularProgress'
-import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
+import { black } from 'material-ui/styles/colors'
 import {Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
