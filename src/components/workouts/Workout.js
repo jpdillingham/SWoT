@@ -9,11 +9,13 @@ import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import AVPlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled'
 import ImageLens from 'material-ui/svg-icons/image/lens'
+import Paper from 'material-ui/Paper'
 
 import { fetchWorkouts, updateWorkout } from '../workouts/WorkoutsActions'
 import { showSnackbar } from '../app/AppActions';
 
 import WorkoutExerciseForm from './WorkoutExerciseForm';
+import WorkoutStepper from './WorkoutStepper';
 
 const initialState = {
     workout: undefined,
@@ -92,38 +94,13 @@ class Workout extends Component {
                     this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
                         this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                             this.state.workout === undefined ? <span>Invalid Workout Id.</span> : 
-                                <div>
-                                    <Stepper
-                                        activeStep={this.state.stepIndex}
-                                        linear={false}
-                                        orientation={'vertical'}
-                                    >
-                                        {this.state.workout.routine.exercises.map((exercise, index) =>
-                                            <Step key={index}>
-                                                <StepButton 
-                                                    completed={exercise.endTime !== undefined}
-                                                    onClick={() => this.handleStepClick(index)}
-                                                    icon={exercise.endTime !== undefined ? 
-                                                        <ActionCheckCircle/> :
-                                                        exercise.startTime !== undefined ?
-                                                            <AVPlayCircleFilled/> :
-                                                            <ImageLens/>
-                                                    }
-                                                >
-                                                    {exercise.name}
-                                                </StepButton>
-                                                <StepContent>
-                                                    <WorkoutExerciseForm 
-                                                        stepIndex={index}
-                                                        exercise={exercise}
-                                                        onChange={this.handleExerciseChange}
-                                                        onComplete={this.handleExerciseComplete}
-                                                    />
-                                                </StepContent>
-                                            </Step>
-                                        )}
-                                    </Stepper>
-                                </div>
+                                <Paper>
+                                    <WorkoutStepper
+                                        workout={this.state.workout}
+                                        onExerciseChange={this.handleExerciseChange}
+                                        onExerciseComplete={this.handleExerciseComplete}
+                                    />
+                                </Paper>
                 }
             </div>
         )
