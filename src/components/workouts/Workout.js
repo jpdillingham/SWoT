@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 import { connect } from 'react-redux';
 
-import { red500, black } from 'material-ui/styles/colors'
+import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
-import {Card, CardHeader, CardText } from 'material-ui/Card';
-import Avatar from 'material-ui/Avatar';
-import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
-
-import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
 import { fetchWorkouts, updateWorkout } from '../workouts/WorkoutsActions'
 import { showSnackbar } from '../app/AppActions';
 
-import WorkoutStepper from './WorkoutStepper';
+import WorkoutCard from './WorkoutCard'
 
 const initialState = {
     workout: undefined,
@@ -26,22 +20,6 @@ const initialState = {
 }
 
 const styles = {
-    cardHeader: {
-        backgroundColor: WORKOUT_AVATAR_COLOR,
-        marginBottom: 0,
-    },
-    cardTitle: {
-        fontSize: '20px',
-    },
-    card: {
-        width: '100%',
-        height: '100%',
-        position: 'relative',
-    },
-    stepper: {
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
     icon: {
         height: 48,
         width: 48,
@@ -100,30 +78,10 @@ class Workout extends Component {
                     this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
                         this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                             this.state.workout === undefined ? <span>Invalid Workout Id.</span> : 
-                                <Card zDepth={2} style={styles.card}>
-                                    <CardHeader                        
-                                        titleStyle={styles.cardTitle}
-                                        style={styles.cardHeader}
-                                        title={this.state.workout.routine.name}
-                                        subtitle={'Started ' + moment(this.state.workout[this.props.timeField]).calendar()}
-                                        avatar={
-                                            <Avatar 
-                                                backgroundColor={WORKOUT_AVATAR_COLOR} 
-                                                size={40} 
-                                                color={black}
-                                                icon={<ActionAssignmentTurnedIn/>} 
-                                            />
-                                        }
-                                    >
-                                    </CardHeader>
-                                    <CardText style={styles.text}>
-                                        <WorkoutStepper
-                                            style={styles.stepper}
-                                            workout={this.state.workout}
-                                            onExerciseChange={this.handleExerciseChange}
-                                        />
-                                    </CardText>
-                                </Card>
+                                <WorkoutCard
+                                    workout={this.state.workout}
+                                    onExerciseChange={this.handleExerciseChange}
+                                />
                 }
             </div>
         )
