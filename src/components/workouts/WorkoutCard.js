@@ -52,7 +52,7 @@ class WorkoutCard extends Component {
                     <WorkoutStepper
                         style={styles.stepper}
                         workout={this.props.workout}
-                        onExerciseChange={this.props.onExerciseChange}
+                        onChange={this.props.onChange}
                     />
                 </CardText>
             </Card>
