@@ -121,7 +121,6 @@ class Workout extends Component {
                                             style={styles.stepper}
                                             workout={this.state.workout}
                                             onExerciseChange={this.handleExerciseChange}
-                                            onExerciseComplete={this.handleExerciseComplete}
                                         />
                                     </CardText>
                                 </Card>
