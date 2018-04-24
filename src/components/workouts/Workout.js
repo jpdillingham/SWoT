@@ -26,9 +26,6 @@ const initialState = {
 }
 
 const styles = {
-    container: {
-        height: '100%'
-    },
     cardHeader: {
         backgroundColor: WORKOUT_AVATAR_COLOR,
         marginBottom: 0,
@@ -36,11 +33,6 @@ const styles = {
     cardTitle: {
         fontSize: '20px',
         marginTop: 6,
-    },
-    iconMenu: {
-        position: 'absolute',
-        right: 0,
-        top: 10,
     },
     card: {
         width: '100%',
@@ -55,9 +47,6 @@ const styles = {
         left: 'auto',
         position: 'absolute',
         zIndex: 1000,
-    },
-    link: {
-        cursor: 'pointer',
     },
     stepper: {
         marginLeft: 'auto',
