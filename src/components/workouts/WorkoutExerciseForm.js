@@ -71,6 +71,8 @@ const initialState = {
 class WorkoutExerciseForm extends Component {
     state = { ...initialState, exercise: { ...this.props.exercise }};
 
+    timer;
+
     handleHistoryClick = () => { }
 
     handleMetricChange = (event, value, metric) => {
@@ -110,47 +112,35 @@ class WorkoutExerciseForm extends Component {
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
                 this.setState({ 
-                    api: { ...this.state.api, isExecuting: true },
                     exercise: { ...this.state.exercise, endTime: Date.now() }
-                }, () => {
-                    this.props.onChange(this.state.exercise)
-                    .then(() => {
-                        this.setState({ api: { ...this.state.api, isExecuting: false }})
-                        this.props.onComplete();
-                    }, error => {
-                       this.setState({ api: { isExecuting: false, isErrored: true }})
-                    })
-                })
+                }, () => this.invokeOnChange())
             }
         })
     }
 
     handleStartClick = () => {
         this.setState({ 
-            api: { ...this.state.api, isExecuting: true },
             exercise: { ...this.state.exercise, startTime: new Date().getTime() }
-        }, () => {
-            this.props.onChange(this.state.exercise)
-            .then(() => {
-                this.setState({ api: { ...this.state.api, isExecuting: false }})
-            }, error => {
-                this.setState({ api: { isExecuting: false, isErrored: true }})
-            })
-        })
+        }, () => this.invokeOnChange())
     }
 
     handleRestartClick = () => {
         this.setState({ 
-            api: { ...this.state.api, isExecuting: true },
             exercise: { ...this.state.exercise, startTime: new Date().getTime(), endTime: undefined }
-        }, () => {
+        }, () => this.invokeOnChange())
+    }
+
+    invokeOnChange = () => {
+        this.setState({ 
+            api: { ...this.state.api, isExecuting: true }
+        }, () =>
             this.props.onChange(this.state.exercise)
             .then(() => {
                 this.setState({ api: { ...this.state.api, isExecuting: false }})
             }, error => {
                 this.setState({ api: { isExecuting: false, isErrored: true }})
             })
-        })
+        )
     }
 
     getMetricDisplayName = (metric) => {
@@ -176,7 +166,11 @@ class WorkoutExerciseForm extends Component {
     }
 
     componentDidMount = () => {
-        setInterval(() => this.setState({ ticker: this.state.ticker + 1 }), 1000);
+        this.timer = setInterval(() => this.setState({ ticker: this.state.ticker + 1 }), 1000);
+    }
+
+    componentWillUnmount = () => {
+        clearInterval(this.timer);
     }
 
     render() {

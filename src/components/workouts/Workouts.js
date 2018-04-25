@@ -66,19 +66,31 @@ class Workouts extends Component {
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
                         <WorkoutList 
-                            title={'Active Workouts'}
-                            icon={<ActionSchedule/>}
+                            title={'In Progress'}
+                            icon={<AVPlayArrow/>}
                             itemRightIcon={<AVPlayArrow/>}
-                            workouts={this.props.workouts.filter(workout => workout.endTime === undefined)}
+                            workouts={this.props.workouts.filter(workout => workout.startTime !== undefined && workout.endTime === undefined)}
+                            sort={'desc'}
                             timePrefix={'Started'}
                             timeField={'startTime'}
                             onClick={this.handleClick}
                         />
                         <WorkoutList 
-                            title={'Completed Workouts'}
+                            title={'Scheduled'}
+                            icon={<ActionSchedule/>}
+                            itemRightIcon={<AVPlayArrow/>}
+                            workouts={this.props.workouts.filter(workout => workout.startTime === undefined)}
+                            sort={'asc'}
+                            timePrefix={'Scheduled for'}
+                            timeField={'scheduledTime'}
+                            onClick={this.handleClick}
+                        />
+                        <WorkoutList 
+                            title={'Completed'}
                             icon={<ActionDone/>}
                             itemRightIcon={<ActionInfo/>}
                             workouts={this.props.workouts.filter(workout => workout.endTime !== undefined)}
+                            sort={'desc'}
                             timePrefix={'Completed'}
                             timeField={'endTime'}
                             onClick={this.handleClick}
