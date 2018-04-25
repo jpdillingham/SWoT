@@ -45,9 +45,8 @@ class WorkoutStepper extends Component {
                         </StepButton>
                         <StepContent>
                             <WorkoutExerciseForm 
-                                stepIndex={index}
                                 exercise={exercise}
-                                onChange={this.props.onExerciseChange}
+                                onChange={this.props.onChange}
                                 onComplete={this.handleExerciseComplete}
                             />
                         </StepContent>

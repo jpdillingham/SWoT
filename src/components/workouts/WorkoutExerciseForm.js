@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import { black } from 'material-ui/styles/colors'
 import {Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
 import ActionHistory from 'material-ui/svg-icons/action/history';
 import Avatar from 'material-ui/Avatar';
@@ -52,9 +53,13 @@ const styles = {
     button: {
         float: 'right',
     },
+    time: {
+        color: black,
+    }
 }
 
 const initialState = {
+    ticker: 0,
     exercise: undefined,
     api: {
         isExecuting: false,
@@ -111,7 +116,7 @@ class WorkoutExerciseForm extends Component {
                     this.props.onChange(this.state.exercise)
                     .then(() => {
                         this.setState({ api: { ...this.state.api, isExecuting: false }})
-                        this.props.onComplete(this.props.stepIndex);
+                        this.props.onComplete();
                     }, error => {
                        this.setState({ api: { isExecuting: false, isErrored: true }})
                     })
@@ -123,7 +128,7 @@ class WorkoutExerciseForm extends Component {
     handleStartClick = () => {
         this.setState({ 
             api: { ...this.state.api, isExecuting: true },
-            exercise: { ...this.state.exercise, startTime: Date.now() }
+            exercise: { ...this.state.exercise, startTime: new Date().getTime() }
         }, () => {
             this.props.onChange(this.state.exercise)
             .then(() => {
@@ -137,7 +142,7 @@ class WorkoutExerciseForm extends Component {
     handleRestartClick = () => {
         this.setState({ 
             api: { ...this.state.api, isExecuting: true },
-            exercise: { ...this.state.exercise, startTime: Date.now(), endTime: undefined }
+            exercise: { ...this.state.exercise, startTime: new Date().getTime(), endTime: undefined }
         }, () => {
             this.props.onChange(this.state.exercise)
             .then(() => {
@@ -150,6 +155,28 @@ class WorkoutExerciseForm extends Component {
 
     getMetricDisplayName = (metric) => {
         return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
+    }
+
+    getElapsedTime = () => {
+        let end = this.state.exercise.endTime || new Date().getTime();
+        let duration = Math.trunc((end - this.state.exercise.startTime) / 1000)
+
+        let formatTime = (seconds) => {
+            const h = Math.floor(seconds / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            return [
+              h,
+              m > 9 ? m : (h ? '0' + m : m || '0'),
+              s > 9 ? s : '0' + s,
+            ].filter(a => a).join(':');
+        }
+
+        return formatTime(duration)
+    }
+
+    componentDidMount = () => {
+        setInterval(() => this.setState({ ticker: this.state.ticker + 1 }), 1000);
     }
 
     render() {
@@ -237,7 +264,7 @@ class WorkoutExerciseForm extends Component {
                                 style={styles.button}
                             /> 
                         }
-                        <FlatButton label={' '} disabled={true}/> {/* lazy fix for positioning */}
+                        <FlatButton label={this.getElapsedTime()} disabled={true} style={styles.time}/>
                     </CardActions>
                 </Card>
             </div>
