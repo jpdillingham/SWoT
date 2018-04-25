@@ -10,6 +10,7 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import DatePicker from 'material-ui/DatePicker'
+import TimePicker from 'material-ui/TimePicker'
 
 import { showSnackbar } from '../app/AppActions.js'
 
@@ -42,10 +43,13 @@ const styles = {
 }
 
 const getInitialState = () => ({
+    selectedDate: new Date(),
+    selectedTime: new Date(),
     workout: {
         id: getGuid(),
         routine: { id: undefined },
-        startTime: new Date(),
+        scheduledTime: undefined,
+        startTime: undefined,
         endTime: undefined,
     },
     validationErrors: {
@@ -72,16 +76,29 @@ class WorkoutDialog extends Component {
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.setState({ api: { ...this.state.api, isExecuting: true } })
-
-                this.props.addWorkout(this.state.workout)
-                .then(response => {
-                    this.handleApiSuccess('Added Workout \'' + response.data.id + '\'.')
-                }, error => {
-                    this.handleApiError(error);
-                })
+                this.setState({ 
+                    api: { ...this.state.api, isExecuting: true },
+                    workout: {
+                        ...this.state.workout,
+                        scheduledTime: this.getScheduledTime(),
+                    }
+                }, () => 
+                    this.props.addWorkout(this.state.workout)
+                    .then(response => {
+                        this.handleApiSuccess('Added Workout \'' + response.data.id + '\'.')
+                    }, error => {
+                        this.handleApiError(error);
+                    })
+                )
             }
         })
+    }
+
+    getScheduledTime = () => {
+        let date = this.state.selectedDate;
+        let time = this.state.selectedTime;
+
+        return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), 0).getTime();
     }
 
     handleApiSuccess = (message) => {
@@ -114,7 +131,12 @@ class WorkoutDialog extends Component {
     }
 
     handleDateChange = (event, value) => {
-        this.setState({ workout: { ...this.state.workout, date: value }});
+        this.setState({ selectedDate: value });
+    }
+
+    handleTimeChange = (event, value) => {
+
+        this.setState({ selectedTime: value })
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -151,7 +173,15 @@ class WorkoutDialog extends Component {
                         hintText="Date"
                         textFieldStyle={styles.date}
                         onChange={this.handleDateChange}
-                        value={this.state.workout.date}
+                        value={this.state.selectedDate}
+                        autoOk={true}
+                    />
+                    <TimePicker
+                        floatingLabelText="Time"
+                        hintText="Time"
+                        textFieldStyle={styles.time}
+                        onChange={this.handleTimeChange}
+                        value={this.state.selectedTime}
                         autoOk={true}
                     />
                     <SelectField
