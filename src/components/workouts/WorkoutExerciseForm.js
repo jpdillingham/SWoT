@@ -71,6 +71,8 @@ const initialState = {
 class WorkoutExerciseForm extends Component {
     state = { ...initialState, exercise: { ...this.props.exercise }};
 
+    timer;
+
     handleHistoryClick = () => { }
 
     handleMetricChange = (event, value, metric) => {
@@ -164,7 +166,11 @@ class WorkoutExerciseForm extends Component {
     }
 
     componentDidMount = () => {
-        setInterval(() => this.setState({ ticker: this.state.ticker + 1 }), 1000);
+        this.timer = setInterval(() => this.setState({ ticker: this.state.ticker + 1 }), 1000);
+    }
+
+    componentWillUnmount = () => {
+        clearInterval(this.timer);
     }
 
     render() {
