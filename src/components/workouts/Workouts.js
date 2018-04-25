@@ -67,11 +67,20 @@ class Workouts extends Component {
                     <div style={styles.grid}>
                         <WorkoutList 
                             title={'Active Workouts'}
-                            icon={<ActionSchedule/>}
+                            icon={<AVPlayArrow/>}
                             itemRightIcon={<AVPlayArrow/>}
-                            workouts={this.props.workouts.filter(workout => workout.endTime === undefined)}
+                            workouts={this.props.workouts.filter(workout => workout.startTime !== undefined && workout.endTime === undefined)}
                             timePrefix={'Started'}
                             timeField={'startTime'}
+                            onClick={this.handleClick}
+                        />
+                        <WorkoutList 
+                            title={'Scheduled Workouts'}
+                            icon={<ActionSchedule/>}
+                            itemRightIcon={<AVPlayArrow/>}
+                            workouts={this.props.workouts.filter(workout => workout.startTime === undefined)}
+                            timePrefix={'Scheduled for'}
+                            timeField={'scheduledTime'}
                             onClick={this.handleClick}
                         />
                         <WorkoutList 
