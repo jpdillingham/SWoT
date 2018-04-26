@@ -33,6 +33,14 @@ const styles = {
 class Workout extends Component {
     state = initialState;
 
+    handleResetClick = () => {
+
+    }
+
+    handleDeleteClick = () => {
+        
+    }
+
     componentWillMount = () => {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
         
@@ -81,6 +89,8 @@ class Workout extends Component {
                                 <WorkoutCard
                                     workout={this.state.workout}
                                     onChange={this.handleWorkoutChange}
+                                    onDeleteClick={this.handleDeleteClick}
+                                    onResetClick={this.handleResetClick}
                                 />
                 }
             </div>
