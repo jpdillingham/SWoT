@@ -10,7 +10,7 @@ import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
-import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
+import { AvPlayArrow, AvStop, AvRepeat } from 'material-ui/svg-icons';
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
@@ -50,6 +50,18 @@ const styles = {
 }
 
 class WorkoutCard extends Component {
+    handleResetClick = () => {
+
+    }
+
+    handleDeleteClick = () => {
+
+    }
+
+    handleStartStopClick = () => {
+
+    }
+    
     render() {
         return (
             <Card zDepth={2} style={styles.card}>
@@ -72,9 +84,9 @@ class WorkoutCard extends Component {
                         zDepth={2} 
                         style={styles.fab}
                         mini={true}
-                        onClick={this.handleEditClick}
+                        onClick={this.handleStartStopClick}
                     >
-                        <AVPlayArrow />
+                        {this.props.workout.startTime === undefined ? <AvPlayArrow/> : <AvStop/> }
                     </FloatingActionButton>
                 </CardHeader>
                 <IconMenu
@@ -83,15 +95,18 @@ class WorkoutCard extends Component {
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                    <MenuItem primaryText="Reset" onClick={this.props.onResetClick} />
-                    <MenuItem primaryText="Delete" onClick={this.props.onDeleteClick} />
+                    <MenuItem primaryText="Reset" onClick={this.handleResetClick} />
+                    <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
                 </IconMenu>
                 <CardText>
-                    <WorkoutStepper
-                        style={styles.stepper}
-                        workout={this.props.workout}
-                        onChange={this.props.onChange}
-                    />
+                    {this.props.workout.startTime === undefined ? 
+                        <p>press start</p> :
+                        <WorkoutStepper
+                            style={styles.stepper}
+                            workout={this.props.workout}
+                            onExerciseChange={this.props.onExerciseChange}
+                        />
+                    }
                 </CardText>
             </Card>
         )
