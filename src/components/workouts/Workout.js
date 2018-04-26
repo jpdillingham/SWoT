@@ -38,14 +38,13 @@ class Workout extends Component {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
         
         this.props.fetchWorkouts()
-            .then(response => {
-                this.setState({ 
-                    workout: this.props.workouts.find(w => w.id === this.props.match.params.id),
-                    api: { isExecuting: false, isErrored: false }
-                })
-            }, error => {
-                this.setState({ api: { isExecuting: false, isErrored: true }})
+        .then(response => {
+            this.setState({ 
+                api: { isExecuting: false, isErrored: false }
             })
+        }, error => {
+            this.setState({ api: { isExecuting: false, isErrored: true }})
+        })
     }
 
     handleWorkoutChange = (workout) => {
@@ -58,6 +57,7 @@ class Workout extends Component {
     }
 
     handleWorkoutExerciseChange = (exercise) => {
+        // todo: fix this after the removal of this.state.workout
         return new Promise((resolve, reject) => {
             this.setState({ 
                 workout: { 
@@ -82,21 +82,23 @@ class Workout extends Component {
     }
 
     render() {
+        let workout = this.props.workouts.find(w => w.id === this.props.match.params.id)
+
         return (
             <div>
                 { 
                     this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
                         this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                            this.state.workout === undefined ? <span>Invalid Workout Id.</span> : 
-                                this.state.workout.endTime === undefined ?
+                            workout === undefined ? <span>Invalid Workout Id.</span> : 
+                                workout.endTime === undefined ?
                                     <WorkoutCard
-                                        workout={this.state.workout}
+                                        workout={workout}
                                         onWorkoutChange={this.handleWorkoutChange}
                                         onExerciseChange={this.handleWorkoutExerciseChange}
                                         onDeleteClick={this.handleDeleteClick}
                                         onResetClick={this.handleResetClick}
                                     /> :
-                                    <WorkoutReportCard workout={this.state.workout}/>
+                                    <WorkoutReportCard workout={workout}/>
                 }
             </div>
         )
