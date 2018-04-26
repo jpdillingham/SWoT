@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class WorkoutReport extends Component {
+class WorkoutReportCard extends Component {
     render() {
         return (
             <ul>
@@ -19,4 +19,4 @@ class WorkoutReport extends Component {
     }
 }
 
-export default WorkoutReport
+export default WorkoutReportCard
