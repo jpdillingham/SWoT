@@ -59,9 +59,18 @@ class WorkoutCard extends Component {
     }
 
     handleStartStopClick = () => {
+        let workout = { ...this.props.workout };
 
+        if (workout.startTime === undefined) {
+            workout.startTime = new Date().getTime();
+        }
+        else if (workout.endTime === undefined) {
+            workout.endTime = new Date().getTime();
+        }
+
+        this.props.onWorkoutChange(workout);
     }
-    
+
     render() {
         return (
             <Card zDepth={2} style={styles.card}>
