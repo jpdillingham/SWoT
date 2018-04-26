@@ -34,14 +34,6 @@ const styles = {
 class Workout extends Component {
     state = initialState;
 
-    handleResetClick = () => {
-
-    }
-
-    handleDeleteClick = () => {
-        
-    }
-
     componentWillMount = () => {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
         
@@ -54,6 +46,15 @@ class Workout extends Component {
             }, error => {
                 this.setState({ api: { isExecuting: false, isErrored: true }})
             })
+    }
+
+    handleWorkoutChange = (workout) => {
+        this.props.updateWorkout(workout)
+        .then(response => {
+            this.props.showSnackbar('Updated Workout')
+        }, error => {
+            this.props.showSnackbar('Error updating Workout')
+        })
     }
 
     handleWorkoutExerciseChange = (exercise) => {
@@ -90,6 +91,7 @@ class Workout extends Component {
                                 this.state.workout.endTime === undefined ?
                                     <WorkoutCard
                                         workout={this.state.workout}
+                                        onWorkoutChange={this.handleWorkoutChange}
                                         onExerciseChange={this.handleWorkoutExerciseChange}
                                         onDeleteClick={this.handleDeleteClick}
                                         onResetClick={this.handleResetClick}
