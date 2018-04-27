@@ -15,6 +15,7 @@ import { AvPlayArrow, AvStop } from 'material-ui/svg-icons';
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
 import WorkoutStepper from './WorkoutStepper';
+import WorkoutDeleteDialog from './WorkoutDeleteDialog'
 
 const styles = {
     cardHeader: {
@@ -49,7 +50,15 @@ const styles = {
     },
 }
 
+const initialState = {
+    deleteDialog: {
+        open: false,
+    }
+}
+
 class WorkoutCard extends Component {
+    state = initialState;
+
     handleStartStopClick = () => {
         let workout = { ...this.props.workout };
 
@@ -63,53 +72,69 @@ class WorkoutCard extends Component {
         this.props.onWorkoutChange(workout);
     }
 
+    handleDeleteClick = () => {
+        this.setState({ deleteDialog: { open: true }})
+    }
+
+    handleDeleteDialogClose = () => {
+        this.setState({ deleteDialog: { open: false }})
+    }
+
     render() {
         return (
-            <Card zDepth={2} style={styles.card}>
-                <CardHeader                        
-                    titleStyle={styles.cardTitle}
-                    style={styles.cardHeader}
-                    title={this.props.workout.routine.name}
-                    subtitle={'Started ' + moment(this.props.workout.startTime).calendar()}
-                    avatar={
-                        <Avatar 
-                            backgroundColor={WORKOUT_AVATAR_COLOR} 
-                            size={40} 
-                            color={black}
-                            icon={<ActionAssignmentTurnedIn/>} 
-                        />
-                    }
-                >
-                    <FloatingActionButton 
-                        secondary={false} 
-                        zDepth={2} 
-                        style={styles.fab}
-                        mini={true}
-                        onClick={this.handleStartStopClick}
+            <div>
+                <Card zDepth={2} style={styles.card}>
+                    <CardHeader                        
+                        titleStyle={styles.cardTitle}
+                        style={styles.cardHeader}
+                        title={this.props.workout.routine.name}
+                        subtitle={'Started ' + moment(this.props.workout.startTime).calendar()}
+                        avatar={
+                            <Avatar 
+                                backgroundColor={WORKOUT_AVATAR_COLOR} 
+                                size={40} 
+                                color={black}
+                                icon={<ActionAssignmentTurnedIn/>} 
+                            />
+                        }
                     >
-                        {this.props.workout.startTime === undefined ? <AvPlayArrow/> : <AvStop/> }
-                    </FloatingActionButton>
-                </CardHeader>
-                <IconMenu
-                    style={styles.iconMenu}
-                    iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                >
-                    <MenuItem primaryText="Reset" onClick={this.props.onResetClick} />
-                    <MenuItem primaryText="Delete" onClick={this.props.onDeleteClick} />
-                </IconMenu>
-                <CardText>
-                    {this.props.workout.startTime === undefined ? 
-                        <p>press start</p> :
-                        <WorkoutStepper
-                            style={styles.stepper}
-                            workout={this.props.workout}
-                            onExerciseChange={this.props.onExerciseChange}
-                        />
-                    }
-                </CardText>
-            </Card>
+                        <FloatingActionButton 
+                            secondary={false} 
+                            zDepth={2} 
+                            style={styles.fab}
+                            mini={true}
+                            onClick={this.handleStartStopClick}
+                        >
+                            {this.props.workout.startTime === undefined ? <AvPlayArrow/> : <AvStop/> }
+                        </FloatingActionButton>
+                    </CardHeader>
+                    <IconMenu
+                        style={styles.iconMenu}
+                        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                    >
+                        <MenuItem primaryText="Reset" onClick={this.props.onResetClick} />
+                        <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
+                    </IconMenu>
+                    <CardText>
+                        {this.props.workout.startTime === undefined ? 
+                            <p>press start</p> :
+                            <WorkoutStepper
+                                style={styles.stepper}
+                                workout={this.props.workout}
+                                onExerciseChange={this.props.onExerciseChange}
+                            />
+                        }
+                    </CardText>
+                </Card>
+                <WorkoutDeleteDialog 
+                    open={this.state.deleteDialog.open} 
+                    onDelete={this.props.onDeleteClick}
+                    onCancel={this.handleDeleteDialogClose}
+                    workout={this.props.workout}
+                />
+            </div>
         )
     }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchWorkouts } from '../workouts/WorkoutsActions'
+import { fetchWorkouts } from './WorkoutsActions'
 
 import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
