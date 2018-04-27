@@ -50,14 +50,6 @@ const styles = {
 }
 
 class WorkoutCard extends Component {
-    handleResetClick = () => {
-
-    }
-
-    handleDeleteClick = () => {
-
-    }
-
     handleStartStopClick = () => {
         let workout = { ...this.props.workout };
 
@@ -104,8 +96,8 @@ class WorkoutCard extends Component {
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                    <MenuItem primaryText="Reset" onClick={this.handleResetClick} />
-                    <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
+                    <MenuItem primaryText="Reset" onClick={this.props.onResetClick} />
+                    <MenuItem primaryText="Delete" onClick={this.props.onDeleteClick} />
                 </IconMenu>
                 <CardText>
                     {this.props.workout.startTime === undefined ? 

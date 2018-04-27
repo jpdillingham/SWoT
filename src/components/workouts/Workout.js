@@ -5,7 +5,7 @@ import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
-import { fetchWorkouts, updateWorkout } from '../workouts/WorkoutsActions'
+import { fetchWorkouts, updateWorkout, deleteWorkout } from '../workouts/WorkoutsActions'
 import { showSnackbar } from '../app/AppActions';
 
 import WorkoutCard from './WorkoutCard'
@@ -56,6 +56,15 @@ class Workout extends Component {
         })
     }
 
+    handleWorkoutDeleteClick = (id) => {
+        this.props.deleteWorkout(id)
+        .then(response => {
+            this.props.showSnackbar('Deleted Workout')
+        }, error => {
+            this.props.showSnackbar('Error deleting Workout')
+        })
+    }
+
     handleWorkoutExerciseChange = (exercise) => {
         // todo: fix this after the removal of this.state.workout
         return new Promise((resolve, reject) => {
@@ -95,7 +104,7 @@ class Workout extends Component {
                                         workout={workout}
                                         onWorkoutChange={this.handleWorkoutChange}
                                         onExerciseChange={this.handleWorkoutExerciseChange}
-                                        onDeleteClick={this.handleDeleteClick}
+                                        onDeleteClick={() => this.handleWorkoutDeleteClick(workout.id)}
                                         onResetClick={this.handleResetClick}
                                     /> :
                                     <WorkoutReportCard workout={workout}/>
@@ -112,6 +121,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     fetchWorkouts,
     updateWorkout,
+    deleteWorkout,
     showSnackbar,
 }
 
