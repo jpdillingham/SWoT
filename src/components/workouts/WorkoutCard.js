@@ -10,7 +10,7 @@ import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
-import { AvPlayArrow, AvStop, AvRepeat } from 'material-ui/svg-icons';
+import { AvPlayArrow, AvStop } from 'material-ui/svg-icons';
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
