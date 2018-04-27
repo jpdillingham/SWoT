@@ -15,7 +15,7 @@ import { AvPlayArrow, AvStop } from 'material-ui/svg-icons';
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
 import WorkoutStepper from './WorkoutStepper';
-import WorkoutDeleteDialog from './WorkoutDeleteDialog'
+import DeleteDialog from '../shared/DeleteDialog';
 
 const styles = {
     cardHeader: {
@@ -128,11 +128,12 @@ class WorkoutCard extends Component {
                         }
                     </CardText>
                 </Card>
-                <WorkoutDeleteDialog 
-                    open={this.state.deleteDialog.open} 
+                <DeleteDialog 
+                    subject="Workout"
+                    name={this.props.workout.routine.name}
                     onDelete={this.props.onDeleteClick}
                     onCancel={this.handleDeleteDialogClose}
-                    workout={this.props.workout}
+                    open={this.state.deleteDialog.open} 
                 />
             </div>
         )
