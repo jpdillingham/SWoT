@@ -88,7 +88,10 @@ class WorkoutCard extends Component {
                         titleStyle={styles.cardTitle}
                         style={styles.cardHeader}
                         title={this.props.workout.routine.name}
-                        subtitle={'Started ' + moment(this.props.workout.startTime).calendar()}
+                        subtitle={
+                            this.props.workout.startTime === undefined ? 'Scheduled for ' + moment(this.props.workout.scheduledTime).calendar() :
+                            'Started ' + moment(this.props.workout.startTime).calendar()
+                        }
                         avatar={
                             <Avatar 
                                 backgroundColor={WORKOUT_AVATAR_COLOR} 
