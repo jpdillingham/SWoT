@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { black } from 'material-ui/styles/colors'
-import {Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
+import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
 import ActionHistory from 'material-ui/svg-icons/action/history';
 import Avatar from 'material-ui/Avatar';
 
@@ -111,30 +111,24 @@ class WorkoutExerciseForm extends Component {
             validationErrors: this.getValidationErrors(this.state)
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.setState({ 
-                    exercise: { ...this.state.exercise, endTime: Date.now() }
-                }, () => this.invokeOnChange())
+                this.invokeOnChange({ ...this.state.exercise, endTime: Date.now() })
             }
         })
     }
 
     handleStartClick = () => {
-        this.setState({ 
-            exercise: { ...this.state.exercise, startTime: new Date().getTime() }
-        }, () => this.invokeOnChange())
+        this.invokeOnChange({ ...this.state.exercise, startTime: new Date().getTime() })
     }
 
     handleRestartClick = () => {
-        this.setState({ 
-            exercise: { ...this.state.exercise, startTime: new Date().getTime(), endTime: undefined }
-        }, () => this.invokeOnChange())
+        this.invokeOnChange({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined })
     }
 
-    invokeOnChange = () => {
+    invokeOnChange = (exercise) => {
         this.setState({ 
             api: { ...this.state.api, isExecuting: true }
         }, () =>
-            this.props.onChange(this.state.exercise)
+            this.props.onChange(exercise)
             .then(() => {
                 this.setState({ api: { ...this.state.api, isExecuting: false }})
             }, error => {
@@ -148,8 +142,8 @@ class WorkoutExerciseForm extends Component {
     }
 
     getElapsedTime = () => {
-        let end = this.state.exercise.endTime || new Date().getTime();
-        let duration = Math.trunc((end - this.state.exercise.startTime) / 1000)
+        let end = this.props.exercise.endTime || new Date().getTime();
+        let duration = Math.trunc((end - this.props.exercise.startTime) / 1000)
 
         let formatTime = (seconds) => {
             const h = Math.floor(seconds / 3600);
@@ -171,6 +165,16 @@ class WorkoutExerciseForm extends Component {
 
     componentWillUnmount = () => {
         clearInterval(this.timer);
+    }
+
+    componentWillReceiveProps = (newProps) => {
+        let complete = this.state.exercise.startTime !== undefined && this.state.exercise.endTime !== undefined;
+
+        this.setState({ ...this.state, exercise: newProps.exercise }, () => {
+            if (!complete && this.state.exercise.startTime !== undefined && this.state.exercise.endTime !== undefined) {
+                this.props.onComplete();
+            }
+        });
     }
 
     render() {
@@ -221,28 +225,28 @@ class WorkoutExerciseForm extends Component {
                                     errorText={this.state.validationErrors[m.name]}
                                     floatingLabelText={this.getMetricDisplayName(m)}
                                     onChange={(e,v) => this.handleMetricChange(e,v,m)}
-                                    disabled={this.state.exercise.endTime !== undefined || this.state.exercise.startTime === undefined}
+                                    disabled={this.props.exercise.endTime !== undefined || this.props.exercise.startTime === undefined}
                                 />
                             ) : ''
                         }
                         <TextField
                             hintText={'Notes'}
                             floatingLabelText={'Notes'}
-                            defaultValue={this.state.exercise.notes}
+                            defaultValue={this.props.exercise.notes}
                             multiLine={true}
                             onChange={this.handleNotesChange}
-                            disabled={this.state.exercise.endTime !== undefined  || this.state.exercise.startTime === undefined}
+                            disabled={this.props.exercise.endTime !== undefined  || this.props.exercise.startTime === undefined}
                         />
                     </CardText>
                     <CardActions>
-                        {!this.state.exercise.startTime ? 
+                        {!this.props.exercise.startTime ? 
                             <SaveRetryFlatButton 
                                 label={'Start'}
                                 onClick={this.handleStartClick} 
                                 api={this.state.api} 
                                 validation={this.state.validationErrors} 
                                 style={styles.button}
-                            /> : !this.state.exercise.endTime ?
+                            /> : !this.props.exercise.endTime ?
                             <SaveRetryFlatButton 
                                 label={'Complete'}
                                 onClick={this.handleCompleteClick} 
