@@ -141,9 +141,11 @@ class WorkoutExerciseForm extends Component {
         return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
     }
 
-    getElapsedTime = () => {
-        let end = this.props.exercise.endTime || new Date().getTime();
-        let duration = Math.trunc((end - this.props.exercise.startTime) / 1000)
+    getElapsedTime = (start, end) => {
+        if (!start) return '';
+
+        end = end || new Date().getTime();
+        let duration = Math.trunc((end - start) / 1000);
 
         let formatTime = (seconds) => {
             const h = Math.floor(seconds / 3600);
@@ -156,7 +158,7 @@ class WorkoutExerciseForm extends Component {
             ].filter(a => a).join(':');
         }
 
-        return formatTime(duration)
+        return formatTime(duration);
     }
 
     componentDidMount = () => {
@@ -262,7 +264,7 @@ class WorkoutExerciseForm extends Component {
                                 style={styles.button}
                             /> 
                         }
-                        <FlatButton label={this.getElapsedTime()} disabled={true} style={styles.time}/>
+                        <FlatButton label={this.getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime)} disabled={true} style={styles.time}/>
                     </CardActions>
                 </Card>
             </div>
