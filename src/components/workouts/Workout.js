@@ -65,27 +65,18 @@ class Workout extends Component {
         })
     }
 
-    handleWorkoutExerciseChange = (exercise) => {
-        // todo: fix this after the removal of this.state.workout
+    handleWorkoutExerciseChange = (workout, exercise) => {
+        workout.routine.exercises = workout.routine.exercises.map(e => {
+            return e.sequence === exercise.sequence && e.id === exercise.id ? exercise : e;
+        });
+
         return new Promise((resolve, reject) => {
-            this.setState({ 
-                workout: { 
-                    ...this.state.workout, 
-                    routine: { 
-                        ...this.state.workout.routine,
-                        exercises: this.state.workout.routine.exercises.map(e => {
-                            return e.sequence === exercise.sequence && e.id === exercise.id ? exercise : e;
-                        })
-                    } 
-                }
-            }, () => {
-                this.props.updateWorkout(this.state.workout)
-                .then(response => {
-                    this.props.showSnackbar('Updated Workout')
-                    resolve();
-                }, error => {
-                    reject();
-                })
+            this.props.updateWorkout(workout)
+            .then(response => {
+                this.props.showSnackbar('Updated Workout')
+                resolve();
+            }, error => {
+                reject();
             })
         })
     }
@@ -103,7 +94,7 @@ class Workout extends Component {
                                     <WorkoutCard
                                         workout={workout}
                                         onWorkoutChange={this.handleWorkoutChange}
-                                        onExerciseChange={this.handleWorkoutExerciseChange}
+                                        onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(workout, exercise)}
                                         onDeleteClick={() => this.handleWorkoutDeleteClick(workout.id)}
                                         onResetClick={this.handleResetClick}
                                     /> :
