@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 
-class DeleteDialog extends Component {
+class ConfirmDialog extends Component {
     state = {
         api: {
             isExecuting: false,
@@ -11,9 +11,9 @@ class DeleteDialog extends Component {
         }
     }
 
-    handleDeleteClick = () => {
+    handleConfirmClick = () => {
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
-            this.props.onDelete()
+            this.props.onConfirm()
             .then(response => {
                 this.setState({ api: { isExecuting: false, isErrored: false }});
             }, error => {
@@ -34,9 +34,9 @@ class DeleteDialog extends Component {
                                 onClick={this.props.onCancel}
                             />
                             <FlatButton
-                                label={this.state.api.isErrored ? 'Retry' : 'Delete' }
+                                label={this.state.api.isErrored ? 'Retry' : this.props.buttonCaption }
                                 disabled={this.state.api.isExecuting}
-                                onClick={this.handleDeleteClick}
+                                onClick={this.handleConfirmClick}
                             />
                         </div>
                     }
@@ -50,5 +50,5 @@ class DeleteDialog extends Component {
     }
 }
 
-export default DeleteDialog
+export default ConfirmDialog
 

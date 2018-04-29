@@ -17,7 +17,7 @@ import TextField from 'material-ui/TextField/TextField';
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
 import WorkoutStepper from './WorkoutStepper';
-import DeleteDialog from '../shared/DeleteDialog';
+import ConfirmDialog from '../shared/ConfirmDialog';
 
 const styles = {
     cardHeader: {
@@ -157,10 +157,11 @@ class WorkoutCard extends Component {
                         />
                     </CardText>
                 </Card>
-                <DeleteDialog 
-                    title="Delete Workout"
+                <ConfirmDialog 
+                    title={'Delete Workout'}
                     prompt={'Are you sure you want to delete Workout \'' + this.props.workout.routine.name + '\'?'}
-                    onDelete={this.props.onDeleteClick}
+                    buttonCaption={'Delete'}
+                    onConfirm={this.props.onDeleteClick}
                     onCancel={this.handleDeleteDialogClose}
                     open={this.state.deleteDialog.open} 
                 />
