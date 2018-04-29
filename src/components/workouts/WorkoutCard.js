@@ -11,6 +11,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import { AvPlayArrow, AvStop } from 'material-ui/svg-icons';
+import Divider from 'material-ui/Divider';
+import TextField from 'material-ui/TextField/TextField';
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
@@ -48,11 +50,20 @@ const styles = {
         position: 'absolute',
         zIndex: 1000,
     },
+    divider: {
+        marginTop: 30,
+    },
+    notes: {
+        width: '100%',
+    }
 }
 
 const initialState = {
     deleteDialog: {
         open: false,
+    },
+    workout: {
+        notes: '',
     }
 }
 
@@ -60,7 +71,10 @@ class WorkoutCard extends Component {
     state = initialState;
 
     handleStartStopClick = () => {
-        let workout = { ...this.props.workout };
+        let workout = { 
+            ...this.props.workout,
+            notes: this.state.workout.notes
+        };
 
         if (workout.startTime === undefined) {
             workout.startTime = new Date().getTime();
@@ -70,6 +84,10 @@ class WorkoutCard extends Component {
         }
 
         this.props.onWorkoutChange(workout);
+    }
+
+    handleNotesChange = (event, value) => {
+        this.setState({ workout: { ...this.state.workout, notes: value }})
     }
 
     handleDeleteClick = () => {
@@ -126,6 +144,16 @@ class WorkoutCard extends Component {
                             style={styles.stepper}
                             workout={this.props.workout}
                             onExerciseChange={this.props.onExerciseChange}
+                        />
+                        <Divider style={styles.divider}/>
+                        <TextField
+                            hintText={'Workout Notes'}
+                            floatingLabelText={'Workout Notes'}
+                            defaultValue={this.props.workout.notes}
+                            style={styles.notes}
+                            multiLine={true}
+                            onChange={this.handleNotesChange}
+                            disabled={this.props.workout.endTime !== undefined  || this.props.workout.startTime === undefined}
                         />
                     </CardText>
                 </Card>
