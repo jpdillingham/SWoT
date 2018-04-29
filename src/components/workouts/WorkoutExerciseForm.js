@@ -1,23 +1,19 @@
 import React, { Component } from 'react';
 
-import { black } from 'material-ui/styles/colors'
-import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
 import ActionHistory from 'material-ui/svg-icons/action/history';
 import Avatar from 'material-ui/Avatar';
-
+import { black } from 'material-ui/styles/colors';
+import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
 
-import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
-
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
-import FlatButton from 'material-ui/FlatButton/FlatButton';
 import { getElapsedTime } from '../../util';
 
+import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
+
 const styles = {
-    container: {
-        height: '100%'
-    },
     cardHeader: {
         backgroundColor: EXERCISE_AVATAR_COLOR,
         marginBottom: 0,
@@ -25,11 +21,6 @@ const styles = {
     cardTitle: {
         fontSize: '20px',
         marginTop: 6,
-    },
-    iconMenu: {
-        position: 'absolute',
-        right: 0,
-        top: 10,
     },
     card: {
         width: CARD_WIDTH - 100,
@@ -167,7 +158,7 @@ class WorkoutExerciseForm extends Component {
         }
 
         return (
-            <div style={styles.container}>
+            <div>
                 <Card zDepth={2} style={styles.card}>
                     <CardHeader                        
                         titleStyle={styles.cardTitle}
