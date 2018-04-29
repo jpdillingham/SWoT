@@ -11,11 +11,22 @@ class DeleteDialog extends Component {
         }
     }
 
+    handleDeleteClick = () => {
+        this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
+            this.props.onDelete()
+            .then(response => {
+                this.setState({ api: { isExecuting: false, isErrored: false }});
+            }, error => {
+                this.setState({ api: { isExecuting: false, isErrored: true }});
+            })
+        })
+    }
+
     render() {
         return (
             <div>
                 <Dialog
-                    title={"Delete " + this.props.subject}
+                    title={this.props.title}
                     actions={  
                         <div>          
                             <FlatButton
@@ -25,14 +36,14 @@ class DeleteDialog extends Component {
                             <FlatButton
                                 label={this.state.api.isErrored ? 'Retry' : 'Delete' }
                                 disabled={this.state.api.isExecuting}
-                                onClick={this.props.onDelete}
+                                onClick={this.handleDeleteClick}
                             />
                         </div>
                     }
                     modal={true}
                     open={this.props.open}
                 >
-                    Are you sure you want to delete {this.props.subject} '{this.props.name}'?
+                    {this.props.prompt}
                 </Dialog>
             </div>
         )
