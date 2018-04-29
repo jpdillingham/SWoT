@@ -8,7 +8,7 @@ Values provided for the 'value' field of a metric serve as the default values an
 
 ```javascript
 exercise: {
-    id: 'Guid/Uuid',
+    id: 'guid',
     name: 'string',
     type: 'weightlifting' | 'cardio' | 'stretching' | 'balance',
     url: 'string',
@@ -21,66 +21,28 @@ exercise: {
 }
 ```
 
-## Examples
+## Example
 
 ```javascript
-{ 
-    id: 'c4a10b9d-d5de-434e-bac4-c3a4ff014f82',
-    name: 'bench press',
-    type: 'weightlifting',
-    url: 'https://www.bodybuilding.com/exercises/barbell-bench-press-medium-grip',
-    metrics: [
+{
+    "id": "4465b1e2-5af9-81ae-2335-84e09598d63c",
+    "name": "Bench Press",
+    "type": "Weightlifting",
+    "url": "https://www.bodybuilding.com/exercises/barbell-bench-press-medium-grip"
+    "metrics": [
         {
-            name: 'weight',
-            uom: 'lbs',
+            "name": "Weight",
+            "uom": "Lbs"
         },
         {
-            name: 'sets',
+            "name": "Sets",
+            "uom": null
         },
         {
-            name: 'reps',
+            "name": "Reps",
+            "uom": null
         }
-    ]
-}
-```
-
-```javascript
-{ 
-    id: '29d53257-5eca-4083-9019-81dc62425801',
-    name: 'squat',
-    type: 'weightlifting',
-    url: 'https://www.bodybuilding.com/exercises/barbell-full-squat',
-    metrics: [
-        {
-            name: 'weight',
-            uom: 'lbs',
-        },
-        {
-            name: 'sets',
-        },
-        {
-            name: 'reps',
-        }
-    ] 
-}
-```
-
-```javascript
-{ 
-    id: '0f2f3a76-c1a2-4a53-bec9-0f124a1f3b16',
-    name: 'running',
-    type: 'cardio',
-    url: 'https://www.bodybuilding.com/exercises/running-treadmill',
-    metrics: [
-        {
-            name: 'distance',
-            uom: 'miles',
-        },
-        {
-            name: 'time',
-            uom: 'minutes',
-        }
-    ]
+    ],
 }
 ```
 
@@ -92,33 +54,132 @@ The Routine object contains a name and an ordered array of Exercise ids.
 
 ```javascript
 routine: {
-    id: 'Guid/Uuid',
+    id: 'guid',
     name: 'string',
     exercises: [
-        { id: 'Guid/Uuid' },
+        { 
+            sequence: int,
+            id: 'guid',
+            name: 'string',
+            type: 'weightlifting' | 'cardio' | 'stretching' | 'balance',
+            url: 'string',
+            metrics: [
+                {
+                    name: 'string'
+                    uom: 'string'
+                },
+            ]
+        },
     ]
 }
 ```
 
-## Examples
+## Example
 
 ```javascript
 {
-    id: 'f5d161a9-4913-4052-bc80-c82643ba7d25',
-    name: 'cardio',
-    exercises: [
-        { id: '0f2f3a76-c1a2-4a53-bec9-0f124a1f3b16' }, // 'running'
-    ]
+    "id": "fae96198-80a7-da98-0602-d807669692f7",
+    "name": "Just Bench"
+    "exercises": [
+        {
+            "sequence": 1,
+            "id": "4465b1e2-5af9-81ae-2335-84e09598d63c",
+            "name": "Bench Press",
+            "type": "Weightlifting",
+            "url": "https://www.bodybuilding.com/exercises/1"
+            "metrics": [
+                {
+                    "name": "Weight",
+                    "uom": "Lbs"
+                },
+                {
+                    "name": "Sets",
+                    "uom": null
+                },
+                {
+                    "name": "Reps",
+                    "uom": null
+                }
+            ],
+        }
+    ],
 }
 ```
 
+# Workout
+
+The Workout object represents a single instance of a Routine and mirrors the Routine structure but adds a few additional fields to contain results.
+
+## Model
+
 ```javascript
 {
-    id: 'f8a39189-0824-4dd6-a621-eb76ea85306d',
-    name: 'workout A',
-    exercises: [
-        { id: 'c4a10b9d-d5de-434e-bac4-c3a4ff014f82' }, // 'bench press'
-        { id: '29d53257-5eca-4083-9019-81dc62425801' }, // 'squat'
-    ]
+    id: 'guid',
+    scheduledTime: long, 
+    startTime: long,
+    endTime: long, 
+    routine: {
+        id: 'guid',
+        name: 'string'
+        exercises: [
+            {
+                sequence: int,
+                id: 'guid',
+                name: 'string',
+                type: 'weightlifting' | 'cardio' | 'stretching' | 'balance',
+                url: 'string',
+                startTime: long,
+                endTime: long,
+                metrics: [
+                    {
+                        name: 'string',
+                        uom: 'string',
+                        value: 'string'
+                    }
+                ],
+                notes: 'string',
+            }
+        ],
+    },
+    notes: 'string',
+}
+```
+
+## Example
+
+```javascript
+{
+    "id": "75088a40-8bf9-1727-f362-0cb05dc77a2b",
+    "scheduledTime": 1524963480000, //result
+    "startTime": 1524963550635, //result
+    "endTime": 1524963566741, //result
+    "routine": {
+        "id": "b2a2b789-b4f0-f154-9da3-de27112b5585",
+        "name": "Running"
+        "exercises": [
+            {
+                "id": "0f2f3a76-c1a2-4a53-bec9-0f124a1f3b16",
+                "type": "Cardio",
+                "name": "Running",
+                "url": "https://www.bodybuilding.com/exercises/running-treadmill"
+                "startTime": 1524963554264, //result
+                "endTime": 1524963559694, //result
+                "metrics": [
+                    {
+                        "name": "Distance",
+                        "uom": "Miles",
+                        "value": "1" //result
+                    },
+                    {
+                        "name": "Time",
+                        "uom": "Minutes",
+                        "value": "5" //result
+                    }
+                ],
+                "notes": "notes about this particular exercise", //result
+            }
+        ],
+    },
+    "notes": "some workout notes", //result
 }
 ```

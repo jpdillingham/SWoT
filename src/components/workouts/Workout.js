@@ -5,7 +5,7 @@ import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
-import { fetchWorkouts, updateWorkout } from '../workouts/WorkoutsActions'
+import { fetchWorkouts, updateWorkout, deleteWorkout } from '../workouts/WorkoutsActions'
 import { showSnackbar } from '../app/AppActions';
 
 import WorkoutCard from './WorkoutCard'
@@ -56,27 +56,27 @@ class Workout extends Component {
         })
     }
 
-    handleWorkoutExerciseChange = (exercise) => {
-        // todo: fix this after the removal of this.state.workout
+    handleWorkoutDeleteClick = (id) => {
+        this.props.deleteWorkout(id)
+        .then(response => {
+            this.props.showSnackbar('Deleted Workout')
+        }, error => {
+            this.props.showSnackbar('Error deleting Workout')
+        })
+    }
+
+    handleWorkoutExerciseChange = (workout, exercise) => {
+        workout.routine.exercises = workout.routine.exercises.map(e => {
+            return e.sequence === exercise.sequence && e.id === exercise.id ? exercise : e;
+        });
+
         return new Promise((resolve, reject) => {
-            this.setState({ 
-                workout: { 
-                    ...this.state.workout, 
-                    routine: { 
-                        ...this.state.workout.routine,
-                        exercises: this.state.workout.routine.exercises.map(e => {
-                            return e.sequence === exercise.sequence && e.id === exercise.id ? exercise : e;
-                        })
-                    } 
-                }
-            }, () => {
-                this.props.updateWorkout(this.state.workout)
-                .then(response => {
-                    this.props.showSnackbar('Updated Workout')
-                    resolve();
-                }, error => {
-                    reject();
-                })
+            this.props.updateWorkout(workout)
+            .then(response => {
+                this.props.showSnackbar('Updated Workout')
+                resolve();
+            }, error => {
+                reject();
             })
         })
     }
@@ -94,8 +94,8 @@ class Workout extends Component {
                                     <WorkoutCard
                                         workout={workout}
                                         onWorkoutChange={this.handleWorkoutChange}
-                                        onExerciseChange={this.handleWorkoutExerciseChange}
-                                        onDeleteClick={this.handleDeleteClick}
+                                        onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(workout, exercise)}
+                                        onDeleteClick={() => this.handleWorkoutDeleteClick(workout.id)}
                                         onResetClick={this.handleResetClick}
                                     /> :
                                     <WorkoutReportCard workout={workout}/>
@@ -112,6 +112,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     fetchWorkouts,
     updateWorkout,
+    deleteWorkout,
     showSnackbar,
 }
 

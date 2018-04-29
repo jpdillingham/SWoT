@@ -25,7 +25,7 @@ class WorkoutStepper extends Component {
     render() {
         return (
             <Stepper
-                activeStep={this.state.stepIndex}
+                activeStep={!this.props.enabled ? -1 : this.state.stepIndex}
                 linear={false}
                 orientation={'vertical'}
             >

@@ -14,6 +14,10 @@ class WorkoutReportCard extends Component {
                         </ul>
                     </li>
                 )}
+                <li>
+                    Notes
+                    <ul><li>{this.props.workout.notes}</li></ul>
+                </li>
             </ul>
         )
     }
