@@ -158,8 +158,8 @@ class WorkoutCard extends Component {
                     </CardText>
                 </Card>
                 <DeleteDialog 
-                    subject="Workout"
-                    name={this.props.workout.routine.name}
+                    title="Delete Workout"
+                    prompt={'Are you sure you want to delete Workout \'' + this.props.workout.routine.name + '\'?'}
                     onDelete={this.props.onDeleteClick}
                     onCancel={this.handleDeleteDialogClose}
                     open={this.state.deleteDialog.open} 
