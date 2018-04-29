@@ -48,20 +48,28 @@ class Workout extends Component {
     }
 
     handleWorkoutChange = (workout) => {
-        this.props.updateWorkout(workout)
-        .then(response => {
-            this.props.showSnackbar('Updated Workout')
-        }, error => {
-            this.props.showSnackbar('Error updating Workout')
+        return new Promise((resolve, reject) => {
+            this.props.updateWorkout(workout)
+            .then(response => {
+                this.props.showSnackbar('Updated Workout');
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error updating Workout')
+                reject(error);
+            })
         })
     }
 
     handleWorkoutDeleteClick = (id) => {
-        this.props.deleteWorkout(id)
-        .then(response => {
-            this.props.showSnackbar('Deleted Workout')
-        }, error => {
-            this.props.showSnackbar('Error deleting Workout')
+        return new Promise((resolve, reject) => {
+            this.props.deleteWorkout(id)
+            .then(response => {
+                this.props.showSnackbar('Deleted Workout');
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error deleting Workout');
+                reject(error);
+            })
         })
     }
 
