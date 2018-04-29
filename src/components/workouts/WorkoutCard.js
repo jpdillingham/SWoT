@@ -170,20 +170,23 @@ class WorkoutCard extends Component {
                 </Card>
                 <ConfirmDialog 
                     title={'Delete Workout'}
-                    prompt={'Are you sure you want to delete Workout \'' + this.props.workout.routine.name + '\'?'}
                     buttonCaption={'Delete'}
                     onConfirm={this.props.onDelete}
                     onClose={this.handleDeleteDialogClose}
                     open={this.state.deleteDialog.open} 
-                />
+                >
+                    Are you sure you want to delete Workout '{this.props.workout.routine.name}'?
+                </ConfirmDialog>
                 <ConfirmDialog 
                     title={'Reset Workout'}
-                    prompt={'Are you sure you want to reset Workout \'' + this.props.workout.routine.name + '\'?<br/>All data will be lost!'}
                     buttonCaption={'Reset'}
                     onConfirm={this.props.onReset}
                     onClose={this.handleResetDialogClose}
                     open={this.state.resetDialog.open} 
-                />
+                >
+                    <p>Are you sure you want to reset Workout '{this.props.workout.routine.name}'?</p>
+                    <p>All data will be lost!</p>
+                </ConfirmDialog>
             </div>
         )
     }

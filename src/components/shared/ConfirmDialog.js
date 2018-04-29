@@ -41,7 +41,7 @@ class ConfirmDialog extends Component {
                     modal={true}
                     open={this.props.open}
                 >
-                    {this.props.prompt}
+                    {this.props.children}
                 </Dialog>
             </div>
         )

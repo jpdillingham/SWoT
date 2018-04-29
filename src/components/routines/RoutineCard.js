@@ -146,12 +146,13 @@ class RoutineCard extends Component {
                 </Card>
                 <ConfirmDialog 
                     title={'Delete Routine'}
-                    prompt={'Are you sure you want to delete Routine \'' + this.props.routine.name + '\'?'}
                     buttonCaption={'Delete'}
                     onConfirm={this.props.onDelete}
                     onClose={this.handleDeleteDialogClose}
                     open={this.state.deleteDialog.open} 
-                />
+                >
+                    Are you sure you want to delete Routine '{this.props.routine.name}'?
+                </ConfirmDialog>
                 <RoutineDialog
                     open={this.state.routineDialog.open}
                     intent={this.state.routineDialog.intent}
