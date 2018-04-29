@@ -15,7 +15,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 
-import RoutineDeleteDialog from './RoutineDeleteDialog'
+import ConfirmDialog from '../shared/ConfirmDialog'
 import RoutineDialog from './RoutineDialog'
 
 import { INTENTS } from '../../constants'
@@ -109,11 +109,19 @@ class RoutineCard extends Component {
                         </List>
                     </CardText>
                 </Card>
-                <RoutineDeleteDialog 
+                {/* <RoutineDeleteDialog 
                     open={this.state.deleteDialog.open} 
                     handleClose={this.handleDeleteDialogClose}
                     routine={this.props.routine}
                     style={styles.deleteDialog}
+                /> */}
+                <ConfirmDialog 
+                    title={'Delete Routine'}
+                    prompt={'Are you sure you want to delete Routine \'' + this.props.routine.name + '\'?'}
+                    buttonCaption={'Delete'}
+                    onConfirm={this.props.onDelete}
+                    onCancel={this.handleDeleteDialogClose}
+                    open={this.state.deleteDialog.open} 
                 />
                 <RoutineDialog
                     open={this.state.routineDialog.open}
