@@ -14,9 +14,7 @@ class ConfirmDialog extends Component {
     handleConfirmClick = () => {
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
             this.props.onConfirm()
-            .then(response => {
-                this.setState({ api: { isExecuting: false, isErrored: false }});
-            }, error => {
+            .then(response => { }, error => {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
             })
         })
