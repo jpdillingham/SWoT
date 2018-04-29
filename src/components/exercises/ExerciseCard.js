@@ -14,6 +14,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 
+import ExerciseRoutineReferenceList from './ExerciseRoutineReferenceList'
+
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR, INTENTS } from '../../constants';
 
 const styles = {
@@ -175,7 +177,10 @@ class ExerciseCard extends Component {
                     onClose={this.handleDeleteDialogClose}
                     open={this.state.deleteDialog.open} 
                 >
-                    Are you sure you want to delete Exercise '{this.props.exercise.name}'?
+                    <div>
+                        <p>Are you sure you want to delete Exercise '{this.props.exercise.name}'?</p>
+                        <ExerciseRoutineReferenceList exercise={this.props.exercise}/>
+                    </div>
                 </ConfirmDialog>
                 <ExerciseDialog
                     open={this.state.exerciseDialog.open}
