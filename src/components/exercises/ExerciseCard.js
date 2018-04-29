@@ -168,12 +168,6 @@ class ExerciseCard extends Component {
                         </List>
                     </CardText>
                 </Card>
-                {/* <ExerciseDeleteDialog 
-                    open={this.state.deleteDialog.open} 
-                    handleClose={this.handleDeleteDialogClose}
-                    exercise={this.props.exercise}
-                    style={styles.deleteDialog}
-                /> */}
                 <ConfirmDialog 
                     title={'Delete Exercise'}
                     buttonCaption={'Delete'}
