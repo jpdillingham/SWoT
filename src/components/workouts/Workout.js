@@ -60,9 +60,9 @@ class Workout extends Component {
         })
     }
 
-    handleWorkoutDeleteClick = (id) => {
+    handleWorkoutDelete = (workout) => {
         return new Promise((resolve, reject) => {
-            this.props.deleteWorkout(id)
+            this.props.deleteWorkout(workout.id)
             .then(response => {
                 this.props.showSnackbar('Deleted Workout');
                 resolve(response);
@@ -71,6 +71,10 @@ class Workout extends Component {
                 reject(error);
             })
         })
+    }
+
+    handleWorkoutReset = (workout) => {
+
     }
 
     handleWorkoutExerciseChange = (workout, exercise) => {
@@ -103,8 +107,8 @@ class Workout extends Component {
                                         workout={workout}
                                         onWorkoutChange={this.handleWorkoutChange}
                                         onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(workout, exercise)}
-                                        onDeleteClick={() => this.handleWorkoutDeleteClick(workout.id)}
-                                        onResetClick={this.handleResetClick}
+                                        onDelete={() => this.handleWorkoutDelete(workout)}
+                                        onReset={() => this.handleReset(workout)}
                                     /> :
                                     <WorkoutReportCard workout={workout}/>
                 }
