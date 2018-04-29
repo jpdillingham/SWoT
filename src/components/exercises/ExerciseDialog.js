@@ -10,7 +10,7 @@ import { addExercise, updateExercise } from './ExercisesActions'
 import { showSnackbar } from '../app/AppActions.js'
 
 import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
-import { getGuid, swap } from '../../util';
+import { getGuid, swapArrayElements } from '../../util';
 
 import ExerciseMetricDialog from './ExerciseMetricDialog';
 import ExerciseMetricList from './ExerciseMetricList';
@@ -110,7 +110,7 @@ class ExerciseDialog extends Component {
         let arr = this.state.exercise.metrics.slice();
 
         if (index > 0) {
-            arr = swap(arr, index, index - 1);     
+            arr = swapArrayElements(arr, index, index - 1);     
         }
 
         this.setState({ exercise: { ...this.state.exercise, metrics: arr } }) 
@@ -120,7 +120,7 @@ class ExerciseDialog extends Component {
         let arr = this.state.exercise.metrics.slice();
 
         if (index < arr.length - 1) {
-            arr = swap(arr, index, index + 1);
+            arr = swapArrayElements(arr, index, index + 1);
         }
 
         this.setState({ exercise: { ...this.state.exercise, metrics: arr } })
