@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchExercises } from './ExercisesActions'
+import { fetchExercises, deleteExercise } from './ExercisesActions'
+import { showSnackbar } from '../app/AppActions'
 
 import ExerciseCard from './ExerciseCard'
 
@@ -39,7 +40,7 @@ class Exercises extends Component {
 
     handleExerciseDelete = (exercise) => {
         return new Promise((resolve, reject) => {
-            this.props.deleteExercise(exercise)
+            this.props.deleteExercise(exercise.id)
             .then(response => {
                 this.props.showSnackbar('Deleted Exercise \'' + exercise.name + '\'.')
                 resolve(response);
@@ -71,9 +72,11 @@ class Exercises extends Component {
                     <div>
                         <div style={styles.grid}>
                             {this.props.exercises.map(e =>  
-                                <div key={e.id}>
-                                    <ExerciseCard exercise={e} />
-                                </div>
+                                <ExerciseCard 
+                                    key={e.id}
+                                    exercise={e} 
+                                    onDelete={() => this.handleExerciseDelete(e)}
+                                />
                             )}
                         </div>
                         <AddFloatingActionButton dialog={<ExerciseDialog intent={INTENTS.ADD} />} />
@@ -88,6 +91,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     fetchExercises,
+    deleteExercise,
+    showSnackbar,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Exercises)
