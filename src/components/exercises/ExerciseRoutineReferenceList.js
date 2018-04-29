@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import FlatButton from 'material-ui/FlatButton'
-import Dialog from 'material-ui/Dialog'
 import {List, ListItem} from 'material-ui/List';
 
 import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
-import { deleteExercise } from './ExercisesActions'
 import { fetchRoutines } from '../routines/RoutinesActions'
-import { showSnackbar } from '../app/AppActions.js'
 
 const styles = {
     icon: {
@@ -32,7 +28,6 @@ class ExerciseRoutineReferenceList extends Component {
     }
 
     componentWillMount = () => {
-        console.log("mount")
         this.setState({ api: { ...this.state.api, isExecuting: true }})
 
         this.props.fetchRoutines()
@@ -41,11 +36,6 @@ class ExerciseRoutineReferenceList extends Component {
         }, error => {
             this.setState({ api: { isExecuting: false, isErrored: true }})
         })
-    }
-
-    componentWillReceiveProps(nextProps) {
-        console.log("props");
-
     }
 
     render() {
