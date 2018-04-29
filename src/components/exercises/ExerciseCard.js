@@ -70,7 +70,9 @@ class ExerciseCard extends Component {
     state = initialState
 
     handleDeleteDialogClose = (result) => {
-        this.setState({ deleteDialog: { open: false }})
+        if (result.cancelled) {
+            this.setState({ deleteDialog: { open: false }})
+        }
     }
 
     handleExerciseDialogClose = () => {
