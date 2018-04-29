@@ -142,8 +142,6 @@ class WorkoutExerciseForm extends Component {
     }
 
     getElapsedTime = (start, end) => {
-        if (!start) return '';
-
         end = end || new Date().getTime();
         let duration = Math.trunc((end - start) / 1000);
 
@@ -264,7 +262,11 @@ class WorkoutExerciseForm extends Component {
                                 style={styles.button}
                             /> 
                         }
-                        <FlatButton label={this.getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime)} disabled={true} style={styles.time}/>
+                        <FlatButton 
+                            label={this.props.exercise.startTime ? this.getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
+                            disabled={true} 
+                            style={styles.time}
+                        />
                     </CardActions>
                 </Card>
             </div>
