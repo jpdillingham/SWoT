@@ -121,14 +121,12 @@ class WorkoutCard extends Component {
                         <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
                     </IconMenu>
                     <CardText>
-                        {this.props.workout.startTime === undefined ? 
-                            <p>press start</p> :
-                            <WorkoutStepper
-                                style={styles.stepper}
-                                workout={this.props.workout}
-                                onExerciseChange={this.props.onExerciseChange}
-                            />
-                        }
+                        <WorkoutStepper
+                            enabled={this.props.workout.startTime !== undefined}
+                            style={styles.stepper}
+                            workout={this.props.workout}
+                            onExerciseChange={this.props.onExerciseChange}
+                        />
                     </CardText>
                 </Card>
                 <DeleteDialog 
