@@ -7,7 +7,7 @@ import ActionAssessment from 'material-ui/svg-icons/action/assessment';
 import Avatar from 'material-ui/Avatar';
 
 import ExerciseDialog from './ExerciseDialog'
-import ExerciseDeleteDialog from './ExerciseDeleteDialog';
+import ConfirmDialog from '../shared/ConfirmDialog';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentCreate from 'material-ui/svg-icons/content/create';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
@@ -166,12 +166,21 @@ class ExerciseCard extends Component {
                         </List>
                     </CardText>
                 </Card>
-                <ExerciseDeleteDialog 
+                {/* <ExerciseDeleteDialog 
                     open={this.state.deleteDialog.open} 
                     handleClose={this.handleDeleteDialogClose}
                     exercise={this.props.exercise}
                     style={styles.deleteDialog}
-                />
+                /> */}
+                <ConfirmDialog 
+                    title={'Delete Exercise'}
+                    buttonCaption={'Delete'}
+                    onConfirm={this.props.onDelete}
+                    onClose={this.handleDeleteDialogClose}
+                    open={this.state.deleteDialog.open} 
+                >
+                    Are you sure you want to delete Exercise '{this.props.exercise.name}'?
+                </ConfirmDialog>
                 <ExerciseDialog
                     open={this.state.exerciseDialog.open}
                     intent={this.state.exerciseDialog.intent}
