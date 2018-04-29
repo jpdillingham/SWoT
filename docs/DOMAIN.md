@@ -150,7 +150,7 @@ The Workout object represents a single instance of a Routine and mirrors the Rou
 ```javascript
 {
     "id": "75088a40-8bf9-1727-f362-0cb05dc77a2b",
-    "scheduledTime": 1524963480000, //result
+    "scheduledTime": 1524963480000, 
     "startTime": 1524963550635, //result
     "endTime": 1524963566741, //result
     "routine": {
