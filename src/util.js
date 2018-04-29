@@ -23,3 +23,21 @@ export const validateEmail = (email) => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
+
+export const getElapsedTime = (start, end) => {
+    end = end || new Date().getTime();
+    let duration = Math.trunc((end - start) / 1000);
+
+    let formatTime = (seconds) => {
+        const h = Math.floor(seconds / 3600);
+        const m = Math.floor((seconds % 3600) / 60);
+        const s = seconds % 60;
+        return [
+          h,
+          m > 9 ? m : (h ? '0' + m : m || '0'),
+          s > 9 ? s : '0' + s,
+        ].filter(a => a).join(':');
+    }
+
+    return formatTime(duration);
+}

@@ -12,6 +12,7 @@ import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
 import FlatButton from 'material-ui/FlatButton/FlatButton';
+import { getElapsedTime } from '../../util';
 
 const styles = {
     container: {
@@ -141,24 +142,6 @@ class WorkoutExerciseForm extends Component {
         return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
     }
 
-    getElapsedTime = (start, end) => {
-        end = end || new Date().getTime();
-        let duration = Math.trunc((end - start) / 1000);
-
-        let formatTime = (seconds) => {
-            const h = Math.floor(seconds / 3600);
-            const m = Math.floor((seconds % 3600) / 60);
-            const s = seconds % 60;
-            return [
-              h,
-              m > 9 ? m : (h ? '0' + m : m || '0'),
-              s > 9 ? s : '0' + s,
-            ].filter(a => a).join(':');
-        }
-
-        return formatTime(duration);
-    }
-
     componentDidMount = () => {
         this.timer = setInterval(() => this.setState({ ticker: this.state.ticker + 1 }), 1000);
     }
@@ -263,7 +246,7 @@ class WorkoutExerciseForm extends Component {
                             /> 
                         }
                         <FlatButton 
-                            label={this.props.exercise.startTime ? this.getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
+                            label={this.props.exercise.startTime ? getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
                             disabled={true} 
                             style={styles.time}
                         />
