@@ -14,7 +14,7 @@ class ConfirmDialog extends Component {
     handleConfirmClick = () => {
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
             this.props.onConfirm()
-            .then(response => { }, error => {
+            .then(response => { this.props.onClose({ cancelled: false }) }, error => {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
             })
         })
@@ -29,7 +29,7 @@ class ConfirmDialog extends Component {
                         <div>          
                             <FlatButton
                                 label="Cancel"
-                                onClick={this.props.onCancel}
+                                onClick={() => this.props.onClose({ cancelled: true })}
                             />
                             <FlatButton
                                 label={this.state.api.isErrored ? 'Retry' : this.props.buttonCaption }

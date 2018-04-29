@@ -74,7 +74,30 @@ class Workout extends Component {
     }
 
     handleWorkoutReset = (workout) => {
+        delete workout.startTime;
+        delete workout.endTime;
+        delete workout.notes;
 
+        workout.routine.exercises.forEach(e => {
+            delete e.startTime;
+            delete e.endTime;
+            delete e.notes;
+
+            e.metrics.forEach(m => {
+                delete m.value;
+            });
+        });
+
+        return new Promise((resolve, reject) => {
+            this.props.updateWorkout(workout)
+            .then(response => {
+                this.props.showSnackbar('Reset Workout');
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error resetting Workout');
+                reject(error);
+            })
+        })
     }
 
     handleWorkoutExerciseChange = (workout, exercise) => {
@@ -108,7 +131,7 @@ class Workout extends Component {
                                         onWorkoutChange={this.handleWorkoutChange}
                                         onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(workout, exercise)}
                                         onDelete={() => this.handleWorkoutDelete(workout)}
-                                        onReset={() => this.handleReset(workout)}
+                                        onReset={() => this.handleWorkoutReset(workout)}
                                     /> :
                                     <WorkoutReportCard workout={workout}/>
                 }

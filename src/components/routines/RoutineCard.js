@@ -120,7 +120,7 @@ class RoutineCard extends Component {
                     prompt={'Are you sure you want to delete Routine \'' + this.props.routine.name + '\'?'}
                     buttonCaption={'Delete'}
                     onConfirm={this.props.onDelete}
-                    onCancel={this.handleDeleteDialogClose}
+                    onClose={this.handleDeleteDialogClose}
                     open={this.state.deleteDialog.open} 
                 />
                 <RoutineDialog

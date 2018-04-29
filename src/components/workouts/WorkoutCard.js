@@ -62,6 +62,9 @@ const initialState = {
     deleteDialog: {
         open: false,
     },
+    resetDialog: {
+        open: false,
+    },
     workout: {
         notes: '',
     }
@@ -94,8 +97,16 @@ class WorkoutCard extends Component {
         this.setState({ deleteDialog: { open: true }})
     }
 
-    handleDeleteDialogClose = () => {
+    handleDeleteDialogClose = (result) => {
         this.setState({ deleteDialog: { open: false }})
+    }
+
+    handleResetClick = () => {
+        this.setState({ resetDialog: { open: true }})
+    }
+
+    handleResetDialogClose = (result) => {
+        this.setState({ resetDialog: { open: false }})
     }
 
     render() {
@@ -135,7 +146,7 @@ class WorkoutCard extends Component {
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem primaryText="Reset" onClick={this.props.onReset} />
+                        <MenuItem primaryText="Reset" onClick={this.handleResetClick} />
                         <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
                     </IconMenu>
                     <CardText>
@@ -162,8 +173,16 @@ class WorkoutCard extends Component {
                     prompt={'Are you sure you want to delete Workout \'' + this.props.workout.routine.name + '\'?'}
                     buttonCaption={'Delete'}
                     onConfirm={this.props.onDelete}
-                    onCancel={this.handleDeleteDialogClose}
+                    onClose={this.handleDeleteDialogClose}
                     open={this.state.deleteDialog.open} 
+                />
+                <ConfirmDialog 
+                    title={'Reset Workout'}
+                    prompt={'Are you sure you want to reset Workout \'' + this.props.workout.routine.name + '\'?<br/>All data will be lost!'}
+                    buttonCaption={'Reset'}
+                    onConfirm={this.props.onReset}
+                    onClose={this.handleResetDialogClose}
+                    open={this.state.resetDialog.open} 
                 />
             </div>
         )
