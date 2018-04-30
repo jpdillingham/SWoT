@@ -150,58 +150,56 @@ class WorkoutDialog extends Component {
 
     render() {
         return (
-            <div>
-                <Dialog
-                    title={'Add Workout'} 
-                    autoScrollBodyContent={true}
-                    actions={
-                        <div>
-                            <FlatButton label="Cancel" onClick={this.handleCancelClick} />
-                            <SaveRetryFlatButton 
-                                onClick={this.handleSaveClick} 
-                                api={this.state.api} 
-                                validation={this.state.validationErrors} 
-                            />
-                        </div>
-                    }
-                    modal={true}
-                    open={this.props.open}
-                    contentStyle={styles.dialogContent}
+            <Dialog
+                title={'Add Workout'} 
+                autoScrollBodyContent={true}
+                actions={
+                    <div>
+                        <FlatButton label="Cancel" onClick={this.handleCancelClick} />
+                        <SaveRetryFlatButton 
+                            onClick={this.handleSaveClick} 
+                            api={this.state.api} 
+                            validation={this.state.validationErrors} 
+                        />
+                    </div>
+                }
+                modal={true}
+                open={this.props.open}
+                contentStyle={styles.dialogContent}
+            >
+                <DatePicker 
+                    floatingLabelText="Date"
+                    hintText="Date"
+                    textFieldStyle={styles.date}
+                    onChange={this.handleDateChange}
+                    value={this.state.selectedDate}
+                    autoOk={true}
+                />
+                <TimePicker
+                    floatingLabelText="Time"
+                    hintText="Time"
+                    textFieldStyle={styles.time}
+                    onChange={this.handleTimeChange}
+                    value={this.state.selectedTime}
+                    autoOk={true}
+                />
+                <SelectField
+                    floatingLabelText="Routine"
+                    value={this.state.workout.routine.id}
+                    onChange={this.handleRoutineChange}
+                    errorText={this.state.validationErrors.routine}
+                    style={styles.routine}
                 >
-                    <DatePicker 
-                        floatingLabelText="Date"
-                        hintText="Date"
-                        textFieldStyle={styles.date}
-                        onChange={this.handleDateChange}
-                        value={this.state.selectedDate}
-                        autoOk={true}
-                    />
-                    <TimePicker
-                        floatingLabelText="Time"
-                        hintText="Time"
-                        textFieldStyle={styles.time}
-                        onChange={this.handleTimeChange}
-                        value={this.state.selectedTime}
-                        autoOk={true}
-                    />
-                    <SelectField
-                        floatingLabelText="Routine"
-                        value={this.state.workout.routine.id}
-                        onChange={this.handleRoutineChange}
-                        errorText={this.state.validationErrors.routine}
-                        style={styles.routine}
-                    >
-                        {this.props.routines.map(r => 
-                            <MenuItem 
-                                key={r.id} 
-                                value={r.id} 
-                                primaryText={r.name}
-                                leftIcon={<ActionAssignment />}
-                            />
-                        )}
-                    </SelectField>
-                </Dialog>
-            </div>
+                    {this.props.routines.map(r => 
+                        <MenuItem 
+                            key={r.id} 
+                            value={r.id} 
+                            primaryText={r.name}
+                            leftIcon={<ActionAssignment />}
+                        />
+                    )}
+                </SelectField>
+            </Dialog>
         )
     }
 }

@@ -106,22 +106,18 @@ class Workout extends Component {
         let workout = this.props.workouts.find(w => w.id === this.props.match.params.id)
 
         return (
-            <div>
-                { 
-                    this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
-                        this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                            workout === undefined ? <span>Invalid Workout Id.</span> : 
-                                workout.endTime === undefined ?
-                                    <WorkoutCard
-                                        workout={workout}
-                                        onWorkoutChange={this.handleWorkoutChange}
-                                        onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(workout, exercise)}
-                                        onDelete={() => this.handleWorkoutDelete(workout)}
-                                        onReset={() => this.handleWorkoutReset(workout)}
-                                    /> :
-                                    <WorkoutReportCard workout={workout}/>
-                }
-            </div>
+            this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
+                this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
+                    workout === undefined ? <span>Invalid Workout Id.</span> : 
+                        workout.endTime === undefined ?
+                            <WorkoutCard
+                                workout={workout}
+                                onWorkoutChange={this.handleWorkoutChange}
+                                onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(workout, exercise)}
+                                onDelete={() => this.handleWorkoutDelete(workout)}
+                                onReset={() => this.handleWorkoutReset(workout)}
+                            /> :
+                            <WorkoutReportCard workout={workout}/>
         )
     }
 }
