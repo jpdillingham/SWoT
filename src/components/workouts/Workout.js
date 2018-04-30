@@ -48,20 +48,55 @@ class Workout extends Component {
     }
 
     handleWorkoutChange = (workout) => {
-        this.props.updateWorkout(workout)
-        .then(response => {
-            this.props.showSnackbar('Updated Workout')
-        }, error => {
-            this.props.showSnackbar('Error updating Workout')
+        return new Promise((resolve, reject) => {
+            this.props.updateWorkout(workout)
+            .then(response => {
+                this.props.showSnackbar('Updated Workout');
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error updating Workout')
+                reject(error);
+            })
         })
     }
 
-    handleWorkoutDeleteClick = (id) => {
-        this.props.deleteWorkout(id)
-        .then(response => {
-            this.props.showSnackbar('Deleted Workout')
-        }, error => {
-            this.props.showSnackbar('Error deleting Workout')
+    handleWorkoutDelete = (workout) => {
+        return new Promise((resolve, reject) => {
+            this.props.deleteWorkout(workout.id)
+            .then(response => {
+                this.props.showSnackbar('Deleted Workout');
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error deleting Workout');
+                reject(error);
+            })
+        })
+    }
+
+    handleWorkoutReset = (workout) => {
+        delete workout.startTime;
+        delete workout.endTime;
+        delete workout.notes;
+
+        workout.routine.exercises.forEach(e => {
+            delete e.startTime;
+            delete e.endTime;
+            delete e.notes;
+
+            e.metrics.forEach(m => {
+                delete m.value;
+            });
+        });
+
+        return new Promise((resolve, reject) => {
+            this.props.updateWorkout(workout)
+            .then(response => {
+                this.props.showSnackbar('Reset Workout');
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error resetting Workout');
+                reject(error);
+            })
         })
     }
 
@@ -95,8 +130,8 @@ class Workout extends Component {
                                         workout={workout}
                                         onWorkoutChange={this.handleWorkoutChange}
                                         onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(workout, exercise)}
-                                        onDeleteClick={() => this.handleWorkoutDeleteClick(workout.id)}
-                                        onResetClick={this.handleResetClick}
+                                        onDelete={() => this.handleWorkoutDelete(workout)}
+                                        onReset={() => this.handleWorkoutReset(workout)}
                                     /> :
                                     <WorkoutReportCard workout={workout}/>
                 }

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchExercises } from './ExercisesActions'
+import { fetchExercises, deleteExercise } from './ExercisesActions'
+import { showSnackbar } from '../app/AppActions'
 
-import ExercizeCard from './ExerciseCard'
+import ExerciseCard from './ExerciseCard'
 
 import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -37,15 +38,31 @@ class Exercises extends Component {
         }
     }
 
+    handleExerciseDelete = (exercise) => {
+        return new Promise((resolve, reject) => {
+            this.props.deleteExercise(exercise.id)
+            .then(response => {
+                this.props.showSnackbar('Deleted Exercise \'' + exercise.name + '\'.')
+                resolve(response);
+            }, error => {
+                let message = 'Error deleting Exercise'
+                message += error.response ? ': ' + JSON.stringify(error.exercise.data).replace(/"/g, "") : '.'
+
+                this.props.showSnackbar(message);
+                reject(error);
+            })
+        });
+    }
+
     componentWillMount() {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
 
         this.props.fetchExercises()
-            .then(response => {
-                this.setState({ api: { isExecuting: false, isErrored: false }})
-            }, error => {
-                this.setState({ api: { isExecuting: false, isErrored: true }})
-            })
+        .then(response => {
+            this.setState({ api: { isExecuting: false, isErrored: false }})
+        }, error => {
+            this.setState({ api: { isExecuting: false, isErrored: true }})
+        })
     }
 
     render() {
@@ -55,9 +72,11 @@ class Exercises extends Component {
                     <div>
                         <div style={styles.grid}>
                             {this.props.exercises.map(e =>  
-                                <div key={e.id}>
-                                    <ExercizeCard exercise={e} />
-                                </div>
+                                <ExerciseCard 
+                                    key={e.id}
+                                    exercise={e} 
+                                    onDelete={() => this.handleExerciseDelete(e)}
+                                />
                             )}
                         </div>
                         <AddFloatingActionButton dialog={<ExerciseDialog intent={INTENTS.ADD} />} />
@@ -72,6 +91,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     fetchExercises,
+    deleteExercise,
+    showSnackbar,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Exercises)

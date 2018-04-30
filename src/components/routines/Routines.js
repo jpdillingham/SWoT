@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchRoutines } from './RoutinesActions'
+import { fetchRoutines, deleteRoutine } from './RoutinesActions'
+import { showSnackbar } from '../app/AppActions'
 
 import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -37,6 +38,22 @@ class Routines extends Component {
         }
     }
 
+    handleRoutineDelete = (routine) => {
+        return new Promise((resolve, reject) => {
+            this.props.deleteRoutine(routine.id)
+            .then(response => {
+                this.props.showSnackbar('Deleted Routine \'' + routine.name + '\'.')
+                resolve(response);
+            }, error => {
+                let message = 'Error deleting Routine'
+                message += error.response ? ': ' + JSON.stringify(error.routine.data).replace(/"/g, "") : '.'
+
+                this.props.showSnackbar(message);
+                reject(error);
+            })
+        })
+    }
+
     componentWillMount() {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
 
@@ -55,7 +72,11 @@ class Routines extends Component {
                     <div>
                         <div style={styles.grid}>
                             {this.props.routines.map(r =>  
-                                <RoutineCard key={r.id} routine={r} />
+                                <RoutineCard 
+                                    key={r.id} 
+                                    routine={r} 
+                                    onDelete={() => this.handleRoutineDelete(r)}
+                                />
                             )}
                         </div>
                         <AddFloatingActionButton dialog={<RoutineDialog intent={INTENTS.ADD} />} />
@@ -70,6 +91,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     fetchRoutines,
+    deleteRoutine,
+    showSnackbar
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Routines)

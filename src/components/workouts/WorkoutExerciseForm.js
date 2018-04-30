@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 
-import { black } from 'material-ui/styles/colors'
-import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
 import ActionHistory from 'material-ui/svg-icons/action/history';
 import Avatar from 'material-ui/Avatar';
-
+import { black } from 'material-ui/styles/colors';
+import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
 
+import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
+import { getElapsedTime } from '../../util';
+
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 
-import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
-import FlatButton from 'material-ui/FlatButton/FlatButton';
-
 const styles = {
-    container: {
-        height: '100%'
-    },
     cardHeader: {
         backgroundColor: EXERCISE_AVATAR_COLOR,
         marginBottom: 0,
@@ -24,11 +21,6 @@ const styles = {
     cardTitle: {
         fontSize: '20px',
         marginTop: 6,
-    },
-    iconMenu: {
-        position: 'absolute',
-        right: 0,
-        top: 10,
     },
     card: {
         width: CARD_WIDTH - 100,
@@ -141,26 +133,6 @@ class WorkoutExerciseForm extends Component {
         return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
     }
 
-    getElapsedTime = (start, end) => {
-        if (!start) return '';
-
-        end = end || new Date().getTime();
-        let duration = Math.trunc((end - start) / 1000);
-
-        let formatTime = (seconds) => {
-            const h = Math.floor(seconds / 3600);
-            const m = Math.floor((seconds % 3600) / 60);
-            const s = seconds % 60;
-            return [
-              h,
-              m > 9 ? m : (h ? '0' + m : m || '0'),
-              s > 9 ? s : '0' + s,
-            ].filter(a => a).join(':');
-        }
-
-        return formatTime(duration);
-    }
-
     componentDidMount = () => {
         this.timer = setInterval(() => this.setState({ ticker: this.state.ticker + 1 }), 1000);
     }
@@ -186,7 +158,7 @@ class WorkoutExerciseForm extends Component {
         }
 
         return (
-            <div style={styles.container}>
+            <div>
                 <Card zDepth={2} style={styles.card}>
                     <CardHeader                        
                         titleStyle={styles.cardTitle}
@@ -264,7 +236,11 @@ class WorkoutExerciseForm extends Component {
                                 style={styles.button}
                             /> 
                         }
-                        <FlatButton label={this.getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime)} disabled={true} style={styles.time}/>
+                        <FlatButton 
+                            label={this.props.exercise.startTime ? getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
+                            disabled={true} 
+                            style={styles.time}
+                        />
                     </CardActions>
                 </Card>
             </div>

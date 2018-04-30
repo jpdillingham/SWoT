@@ -17,7 +17,7 @@ import TextField from 'material-ui/TextField/TextField';
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
 import WorkoutStepper from './WorkoutStepper';
-import DeleteDialog from '../shared/DeleteDialog';
+import ConfirmDialog from '../shared/ConfirmDialog';
 
 const styles = {
     cardHeader: {
@@ -62,6 +62,9 @@ const initialState = {
     deleteDialog: {
         open: false,
     },
+    resetDialog: {
+        open: false,
+    },
     workout: {
         notes: '',
     }
@@ -94,8 +97,16 @@ class WorkoutCard extends Component {
         this.setState({ deleteDialog: { open: true }})
     }
 
-    handleDeleteDialogClose = () => {
+    handleDeleteDialogClose = (result) => {
         this.setState({ deleteDialog: { open: false }})
+    }
+
+    handleResetClick = () => {
+        this.setState({ resetDialog: { open: true }})
+    }
+
+    handleResetDialogClose = (result) => {
+        this.setState({ resetDialog: { open: false }})
     }
 
     render() {
@@ -135,7 +146,7 @@ class WorkoutCard extends Component {
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem primaryText="Reset" onClick={this.props.onResetClick} />
+                        <MenuItem primaryText="Reset" onClick={this.handleResetClick} />
                         <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
                     </IconMenu>
                     <CardText>
@@ -157,13 +168,25 @@ class WorkoutCard extends Component {
                         />
                     </CardText>
                 </Card>
-                <DeleteDialog 
-                    subject="Workout"
-                    name={this.props.workout.routine.name}
-                    onDelete={this.props.onDeleteClick}
-                    onCancel={this.handleDeleteDialogClose}
+                <ConfirmDialog 
+                    title={'Delete Workout'}
+                    buttonCaption={'Delete'}
+                    onConfirm={this.props.onDelete}
+                    onClose={this.handleDeleteDialogClose}
                     open={this.state.deleteDialog.open} 
-                />
+                >
+                    Are you sure you want to delete Workout '{this.props.workout.routine.name}'?
+                </ConfirmDialog>
+                <ConfirmDialog 
+                    title={'Reset Workout'}
+                    buttonCaption={'Reset'}
+                    onConfirm={this.props.onReset}
+                    onClose={this.handleResetDialogClose}
+                    open={this.state.resetDialog.open} 
+                >
+                    <p>Are you sure you want to reset Workout '{this.props.workout.routine.name}'?</p>
+                    <p>All data will be lost!</p>
+                </ConfirmDialog>
             </div>
         )
     }

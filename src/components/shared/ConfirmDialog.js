@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 
-class DeleteDialog extends Component {
+class ConfirmDialog extends Component {
     state = {
         api: {
             isExecuting: false,
@@ -11,33 +11,42 @@ class DeleteDialog extends Component {
         }
     }
 
+    handleConfirmClick = () => {
+        this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
+            this.props.onConfirm()
+            .then(response => { this.props.onClose({ cancelled: false }) }, error => {
+                this.setState({ api: { isExecuting: false, isErrored: true }});
+            })
+        })
+    }
+
     render() {
         return (
             <div>
                 <Dialog
-                    title={"Delete " + this.props.subject}
+                    title={this.props.title}
                     actions={  
                         <div>          
                             <FlatButton
                                 label="Cancel"
-                                onClick={this.props.onCancel}
+                                onClick={() => this.props.onClose({ cancelled: true })}
                             />
                             <FlatButton
-                                label={this.state.api.isErrored ? 'Retry' : 'Delete' }
+                                label={this.state.api.isErrored ? 'Retry' : this.props.buttonCaption }
                                 disabled={this.state.api.isExecuting}
-                                onClick={this.props.onDelete}
+                                onClick={this.handleConfirmClick}
                             />
                         </div>
                     }
                     modal={true}
                     open={this.props.open}
                 >
-                    Are you sure you want to delete {this.props.subject} '{this.props.name}'?
+                    {this.props.children}
                 </Dialog>
             </div>
         )
     }
 }
 
-export default DeleteDialog
+export default ConfirmDialog
 

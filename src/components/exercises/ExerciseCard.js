@@ -7,12 +7,14 @@ import ActionAssessment from 'material-ui/svg-icons/action/assessment';
 import Avatar from 'material-ui/Avatar';
 
 import ExerciseDialog from './ExerciseDialog'
-import ExerciseDeleteDialog from './ExerciseDeleteDialog';
+import ConfirmDialog from '../shared/ConfirmDialog';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentCreate from 'material-ui/svg-icons/content/create';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
+
+import ExerciseRoutineReferenceList from './ExerciseRoutineReferenceList'
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR, INTENTS } from '../../constants';
 
@@ -70,7 +72,9 @@ class ExerciseCard extends Component {
     state = initialState
 
     handleDeleteDialogClose = (result) => {
-        this.setState({ deleteDialog: { open: false }})
+        if (result.cancelled) {
+            this.setState({ deleteDialog: { open: false }})
+        }
     }
 
     handleExerciseDialogClose = () => {
@@ -166,12 +170,18 @@ class ExerciseCard extends Component {
                         </List>
                     </CardText>
                 </Card>
-                <ExerciseDeleteDialog 
+                <ConfirmDialog 
+                    title={'Delete Exercise'}
+                    buttonCaption={'Delete'}
+                    onConfirm={this.props.onDelete}
+                    onClose={this.handleDeleteDialogClose}
                     open={this.state.deleteDialog.open} 
-                    handleClose={this.handleDeleteDialogClose}
-                    exercise={this.props.exercise}
-                    style={styles.deleteDialog}
-                />
+                >
+                    <div>
+                        <p>Are you sure you want to delete Exercise '{this.props.exercise.name}'?</p>
+                        <ExerciseRoutineReferenceList exercise={this.props.exercise}/>
+                    </div>
+                </ConfirmDialog>
                 <ExerciseDialog
                     open={this.state.exerciseDialog.open}
                     intent={this.state.exerciseDialog.intent}

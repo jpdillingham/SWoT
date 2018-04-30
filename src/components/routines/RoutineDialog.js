@@ -10,7 +10,7 @@ import TextField from 'material-ui/TextField';
 import RoutineExerciseDialog from './RoutineExerciseDialog';
 
 import { INTENTS } from '../../constants';
-import { getGuid, swap } from '../../util';
+import { getGuid, swapArrayElements } from '../../util';
 
 import { fetchExercises } from '../exercises/ExercisesActions'
 import { updateRoutine, addRoutine } from '../routines/RoutinesActions'
@@ -150,7 +150,7 @@ class RoutineDialog extends Component {
         let arr = this.state.routine.exercises.slice();
 
         if (index > 0) {
-            arr = swap(arr, index, index - 1);     
+            arr = swapArrayElements(arr, index, index - 1);     
         }
 
         this.setState({ routine: { ...this.state.routine, exercises: arr } }) 
@@ -160,7 +160,7 @@ class RoutineDialog extends Component {
         let arr = this.state.routine.exercises.slice();
 
         if (index < arr.length - 1) {
-            arr = swap(arr, index, index + 1);
+            arr = swapArrayElements(arr, index, index + 1);
         }
 
         this.setState({ routine: { ...this.state.routine, exercises: arr } })

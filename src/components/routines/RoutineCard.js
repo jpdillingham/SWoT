@@ -15,10 +15,46 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 
-import RoutineDeleteDialog from './RoutineDeleteDialog'
+import ConfirmDialog from '../shared/ConfirmDialog'
 import RoutineDialog from './RoutineDialog'
 
 import { INTENTS } from '../../constants'
+
+const styles = {
+    iconMenu: {
+        position: 'absolute',
+        right: 0,
+        top: 10,
+    },
+    fab: {
+        margin: 0,
+        top: 47,
+        right: 40,
+        bottom: 'auto',
+        left: 'auto',
+        position: 'absolute',
+        zIndex: 1000,
+    },
+    cardHeader: {
+        backgroundColor: ROUTINE_AVATAR_COLOR,
+        marginBottom: 0,
+    },
+    cardTitle: {
+        fontSize: '20px',
+        marginTop: 6,
+    },
+    container: {
+        height: '100%'
+    },
+    card: {
+        width: CARD_WIDTH,
+        height: '100%',
+        position: 'relative'
+    },
+    link: {
+        cursor: 'pointer',
+    },
+}
 
 const initialState = {
     deleteDialog: {
@@ -39,7 +75,9 @@ class RoutineCard extends Component {
     }
 
     handleDeleteDialogClose = (result) => {
-        this.setState({ deleteDialog: { open: false }})
+        if (result.cancelled) {
+            this.setState({ deleteDialog: { open: false }})
+        }
     }
 
     handleDuplicateClick = () => {
@@ -70,7 +108,6 @@ class RoutineCard extends Component {
             }
         }))
     }
-
 
     render() {
         return (
@@ -109,12 +146,15 @@ class RoutineCard extends Component {
                         </List>
                     </CardText>
                 </Card>
-                <RoutineDeleteDialog 
+                <ConfirmDialog 
+                    title={'Delete Routine'}
+                    buttonCaption={'Delete'}
+                    onConfirm={this.props.onDelete}
+                    onClose={this.handleDeleteDialogClose}
                     open={this.state.deleteDialog.open} 
-                    handleClose={this.handleDeleteDialogClose}
-                    routine={this.props.routine}
-                    style={styles.deleteDialog}
-                />
+                >
+                    Are you sure you want to delete Routine '{this.props.routine.name}'?
+                </ConfirmDialog>
                 <RoutineDialog
                     open={this.state.routineDialog.open}
                     intent={this.state.routineDialog.intent}
@@ -127,42 +167,3 @@ class RoutineCard extends Component {
 }
 
 export default RoutineCard
-
-const styles = {
-    iconMenu: {
-        position: 'absolute',
-        right: 0,
-        top: 10,
-    },
-    fab: {
-        margin: 0,
-        top: 47,
-        right: 40,
-        bottom: 'auto',
-        left: 'auto',
-        position: 'absolute',
-        zIndex: 1000,
-    },
-    cardHeader: {
-        backgroundColor: ROUTINE_AVATAR_COLOR,
-        marginBottom: 0,
-    },
-    cardTitle: {
-        fontSize: '20px',
-        marginTop: 6,
-    },
-    container: {
-        height: '100%'
-    },
-    card: {
-        width: CARD_WIDTH,
-        height: '100%',
-        position: 'relative'
-    },
-    text: {
-        /* marginBottom: 40 */
-    },
-    link: {
-        cursor: 'pointer',
-    },
-}
