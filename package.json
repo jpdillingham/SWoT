@@ -7,7 +7,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "update-s3": "aws s3 sync build/ s3://swot-content --acl public-read --delete",
+    "deploy": "react-scripts build && aws update-s3"
   },
   "repository": {
     "type": "git",

@@ -47,11 +47,14 @@ class Workout extends Component {
         })
     }
 
-    handleWorkoutChange = (workout) => {
+    handleWorkoutChange = (workout, notify = { show: false, caption: ''}) => {
         return new Promise((resolve, reject) => {
             this.props.updateWorkout(workout)
             .then(response => {
-                this.props.showSnackbar('Updated Workout');
+                if (notify.show) {
+                    this.props.showSnackbar(notify.caption);
+                }
+
                 resolve(response);
             }, error => {
                 this.props.showSnackbar('Error updating Workout')
@@ -73,7 +76,7 @@ class Workout extends Component {
         })
     }
 
-    handleWorkoutReset = (workout) => {
+    handleWorkoutReset = (workout, notify = { show: false, caption: ''}) => {
         delete workout.startTime;
         delete workout.endTime;
         delete workout.notes;
@@ -88,54 +91,33 @@ class Workout extends Component {
             });
         });
 
-        return new Promise((resolve, reject) => {
-            this.props.updateWorkout(workout)
-            .then(response => {
-                this.props.showSnackbar('Reset Workout');
-                resolve(response);
-            }, error => {
-                this.props.showSnackbar('Error resetting Workout');
-                reject(error);
-            })
-        })
+        return this.handleWorkoutChange(workout, notify);
     }
 
-    handleWorkoutExerciseChange = (workout, exercise) => {
+    handleWorkoutExerciseChange = (workout, exercise, notify = { show: false, caption: ''}) => {
         workout.routine.exercises = workout.routine.exercises.map(e => {
             return e.sequence === exercise.sequence && e.id === exercise.id ? exercise : e;
         });
 
-        return new Promise((resolve, reject) => {
-            this.props.updateWorkout(workout)
-            .then(response => {
-                this.props.showSnackbar('Updated Workout')
-                resolve();
-            }, error => {
-                reject();
-            })
-        })
+        return this.handleWorkoutChange(workout, notify);
     }
 
     render() {
         let workout = this.props.workouts.find(w => w.id === this.props.match.params.id)
 
         return (
-            <div>
-                { 
-                    this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
-                        this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                            workout === undefined ? <span>Invalid Workout Id.</span> : 
-                                workout.endTime === undefined ?
-                                    <WorkoutCard
-                                        workout={workout}
-                                        onWorkoutChange={this.handleWorkoutChange}
-                                        onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(workout, exercise)}
-                                        onDelete={() => this.handleWorkoutDelete(workout)}
-                                        onReset={() => this.handleWorkoutReset(workout)}
-                                    /> :
-                                    <WorkoutReportCard workout={workout}/>
-                }
-            </div>
+            this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
+                this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
+                    workout === undefined ? <span>Invalid Workout Id.</span> : 
+                        workout.endTime === undefined ?
+                            <WorkoutCard
+                                workout={workout}
+                                onWorkoutChange={this.handleWorkoutChange}
+                                onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(workout, exercise)}
+                                onDelete={() => this.handleWorkoutDelete(workout)}
+                                onReset={() => this.handleWorkoutReset(workout)}
+                            /> :
+                            <WorkoutReportCard workout={workout}/>
         )
     }
 }

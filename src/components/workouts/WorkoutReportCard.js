@@ -5,11 +5,11 @@ class WorkoutReportCard extends Component {
         return (
             <ul>
                 {this.props.workout.routine.exercises.map(e => 
-                    <li>
+                    <li key={e.id}>
                         {e.name}
                         <ul>
-                            {e.metrics.map(m => 
-                                <li>{m.name + (m.uom ? ' (' + m.uom + ')' : '') + ': ' + m.value}</li>
+                            {e.metrics.map((m, index) => 
+                                <li key={index}>{m.name + (m.uom ? ' (' + m.uom + ')' : '') + ': ' + m.value}</li>
                             )}
                         </ul>
                     </li>
