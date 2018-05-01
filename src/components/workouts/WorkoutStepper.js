@@ -8,7 +8,7 @@ import ImageLens from 'material-ui/svg-icons/image/lens'
 import WorkoutExerciseForm from './WorkoutExerciseForm'
 
 const initialState = {
-    stepIndex: 0,
+    stepIndex: -1,
 }
 
 class WorkoutStepper extends Component {
@@ -20,6 +20,20 @@ class WorkoutStepper extends Component {
 
     handleExerciseComplete = () => {
         this.setState({ stepIndex: this.state.stepIndex + 1 })
+    }
+
+    componentDidMount = () => {
+        this.setState({ stepIndex: this.getNextExerciseIndex() });
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        this.setState({ stepIndex: this.getNextExerciseIndex() });
+    }
+
+    getNextExerciseIndex = () => {
+        return (this.props.workout.routine.exercises
+                    .sort((a, b) => a.sequence === b.sequence ? 0 : a.sequence > b.sequence ? 1 : -1)
+                    .find(e => e.endTime === undefined) || { sequence: -1 }).sequence;
     }
 
     render() {
