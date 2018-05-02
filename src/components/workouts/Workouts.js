@@ -47,7 +47,7 @@ class Workouts extends Component {
 
         Promise.all([
             this.props.fetchWorkouts(),
-            this.props.fetchWorkoutsHistory()
+            this.props.fetchWorkoutsHistory(5, 0)
         ]).then(responses => {
             this.setState({ api: { isExecuting: false, isErrored: false }})
         }, error => {
@@ -92,7 +92,7 @@ class Workouts extends Component {
                             title={'Completed'}
                             icon={<ActionDone/>}
                             itemRightIcon={<ActionInfo/>}
-                            workouts={this.props.workoutsHistory}
+                            workouts={this.props.workoutsHistory.workouts}
                             sort={'desc'}
                             timePrefix={'Completed'}
                             timeField={'endTime'}
