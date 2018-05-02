@@ -7,6 +7,7 @@ import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
 import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
+import FlatButton from 'material-ui/FlatButton'
 
 import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
@@ -97,7 +98,9 @@ class Workouts extends Component {
                             timePrefix={'Completed'}
                             timeField={'endTime'}
                             onClick={this.handleClick}
-                        />
+                        >
+                            <FlatButton label="View Full History" fullWidth={true}/>
+                        </WorkoutList>
                         <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
                     </div>
         )
