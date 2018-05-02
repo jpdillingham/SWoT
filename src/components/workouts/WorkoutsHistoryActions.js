@@ -10,7 +10,7 @@ const workoutsHistoryGet = (workoutsHistory) => ({
 
 export const fetchWorkoutsHistory = (limit, offset) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        api.get(endpoint + '?limit=' + limit + '&offset=' + offset)
+        api.get(endpoint + '?status=done&limit=' + limit + '&offset=' + offset)
         .then(response => {
             dispatch(workoutsHistoryGet(response.data));
             resolve(response);
