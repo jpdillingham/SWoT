@@ -61,6 +61,7 @@ class WorkoutList extends Component {
                                 />
                             )}
                         </List>
+                        {this.props.children}
                     </CardText>
                 </Card>
             : '' 
