@@ -7,7 +7,6 @@ import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import FlatButton from 'material-ui/FlatButton'
-import Divider from 'material-ui/Divider'
 
 import ActionDone from 'material-ui/svg-icons/action/done'
 import ActionInfo from 'material-ui/svg-icons/action/info'
