@@ -1,9 +1,10 @@
 const initialState = []
 
 const WorkoutsHistoryReducer = (state = initialState, action) => {
+    console.log(action)
     switch (action.type) {
-        case 'COMPLETED_WORKOUTS_GET':
-            return action.completedWorkouts
+        case 'WORKOUTS_HISTORY_GET':
+            return action.workoutsHistory
         default:
             return state;
     }
