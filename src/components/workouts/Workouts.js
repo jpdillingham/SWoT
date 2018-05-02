@@ -99,7 +99,11 @@ class Workouts extends Component {
                             timeField={'endTime'}
                             onClick={this.handleClick}
                         >
-                            <FlatButton label="View Full History" fullWidth={true}/>
+                            <FlatButton 
+                                label="View Full History" 
+                                fullWidth={true}
+                                onClick={() => this.navigate('/history')}
+                            />
                         </WorkoutListCard>
                         <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
                     </div>
