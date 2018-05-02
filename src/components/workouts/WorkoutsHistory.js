@@ -56,7 +56,7 @@ class WorkoutsHistory extends Component {
         this.props.history.push(url);
     }
 
-    handleClick = (workoutId) => {
+    handleWorkoutClick = (workoutId) => {
         this.navigate('/workouts/' + workoutId)
     }
 
@@ -73,7 +73,7 @@ class WorkoutsHistory extends Component {
                             sort={'desc'}
                             timePrefix={'Completed'}
                             timeField={'endTime'}
-                            onClick={this.handleClick}
+                            onClick={this.handleWorkoutClick}
                         >
                             <FlatButton icon={<HardwareKeyboardArrowLeft/>}/>
                             <FlatButton icon={<HardwareKeyboardArrowRight/>}/>
