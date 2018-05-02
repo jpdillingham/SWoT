@@ -75,7 +75,6 @@ class WorkoutsHistory extends Component {
                             timeField={'endTime'}
                             onClick={this.handleClick}
                         >
-                            <Divider style={{ marginBottom: 20 }}/>
                             <FlatButton icon={<HardwareKeyboardArrowLeft/>}/>
                             <FlatButton icon={<HardwareKeyboardArrowRight/>}/>
                         </WorkoutListCard>
