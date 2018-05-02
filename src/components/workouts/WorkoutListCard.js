@@ -25,7 +25,7 @@ const styles = {
     },
 }
 
-class WorkoutList extends Component {
+class WorkoutListCard extends Component {
     render() {
         return (
             this.props.workouts && this.props.workouts.length > 0 ? 
@@ -69,4 +69,4 @@ class WorkoutList extends Component {
     }
 }
 
-export default WorkoutList
+export default WorkoutListCard

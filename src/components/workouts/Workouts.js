@@ -16,7 +16,7 @@ import ActionDone from 'material-ui/svg-icons/action/done'
 import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
 import ActionInfo from 'material-ui/svg-icons/action/info'
 
-import WorkoutList from './WorkoutList'
+import WorkoutListCard from './WorkoutListCard'
 
 const initialState = {
     api: {
@@ -69,7 +69,7 @@ class Workouts extends Component {
             this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
-                        <WorkoutList 
+                        <WorkoutListCard 
                             title={'In Progress'}
                             icon={<AVPlayArrow/>}
                             itemRightIcon={<AVPlayArrow/>}
@@ -79,7 +79,7 @@ class Workouts extends Component {
                             timeField={'startTime'}
                             onClick={this.handleClick}
                         />
-                        <WorkoutList 
+                        <WorkoutListCard 
                             title={'Scheduled'}
                             icon={<ActionSchedule/>}
                             itemRightIcon={<AVPlayArrow/>}
@@ -89,7 +89,7 @@ class Workouts extends Component {
                             timeField={'scheduledTime'}
                             onClick={this.handleClick}
                         />
-                        <WorkoutList 
+                        <WorkoutListCard 
                             title={'Completed'}
                             icon={<ActionDone/>}
                             itemRightIcon={<ActionInfo/>}
@@ -100,7 +100,7 @@ class Workouts extends Component {
                             onClick={this.handleClick}
                         >
                             <FlatButton label="View Full History" fullWidth={true}/>
-                        </WorkoutList>
+                        </WorkoutListCard>
                         <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
                     </div>
         )
