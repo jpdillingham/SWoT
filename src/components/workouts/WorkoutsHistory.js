@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchWorkouts } from './WorkoutsActions'
 import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
 
 import { red500 } from 'material-ui/styles/colors'
@@ -10,13 +9,8 @@ import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import FlatButton from 'material-ui/FlatButton'
 import Divider from 'material-ui/Divider'
 
-import AddFloatingAddButton from '../shared/AddFloatingActionButton'
-import WorkoutDialog from './WorkoutDialog';
-import ActionSchedule from 'material-ui/svg-icons/action/schedule'
 import ActionDone from 'material-ui/svg-icons/action/done'
-import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
 import ActionInfo from 'material-ui/svg-icons/action/info'
-
 import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 
