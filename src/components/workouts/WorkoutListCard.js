@@ -5,6 +5,7 @@ import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
 import { black } from 'material-ui/styles/colors'
+import Divider from 'material-ui/Divider'
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 import { List, ListItem } from 'material-ui/List';
@@ -23,9 +24,12 @@ const styles = {
         height: '100%',
         position: 'relative',
     },
+    divider: {
+        marginBottom: 10
+    }
 }
 
-class WorkoutList extends Component {
+class WorkoutListCard extends Component {
     render() {
         return (
             this.props.workouts && this.props.workouts.length > 0 ? 
@@ -51,16 +55,18 @@ class WorkoutList extends Component {
                                     }
                                 })
                                 .map(w => 
-                                <ListItem
-                                    key={w.id}
-                                    primaryText={w.routine.name}
-                                    secondaryText={this.props.timePrefix + ' ' + moment(w[this.props.timeField]).calendar()}
-                                    leftIcon={<ActionAssignmentTurnedIn/>}
-                                    rightIcon={this.props.itemRightIcon}
-                                    onClick={() => this.props.onClick(w.id)}
-                                />
+                                    <ListItem
+                                        key={w.id}
+                                        primaryText={w.routine.name}
+                                        secondaryText={this.props.timePrefix + ' ' + moment(w[this.props.timeField]).calendar()}
+                                        leftIcon={<ActionAssignmentTurnedIn/>}
+                                        rightIcon={this.props.itemRightIcon}
+                                        onClick={() => this.props.onClick(w.id)}
+                                    />
                             )}
                         </List>
+                        {this.props.children ? <Divider style={styles.divider}/> : ''}
+                        {this.props.children}
                     </CardText>
                 </Card>
             : '' 
@@ -68,4 +74,4 @@ class WorkoutList extends Component {
     }
 }
 
-export default WorkoutList
+export default WorkoutListCard

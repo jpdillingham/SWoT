@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchWorkouts } from './WorkoutsActions'
 import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
 
 import { red500 } from 'material-ui/styles/colors'
@@ -9,12 +8,10 @@ import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import FlatButton from 'material-ui/FlatButton'
 
-import AddFloatingAddButton from '../shared/AddFloatingActionButton'
-import WorkoutDialog from './WorkoutDialog';
-import ActionSchedule from 'material-ui/svg-icons/action/schedule'
 import ActionDone from 'material-ui/svg-icons/action/done'
-import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
 import ActionInfo from 'material-ui/svg-icons/action/info'
+import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
+import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 
 import WorkoutListCard from './WorkoutListCard'
 
@@ -40,16 +37,14 @@ const styles = {
     },
 }
 
-class Workouts extends Component {
+class WorkoutsHistory extends Component {
     state = initialState;
 
     componentWillMount() {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
 
-        Promise.all([
-            this.props.fetchWorkouts(),
-            this.props.fetchWorkoutsHistory(5, 0)
-        ]).then(responses => {
+        this.props.fetchWorkoutsHistory(10, 0)
+        .then(response => {
             this.setState({ api: { isExecuting: false, isErrored: false }})
         }, error => {
             this.setState({ api: { isExecuting: false, isErrored: true }})
@@ -60,7 +55,7 @@ class Workouts extends Component {
         this.props.history.push(url);
     }
 
-    handleClick = (workoutId) => {
+    handleWorkoutClick = (workoutId) => {
         this.navigate('/workouts/' + workoutId)
     }
 
@@ -70,26 +65,6 @@ class Workouts extends Component {
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
                         <WorkoutListCard 
-                            title={'In Progress'}
-                            icon={<AVPlayArrow/>}
-                            itemRightIcon={<AVPlayArrow/>}
-                            workouts={this.props.workouts.filter(workout => workout.startTime !== undefined && workout.endTime === undefined)}
-                            sort={'desc'}
-                            timePrefix={'Started'}
-                            timeField={'startTime'}
-                            onClick={this.handleClick}
-                        />
-                        <WorkoutListCard 
-                            title={'Scheduled'}
-                            icon={<ActionSchedule/>}
-                            itemRightIcon={<AVPlayArrow/>}
-                            workouts={this.props.workouts.filter(workout => workout.startTime === undefined)}
-                            sort={'asc'}
-                            timePrefix={'Scheduled for'}
-                            timeField={'scheduledTime'}
-                            onClick={this.handleClick}
-                        />
-                        <WorkoutListCard 
                             title={'Completed'}
                             icon={<ActionDone/>}
                             itemRightIcon={<ActionInfo/>}
@@ -97,28 +72,22 @@ class Workouts extends Component {
                             sort={'desc'}
                             timePrefix={'Completed'}
                             timeField={'endTime'}
-                            onClick={this.handleClick}
+                            onClick={this.handleWorkoutClick}
                         >
-                            <FlatButton 
-                                label="View Full History" 
-                                fullWidth={true}
-                                onClick={() => this.navigate('/history')}
-                            />
+                            <FlatButton icon={<HardwareKeyboardArrowLeft/>}/>
+                            <FlatButton icon={<HardwareKeyboardArrowRight/>}/>
                         </WorkoutListCard>
-                        <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
                     </div>
         )
     }
 }
 
 const mapStateToProps = (state) => ({
-    workouts: state.workouts,
     workoutsHistory: state.workoutsHistory,
 })
 
 const mapDispatchToProps = {
-    fetchWorkouts,
     fetchWorkoutsHistory
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Workouts)
+export default connect(mapStateToProps, mapDispatchToProps)(WorkoutsHistory)

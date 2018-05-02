@@ -25,7 +25,7 @@ const workoutsDelete = (id) => ({
 
 export const fetchWorkouts = () => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
-        api.get(endpoint)
+        api.get(endpoint + '?status=undone')
         .then(response => {
             dispatch(workoutsGet(response.data));
             resolve(response);

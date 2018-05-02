@@ -13,6 +13,7 @@ import AppContainer from '../shared/AppContainer'
 
 import Workouts from '../workouts/Workouts'
 import Workout from '../workouts/Workout'
+import WorkoutsHistory from '../workouts/WorkoutsHistory'
 import Exercises from '../exercises/Exercises'
 import Routines from '../routines/Routines'
 
@@ -61,6 +62,7 @@ class App extends Component {
                                 <Route exact path="/" component={Workouts}/>
                                 <Route exact path="/workouts" component={Workouts}/>
                                 <Route path="/workouts/:id" component={Workout}/>
+                                <Route path="/history" component={WorkoutsHistory}/>
                                 <Route path="/exercises" component={Exercises}/>
                                 <Route path="/routines" component={Routines}/>
                                 <Route path="/login" component={Login}/>
