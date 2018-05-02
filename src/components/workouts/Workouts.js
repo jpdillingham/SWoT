@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchWorkouts } from './WorkoutsActions'
+import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
 
 import { red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -44,12 +45,14 @@ class Workouts extends Component {
     componentWillMount() {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
 
-        this.props.fetchWorkouts()
-            .then(response => {
-                this.setState({ api: { isExecuting: false, isErrored: false }})
-            }, error => {
-                this.setState({ api: { isExecuting: false, isErrored: true }})
-            })
+        Promise.all([
+            this.props.fetchWorkouts(),
+            this.props.fetchWorkoutsHistory()
+        ]).then(responses => {
+            this.setState({ api: { isExecuting: false, isErrored: false }})
+        }, error => {
+            this.setState({ api: { isExecuting: false, isErrored: true }})
+        })
     }
 
     navigate = (url) => {
@@ -89,7 +92,7 @@ class Workouts extends Component {
                             title={'Completed'}
                             icon={<ActionDone/>}
                             itemRightIcon={<ActionInfo/>}
-                            workouts={this.props.workouts.filter(workout => workout.endTime !== undefined)}
+                            workouts={this.props.workoutsHistory}
                             sort={'desc'}
                             timePrefix={'Completed'}
                             timeField={'endTime'}
@@ -102,11 +105,13 @@ class Workouts extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    workouts: state.workouts
+    workouts: state.workouts,
+    workoutsHistory: state.workoutsHistory,
 })
 
 const mapDispatchToProps = {
-    fetchWorkouts
+    fetchWorkouts,
+    fetchWorkoutsHistory
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workouts)
