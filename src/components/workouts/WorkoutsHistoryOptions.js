@@ -13,10 +13,7 @@ import ActionInfo from 'material-ui/svg-icons/action/info'
 import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 
-import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
-
-import WorkoutListCard from './WorkoutListCard'
 import SelectField from 'material-ui/SelectField/SelectField';
 
 const limitOptions = [ 5, 10, 25, 50 ];

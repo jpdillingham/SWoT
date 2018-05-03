@@ -13,7 +13,7 @@ import ActionInfo from 'material-ui/svg-icons/action/info'
 import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 
-import WorkoutListCard from './WorkoutListCard'
+import WorkoutsListCard from './WorkoutsListCard'
 import WorkoutsHistoryOptions from './WorkoutsHistoryOptions'
 
 const initialState = {
@@ -121,7 +121,7 @@ class WorkoutsHistory extends Component {
             this.state.loadApi.isExecuting ? <CircularProgress style={styles.icon} /> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
-                        <WorkoutListCard 
+                        <WorkoutsListCard 
                             title={'Completed'}
                             icon={<ActionDone/>}
                             options={
@@ -154,7 +154,7 @@ class WorkoutsHistory extends Component {
                                     icon={<HardwareKeyboardArrowRight/>}
                                 />
                             </div>
-                        </WorkoutListCard>
+                        </WorkoutsListCard>
                     </div>
         )
     }
