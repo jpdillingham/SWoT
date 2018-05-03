@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
 
-import { red500 } from 'material-ui/styles/colors'
+import { black, red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import FlatButton from 'material-ui/FlatButton'
@@ -45,6 +45,13 @@ const styles = {
         left: '50%',
         transform: 'translate(-50%, -50%)'
     },
+    paginationButton: {
+        color: black,
+        width: 150
+    },
+    buttonRow: {
+        textAlign: 'center'
+    }
 }
 
 class WorkoutsHistory extends Component {
@@ -63,21 +70,17 @@ class WorkoutsHistory extends Component {
     }
 
     handleNextClick = () => {
-        this.setState({ 
-            filters: {
-                ...this.state.filters,
-                offset: this.state.filters.offset + this.state.filters.limit
-            }
-        }, () => this.refreshWorkoutsHistory(this.state.filters, 'refreshApi'))
+        this.refreshWorkoutsHistory({
+            ...this.state.filters,
+            offset: this.state.filters.offset + this.state.filters.limit
+        }, 'refreshApi')
     }
 
     handlePreviousClick = () => {
-        this.setState({ 
-            filters: {
-                ...this.state.filters,
-                offset: this.state.filters.offset - this.state.filters.limit
-            }
-        }, () => this.refreshWorkoutsHistory(this.state.filters, 'refreshApi'))        
+        this.refreshWorkoutsHistory({
+            ...this.state.filters,
+            offset: this.state.filters.offset - this.state.filters.limit
+        }, 'refreshApi')        
     }
 
     refreshWorkoutsHistory = (filters, api = 'loadApi') => {
@@ -123,17 +126,23 @@ class WorkoutsHistory extends Component {
                             timeField={'endTime'}
                             onClick={this.handleWorkoutClick}
                         >
-                            <FlatButton
-                                onClick={this.handlePreviousClick}
-                                disabled={start === 1}
-                                icon={<HardwareKeyboardArrowLeft/>}
-                            />
-                            <span>{start + '-' + end + ' of ' + total}</span>
-                            <FlatButton 
-                                onClick={this.handleNextClick}
-                                disabled={end === total} 
-                                icon={<HardwareKeyboardArrowRight/>}
-                            />
+                            <div style={styles.buttonRow}>
+                                <FlatButton
+                                    onClick={this.handlePreviousClick}
+                                    disabled={start === 1}
+                                    icon={<HardwareKeyboardArrowLeft/>}
+                                />
+                                <FlatButton 
+                                    label={start + '-' + end + ' of ' + total}
+                                    disabled={true}
+                                    style={styles.paginationButton}
+                                />
+                                <FlatButton 
+                                    onClick={this.handleNextClick}
+                                    disabled={end === total} 
+                                    icon={<HardwareKeyboardArrowRight/>}
+                                />
+                            </div>
                         </WorkoutListCard>
                     </div>
         )
