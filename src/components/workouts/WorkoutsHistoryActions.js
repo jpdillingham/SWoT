@@ -3,10 +3,9 @@ import { API_ROOT } from "../../constants"
 
 const endpoint = API_ROOT + '/workouts';
 
-const workoutsHistoryGet = (workouts, filters, totalCount) => ({
+const workoutsHistoryGet = (workouts, totalCount) => ({
     type: 'WORKOUTS_HISTORY_GET',
     workouts: workouts,
-    filters: filters,
     totalCount: totalCount,
 })
 
@@ -22,7 +21,7 @@ export const fetchWorkoutsHistory = (filters) => (dispatch, getState) => {
         api.get(endpoint + queryParams)
         .then(response => {
             let totalCount = parseInt(response.headers['x-total-count'], 10)
-            dispatch(workoutsHistoryGet(response.data, filters, totalCount));
+            dispatch(workoutsHistoryGet(response.data, totalCount));
             resolve(response);
         }, error => {
             reject('API error: ' + error);
