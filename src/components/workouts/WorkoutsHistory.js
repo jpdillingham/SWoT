@@ -14,12 +14,13 @@ import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-a
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 
 import WorkoutListCard from './WorkoutListCard'
+import WorkoutsHistoryOptions from './WorkoutsHistoryOptions'
 
 const initialState = {
     workouts: [],
     filters: {
         offset: 0,
-        limit: 3,
+        limit: 5,
         order: 'desc'
     },
     loadApi: {
@@ -58,7 +59,7 @@ class WorkoutsHistory extends Component {
     state = initialState;
 
     componentWillMount() {
-        this.refreshWorkoutsHistory(this.state.filters);
+        this.refreshWorkoutsHistory(this.state.filters, 'loadApi');
     }
 
     navigate = (url) => {
@@ -73,17 +74,21 @@ class WorkoutsHistory extends Component {
         this.refreshWorkoutsHistory({
             ...this.state.filters,
             offset: this.state.filters.offset + this.state.filters.limit
-        }, 'refreshApi')
+        })
+    }
+
+    handleFiltersChange = (filters) => {
+        this.refreshWorkoutsHistory(filters);
     }
 
     handlePreviousClick = () => {
         this.refreshWorkoutsHistory({
             ...this.state.filters,
             offset: this.state.filters.offset - this.state.filters.limit
-        }, 'refreshApi')        
+        })        
     }
 
-    refreshWorkoutsHistory = (filters, api = 'loadApi') => {
+    refreshWorkoutsHistory = (filters, api = 'refreshApi') => {
         this.setState({ 
             filters: filters,
             [api]: { ...this.state[api], isExecuting: true }
@@ -119,6 +124,12 @@ class WorkoutsHistory extends Component {
                         <WorkoutListCard 
                             title={'Completed'}
                             icon={<ActionDone/>}
+                            options={
+                                <WorkoutsHistoryOptions 
+                                    filters={this.state.filters} 
+                                    onChange={this.handleFiltersChange}
+                                />
+                            }
                             itemRightIcon={<ActionInfo/>}
                             workouts={workouts}
                             sort={'desc'}
