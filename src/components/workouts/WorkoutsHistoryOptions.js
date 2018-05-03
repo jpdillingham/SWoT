@@ -18,9 +18,17 @@ class WorkoutsHistoryOptions extends Component {
 
     render() {
         return (
-            <SelectField style={styles.limit} value={this.props.filters.limit} onChange={this.handleLimitChange}>
+            <SelectField 
+                style={styles.limit} 
+                value={this.props.filters.limit} 
+                onChange={this.handleLimitChange}
+            >
                 {limitOptions.map((o, index) => 
-                    <MenuItem key={index} value={o} primaryText={o} />                    
+                    <MenuItem 
+                        key={index} 
+                        value={o} 
+                        primaryText={o} 
+                    />                    
                 )}
             </SelectField>
         )
