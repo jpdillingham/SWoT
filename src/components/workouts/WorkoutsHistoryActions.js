@@ -21,8 +21,8 @@ export const fetchWorkoutsHistory = (filters) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         api.get(endpoint + queryParams)
         .then(response => {
-            console.log(response)
-            dispatch(workoutsHistoryGet(response.data, filters, parseInt(response.headers['x-total-count'])));
+            let totalCount = parseInt(response.headers['x-total-count'], 10)
+            dispatch(workoutsHistoryGet(response.data, filters, totalCount));
             resolve(response);
         }, error => {
             reject('API error: ' + error);
