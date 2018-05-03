@@ -16,7 +16,16 @@ import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-
 import WorkoutListCard from './WorkoutListCard'
 
 const initialState = {
-    api: {
+    workouts: [],
+    pagination: {
+        offset: 0,
+        limit: 5
+    },
+    loadApi: {
+        isExecuting: false,
+        isErrored: false,
+    },
+    refreshApi: {
         isExecuting: false,
         isErrored: false,
     }
@@ -41,14 +50,7 @@ class WorkoutsHistory extends Component {
     state = initialState;
 
     componentWillMount() {
-        this.setState({ api: { ...this.state.api, isExecuting: true }})
-
-        this.props.fetchWorkoutsHistory({ offset: 0, limit: 3 })
-        .then(response => {
-            this.setState({ api: { isExecuting: false, isErrored: false }})
-        }, error => {
-            this.setState({ api: { isExecuting: false, isErrored: true }})
-        })
+        this.refreshWorkoutsHistory(this.state.pagination);
     }
 
     navigate = (url) => {
@@ -57,6 +59,35 @@ class WorkoutsHistory extends Component {
 
     handleWorkoutClick = (workoutId) => {
         this.navigate('/workouts/' + workoutId)
+    }
+
+    handleNextClick = () => {
+        this.setState({ 
+            pagination: {
+                ...this.state.pagination,
+                offset: this.state.pagination.offset + this.state.pagination.limit
+            }
+        }, () => this.refreshWorkoutsHistory(this.state.pagination, 'refreshApi'))
+    }
+
+    handlePreviousClick = () => {
+        this.setState({ 
+            pagination: {
+                ...this.state.pagination,
+                offset: this.state.pagination.offset - this.state.pagination.limit
+            }
+        }, () => this.refreshWorkoutsHistory(this.state.pagination, 'refreshApi'))        
+    }
+
+    refreshWorkoutsHistory = (filters, api = 'loadApi') => {
+        this.setState({ [api]: { ...this.state[api], isExecuting: true }})
+
+        this.props.fetchWorkoutsHistory(filters)
+        .then(response => {
+            this.setState({ [api]: { isExecuting: false, isErrored: false }})
+        }, error => {
+            this.setState({ [api]: { isExecuting: false, isErrored: true }})
+        })
     }
 
     render() {
@@ -73,22 +104,30 @@ class WorkoutsHistory extends Component {
         let total = this.props.workoutsHistory.totalCount;
 
         return (
-            this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
-                this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
+            this.state.loadApi.isExecuting ? <CircularProgress style={styles.icon} /> : 
+                this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
                         <WorkoutListCard 
                             title={'Completed'}
                             icon={<ActionDone/>}
                             itemRightIcon={<ActionInfo/>}
-                            workouts={workouts}
+                            workouts={this.props.workoutsHistory.workouts}
                             sort={'desc'}
                             timePrefix={'Completed'}
                             timeField={'endTime'}
                             onClick={this.handleWorkoutClick}
                         >
-                            <FlatButton icon={<HardwareKeyboardArrowLeft/>}/>
+                            <FlatButton
+                                onClick={this.handlePreviousClick}
+                                disabled={start === 1}
+                                icon={<HardwareKeyboardArrowLeft/>}
+                            />
                             <span>{start + '-' + end + ' of ' + total}</span>
-                            <FlatButton icon={<HardwareKeyboardArrowRight/>}/>
+                            <FlatButton 
+                                onClick={this.handleNextClick}
+                                disabled={end === total} 
+                                icon={<HardwareKeyboardArrowRight/>}
+                            />
                         </WorkoutListCard>
                     </div>
         )
