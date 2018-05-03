@@ -17,9 +17,10 @@ import WorkoutListCard from './WorkoutListCard'
 
 const initialState = {
     workouts: [],
-    pagination: {
+    filters: {
         offset: 0,
-        limit: 5
+        limit: 3,
+        order: 'desc'
     },
     loadApi: {
         isExecuting: false,
@@ -50,7 +51,7 @@ class WorkoutsHistory extends Component {
     state = initialState;
 
     componentWillMount() {
-        this.refreshWorkoutsHistory(this.state.pagination);
+        this.refreshWorkoutsHistory(this.state.filters);
     }
 
     navigate = (url) => {
@@ -63,40 +64,45 @@ class WorkoutsHistory extends Component {
 
     handleNextClick = () => {
         this.setState({ 
-            pagination: {
-                ...this.state.pagination,
-                offset: this.state.pagination.offset + this.state.pagination.limit
+            filters: {
+                ...this.state.filters,
+                offset: this.state.filters.offset + this.state.filters.limit
             }
-        }, () => this.refreshWorkoutsHistory(this.state.pagination, 'refreshApi'))
+        }, () => this.refreshWorkoutsHistory(this.state.filters, 'refreshApi'))
     }
 
     handlePreviousClick = () => {
         this.setState({ 
-            pagination: {
-                ...this.state.pagination,
-                offset: this.state.pagination.offset - this.state.pagination.limit
+            filters: {
+                ...this.state.filters,
+                offset: this.state.filters.offset - this.state.filters.limit
             }
-        }, () => this.refreshWorkoutsHistory(this.state.pagination, 'refreshApi'))        
+        }, () => this.refreshWorkoutsHistory(this.state.filters, 'refreshApi'))        
     }
 
     refreshWorkoutsHistory = (filters, api = 'loadApi') => {
-        this.setState({ [api]: { ...this.state[api], isExecuting: true }})
-
-        this.props.fetchWorkoutsHistory(filters)
-        .then(response => {
-            this.setState({ [api]: { isExecuting: false, isErrored: false }})
-        }, error => {
-            this.setState({ [api]: { isExecuting: false, isErrored: true }})
+        this.setState({ 
+            filters: filters,
+            [api]: { ...this.state[api], isExecuting: true }
+        }, () => {
+            this.props.fetchWorkoutsHistory(filters)
+            .then(response => {
+                this.setState({ [api]: { isExecuting: false, isErrored: false }})
+            }, error => {
+                this.setState({ [api]: { isExecuting: false, isErrored: true }})
+            })
         })
+
     }
 
     render() {
         let workouts = this.props.workoutsHistory.workouts;
-        let filters = this.props.workoutsHistory.filters;
+        let filters = this.state.filters;
         let start;
         let end;
 
-        if (filters) {
+        console.log(workouts)
+        if (workouts) {
             start = filters.offset + 1;
             end = start - 1 + workouts.length;
         }
@@ -111,7 +117,7 @@ class WorkoutsHistory extends Component {
                             title={'Completed'}
                             icon={<ActionDone/>}
                             itemRightIcon={<ActionInfo/>}
-                            workouts={this.props.workoutsHistory.workouts}
+                            workouts={workouts}
                             sort={'desc'}
                             timePrefix={'Completed'}
                             timeField={'endTime'}
