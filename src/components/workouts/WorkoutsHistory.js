@@ -43,7 +43,7 @@ class WorkoutsHistory extends Component {
     componentWillMount() {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
 
-        this.props.fetchWorkoutsHistory(10, 0)
+        this.props.fetchWorkoutsHistory({ offset: 0, limit: 5 })
         .then(response => {
             this.setState({ api: { isExecuting: false, isErrored: false }})
         }, error => {
@@ -60,6 +60,8 @@ class WorkoutsHistory extends Component {
     }
 
     render() {
+        let filters = this.props.workoutsHistory.filters;
+
         return (
             this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
@@ -75,6 +77,7 @@ class WorkoutsHistory extends Component {
                             onClick={this.handleWorkoutClick}
                         >
                             <FlatButton icon={<HardwareKeyboardArrowLeft/>}/>
+                            <span>{filters.offset + ' - ' + filters.limit}</span>
                             <FlatButton icon={<HardwareKeyboardArrowRight/>}/>
                         </WorkoutListCard>
                     </div>

@@ -3,18 +3,24 @@ import { API_ROOT } from "../../constants"
 
 const endpoint = API_ROOT + '/workouts';
 
-const workoutsHistoryGet = (workouts, limit, offset) => ({
+const workoutsHistoryGet = (workouts, filters) => ({
     type: 'WORKOUTS_HISTORY_GET',
     workouts: workouts,
-    limit: limit,
-    offset: offset,
+    filters: filters,
 })
 
-export const fetchWorkoutsHistory = (limit, offset) => (dispatch, getState) => {
+export const fetchWorkoutsHistory = (filters) => (dispatch, getState) => {
+    let queryParams = '?';
+    queryParams += 'status=done';
+
+    Object.keys(filters).forEach(f => {
+        queryParams += '&' + f + '=' + filters[f];
+    })
+
     return new Promise((resolve, reject) => {
-        api.get(endpoint + '?status=done&limit=' + limit + '&offset=' + offset)
+        api.get(endpoint + queryParams)
         .then(response => {
-            dispatch(workoutsHistoryGet(response.data, limit, offset));
+            dispatch(workoutsHistoryGet(response.data, filters));
             resolve(response);
         }, error => {
             reject('API error: ' + error);
