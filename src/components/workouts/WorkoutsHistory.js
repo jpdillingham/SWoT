@@ -43,7 +43,7 @@ class WorkoutsHistory extends Component {
     componentWillMount() {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
 
-        this.props.fetchWorkoutsHistory({ offset: 0, limit: 5 })
+        this.props.fetchWorkoutsHistory({ offset: 0, limit: 3 })
         .then(response => {
             this.setState({ api: { isExecuting: false, isErrored: false }})
         }, error => {
@@ -60,7 +60,17 @@ class WorkoutsHistory extends Component {
     }
 
     render() {
+        let workouts = this.props.workoutsHistory.workouts;
         let filters = this.props.workoutsHistory.filters;
+        let start;
+        let end;
+
+        if (filters) {
+            start = filters.offset + 1;
+            end = start - 1 + workouts.length;
+        }
+        
+        let total = this.props.workoutsHistory.totalCount;
 
         return (
             this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
@@ -70,14 +80,14 @@ class WorkoutsHistory extends Component {
                             title={'Completed'}
                             icon={<ActionDone/>}
                             itemRightIcon={<ActionInfo/>}
-                            workouts={this.props.workoutsHistory.workouts}
+                            workouts={workouts}
                             sort={'desc'}
                             timePrefix={'Completed'}
                             timeField={'endTime'}
                             onClick={this.handleWorkoutClick}
                         >
                             <FlatButton icon={<HardwareKeyboardArrowLeft/>}/>
-                            <span>{filters.offset + ' - ' + filters.limit}</span>
+                            <span>{start + '-' + end + ' of ' + total}</span>
                             <FlatButton icon={<HardwareKeyboardArrowRight/>}/>
                         </WorkoutListCard>
                     </div>
