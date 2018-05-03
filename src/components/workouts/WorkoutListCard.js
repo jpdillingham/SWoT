@@ -24,7 +24,10 @@ const styles = {
         height: '100%',
         position: 'relative',
     },
-    divider: {
+    headerDivider: {
+        marginTop: 10
+    },
+    footerDivider: {
         marginBottom: 10
     }
 }
@@ -41,6 +44,8 @@ class WorkoutListCard extends Component {
                         avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={this.props.icon}></Avatar>}
                     />
                     <CardText>
+                        {this.props.options}
+                        {this.props.options ? <Divider style={styles.headerDivider}/> : ''}
                         <List>
                             {this.props.workouts
                                 .sort((a, b) => { 
@@ -65,7 +70,7 @@ class WorkoutListCard extends Component {
                                     />
                             )}
                         </List>
-                        {this.props.children ? <Divider style={styles.divider}/> : ''}
+                        {this.props.children ? <Divider style={styles.footerDivider}/> : ''}
                         {this.props.children}
                     </CardText>
                 </Card>
