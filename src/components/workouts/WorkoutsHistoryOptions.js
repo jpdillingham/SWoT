@@ -7,10 +7,13 @@ import { FILTER_SORT_ORDER_OPTIONS, FILTER_LIMIT_OPTIONS } from '../../constants
 
 const styles = {
     order: {
-        width: 100,
+        width: 150,
     },
     limit: {
         width: 75,
+    },
+    routine: {
+        width: 300,
     }
 }
 
@@ -23,21 +26,35 @@ class WorkoutsHistoryOptions extends Component {
         return (
             <div>
                 <SelectField 
-                    floatingLabelText="Sort"
+                    floatingLabelText={'Filter By'}
+                    style={styles.routine} 
+                    value={this.props.filters.routine} 
+                    onChange={(event, index, value) => this.handleChange('routine', event, index, value)}
+                >
+                    {this.props.routines.map((r, index) => 
+                        <MenuItem 
+                            key={index} 
+                            value={r.id} 
+                            primaryText={r.name} 
+                        />                    
+                    )}
+                </SelectField>
+                <SelectField 
+                    floatingLabelText="Sort By"
                     style={styles.order} 
-                    value={this.props.filters.order.toUpperCase()} 
+                    value={FILTER_SORT_ORDER_OPTIONS.find(o => o.value.toLowerCase() === this.props.filters.order.toLowerCase()).value} 
                     onChange={(event, index, value) => this.handleChange('order', event, index, value)}
                 >
                     {FILTER_SORT_ORDER_OPTIONS.map((o, index) => 
                         <MenuItem 
                             key={index} 
-                            value={o} 
-                            primaryText={o} 
+                            value={o.value} 
+                            primaryText={o.caption} 
                         />                    
                     )}
                 </SelectField>
                 <SelectField 
-                    floatingLabelText="Limit"
+                    floatingLabelText="Per Page"
                     style={styles.limit} 
                     value={this.props.filters.limit} 
                     onChange={(event, index, value) => this.handleChange('limit', event, index, value)}
@@ -45,8 +62,8 @@ class WorkoutsHistoryOptions extends Component {
                     {FILTER_LIMIT_OPTIONS.map((o, index) => 
                         <MenuItem 
                             key={index} 
-                            value={o} 
-                            primaryText={o} 
+                            value={o.value} 
+                            primaryText={o.caption} 
                         />                    
                     )}
                 </SelectField>
