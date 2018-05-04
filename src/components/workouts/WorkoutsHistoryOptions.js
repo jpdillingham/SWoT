@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import { red500 } from 'material-ui/styles/colors'
 import SelectField from 'material-ui/SelectField/SelectField';
 import MenuItem from 'material-ui/MenuItem'
-import IconButton from 'material-ui/IconButton'
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel'
 
 import { FILTER_SORT_ORDER_OPTIONS, FILTER_LIMIT_OPTIONS } from '../../constants'
