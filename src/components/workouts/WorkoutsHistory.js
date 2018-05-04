@@ -90,14 +90,13 @@ class WorkoutsHistory extends Component {
 
     refreshWorkoutsHistory = (filters, api = 'refreshApi') => {
         this.setState({ 
-            filters: filters,
             [api]: { ...this.state[api], isExecuting: true }
         }, () => {
             this.props.fetchWorkoutsHistory(filters)
             .then(response => {
-                this.setState({ [api]: { isExecuting: false, isErrored: false }})
+                this.setState({ filters: filters, [api]: { isExecuting: false, isErrored: false }})
             }, error => {
-                this.setState({ [api]: { isExecuting: false, isErrored: true }})
+                this.setState({ filters: filters, [api]: { isExecuting: false, isErrored: true }})
             })
         })
 
@@ -132,7 +131,7 @@ class WorkoutsHistory extends Component {
                             }
                             itemRightIcon={<ActionInfo/>}
                             workouts={workouts}
-                            sort={'desc'}
+                            sort={this.state.filters.order}
                             timePrefix={'Completed'}
                             timeField={'endTime'}
                             onClick={this.handleWorkoutClick}
