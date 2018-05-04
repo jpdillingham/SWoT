@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import SelectField from 'material-ui/SelectField/SelectField';
 import MenuItem from 'material-ui/MenuItem'
 
-const limitOptions = [ 5, 10, 25, 50 ];
-const sortOptions = [ 'ASC', 'DESC' ];
+import { FILTER_SORT_ORDER_OPTIONS, FILTER_LIMIT_OPTIONS } from '../../constants'
 
 const styles = {
     order: {
@@ -29,7 +28,7 @@ class WorkoutsHistoryOptions extends Component {
                     value={this.props.filters.order.toUpperCase()} 
                     onChange={(event, index, value) => this.handleChange('order', event, index, value)}
                 >
-                    {sortOptions.map((o, index) => 
+                    {FILTER_SORT_ORDER_OPTIONS.map((o, index) => 
                         <MenuItem 
                             key={index} 
                             value={o} 
@@ -43,7 +42,7 @@ class WorkoutsHistoryOptions extends Component {
                     value={this.props.filters.limit} 
                     onChange={(event, index, value) => this.handleChange('limit', event, index, value)}
                 >
-                    {limitOptions.map((o, index) => 
+                    {FILTER_LIMIT_OPTIONS.map((o, index) => 
                         <MenuItem 
                             key={index} 
                             value={o} 
