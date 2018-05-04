@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
+import { fetchRoutines } from '../routines/RoutinesActions'
 
 import { black, red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -60,6 +61,7 @@ class WorkoutsHistory extends Component {
 
     componentWillMount() {
         this.refreshWorkoutsHistory(this.state.filters, 'loadApi');
+        this.props.fetchRoutines();
     }
 
     navigate = (url) => {
@@ -90,14 +92,13 @@ class WorkoutsHistory extends Component {
 
     refreshWorkoutsHistory = (filters, api = 'refreshApi') => {
         this.setState({ 
-            filters: filters,
             [api]: { ...this.state[api], isExecuting: true }
         }, () => {
             this.props.fetchWorkoutsHistory(filters)
             .then(response => {
-                this.setState({ [api]: { isExecuting: false, isErrored: false }})
+                this.setState({ filters: filters, [api]: { isExecuting: false, isErrored: false }})
             }, error => {
-                this.setState({ [api]: { isExecuting: false, isErrored: true }})
+                this.setState({ filters: filters, [api]: { isExecuting: false, isErrored: true }})
             })
         })
 
@@ -127,12 +128,13 @@ class WorkoutsHistory extends Component {
                             options={
                                 <WorkoutsHistoryOptions 
                                     filters={this.state.filters} 
+                                    routines={this.props.routines}
                                     onChange={this.handleFiltersChange}
                                 />
                             }
                             itemRightIcon={<ActionInfo/>}
                             workouts={workouts}
-                            sort={'desc'}
+                            sort={this.state.filters.order}
                             timePrefix={'Completed'}
                             timeField={'endTime'}
                             onClick={this.handleWorkoutClick}
@@ -162,10 +164,12 @@ class WorkoutsHistory extends Component {
 
 const mapStateToProps = (state) => ({
     workoutsHistory: state.workoutsHistory,
+    routines: state.routines,
 })
 
 const mapDispatchToProps = {
-    fetchWorkoutsHistory
+    fetchWorkoutsHistory,
+    fetchRoutines,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutsHistory)

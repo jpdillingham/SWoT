@@ -19,3 +19,15 @@ export const INTENTS = {
 
 export const COGNITO_POOLID = 'us-east-1_OhnX3yEY5'
 export const COGNITO_CLIENTID = '18b132av2gkfgl3m793qcgjsd3'
+
+export const FILTER_LIMIT_OPTIONS = [ 
+    { caption: '5', value: 5 }, 
+    { caption: '10', value: 10 }, 
+    { caption: '25', value: 25 }, 
+    { caption: '50', value: 25 } 
+];
+
+export const FILTER_SORT_ORDER_OPTIONS = [ 
+    { caption: 'Oldest First', value: 'asc' }, 
+    { caption: 'Newest First', value: 'desc' } 
+];

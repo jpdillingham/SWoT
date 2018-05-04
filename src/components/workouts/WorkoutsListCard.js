@@ -50,7 +50,7 @@ class WorkoutsListCard extends Component {
                             {this.props.workouts
                                 .sort((a, b) => { 
                                     let f = this.props.timeField;
-                                    if (this.props.sort === 'desc') {
+                                    if (this.props.sort.toLowerCase() === 'desc') {
                                         return a[f] > b[f] ? -1 : 
                                             a[f] === b[f] ? 0 : 1 
                                     }

@@ -48,7 +48,7 @@ class Workouts extends Component {
 
         Promise.all([
             this.props.fetchWorkouts(),
-            this.props.fetchWorkoutsHistory({ offset: 0, limit: 5 })
+            this.props.fetchWorkoutsHistory({ offset: 0, limit: 5, order: 'desc' })
         ]).then(responses => {
             this.setState({ api: { isExecuting: false, isErrored: false }})
         }, error => {
