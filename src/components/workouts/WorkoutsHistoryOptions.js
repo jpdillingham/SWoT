@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
 
+import { red500 } from 'material-ui/styles/colors'
 import SelectField from 'material-ui/SelectField/SelectField';
 import MenuItem from 'material-ui/MenuItem'
+import IconButton from 'material-ui/IconButton'
+import NavigationCancel from 'material-ui/svg-icons/navigation/cancel'
 
 import { FILTER_SORT_ORDER_OPTIONS, FILTER_LIMIT_OPTIONS } from '../../constants'
 
 const styles = {
     order: {
         width: 150,
+        marginRight: 5,
     },
     limit: {
         width: 75,
+        marginRight: 5,
     },
     routine: {
         width: 300,
+    },
+    routineClearIcon: {
+        width: 18,
+        height: 18,
+        color: red500,
+        cursor: 'pointer',
+        marginBottom: 15,
     }
 }
 
@@ -22,23 +34,16 @@ class WorkoutsHistoryOptions extends Component {
         this.props.onChange({ ...this.props.filters, [filter]: value });
     }
 
+    handleRoutineFilterClearClick = () => {
+        let filters = { ...this.props.filters };
+        delete filters.routine;
+
+        this.props.onChange(filters);
+    }
+
     render() {
         return (
             <div>
-                <SelectField 
-                    floatingLabelText={'Filter By'}
-                    style={styles.routine} 
-                    value={this.props.filters.routine} 
-                    onChange={(event, index, value) => this.handleChange('routine', event, index, value)}
-                >
-                    {this.props.routines.map((r, index) => 
-                        <MenuItem 
-                            key={index} 
-                            value={r.id} 
-                            primaryText={r.name} 
-                        />                    
-                    )}
-                </SelectField>
                 <SelectField 
                     floatingLabelText="Sort By"
                     style={styles.order} 
@@ -67,6 +72,24 @@ class WorkoutsHistoryOptions extends Component {
                         />                    
                     )}
                 </SelectField>
+                <SelectField 
+                        floatingLabelText={'Filter By'}
+                        style={styles.routine} 
+                        value={this.props.filters.routine} 
+                        onChange={(event, index, value) => this.handleChange('routine', event, index, value)}
+                    >
+                        {this.props.routines.map((r, index) => 
+                            <MenuItem 
+                                key={index} 
+                                value={r.id} 
+                                primaryText={r.name} 
+                            />                    
+                        )}
+                </SelectField>
+                {this.props.filters.routine !== undefined ? 
+                    <NavigationCancel style={styles.routineClearIcon} onClick={this.handleRoutineFilterClearClick}/>
+                : '' }
+
             </div>
         )
     }
