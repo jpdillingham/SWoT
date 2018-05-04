@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
+import { fetchRoutines } from '../routines/RoutinesActions'
 
 import { black, red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
@@ -60,6 +61,7 @@ class WorkoutsHistory extends Component {
 
     componentWillMount() {
         this.refreshWorkoutsHistory(this.state.filters, 'loadApi');
+        this.props.fetchRoutines();
     }
 
     navigate = (url) => {
@@ -126,6 +128,7 @@ class WorkoutsHistory extends Component {
                             options={
                                 <WorkoutsHistoryOptions 
                                     filters={this.state.filters} 
+                                    routines={this.props.routines}
                                     onChange={this.handleFiltersChange}
                                 />
                             }
@@ -161,10 +164,12 @@ class WorkoutsHistory extends Component {
 
 const mapStateToProps = (state) => ({
     workoutsHistory: state.workoutsHistory,
+    routines: state.routines,
 })
 
 const mapDispatchToProps = {
-    fetchWorkoutsHistory
+    fetchWorkoutsHistory,
+    fetchRoutines,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutsHistory)
