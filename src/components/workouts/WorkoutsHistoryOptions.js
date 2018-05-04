@@ -7,7 +7,7 @@ const limitOptions = [ 5, 10, 25, 50 ];
 
 const styles = {
     limit: {
-        width: 50,
+        width: 75,
     }
 }
 
@@ -19,6 +19,7 @@ class WorkoutsHistoryOptions extends Component {
     render() {
         return (
             <SelectField 
+                floatingLabelText="Limit"
                 style={styles.limit} 
                 value={this.props.filters.limit} 
                 onChange={this.handleLimitChange}
