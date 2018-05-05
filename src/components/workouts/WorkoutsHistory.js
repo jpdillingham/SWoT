@@ -9,7 +9,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import FlatButton from 'material-ui/FlatButton'
 
-import ActionDone from 'material-ui/svg-icons/action/done'
+import ActionRestore from 'material-ui/svg-icons/action/restore'
 import ActionInfo from 'material-ui/svg-icons/action/info'
 import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
@@ -123,7 +123,7 @@ class WorkoutsHistory extends Component {
                     <div style={styles.grid}>
                         <WorkoutsListCard 
                             title={'Completed'}
-                            icon={<ActionDone/>}
+                            icon={<ActionRestore/>}
                             options={
                                 <WorkoutsHistoryOptions 
                                     filters={this.state.filters} 
