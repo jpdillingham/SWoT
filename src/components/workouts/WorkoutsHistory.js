@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import MDSpinner from 'react-md-spinner'
+
 import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
 import { fetchRoutines } from '../routines/RoutinesActions'
 
@@ -9,7 +11,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import FlatButton from 'material-ui/FlatButton'
 
-import ActionDone from 'material-ui/svg-icons/action/done'
+import ActionRestore from 'material-ui/svg-icons/action/restore'
 import ActionInfo from 'material-ui/svg-icons/action/info'
 import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
@@ -123,8 +125,8 @@ class WorkoutsHistory extends Component {
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
                         <WorkoutsListCard 
-                            title={'Completed'}
-                            icon={<ActionDone/>}
+                            title={'History'}
+                            icon={<ActionRestore/>}
                             options={
                                 <WorkoutsHistoryOptions 
                                     filters={this.state.filters} 
@@ -147,9 +149,10 @@ class WorkoutsHistory extends Component {
                                     icon={<HardwareKeyboardArrowLeft/>}
                                 />
                                 <FlatButton 
-                                    label={start + '-' + end + ' of ' + total}
+                                    label={this.state.refreshApi.isExecuting ? '' : start + '-' + end + ' of ' + total}
                                     disabled={true}
                                     style={styles.paginationButton}
+                                    icon={this.state.refreshApi.isExecuting ? <MDSpinner singleColor={'#000'} size={20}/> : ''}
                                 />
                                 <FlatButton 
                                     onClick={this.handleNextClick}
