@@ -110,7 +110,6 @@ class WorkoutsHistory extends Component {
         let start;
         let end;
 
-        console.log(workouts)
         if (workouts) {
             start = filters.offset + 1;
             end = start - 1 + workouts.length;

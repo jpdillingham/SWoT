@@ -4,7 +4,6 @@ const initialState = {
 }
 
 const SecurityReducer = (state = initialState, action) => { 
-    console.log(action)
     switch (action.type) {
         case 'LOGIN':
             return { ...state, user: action.user, session: action.session };
