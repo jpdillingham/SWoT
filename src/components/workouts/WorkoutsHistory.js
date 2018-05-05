@@ -83,7 +83,10 @@ class WorkoutsHistory extends Component {
     }
 
     handleFiltersChange = (filters) => {
-        
+        if (this.state.filters.routineId !== filters.routineId) {
+            filters.offset = 0;
+        }
+
         this.refreshWorkoutsHistory(filters);
     }
 
