@@ -35,7 +35,7 @@ const styles = {
 class WorkoutsListCard extends Component {
     render() {
         return (
-            (!this.props.workouts || this.props.workouts.length == 0) && this.props.hideIfEmpty ? '' :
+            (!this.props.workouts || this.props.workouts.length === 0) && this.props.hideIfEmpty ? '' :
                 <Card zDepth={2} style={styles.card}>
                     <CardHeader
                         title={this.props.title}
