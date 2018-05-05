@@ -1,7 +1,6 @@
 const initialState = []
 
 const WorkoutsHistoryReducer = (state = initialState, action) => {
-    console.log(action)
     switch (action.type) {
         case 'WORKOUTS_HISTORY_GET':
             return { workouts: action.workouts, totalCount: action.totalCount }

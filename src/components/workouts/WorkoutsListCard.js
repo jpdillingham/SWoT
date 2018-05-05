@@ -35,7 +35,7 @@ const styles = {
 class WorkoutsListCard extends Component {
     render() {
         return (
-            this.props.workouts && this.props.workouts.length > 0 ? 
+            (!this.props.workouts || this.props.workouts.length === 0) && this.props.hideIfEmpty ? '' :
                 <Card zDepth={2} style={styles.card}>
                     <CardHeader
                         title={this.props.title}
@@ -73,8 +73,7 @@ class WorkoutsListCard extends Component {
                         {this.props.children ? <Divider style={styles.footerDivider}/> : ''}
                         {this.props.children}
                     </CardText>
-                </Card>
-            : '' 
+                </Card> 
         )
     }
 }

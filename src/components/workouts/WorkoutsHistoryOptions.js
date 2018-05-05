@@ -18,6 +18,7 @@ const styles = {
     },
     routine: {
         width: 300,
+        marginRight: 5,
     },
     routineClearIcon: {
         width: 18,
@@ -25,6 +26,7 @@ const styles = {
         color: red500,
         cursor: 'pointer',
         marginBottom: 15,
+        marginRight: 15,
     }
 }
 
@@ -37,7 +39,7 @@ class WorkoutsHistoryOptions extends Component {
 
     handleRoutineFilterClearClick = () => {
         let filters = { ...this.props.filters };
-        delete filters.routine;
+        delete filters.routineId;
 
         this.props.onChange(filters);
     }
@@ -76,24 +78,23 @@ class WorkoutsHistoryOptions extends Component {
                     )}
                 </SelectField>
                 <SelectField 
-                        floatingLabelText={'Filter By'}
-                        style={styles.routine} 
-                        value={this.props.filters.routine} 
-                        onChange={(event, index, value) => this.handleChange('routine', event, index, value)}
-                        disabled={this.props.disabled}
-                    >
-                        {this.props.routines.map((r, index) => 
-                            <MenuItem 
-                                key={index} 
-                                value={r.id} 
-                                primaryText={r.name} 
-                            />                    
-                        )}
+                    floatingLabelText={'Filter By'}
+                    style={styles.routine} 
+                    value={this.props.filters.routineId} 
+                    onChange={(event, index, value) => this.handleChange('routineId', event, index, value)}
+                    disabled={this.props.disabled}
+                >
+                    {this.props.routines.map((r, index) => 
+                        <MenuItem 
+                            key={index} 
+                            value={r.id} 
+                            primaryText={r.name} 
+                        />                    
+                    )}
                 </SelectField>
-                {this.props.filters.routine !== undefined ? 
+                {this.props.filters.routineId !== undefined ? 
                     <NavigationCancel style={styles.routineClearIcon} onClick={this.handleRoutineFilterClearClick}/>
                 : '' }
-
             </div>
         )
     }

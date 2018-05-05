@@ -12,8 +12,8 @@ import FlatButton from 'material-ui/FlatButton'
 import AddFloatingAddButton from '../shared/AddFloatingActionButton'
 import WorkoutDialog from './WorkoutDialog';
 import ActionSchedule from 'material-ui/svg-icons/action/schedule'
-import ActionDone from 'material-ui/svg-icons/action/done'
-import AVPlayArrow from 'material-ui/svg-icons/av/play-arrow'
+import AvStop from 'material-ui/svg-icons/av/stop'
+import AvPlayArrow from 'material-ui/svg-icons/av/play-arrow'
 import ActionInfo from 'material-ui/svg-icons/action/info'
 
 import WorkoutsListCard from './WorkoutsListCard'
@@ -71,33 +71,36 @@ class Workouts extends Component {
                     <div style={styles.grid}>
                         <WorkoutsListCard 
                             title={'In Progress'}
-                            icon={<AVPlayArrow/>}
-                            itemRightIcon={<AVPlayArrow/>}
+                            icon={<AvPlayArrow/>}
+                            itemRightIcon={<AvPlayArrow/>}
                             workouts={this.props.workouts.filter(workout => workout.startTime !== undefined && workout.endTime === undefined)}
                             sort={'desc'}
                             timePrefix={'Started'}
                             timeField={'startTime'}
                             onClick={this.handleClick}
+                            hideIfEmpty={true}
                         />
                         <WorkoutsListCard 
                             title={'Scheduled'}
                             icon={<ActionSchedule/>}
-                            itemRightIcon={<AVPlayArrow/>}
+                            itemRightIcon={<AvPlayArrow/>}
                             workouts={this.props.workouts.filter(workout => workout.startTime === undefined)}
                             sort={'asc'}
                             timePrefix={'Scheduled for'}
                             timeField={'scheduledTime'}
                             onClick={this.handleClick}
+                            hideIfEmpty={true}
                         />
                         <WorkoutsListCard 
                             title={'Completed'}
-                            icon={<ActionDone/>}
+                            icon={<AvStop/>}
                             itemRightIcon={<ActionInfo/>}
                             workouts={this.props.workoutsHistory.workouts}
                             sort={'desc'}
                             timePrefix={'Completed'}
                             timeField={'endTime'}
                             onClick={this.handleClick}
+                            hideIfEmpty={true}
                         >
                             <FlatButton 
                                 label="View Full History" 
