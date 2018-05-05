@@ -130,6 +130,7 @@ class WorkoutsHistory extends Component {
                                     filters={this.state.filters} 
                                     routines={this.props.routines}
                                     onChange={this.handleFiltersChange}
+                                    disabled={this.state.refreshApi.isExecuting}
                                 />
                             }
                             itemRightIcon={<ActionInfo/>}
@@ -142,7 +143,7 @@ class WorkoutsHistory extends Component {
                             <div style={styles.buttonRow}>
                                 <FlatButton
                                     onClick={this.handlePreviousClick}
-                                    disabled={start === 1}
+                                    disabled={this.state.refreshApi.isExecuting || start === 1}
                                     icon={<HardwareKeyboardArrowLeft/>}
                                 />
                                 <FlatButton 
@@ -152,7 +153,7 @@ class WorkoutsHistory extends Component {
                                 />
                                 <FlatButton 
                                     onClick={this.handleNextClick}
-                                    disabled={end === total} 
+                                    disabled={this.state.refreshApi.isExecuting || end === total} 
                                     icon={<HardwareKeyboardArrowRight/>}
                                 />
                             </div>
