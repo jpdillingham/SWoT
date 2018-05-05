@@ -24,7 +24,8 @@ const initialState = {
     filters: {
         offset: 0,
         limit: 5,
-        order: 'desc'
+        order: 'desc',
+        routineId: undefined,
     },
     loadApi: {
         isExecuting: false,
@@ -82,6 +83,7 @@ class WorkoutsHistory extends Component {
     }
 
     handleFiltersChange = (filters) => {
+        
         this.refreshWorkoutsHistory(filters);
     }
 
