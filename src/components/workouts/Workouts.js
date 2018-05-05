@@ -78,6 +78,7 @@ class Workouts extends Component {
                             timePrefix={'Started'}
                             timeField={'startTime'}
                             onClick={this.handleClick}
+                            hideIfEmpty={true}
                         />
                         <WorkoutsListCard 
                             title={'Scheduled'}
@@ -88,6 +89,7 @@ class Workouts extends Component {
                             timePrefix={'Scheduled for'}
                             timeField={'scheduledTime'}
                             onClick={this.handleClick}
+                            hideIfEmpty={true}
                         />
                         <WorkoutsListCard 
                             title={'Completed'}
@@ -98,6 +100,7 @@ class Workouts extends Component {
                             timePrefix={'Completed'}
                             timeField={'endTime'}
                             onClick={this.handleClick}
+                            hideIfEmpty={true}
                         >
                             <FlatButton 
                                 label="View Full History" 

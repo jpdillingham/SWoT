@@ -137,6 +137,7 @@ class WorkoutsHistory extends Component {
                             timePrefix={'Completed'}
                             timeField={'endTime'}
                             onClick={this.handleWorkoutClick}
+                            hideIfEmpty={false}
                         >
                             <div style={styles.buttonRow}>
                                 <FlatButton
