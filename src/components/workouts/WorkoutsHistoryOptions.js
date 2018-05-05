@@ -74,8 +74,8 @@ class WorkoutsHistoryOptions extends Component {
                 <SelectField 
                         floatingLabelText={'Filter By'}
                         style={styles.routine} 
-                        value={this.props.filters.routine} 
-                        onChange={(event, index, value) => this.handleChange('routine', event, index, value)}
+                        value={this.props.filters.routineId} 
+                        onChange={(event, index, value) => this.handleChange('routineId', event, index, value)}
                     >
                         {this.props.routines.map((r, index) => 
                             <MenuItem 
