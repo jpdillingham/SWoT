@@ -14,7 +14,9 @@ export const fetchWorkoutsHistory = (filters) => (dispatch, getState) => {
     queryParams += 'status=done';
 
     Object.keys(filters).forEach(f => {
-        queryParams += '&' + f + '=' + filters[f];
+        if (filters[f] !== undefined) {
+            queryParams += '&' + f + '=' + filters[f];
+        }
     })
 
     return new Promise((resolve, reject) => {

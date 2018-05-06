@@ -24,7 +24,10 @@ const initialState = {
     filters: {
         offset: 0,
         limit: 5,
-        order: 'desc'
+        order: 'desc',
+        routineId: undefined,
+        toDate: undefined,
+        fromDate: undefined,
     },
     loadApi: {
         isExecuting: false,
@@ -59,7 +62,24 @@ const styles = {
 }
 
 class WorkoutsHistory extends Component {
-    state = initialState;
+    constructor(props) {
+        super(props);
+
+        let defaultToDate = new Date();
+        defaultToDate.setDate(defaultToDate.getDate() + 1);
+    
+        let defaultFromDate = new Date(defaultToDate);
+        defaultFromDate.setDate(defaultFromDate.getDate() - 30);
+    
+        this.state = { 
+            ...initialState, 
+            filters: { 
+                ...initialState.filters, 
+                toDate: defaultToDate.getTime(), 
+                fromDate: defaultFromDate.getTime() 
+            } 
+        };        
+    }
 
     componentWillMount() {
         this.refreshWorkoutsHistory(this.state.filters, 'loadApi');
@@ -82,6 +102,14 @@ class WorkoutsHistory extends Component {
     }
 
     handleFiltersChange = (filters) => {
+        let routineChanged = this.state.filters.routineId !== filters.routineId;
+        let fromDateChanged = this.state.filters.fromDate !== filters.fromDate;
+        let toDateChanged = this.state.filters.toDate !== filters.toDate;
+
+        if (routineChanged || fromDateChanged || toDateChanged) {
+            filters.offset = 0;
+        }
+
         this.refreshWorkoutsHistory(filters);
     }
 
@@ -149,7 +177,7 @@ class WorkoutsHistory extends Component {
                                     icon={<HardwareKeyboardArrowLeft/>}
                                 />
                                 <FlatButton 
-                                    label={this.state.refreshApi.isExecuting ? '' : start + '-' + end + ' of ' + total}
+                                    label={this.state.refreshApi.isExecuting ? '' : total > 0 ? start + '-' + end + ' of ' + total : 'No Results'}
                                     disabled={true}
                                     style={styles.paginationButton}
                                     icon={this.state.refreshApi.isExecuting ? <MDSpinner singleColor={'#000'} size={20}/> : ''}

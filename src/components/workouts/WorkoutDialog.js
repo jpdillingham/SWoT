@@ -170,6 +170,7 @@ class WorkoutDialog extends Component {
                 <DatePicker 
                     floatingLabelText="Date"
                     hintText="Date"
+                    firstDayOfWeek={0}
                     textFieldStyle={styles.date}
                     onChange={this.handleDateChange}
                     value={this.state.selectedDate}
@@ -181,6 +182,7 @@ class WorkoutDialog extends Component {
                     textFieldStyle={styles.time}
                     onChange={this.handleTimeChange}
                     value={this.state.selectedTime}
+                    minutesStep={5}
                     autoOk={true}
                 />
                 <SelectField
