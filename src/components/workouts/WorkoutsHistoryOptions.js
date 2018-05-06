@@ -66,16 +66,22 @@ class WorkoutsHistoryOptions extends Component {
                     <DatePicker 
                         floatingLabelText="From"
                         hintText="From" 
+                        firstDayOfWeek={0}
+                        defaultDate={new Date(this.props.filters.fromDate)}
+                        maxDate={new Date(this.props.filters.toDate)}
                         style={styles.date}
                         textFieldStyle={styles.dateField}
-                        onChange={(undefined, date) => this.handleChange('fromDate', undefined, undefined, date.getTime())}
+                        onChange={(a, date) => this.handleChange('fromDate', undefined, undefined, date.getTime())}
                     />
                     <DatePicker 
                         floatingLabelText="To"
                         hintText="To" 
+                        firstDayOfWeek={0}
+                        defaultDate={new Date(this.props.filters.toDate)}
+                        minDate={new Date(this.props.filters.fromDate)}
                         style={styles.date}
                         textFieldStyle={styles.dateField}
-                        onChange={(undefined, date) => this.handleChange('toDate', undefined, undefined, date.getTime())}
+                        onChange={(a, date) => this.handleChange('toDate', undefined, undefined, date.getTime())}
                     />
                 </div>
                 <SelectField 
