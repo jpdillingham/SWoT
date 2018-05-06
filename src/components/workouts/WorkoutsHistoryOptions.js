@@ -69,6 +69,7 @@ class WorkoutsHistoryOptions extends Component {
                         firstDayOfWeek={0}
                         defaultDate={new Date(this.props.filters.fromDate)}
                         maxDate={new Date(this.props.filters.toDate)}
+                        disabled={this.props.disabled}
                         style={styles.date}
                         textFieldStyle={styles.dateField}
                         onChange={(a, date) => this.handleChange('fromDate', undefined, undefined, date.getTime())}
@@ -79,6 +80,7 @@ class WorkoutsHistoryOptions extends Component {
                         firstDayOfWeek={0}
                         defaultDate={new Date(this.props.filters.toDate)}
                         minDate={new Date(this.props.filters.fromDate)}
+                        disabled={this.props.disabled}
                         style={styles.date}
                         textFieldStyle={styles.dateField}
                         onChange={(a, date) => this.handleChange('toDate', undefined, undefined, date.getTime())}
