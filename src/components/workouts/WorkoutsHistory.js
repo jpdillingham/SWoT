@@ -62,7 +62,24 @@ const styles = {
 }
 
 class WorkoutsHistory extends Component {
-    state = initialState;
+    constructor(props) {
+        super(props);
+
+        let defaultToDate = new Date();
+        defaultToDate.setDate(defaultToDate.getDate() + 1);
+    
+        let defaultFromDate = new Date(defaultToDate);
+        defaultFromDate.setDate(defaultFromDate.getDate() - 30);
+    
+        this.state = { 
+            ...initialState, 
+            filters: { 
+                ...initialState.filters, 
+                toDate: defaultToDate.getTime(), 
+                fromDate: defaultFromDate.getTime() 
+            } 
+        };        
+    }
 
     componentWillMount() {
         this.refreshWorkoutsHistory(this.state.filters, 'loadApi');
