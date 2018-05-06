@@ -4,6 +4,7 @@ import { red500 } from 'material-ui/styles/colors'
 import SelectField from 'material-ui/SelectField/SelectField';
 import MenuItem from 'material-ui/MenuItem'
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel'
+import DatePicker from 'material-ui/DatePicker'
 
 import { FILTER_SORT_ORDER_OPTIONS, FILTER_LIMIT_OPTIONS } from '../../constants'
 
@@ -27,7 +28,21 @@ const styles = {
         cursor: 'pointer',
         marginBottom: 15,
         marginRight: 15,
-    }
+    },
+    dateWrapper: {
+        marginBottom: -15,
+        display: 'inline-block',
+    },
+    date: {
+        display: 'inline-block',
+        position: 'relative',
+        top: -15,
+    },
+    dateField: {
+        width: 100,
+        marginRight: 5,
+        cursor: 'pointer',
+    },
 }
 
 class WorkoutsHistoryOptions extends Component {
@@ -47,6 +62,22 @@ class WorkoutsHistoryOptions extends Component {
     render() {
         return (
             <div>
+                <div style={styles.dateWrapper}>
+                    <DatePicker 
+                        floatingLabelText="From"
+                        hintText="From" 
+                        style={styles.date}
+                        textFieldStyle={styles.dateField}
+                        onChange={(undefined, date) => this.handleChange('fromDate', undefined, undefined, date.getTime())}
+                    />
+                    <DatePicker 
+                        floatingLabelText="To"
+                        hintText="To" 
+                        style={styles.date}
+                        textFieldStyle={styles.dateField}
+                        onChange={(undefined, date) => this.handleChange('toDate', undefined, undefined, date.getTime())}
+                    />
+                </div>
                 <SelectField 
                     floatingLabelText="Sort By"
                     style={styles.order} 
