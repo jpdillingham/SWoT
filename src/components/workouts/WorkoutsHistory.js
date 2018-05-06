@@ -26,6 +26,8 @@ const initialState = {
         limit: 5,
         order: 'desc',
         routineId: undefined,
+        toDate: undefined,
+        fromDate: undefined,
     },
     loadApi: {
         isExecuting: false,
@@ -83,7 +85,11 @@ class WorkoutsHistory extends Component {
     }
 
     handleFiltersChange = (filters) => {
-        if (this.state.filters.routineId !== filters.routineId) {
+        let routineChanged = this.state.filters.routineId !== filters.routineId;
+        let fromDateChanged = this.state.filters.fromDate !== filters.fromDate;
+        let toDateChanged = this.state.filters.toDate !== filters.toDate;
+
+        if (routineChanged || fromDateChanged || toDateChanged) {
             filters.offset = 0;
         }
 
