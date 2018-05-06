@@ -160,7 +160,7 @@ class WorkoutsHistory extends Component {
                                     icon={<HardwareKeyboardArrowLeft/>}
                                 />
                                 <FlatButton 
-                                    label={this.state.refreshApi.isExecuting ? '' : start + '-' + end + ' of ' + total}
+                                    label={this.state.refreshApi.isExecuting ? '' : total > 0 ? start + '-' + end + ' of ' + total : 'No Results'}
                                     disabled={true}
                                     style={styles.paginationButton}
                                     icon={this.state.refreshApi.isExecuting ? <MDSpinner singleColor={'#000'} size={20}/> : ''}
