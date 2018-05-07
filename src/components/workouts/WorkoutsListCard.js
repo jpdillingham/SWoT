@@ -33,6 +33,18 @@ const styles = {
 }
 
 class WorkoutsListCard extends Component {
+    sort = (a, b) => {
+        let f = this.props.timeField;
+        if (this.props.sort.toLowerCase() === 'desc') {
+            return a[f] > b[f] ? -1 : 
+                a[f] === b[f] ? 0 : 1 
+        }
+        else {
+            return a[f] < b[f] ? -1 : 
+                a[f] === b[f] ? 0 : 1 
+        }        
+    }
+
     render() {
         return (
             (!this.props.workouts || this.props.workouts.length === 0) && this.props.hideIfEmpty ? '' :
@@ -47,18 +59,8 @@ class WorkoutsListCard extends Component {
                         {this.props.options}
                         {this.props.options ? <Divider style={styles.headerDivider}/> : ''}
                         <List>
-                            {this.props.workouts
-                                .sort((a, b) => { 
-                                    let f = this.props.timeField;
-                                    if (this.props.sort.toLowerCase() === 'desc') {
-                                        return a[f] > b[f] ? -1 : 
-                                            a[f] === b[f] ? 0 : 1 
-                                    }
-                                    else {
-                                        return a[f] < b[f] ? -1 : 
-                                            a[f] === b[f] ? 0 : 1 
-                                    }
-                                })
+                            {this.props.workouts && this.props.workouts.length > 0 ? this.props.workouts
+                                .sort(this.sort)
                                 .map(w => 
                                     <ListItem
                                         key={w.id}
@@ -68,7 +70,8 @@ class WorkoutsListCard extends Component {
                                         rightIcon={this.props.itemRightIcon}
                                         onClick={() => this.props.onClick(w.id)}
                                     />
-                            )}
+                                ) : this.props.emptyContent
+                            }
                         </List>
                         {this.props.children ? <Divider style={styles.footerDivider}/> : ''}
                         {this.props.children}
