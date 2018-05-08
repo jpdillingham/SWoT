@@ -6,6 +6,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { fetchWorkouts, updateWorkout, deleteWorkout } from '../workouts/WorkoutsActions'
+import { fetchWorkoutHistory } from '../workouts/WorkoutsHistoryActions'
 import { showSnackbar } from '../app/AppActions';
 
 import WorkoutCard from './WorkoutCard'
@@ -41,7 +42,19 @@ class Workout extends Component {
         .then(response => {
             this.setState({ 
                 workout: response.data.find(w => w.id === this.props.match.params.id),
-                api: { isExecuting: false, isErrored: false }
+            }, () => {
+                if (!this.state.workout) {
+                    this.props.fetchWorkoutHistory(this.props.match.params.id)
+                    .then(response => {
+                        this.setState({
+                            workout: response.data,
+                            api: { isExecuting: false, isErrored: false }
+                        })
+                    })
+                }
+                else {
+                    this.setState({ api: { isExecuting: false, isErrored: false }})
+                }
             })
         }, error => {
             this.setState({ api: { isExecuting: false, isErrored: true }})
@@ -129,6 +142,7 @@ const mapDispatchToProps = {
     fetchWorkouts,
     updateWorkout,
     deleteWorkout,
+    fetchWorkoutHistory,
     showSnackbar,
 }
 
