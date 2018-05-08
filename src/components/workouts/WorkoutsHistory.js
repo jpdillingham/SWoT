@@ -10,11 +10,13 @@ import { black, red500 } from 'material-ui/styles/colors'
 import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import FlatButton from 'material-ui/FlatButton'
+import { ListItem } from 'material-ui/List'
 
 import ActionRestore from 'material-ui/svg-icons/action/restore'
 import ActionInfo from 'material-ui/svg-icons/action/info'
 import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
+import ContentClear from 'material-ui/svg-icons/content/clear'
 
 import WorkoutsListCard from './WorkoutsListCard'
 import WorkoutsHistoryOptions from './WorkoutsHistoryOptions'
@@ -169,6 +171,12 @@ class WorkoutsHistory extends Component {
                             timeField={'endTime'}
                             onClick={this.handleWorkoutClick}
                             hideIfEmpty={false}
+                            emptyContent={
+                                <ListItem 
+                                    primaryText={'No records match the current filter criteria'}
+                                    leftIcon={<ContentClear/>}
+                                />
+                            }
                         >
                             <div style={styles.buttonRow}>
                                 <FlatButton
