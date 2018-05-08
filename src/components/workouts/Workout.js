@@ -104,8 +104,6 @@ class Workout extends Component {
     }
 
     render() {
-        //let workout = this.props.workouts.find(w => w.id === this.props.match.params.id)
-
         return (
             this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
