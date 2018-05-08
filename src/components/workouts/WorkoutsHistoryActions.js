@@ -9,6 +9,17 @@ const workoutsHistoryGet = (workouts, totalCount) => ({
     totalCount: totalCount,
 })
 
+export const fetchWorkoutHistory = (id) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        api.get(endpoint + '/' + id)
+        .then(response => {
+            resolve(response);        
+        }, error => {
+            reject(error);
+        })
+    })
+}
+
 export const fetchWorkoutsHistory = (filters) => (dispatch, getState) => {
     let queryParams = '?';
     queryParams += 'status=done';
