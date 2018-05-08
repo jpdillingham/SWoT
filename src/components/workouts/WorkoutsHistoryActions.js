@@ -7,12 +7,18 @@ const workoutsHistoryGet = (workouts, totalCount) => ({
     type: 'WORKOUTS_HISTORY_GET',
     workouts: workouts,
     totalCount: totalCount,
-})
+});
+
+const workoutHistoryGet = (workout) => ({
+    type: 'WORKOUT_HISTORY_GET',
+    workout: workout,
+});
 
 export const fetchWorkoutHistory = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         api.get(endpoint + '/' + id)
         .then(response => {
+            dispatch(workoutHistoryGet(response.data));
             resolve(response);        
         }, error => {
             reject(error);
