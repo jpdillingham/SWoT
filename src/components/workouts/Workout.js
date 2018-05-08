@@ -40,6 +40,7 @@ class Workout extends Component {
         this.props.fetchWorkouts()
         .then(response => {
             this.setState({ 
+                workout: response.data.find(w => w.id === this.props.match.params.id),
                 api: { isExecuting: false, isErrored: false }
             })
         }, error => {
@@ -103,21 +104,21 @@ class Workout extends Component {
     }
 
     render() {
-        let workout = this.props.workouts.find(w => w.id === this.props.match.params.id)
+        //let workout = this.props.workouts.find(w => w.id === this.props.match.params.id)
 
         return (
             this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    workout === undefined ? <span>Invalid Workout Id.</span> : 
-                        workout.endTime === undefined ?
+                    this.state.workout === undefined ? <span>Invalid Workout Id.</span> : 
+                        this.state.workout.endTime === undefined ?
                             <WorkoutCard
-                                workout={workout}
+                                workout={this.state.workout}
                                 onWorkoutChange={this.handleWorkoutChange}
-                                onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(workout, exercise)}
-                                onDelete={() => this.handleWorkoutDelete(workout)}
-                                onReset={() => this.handleWorkoutReset(workout)}
+                                onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(this.state.workout, exercise)}
+                                onDelete={() => this.handleWorkoutDelete(this.state.workout)}
+                                onReset={() => this.handleWorkoutReset(this.state.workout)}
                             /> :
-                            <WorkoutReportCard workout={workout}/>
+                            <WorkoutReportCard workout={this.state.workout}/>
         )
     }
 }
