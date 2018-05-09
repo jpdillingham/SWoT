@@ -82,12 +82,14 @@ class RoutineDialog extends Component {
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.state.routine.exercises.map((e, index) => e.sequence = index); // add strict ordering based on array position
+                let routine = { ...this.state.routine };
+
+                routine.exercises.map((e, index) => e.sequence = index); // add strict ordering based on array position
 
                 this.setState({ api: { ...this.state.api, isExecuting: true } })
 
                 if (this.props.intent === INTENTS.EDIT) {
-                    this.props.updateRoutine(this.state.routine)
+                    this.props.updateRoutine(routine)
                     .then((response) => {
                         this.handleApiSuccess('Updated Routine \'' + response.data.name + '\'.')
                     }, (error) => {
@@ -95,7 +97,7 @@ class RoutineDialog extends Component {
                     })
                 }
                 else {
-                    this.props.addRoutine(this.state.routine)
+                    this.props.addRoutine(routine)
                     .then((response) => {
                         this.handleApiSuccess('Added Routine \'' + response.data.name + '\'.')
                     }, (error) => {
