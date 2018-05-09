@@ -7,6 +7,9 @@ import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
+import { grey300 } from 'material-ui/styles/colors';
+
+import MDSpinner from 'react-md-spinner'
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
 import { getElapsedTime } from '../../util';
@@ -28,7 +31,7 @@ const styles = {
         position: 'relative',
         marginBottom: 5,
         marginLeft: 5,
-        marginTop: 20
+        marginTop: 20,
     },
     fab: {
         margin: 0,
@@ -47,7 +50,18 @@ const styles = {
     },
     time: {
         color: black,
-    }
+    },
+    spinner: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: 'auto',
+        marginBottom: 'auto',
+    },
 }
 
 const initialState = {
@@ -158,7 +172,13 @@ class WorkoutExerciseForm extends Component {
         }
 
         return (
-            <Card zDepth={2} style={styles.card}>
+            <Card 
+                zDepth={2} 
+                style={{ 
+                    ...styles.card, 
+                    backgroundColor: this.state.api.isExecuting ? grey300 : ''}
+                }
+            >
                 <CardHeader                        
                     titleStyle={styles.cardTitle}
                     style={styles.cardHeader}
@@ -241,6 +261,7 @@ class WorkoutExerciseForm extends Component {
                         style={styles.time}
                     />
                 </CardActions>
+                {this.state.api.isExecuting ? <MDSpinner style={styles.spinner}/> : ''}
             </Card>
         )
     }
