@@ -61,6 +61,10 @@ class Workout extends Component {
         })
     }
 
+    componentWillReceiveProps = (nextProps) => {
+        this.setState({ workout: nextProps.workouts.find(w => w.id === this.props.match.params.id) })
+    }
+
     handleWorkoutChange = (workout, notify = { show: false, caption: ''}) => {
         return new Promise((resolve, reject) => {
             this.props.updateWorkout(workout)
@@ -117,19 +121,21 @@ class Workout extends Component {
     }
 
     render() {
+        let workout = this.state.workout;
+
         return (
             this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    this.state.workout === undefined ? <span>Invalid Workout Id.</span> : 
-                        this.state.workout.endTime === undefined ?
+                    workout === undefined ? <span>Invalid Workout Id.</span> : 
+                        workout.endTime === undefined ?
                             <WorkoutCard
-                                workout={this.state.workout}
+                                workout={workout}
                                 onWorkoutChange={this.handleWorkoutChange}
-                                onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(this.state.workout, exercise)}
-                                onDelete={() => this.handleWorkoutDelete(this.state.workout)}
-                                onReset={() => this.handleWorkoutReset(this.state.workout)}
+                                onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(workout, exercise)}
+                                onDelete={() => this.handleWorkoutDelete(workout)}
+                                onReset={() => this.handleWorkoutReset(workout)}
                             /> :
-                            <WorkoutReportCard workout={this.state.workout}/>
+                            <WorkoutReportCard workout={workout}/>
         )
     }
 }
