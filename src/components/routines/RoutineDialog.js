@@ -6,6 +6,9 @@ import FlatButton from 'material-ui/FlatButton';
 import RoutineExerciseList from './RoutineExerciseList';
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton'
 import TextField from 'material-ui/TextField';
+import { grey300 } from 'material-ui/styles/colors'
+
+import Spinner from '../shared/Spinner'
 
 import RoutineExerciseDialog from './RoutineExerciseDialog';
 
@@ -182,9 +185,15 @@ class RoutineDialog extends Component {
     }
 
     render() {
+        let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
+
         return (
             <div>
                 <Dialog
+                    bodyStyle={refreshStyle}
+                    actionsContainerStyle={refreshStyle}
+                    titleStyle={refreshStyle}
+                    contentStyle={{ ...styles.dialogContent, refreshStyle }}
                     title={(this.props.intent === INTENTS.ADD ? 'Add' : this.props.intent === INTENTS.EDIT ? 'Edit' : 'Duplicate') + ' Routine'} 
                     autoScrollBodyContent={true}
                     actions={
@@ -200,7 +209,6 @@ class RoutineDialog extends Component {
                     }
                     modal={true}
                     open={this.props.open}
-                    contentStyle={styles.dialogContent}
                 >
                     <TextField
                         hintText="e.g. 'Legs'"
@@ -216,6 +224,7 @@ class RoutineDialog extends Component {
                         onMoveDownClick={this.handleMoveDownExerciseMenuClick}
                         onDeleteClick={this.handleDeleteExerciseMenuClick}
                     />
+                    {this.state.api.isExecuting ? <Spinner/> : ''}
                 </Dialog>
                 <RoutineExerciseDialog
                     open={this.state.exerciseDialog.open} 
