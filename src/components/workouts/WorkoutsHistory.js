@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import MDSpinner from 'react-md-spinner'
-
 import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
 import { fetchRoutines } from '../routines/RoutinesActions'
 
