@@ -76,6 +76,7 @@ class WorkoutsListCard extends Component {
                                         leftIcon={<ActionAssignmentTurnedIn/>}
                                         rightIcon={this.props.itemRightIcon}
                                         onClick={() => this.props.onClick(w.id)}
+                                        disabled={this.props.refreshing}
                                     />
                                 ) : this.props.emptyContent
                             }
