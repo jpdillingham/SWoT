@@ -267,8 +267,17 @@ class ExerciseDialog extends Component {
                     autoScrollBodyContent={true}
                     actions={
                         <div>
-                            <FlatButton label="Add Metric" onClick={this.handleAddMetricClick} style={styles.addMetric} />
-                            <FlatButton label="Cancel" onClick={this.handleCancelClick} />
+                            <FlatButton 
+                                label="Add Metric" 
+                                onClick={this.handleAddMetricClick} 
+                                style={styles.addMetric} 
+                                disabled={this.state.api.isExecuting}
+                            />
+                            <FlatButton 
+                                label="Cancel" 
+                                onClick={this.handleCancelClick} 
+                                disabled={this.state.api.isExecuting}
+                            />
                             <SaveRetryFlatButton 
                                 onClick={this.handleSaveClick} 
                                 api={this.state.api} 
