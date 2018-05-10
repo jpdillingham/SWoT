@@ -8,7 +8,7 @@ class Spinner extends Component {
             <MDSpinner
                 { ...this.props }
                 style={{ ...styles.spinner, ...this.props.style }}
-                size={35}
+                size={this.props.size ? this.props.size : 35}
             />
         );
     }
