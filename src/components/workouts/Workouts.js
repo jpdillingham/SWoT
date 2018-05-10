@@ -5,7 +5,6 @@ import { fetchWorkouts } from './WorkoutsActions'
 import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
 
 import { red500 } from 'material-ui/styles/colors'
-import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import FlatButton from 'material-ui/FlatButton'
 
