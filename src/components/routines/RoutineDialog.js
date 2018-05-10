@@ -6,6 +6,9 @@ import FlatButton from 'material-ui/FlatButton';
 import RoutineExerciseList from './RoutineExerciseList';
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton'
 import TextField from 'material-ui/TextField';
+import { grey300 } from 'material-ui/styles/colors'
+
+import Spinner from '../shared/Spinner'
 
 import RoutineExerciseDialog from './RoutineExerciseDialog';
 
@@ -82,12 +85,13 @@ class RoutineDialog extends Component {
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.state.routine.exercises.map((e, index) => e.sequence = index); // add strict ordering based on array position
+                let routine = { ...this.state.routine };
+                routine.exercises.map((e, index) => e.sequence = index); 
 
                 this.setState({ api: { ...this.state.api, isExecuting: true } })
 
                 if (this.props.intent === INTENTS.EDIT) {
-                    this.props.updateRoutine(this.state.routine)
+                    this.props.updateRoutine(routine)
                     .then((response) => {
                         this.handleApiSuccess('Updated Routine \'' + response.data.name + '\'.')
                     }, (error) => {
@@ -95,7 +99,7 @@ class RoutineDialog extends Component {
                     })
                 }
                 else {
-                    this.props.addRoutine(this.state.routine)
+                    this.props.addRoutine(routine)
                     .then((response) => {
                         this.handleApiSuccess('Added Routine \'' + response.data.name + '\'.')
                     }, (error) => {
@@ -181,15 +185,30 @@ class RoutineDialog extends Component {
     }
 
     render() {
+        let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
+
         return (
             <div>
                 <Dialog
+                    bodyStyle={refreshStyle}
+                    actionsContainerStyle={refreshStyle}
+                    titleStyle={refreshStyle}
+                    contentStyle={{ ...styles.dialogContent, refreshStyle }}
                     title={(this.props.intent === INTENTS.ADD ? 'Add' : this.props.intent === INTENTS.EDIT ? 'Edit' : 'Duplicate') + ' Routine'} 
                     autoScrollBodyContent={true}
                     actions={
                         <div>
-                            <FlatButton label="Add Exercise" onClick={this.handleAddExerciseClick} style={styles.addExercise} />
-                            <FlatButton label="Cancel" onClick={this.handleCancelClick} />
+                            <FlatButton 
+                                label="Add Exercise" 
+                                onClick={this.handleAddExerciseClick} 
+                                style={styles.addExercise} 
+                                disabled={this.state.api.isExecuting}
+                            />
+                            <FlatButton 
+                                label="Cancel" 
+                                onClick={this.handleCancelClick} 
+                                disabled={this.state.api.isExecuting}
+                            />
                             <SaveRetryFlatButton 
                                 onClick={this.handleSaveClick} 
                                 api={this.state.api} 
@@ -199,7 +218,6 @@ class RoutineDialog extends Component {
                     }
                     modal={true}
                     open={this.props.open}
-                    contentStyle={styles.dialogContent}
                 >
                     <TextField
                         hintText="e.g. 'Legs'"
@@ -215,6 +233,7 @@ class RoutineDialog extends Component {
                         onMoveDownClick={this.handleMoveDownExerciseMenuClick}
                         onDeleteClick={this.handleDeleteExerciseMenuClick}
                     />
+                    {this.state.api.isExecuting ? <Spinner/> : ''}
                 </Dialog>
                 <RoutineExerciseDialog
                     open={this.state.exerciseDialog.open} 

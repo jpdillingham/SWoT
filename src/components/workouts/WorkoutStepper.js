@@ -19,14 +19,10 @@ class WorkoutStepper extends Component {
     }
 
     handleExerciseComplete = () => {
-        this.setState({ stepIndex: this.state.stepIndex + 1 })
+        this.setState({ stepIndex: this.getNextExerciseIndex() })
     }
 
     componentDidMount = () => {
-        this.setState({ stepIndex: this.getNextExerciseIndex() });
-    }
-
-    componentWillReceiveProps = (nextProps) => {
         this.setState({ stepIndex: this.getNextExerciseIndex() });
     }
 

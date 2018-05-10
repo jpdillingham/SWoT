@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import MDSpinner from 'react-md-spinner'
-
 import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
 import { fetchRoutines } from '../routines/RoutinesActions'
 
@@ -171,6 +169,7 @@ class WorkoutsHistory extends Component {
                             timeField={'endTime'}
                             onClick={this.handleWorkoutClick}
                             hideIfEmpty={false}
+                            refreshing={this.state.refreshApi.isExecuting}
                             emptyContent={
                                 <ListItem 
                                     primaryText={'No records match the current filter criteria'}
@@ -185,10 +184,9 @@ class WorkoutsHistory extends Component {
                                     icon={<HardwareKeyboardArrowLeft/>}
                                 />
                                 <FlatButton 
-                                    label={this.state.refreshApi.isExecuting ? '' : total > 0 ? start + '-' + end + ' of ' + total : 'No Results'}
+                                    label={this.state.refreshApi.isExecuting ? ' ' : total > 0 ? start + '-' + end + ' of ' + total : 'No Results'}
                                     disabled={true}
                                     style={styles.paginationButton}
-                                    icon={this.state.refreshApi.isExecuting ? <MDSpinner singleColor={'#000'} size={20}/> : ''}
                                 />
                                 <FlatButton 
                                     onClick={this.handleNextClick}

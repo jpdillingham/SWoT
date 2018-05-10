@@ -4,11 +4,12 @@ import moment from 'moment';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
-import { black } from 'material-ui/styles/colors'
+import { black, grey300 } from 'material-ui/styles/colors'
 import Divider from 'material-ui/Divider'
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 import { List, ListItem } from 'material-ui/List';
+import Spinner from '../shared/Spinner';
 
 const styles = {
     cardHeader: {
@@ -48,7 +49,13 @@ class WorkoutsListCard extends Component {
     render() {
         return (
             (!this.props.workouts || this.props.workouts.length === 0) && this.props.hideIfEmpty ? '' :
-                <Card zDepth={2} style={styles.card}>
+                <Card 
+                    zDepth={2}                 
+                    style={{ 
+                        ...styles.card, 
+                        backgroundColor: this.props.refreshing ? grey300 : ''
+                    }}
+                >
                     <CardHeader
                         title={this.props.title}
                         titleStyle={styles.cardTitle}
@@ -69,12 +76,14 @@ class WorkoutsListCard extends Component {
                                         leftIcon={<ActionAssignmentTurnedIn/>}
                                         rightIcon={this.props.itemRightIcon}
                                         onClick={() => this.props.onClick(w.id)}
+                                        disabled={this.props.refreshing}
                                     />
                                 ) : this.props.emptyContent
                             }
                         </List>
                         {this.props.children ? <Divider style={styles.footerDivider}/> : ''}
                         {this.props.children}
+                        {this.props.refreshing ? <Spinner/> : ''}
                     </CardText>
                 </Card> 
         )

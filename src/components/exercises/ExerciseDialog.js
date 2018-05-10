@@ -8,6 +8,9 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import { addExercise, updateExercise } from './ExercisesActions'
 import { showSnackbar } from '../app/AppActions.js'
+import { grey300 } from 'material-ui/styles/colors'
+
+import Spinner from '../shared/Spinner'
 
 import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
 import { getGuid, swapArrayElements } from '../../util';
@@ -251,15 +254,30 @@ class ExerciseDialog extends Component {
     }
 
     render() {
+        let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
+
         return (
             <div>
                 <Dialog
+                    bodyStyle={refreshStyle}
+                    actionsContainerStyle={refreshStyle}
+                    titleStyle={refreshStyle}
+                    contentStyle={{ ...styles.dialogContent, refreshStyle }}
                     title={(this.props.intent === INTENTS.ADD ? 'Add' : 'Edit') + ' Exercise'} 
                     autoScrollBodyContent={true}
                     actions={
                         <div>
-                            <FlatButton label="Add Metric" onClick={this.handleAddMetricClick} style={styles.addMetric} />
-                            <FlatButton label="Cancel" onClick={this.handleCancelClick} />
+                            <FlatButton 
+                                label="Add Metric" 
+                                onClick={this.handleAddMetricClick} 
+                                style={styles.addMetric} 
+                                disabled={this.state.api.isExecuting}
+                            />
+                            <FlatButton 
+                                label="Cancel" 
+                                onClick={this.handleCancelClick} 
+                                disabled={this.state.api.isExecuting}
+                            />
                             <SaveRetryFlatButton 
                                 onClick={this.handleSaveClick} 
                                 api={this.state.api} 
@@ -269,7 +287,6 @@ class ExerciseDialog extends Component {
                     }
                     modal={true}
                     open={this.props.open}
-                    contentStyle={styles.dialogContent}
                 >
                     <TextField
                         hintText="e.g. 'Bench Press'"
@@ -303,6 +320,7 @@ class ExerciseDialog extends Component {
                         onEditClick={this.handleEditMetricMenuClick}
                         onDeleteClick={this.handleDeleteMetricMenuClick}
                     />
+                    {this.state.api.isExecuting ? <Spinner/> : ''}
                 </Dialog>
                 <ExerciseMetricDialog
                     open={this.state.metricDialog.open} 
