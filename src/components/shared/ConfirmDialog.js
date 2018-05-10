@@ -51,6 +51,7 @@ class ConfirmDialog extends Component {
                         <div>          
                             <FlatButton
                                 label="Cancel"
+                                disabled={this.state.api.isExecuting}
                                 onClick={this.handleCancelClick}
                             />
                             <FlatButton
