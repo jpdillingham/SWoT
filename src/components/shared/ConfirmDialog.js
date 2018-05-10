@@ -16,13 +16,17 @@ const initialState = {
 class ConfirmDialog extends Component {
     state = initialState;
 
+    componentWillReceiveProps = (nextProps) => {
+        if (!this.props.open && nextProps.open) {
+            this.setState(initialState);
+        }
+    }
+
     handleConfirmClick = () => {
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
             this.props.onConfirm()
             .then(response => { 
-                this.setState(initialState);
-                this.props.onClose({ cancelled: false }) 
-            }, error => {
+                this.props.onClose({ cancelled: false }) }, error => {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
             })
         })
