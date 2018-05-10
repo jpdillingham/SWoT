@@ -163,9 +163,11 @@ class WorkoutExerciseForm extends Component {
         return (
             <Card 
                 zDepth={2} 
-                style={{ 
-                    ...styles.card, 
-                    backgroundColor: this.state.api.isExecuting ? grey300 : ''}
+                style={!this.state.api.isExecuting ? styles.card : 
+                    { 
+                        ...styles.card, 
+                        backgroundColor: grey300 
+                    }
                 }
             >
                 <CardHeader                        
