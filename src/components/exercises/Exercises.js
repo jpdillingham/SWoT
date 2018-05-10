@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { fetchExercises, deleteExercise } from './ExercisesActions'
 import { showSnackbar } from '../app/AppActions'
 
+import Spinner from '../shared/Spinner'
 import ExerciseCard from './ExerciseCard'
 
 import { red500 } from 'material-ui/styles/colors'
@@ -67,7 +68,7 @@ class Exercises extends Component {
 
     render() {
         return (
-            this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
+            this.state.api.isExecuting ? <Spinner size={48}/> : 
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div>
                         <div style={styles.grid}>

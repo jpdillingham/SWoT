@@ -5,10 +5,10 @@ import { fetchRoutines, deleteRoutine } from './RoutinesActions'
 import { showSnackbar } from '../app/AppActions'
 
 import { red500 } from 'material-ui/styles/colors'
-import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import RoutineCard from './RoutineCard'
+import Spinner from '../shared/Spinner'
 
 import AddFloatingActionButton from '../shared/AddFloatingActionButton'
 import { CARD_WIDTH, INTENTS } from '../../constants'
@@ -67,7 +67,7 @@ class Routines extends Component {
 
     render() {
         return (
-            this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
+            this.state.api.isExecuting ? <Spinner size={48}/> : 
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div>
                         <div style={styles.grid}>

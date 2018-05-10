@@ -18,6 +18,7 @@ import ContentClear from 'material-ui/svg-icons/content/clear'
 
 import WorkoutsListCard from './WorkoutsListCard'
 import WorkoutsHistoryOptions from './WorkoutsHistoryOptions'
+import Spinner from '../shared/Spinner'
 
 const initialState = {
     workouts: [],
@@ -148,7 +149,7 @@ class WorkoutsHistory extends Component {
         let total = this.props.workoutsHistory.totalCount;
 
         return (
-            this.state.loadApi.isExecuting ? <CircularProgress style={styles.icon} /> : 
+            this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
                         <WorkoutsListCard 
