@@ -82,8 +82,8 @@ class WorkoutsListCard extends Component {
                         </List>
                         {this.props.children ? <Divider style={styles.footerDivider}/> : ''}
                         {this.props.children}
+                        {this.props.refreshing ? <Spinner/> : ''}
                     </CardText>
-                    {this.props.refreshing ? <Spinner/> : ''}
                 </Card> 
         )
     }
