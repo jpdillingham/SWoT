@@ -171,6 +171,7 @@ class WorkoutsHistory extends Component {
                             timeField={'endTime'}
                             onClick={this.handleWorkoutClick}
                             hideIfEmpty={false}
+                            refreshing={this.state.refreshApi.isExecuting}
                             emptyContent={
                                 <ListItem 
                                     primaryText={'No records match the current filter criteria'}
