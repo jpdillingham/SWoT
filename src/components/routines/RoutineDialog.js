@@ -198,8 +198,17 @@ class RoutineDialog extends Component {
                     autoScrollBodyContent={true}
                     actions={
                         <div>
-                            <FlatButton label="Add Exercise" onClick={this.handleAddExerciseClick} style={styles.addExercise} />
-                            <FlatButton label="Cancel" onClick={this.handleCancelClick} />
+                            <FlatButton 
+                                label="Add Exercise" 
+                                onClick={this.handleAddExerciseClick} 
+                                style={styles.addExercise} 
+                                disabled={this.state.api.isExecuting}
+                            />
+                            <FlatButton 
+                                label="Cancel" 
+                                onClick={this.handleCancelClick} 
+                                disabled={this.state.api.isExecuting}
+                            />
                             <SaveRetryFlatButton 
                                 onClick={this.handleSaveClick} 
                                 api={this.state.api} 
