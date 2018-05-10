@@ -6,21 +6,30 @@ import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 import { grey300 } from 'material-ui/styles/colors'
 
-class ConfirmDialog extends Component {
-    state = {
-        api: {
-            isExecuting: false,
-            isErrored: false,
-        }
+const initialState = {
+    api: {
+        isExecuting: false,
+        isErrored: false,
     }
+}
+
+class ConfirmDialog extends Component {
+    state = initialState;
 
     handleConfirmClick = () => {
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
             this.props.onConfirm()
-            .then(response => { this.props.onClose({ cancelled: false }) }, error => {
+            .then(response => { 
+                this.setState(initialState);
+                this.props.onClose({ cancelled: false }) 
+            }, error => {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
             })
         })
+    }
+
+    handleCancelClick = () => {
+        this.setState(initialState, () => this.props.onClose({ cancelled: true }))
     }
 
     render() {
@@ -38,7 +47,7 @@ class ConfirmDialog extends Component {
                         <div>          
                             <FlatButton
                                 label="Cancel"
-                                onClick={() => this.props.onClose({ cancelled: true })}
+                                onClick={this.handleCancelClick}
                             />
                             <FlatButton
                                 label={this.state.api.isErrored ? 'Retry' : this.props.buttonCaption }
