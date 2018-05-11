@@ -6,7 +6,9 @@ class Spinner extends Component {
     render() {
         return (
             <MDSpinner
+                { ...this.props }
                 style={{ ...styles.spinner, ...this.props.style }}
+                size={this.props.size ? this.props.size : 35}
             />
         );
     }

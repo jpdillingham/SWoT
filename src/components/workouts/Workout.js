@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { red500 } from 'material-ui/styles/colors'
-import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { fetchWorkouts, updateWorkout, deleteWorkout } from '../workouts/WorkoutsActions'
 import { fetchWorkoutHistory } from '../workouts/WorkoutsHistoryActions'
 import { showSnackbar } from '../app/AppActions';
 
+import Spinner from '../shared/Spinner'
 import WorkoutCard from './WorkoutCard'
 import WorkoutReportCard from './WorkoutReportCard'
 
@@ -124,7 +124,7 @@ class Workout extends Component {
         let workout = this.state.workout;
 
         return (
-            this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
+            this.state.api.isExecuting ? <Spinner size={48}/> : 
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     workout === undefined ? <span>Invalid Workout Id.</span> : 
                         workout.endTime === undefined ?

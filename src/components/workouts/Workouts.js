@@ -5,7 +5,6 @@ import { fetchWorkouts } from './WorkoutsActions'
 import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
 
 import { red500 } from 'material-ui/styles/colors'
-import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import FlatButton from 'material-ui/FlatButton'
 
@@ -16,6 +15,7 @@ import AvStop from 'material-ui/svg-icons/av/stop'
 import AvPlayArrow from 'material-ui/svg-icons/av/play-arrow'
 import ActionInfo from 'material-ui/svg-icons/action/info'
 
+import Spinner from '../shared/Spinner'
 import WorkoutsListCard from './WorkoutsListCard'
 
 const initialState = {
@@ -29,14 +29,6 @@ const styles = {
     grid: {
         display: 'grid',
         gridGap: 10,
-    },
-    icon: {
-        height: 48,
-        width: 48,
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)'
     },
 }
 
@@ -66,7 +58,7 @@ class Workouts extends Component {
 
     render() {
         return (
-            this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
+            this.state.api.isExecuting ? <Spinner size={48}/> : 
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
                         <WorkoutsListCard 

@@ -5,7 +5,6 @@ import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
 import { fetchRoutines } from '../routines/RoutinesActions'
 
 import { black, red500 } from 'material-ui/styles/colors'
-import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import FlatButton from 'material-ui/FlatButton'
 import { ListItem } from 'material-ui/List'
@@ -18,6 +17,7 @@ import ContentClear from 'material-ui/svg-icons/content/clear'
 
 import WorkoutsListCard from './WorkoutsListCard'
 import WorkoutsHistoryOptions from './WorkoutsHistoryOptions'
+import Spinner from '../shared/Spinner'
 
 const initialState = {
     workouts: [],
@@ -148,7 +148,7 @@ class WorkoutsHistory extends Component {
         let total = this.props.workoutsHistory.totalCount;
 
         return (
-            this.state.loadApi.isExecuting ? <CircularProgress style={styles.icon} /> : 
+            this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
                         <WorkoutsListCard 

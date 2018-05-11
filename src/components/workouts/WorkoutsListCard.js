@@ -51,10 +51,12 @@ class WorkoutsListCard extends Component {
             (!this.props.workouts || this.props.workouts.length === 0) && this.props.hideIfEmpty ? '' :
                 <Card 
                     zDepth={2}                 
-                    style={{ 
-                        ...styles.card, 
-                        backgroundColor: this.props.refreshing ? grey300 : ''
-                    }}
+                    style={!this.props.refreshing ? styles.card : 
+                        { 
+                            ...styles.card, 
+                            backgroundColor: grey300 
+                        }
+                    }
                 >
                     <CardHeader
                         title={this.props.title}

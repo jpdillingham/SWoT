@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import {List, ListItem} from 'material-ui/List';
 
 import { red500 } from 'material-ui/styles/colors'
-import CircularProgress from 'material-ui/CircularProgress'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
+import Spinner from '../shared/Spinner'
 
 import { fetchRoutines } from '../routines/RoutinesActions'
 
@@ -17,6 +17,13 @@ const styles = {
         display: 'block',
         top: '10px'
     },
+    container: {
+        display: 'block',
+        minHeight: 40,
+    },
+    spinner: {
+        top: 60,
+    }
 }
 
 class ExerciseRoutineReferenceList extends Component {
@@ -43,8 +50,8 @@ class ExerciseRoutineReferenceList extends Component {
                         .filter(r => r.exercises.find(e => e.id === this.props.exercise.id));
 
         return (
-            <div>
-                {this.state.api.isExecuting ? <CircularProgress style={styles.icon} /> : 
+            <div style={styles.container}>
+                {this.state.api.isExecuting ? <Spinner style={styles.spinner}/> : 
                     this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                         <div>
                             {routines.length > 0 ? 
