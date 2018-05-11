@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import { black } from 'material-ui/styles/colors'
+import { black, grey300 } from 'material-ui/styles/colors'
 import {Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
@@ -18,6 +18,7 @@ import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
 import WorkoutStepper from './WorkoutStepper';
 import ConfirmDialog from '../shared/ConfirmDialog';
+import Spinner from '../shared/Spinner';
 
 const styles = {
     cardHeader: {
@@ -67,6 +68,10 @@ const initialState = {
     },
     workout: {
         notes: '',
+    },
+    api: {
+        isExecuting: false,
+        isErrored: false,
     }
 }
 
@@ -86,7 +91,16 @@ class WorkoutCard extends Component {
             workout.endTime = new Date().getTime();
         }
 
-        this.props.onWorkoutChange(workout);
+        this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
+            this.props.onWorkoutChange(workout)
+            .then(response => { 
+                if (response.data.endTime === undefined) {
+                    this.setState({ api: { isExecuting: false, isErrored: false }});
+                }
+            }, error => {
+                this.setState({ api: { isExecuting: false, isErrored: true }});
+            })
+        })
     }
 
     handleNotesChange = (event, value) => {
@@ -112,7 +126,7 @@ class WorkoutCard extends Component {
     render() {
         return (
             <div>
-                <Card zDepth={2} style={styles.card}>
+                <Card zDepth={2} style={!this.state.api.isExecuting ? styles.card : { ...styles.card, backgroundColor: grey300 }}>
                     <CardHeader                        
                         titleStyle={styles.cardTitle}
                         style={styles.cardHeader}
@@ -151,7 +165,7 @@ class WorkoutCard extends Component {
                     </IconMenu>
                     <CardText>
                         <WorkoutStepper
-                            enabled={this.props.workout.startTime !== undefined}
+                            enabled={this.props.workout.startTime !== undefined && !this.state.api.isExecuting}
                             style={styles.stepper}
                             workout={this.props.workout}
                             onExerciseChange={this.props.onExerciseChange}
@@ -166,6 +180,7 @@ class WorkoutCard extends Component {
                             onChange={this.handleNotesChange}
                             disabled={this.props.workout.endTime !== undefined  || this.props.workout.startTime === undefined}
                         />
+                        {this.state.api.isExecuting ? <Spinner/> : ''}
                     </CardText>
                 </Card>
                 <ConfirmDialog 
