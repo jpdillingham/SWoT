@@ -43,7 +43,7 @@ const getInitialState = () => ({
     }
 })
 
-class WorkoutExerciseHistoryDialog extends Component {
+class ExerciseHistoryDialog extends Component {
     render() {
         let style = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
 
@@ -78,4 +78,4 @@ const mapDispatchToProps = {
     fetchWorkoutsHistory,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorkoutExerciseDialog)
+export default connect(mapStateToProps, mapDispatchToProps)(ExerciseDialog)
