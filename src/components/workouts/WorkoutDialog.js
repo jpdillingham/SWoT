@@ -151,14 +151,14 @@ class WorkoutDialog extends Component {
     }
 
     render() {
-        let style = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
+        let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
 
         return (
             <Dialog
-                bodyStyle={style}
-                contentStyle={style}
-                titleStyle={style}
-                actionsContainerStyle={style}
+                bodyStyle={refreshStyle}
+                contentStyle={{ ...styles.dialogContent, refreshStyle }}
+                titleStyle={refreshStyle}
+                actionsContainerStyle={refreshStyle}
                 title={'Add Workout'} 
                 autoScrollBodyContent={true}
                 actions={
@@ -173,7 +173,6 @@ class WorkoutDialog extends Component {
                 }
                 modal={true}
                 open={this.props.open}
-                contentStyle={styles.dialogContent}
             >
                 <DatePicker 
                     floatingLabelText="Date"
