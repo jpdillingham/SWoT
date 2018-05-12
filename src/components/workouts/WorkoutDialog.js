@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { fetchRoutines } from '../routines/RoutinesActions'
 import { addWorkout } from '../workouts/WorkoutsActions'
+import Spinner from '../shared/Spinner'
+import { grey300 } from 'material-ui/styles/colors'
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -149,8 +151,14 @@ class WorkoutDialog extends Component {
     }
 
     render() {
+        let style = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
+
         return (
             <Dialog
+                bodyStyle={style}
+                contentStyle={style}
+                titleStyle={style}
+                actionsContainerStyle={style}
                 title={'Add Workout'} 
                 autoScrollBodyContent={true}
                 actions={
@@ -201,6 +209,7 @@ class WorkoutDialog extends Component {
                         />
                     )}
                 </SelectField>
+                {this.state.api.isExecuting? <Spinner /> : ''}
             </Dialog>
         )
     }
