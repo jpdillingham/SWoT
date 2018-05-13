@@ -5,7 +5,7 @@ import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import AVPlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled'
 import ImageLens from 'material-ui/svg-icons/image/lens'
 
-import WorkoutExerciseForm from './WorkoutExerciseForm'
+import ExerciseForm from '../exercises/ExerciseForm'
 
 const initialState = {
     stepIndex: -1,
@@ -61,7 +61,7 @@ class WorkoutStepper extends Component {
                             {exercise.name}
                         </StepButton>
                         <StepContent>
-                            <WorkoutExerciseForm 
+                            <ExerciseForm 
                                 exercise={exercise}
                                 onChange={this.props.onExerciseChange}
                                 onComplete={this.handleExerciseComplete}

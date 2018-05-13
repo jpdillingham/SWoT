@@ -63,7 +63,7 @@ const initialState = {
     validationErrors: {}
 }
 
-class WorkoutExerciseForm extends Component {
+class ExerciseForm extends Component {
     state = { ...initialState, exercise: { ...this.props.exercise }};
 
     timer;
@@ -258,4 +258,4 @@ class WorkoutExerciseForm extends Component {
     }
 }
 
-export default WorkoutExerciseForm
+export default ExerciseForm
