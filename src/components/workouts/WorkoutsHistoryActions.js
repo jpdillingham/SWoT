@@ -1,7 +1,7 @@
 import api from '../../api';
 import { API_ROOT } from "../../constants"
 
-const endpoint = API_ROOT + '/workouts';
+const endpoint = API_ROOT + '/workouts/history';
 
 const workoutsHistoryGet = (workouts, totalCount) => ({
     type: 'WORKOUTS_HISTORY_GET',
