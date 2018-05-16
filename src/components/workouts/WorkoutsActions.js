@@ -8,9 +8,9 @@ const workoutsPost = (workout) => ({
     workout: workout
 })
 
-const workoutsPut = (workout) => ({
+const workoutsPut = (workouts) => ({
     type: 'WORKOUTS_PUT',
-    workout: workout
+    workouts: workouts
 })
 
 const workoutsGet = (workouts) => ({

@@ -7,9 +7,7 @@ const WorkoutsReducer = (state = initialState, action) => {
         case 'WORKOUTS_POST':
             return state.concat(action.workout)
         case 'WORKOUTS_PUT': 
-            return state.map(w => {
-                return w.id === action.workout.id ? action.workout : w
-            })
+            return action.workouts
         case 'WORKOUTS_DELETE':
             return state.filter(w => w.id !== action.id)
         case 'COMPLETED_WORKOUTS_GET':
