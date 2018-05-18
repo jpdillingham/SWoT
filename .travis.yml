@@ -7,7 +7,7 @@ matrix:
         - cd web
       cache:
         directories:
-        - node_modules
+        - web/node_modules
       script:
         - npm test
         - npm run build
