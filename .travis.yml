@@ -5,6 +5,7 @@ matrix:
         - "stable"
       before_script:
         - cd web
+        - npm install
       cache:
         directories:
         - web/node_modules
