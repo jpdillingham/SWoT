@@ -1,6 +1,33 @@
 matrix:
   include:
   - language: node_js
+    stage: Web
+    node_js:
+    - stable
+    before_script:
+    - cd web
+    - npm install
+    cache:
+      directories:
+      - web/node_modules
+    script:
+    - npm test
+    - npm run build
+    deploy:
+      provider: s3
+      access_key_id: AKIAIAMHE73TSFTKF4SQ
+      secret_access_key:
+        secure: JuDtxp4QZnXMda0uaRhZMJsVGMFyzjmnraNJGkFR+uqO9EsJxmxAnc1KEu71AwUgnjbsnBmreq9VGJ4JZc0B89QMgSbdJDrWTd1YE79mc+01dUHcBsVtJ5dIB+00nnq9PvNe0CGDqd73tVBpyrJzY1ArWxqHP3SSysX9xOVQm3gTGhQQyc1AKS8KP2MkPyLI9BhgbGw4A3e0TYc7ZuZJkzjKIuj4Aay3xQ5XNB6MM/U7iS3Hi3t++88CtEgWkbLexcIHJ9h+ckoP2WtMdaonFLZyUdAE12+CMeQQm/3fPDCrbfRlhme9L3ZipXyHi/smQM1Fun9yBCsXXT4h3AfQSuYb1+PhL55vdAcseP21yZkxnTL27RQONy4YHyc7YTXJliJ2MdjrKXkJvH12x/+Y+KSeet+SPGM3m5T0u3bhAYNqUk9V65g6KrCmPEfDOlN8ej+kdYF1emspoBlNTHRlVNYGfvG99dRAwYotEM57MFYHSbjhE2fWf8j0mtSNtNnOzsUR005IGruFCXGqZsN88Yp4jhBwJ0afi1AAaEaGBiFF9XxgBKreCBE53mql0dxuG5Ukeysv5DjxyByo4r5v4dNlT16mk9jLxln+Ze4lPFSn9se8uAmRYp07HbRzr0W6tuEbL2W3cuXrNIXBhepQVpHjeBuQ0iFNi4UQroXsACQ=
+      bucket: swot-content
+      skip_cleanup: true
+      local_dir: build
+      region: us-east-1
+      acl: public_read
+      on:
+        repo: jpdillingham/SWoT
+        branch: master
+  - language: node_js
+    stage: Api
     node_js:
     - stable
     before_script:
@@ -24,31 +51,6 @@ matrix:
       access_key_id: AKIAILRZNTSHNQYX2NYQ
       secret_access_key:
         secure: VoCq3oTrF834hkFN45EG8z5TvCHO7B2ok3dMYrU7MQtwMSV9laZtHfHD4jHVgzZz5TocfICb7OcrHNWumnnWA/gYxjPOdxYX/CVBSJ2Jf32bnDwc5TQPrTVp2IGbS5S5fNmlPPpG3jNT18L9H5C2cOQXSUKJNdRdrQwodyAECGqfOcxJ8T7O4LtFf+qKSM3y/NXuaAupSOudHhAyf6BaLBTHkx89VrBvlQ4Ia2f3CAF6AIdZ7onYn6ZnrsDN8oDwqRDAE4/QnOZ/Ku02iEE6PfCyXrJ0yX2JYRL9d4ITelwtGCsR/cfgvkVnnPyEwkGW9AyMud8DDYkBGqlQJj8jvNaxtMfyQex4x+U69Z1eUtlDrwNYtN3BTmgQWt16SAooZuIe/h7mrCFGVzruMrHis6wzSOauj+08LnyI0cH1NXOYqiAY9hP1GxZPLKj8Cz43hHaKBKq+aPm4JqxZR4w7UXJZ1r1oAvkFiYySF0adF0Rure6asd9ZKbuaDODqlQkHVWqsZ1HVsMYj+JrgyCzeq1YIUa0IZIqQG6aqmWjiwZLOM8LMT7cguNrZauY4F5XHmqxR7TOfAHpmmOiomdUj/btUdA57mZ4Uc/cebpC8PBqsl06dz8qfC9oEgu3k35miOTP5fJsLjIrkdWzAuFTTJhWUzNXjWvZVOun3kNBU5O8=
-      on:
-        repo: jpdillingham/SWoT
-        branch: master
-  - language: node_js
-    node_js:
-    - stable
-    before_script:
-    - cd web
-    - npm install
-    cache:
-      directories:
-      - web/node_modules
-    script:
-    - npm test
-    - npm run build
-    deploy:
-      provider: s3
-      access_key_id: AKIAIAMHE73TSFTKF4SQ
-      secret_access_key:
-        secure: JuDtxp4QZnXMda0uaRhZMJsVGMFyzjmnraNJGkFR+uqO9EsJxmxAnc1KEu71AwUgnjbsnBmreq9VGJ4JZc0B89QMgSbdJDrWTd1YE79mc+01dUHcBsVtJ5dIB+00nnq9PvNe0CGDqd73tVBpyrJzY1ArWxqHP3SSysX9xOVQm3gTGhQQyc1AKS8KP2MkPyLI9BhgbGw4A3e0TYc7ZuZJkzjKIuj4Aay3xQ5XNB6MM/U7iS3Hi3t++88CtEgWkbLexcIHJ9h+ckoP2WtMdaonFLZyUdAE12+CMeQQm/3fPDCrbfRlhme9L3ZipXyHi/smQM1Fun9yBCsXXT4h3AfQSuYb1+PhL55vdAcseP21yZkxnTL27RQONy4YHyc7YTXJliJ2MdjrKXkJvH12x/+Y+KSeet+SPGM3m5T0u3bhAYNqUk9V65g6KrCmPEfDOlN8ej+kdYF1emspoBlNTHRlVNYGfvG99dRAwYotEM57MFYHSbjhE2fWf8j0mtSNtNnOzsUR005IGruFCXGqZsN88Yp4jhBwJ0afi1AAaEaGBiFF9XxgBKreCBE53mql0dxuG5Ukeysv5DjxyByo4r5v4dNlT16mk9jLxln+Ze4lPFSn9se8uAmRYp07HbRzr0W6tuEbL2W3cuXrNIXBhepQVpHjeBuQ0iFNi4UQroXsACQ=
-      bucket: swot-content
-      skip_cleanup: true
-      local_dir: build
-      region: us-east-1
-      acl: public_read
       on:
         repo: jpdillingham/SWoT
         branch: master
