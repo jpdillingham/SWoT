@@ -50,5 +50,5 @@ matrix:
         secret_access_key:
           secure: efVu/IuMbWy212is1ChPUgz0RMONA03pzBE/k1Ukbz+uYHVahOsjnpR9BhA16hEYiEgGLqUgZOi0T3uyJxbAi1JxtMga/SH8w6w4UWj28j1bOWtJSkU6OaRl9kA+ryMT6OcybUk3kexkwbN5o2yfnDNhoVtp8Cs1iIt4d6pEoSQ8KEu4yDN8DelMaX4ipBFp+251wo1oNQ9c37rJd0q/pzgGkH0bURIG7o45VS9Nkisr3MY1n1RKrMlNGagnTVfwGy9KjsA2b894m61h4/MZt73u1H9L6biWNqU5E9t162KiTfWiFTJVllMO6rvZCt3VCRGP09MQeIiQtTgIB9RXMFqvCR/uiVytFMn6vsBPUE/g3BFPftqbffNoXri7EXqTW1/HGQ/EXdGxC+WQOoqQxjK5CTAn7tlFt35mDSybRy8RKLI5VYGCCucjcBIzagdr0MyCh/1m6bbyC46aWHpugUU4uZx8/EsVF0fzXiRbb3Kd1/o57hZ0p0yg2Yxtt2FXQpzGUzltCH91tyQoSdgE+CFSikoHnKgvL8MbY4HOmspM1d04hLY9s3E4157Kk+ntrzcUNXMcWkWBFQ7hvrviJFMC01iE5Vn2SgPvVbAp5rpyZcHpbHvR6T6onq4qmg/vdZmNrQgqwuYGY/3wf/8ExhkdyXeYkuYkFIta1RDqmSA=
         on:
-          repo: jpdillingham/SWoT-Backend
+          repo: jpdillingham/SWoT
           branch: master
