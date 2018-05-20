@@ -13,12 +13,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jpdillingham/swot.git"
+    "url": "git+https://github.com/jpdillingham/SWoT.git"
   },
   "author": "JP Dillingham",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/jpdillingham/swot/issues"
+    "url": "https://github.com/jpdillingham/SWoT/issues"
   },
   "dependencies": {
     "amazon-cognito-identity-js": "^1.29.0",
