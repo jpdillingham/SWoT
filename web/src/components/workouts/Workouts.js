@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchWorkouts } from './WorkoutsActions'
-import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
+import { fetchWorkoutsHistory } from './history/WorkoutsHistoryActions'
 
 import { red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'

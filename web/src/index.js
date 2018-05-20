@@ -12,7 +12,7 @@ import ExercisesReducer from './components/exercises/ExercisesReducer'
 import AppReducer from './components/app/AppReducer';
 import RoutinesReducer from './components/routines/RoutinesReducer'
 import WorkoutsReducer from './components/workouts/WorkoutsReducers'
-import WorkoutsHistoryReducer from './components/workouts/WorkoutsHistoryReducers'
+import WorkoutsHistoryReducer from './components/workouts/history/WorkoutsHistoryReducers'
 import SecurityReducer from './components/security/SecurityReducer'
 
 const rootReducer = combineReducers({ 

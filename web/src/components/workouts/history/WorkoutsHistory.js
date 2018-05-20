@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchWorkoutsHistory } from './WorkoutsHistoryActions'
-import { fetchRoutines } from '../routines/RoutinesActions'
+import { fetchRoutines } from '../../routines/RoutinesActions'
 
 import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
@@ -15,9 +15,9 @@ import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-a
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 import ContentClear from 'material-ui/svg-icons/content/clear'
 
-import WorkoutsListCard from './WorkoutsListCard'
+import WorkoutsListCard from '../WorkoutsListCard'
 import WorkoutsHistoryOptions from './WorkoutsHistoryOptions'
-import Spinner from '../shared/Spinner'
+import Spinner from '../../shared/Spinner'
 
 const initialState = {
     workouts: [],

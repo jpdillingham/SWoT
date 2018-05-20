@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
-import { fetchWorkouts, updateWorkout, deleteWorkout } from '../workouts/WorkoutsActions'
-import { fetchWorkoutHistory } from '../workouts/WorkoutsHistoryActions'
+import { fetchWorkouts, updateWorkout, deleteWorkout } from './WorkoutsActions'
+import { fetchWorkoutHistory } from './history/WorkoutsHistoryActions'
 import { showSnackbar } from '../app/AppActions';
 
 import Spinner from '../shared/Spinner'
