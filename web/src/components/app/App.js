@@ -13,7 +13,7 @@ import AppContainer from './AppContainer'
 
 import Workouts from '../workouts/Workouts'
 import Workout from '../workouts/Workout'
-import WorkoutsHistory from '../workouts/history/WorkoutsHistory'
+import WorkoutsHistory from '../reports/workoutsHistory/WorkoutsHistory'
 import Exercises from '../exercises/Exercises'
 import Routines from '../routines/Routines'
 
