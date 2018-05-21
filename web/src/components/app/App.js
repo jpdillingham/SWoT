@@ -60,6 +60,7 @@ class App extends Component {
                         <AppContainer show={this.props.user !== undefined}>
                             <Switch>
                                 <Route exact path="/" component={Workouts}/>
+                                <Route exact path="/history" component={WorkoutsHistory}/>
                                 <Route exact path="/workouts" component={Workouts}/>
                                 <Route exact path="/workouts/history" component={WorkoutsHistory}/>
                                 <Route path="/workouts/:id" component={Workout}/>
