@@ -22,6 +22,29 @@ const workoutSort = (predicate) => {
     }
 }
 
+router.get('/history/:id', (req, res) => {
+    let userId = util.getUserId(req);
+    let id = req.params.id;
+
+    database.queryAll(userId, 0, new Date().getTime())
+    .then(workouts => {
+        let workout = workouts.find(w => w.id === id);
+
+        if (workout) {
+            res.status(200);
+            res.json(workout);
+        }
+        else {
+            res.status(404);
+            res.json();
+        }
+    })
+    .catch(error => {
+        res.status(500);
+        res.json(error);
+    })
+})
+
 // pagination - /workouts?limit=N&offset=M
 // sort - /workouts?order=<ASC|DESC>
 // filter by routine - /workouts?routineId=guid

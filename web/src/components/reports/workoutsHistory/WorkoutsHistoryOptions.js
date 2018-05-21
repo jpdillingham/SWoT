@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem'
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel'
 import DatePicker from 'material-ui/DatePicker'
 
-import { FILTER_SORT_ORDER_OPTIONS, FILTER_LIMIT_OPTIONS } from '../../constants'
+import { FILTER_SORT_ORDER_OPTIONS, FILTER_LIMIT_OPTIONS } from '../../../constants'
 
 const styles = {
     order: {

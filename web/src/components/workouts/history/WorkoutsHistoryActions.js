@@ -1,5 +1,5 @@
-import api from '../../api';
-import { API_ROOT } from "../../constants"
+import api from '../../../api';
+import { API_ROOT } from "../../../constants"
 
 const endpoint = API_ROOT + '/workouts/history';
 

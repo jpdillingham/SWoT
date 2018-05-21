@@ -13,7 +13,7 @@ import AppContainer from './AppContainer'
 
 import Workouts from '../workouts/Workouts'
 import Workout from '../workouts/Workout'
-import WorkoutsHistory from '../workouts/WorkoutsHistory'
+import WorkoutsHistory from '../reports/workoutsHistory/WorkoutsHistory'
 import Exercises from '../exercises/Exercises'
 import Routines from '../routines/Routines'
 
@@ -61,8 +61,8 @@ class App extends Component {
                             <Switch>
                                 <Route exact path="/" component={Workouts}/>
                                 <Route exact path="/workouts" component={Workouts}/>
+                                <Route exact path="/workouts/history" component={WorkoutsHistory}/>
                                 <Route path="/workouts/:id" component={Workout}/>
-                                <Route path="/history" component={WorkoutsHistory}/>
                                 <Route path="/exercises" component={Exercises}/>
                                 <Route path="/routines" component={Routines}/>
                                 <Route path="/login" component={Login}/>

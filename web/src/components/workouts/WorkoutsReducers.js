@@ -10,8 +10,6 @@ const WorkoutsReducer = (state = initialState, action) => {
             return action.workouts
         case 'WORKOUTS_DELETE':
             return state.filter(w => w.id !== action.id)
-        case 'COMPLETED_WORKOUTS_GET':
-            return action.completedWorkouts
         default:
             return state;
     }
