@@ -3,7 +3,14 @@ import { connect } from 'react-redux';
 
 import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
-
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    TableHeaderColumn,
+    TableRow,
+    TableRowColumn,
+  } from 'material-ui/Table';
 import Spinner from '../../shared/Spinner'
 
 import { fetchExercisesHistory } from './ExercisesHistoryActions'
@@ -116,7 +123,6 @@ class ExercisesHistory extends Component {
                             defaultFilters={this.state.filters}
                             onFilterChange={this.handleFiltersChange}
                         >
-                            hello world! 
                         </History>
                     </div>
         )
