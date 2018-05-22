@@ -3,7 +3,14 @@ import { connect } from 'react-redux';
 
 import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
-
+import {
+    Table,
+    TableBody,
+    TableHeader,
+    TableHeaderColumn,
+    TableRow,
+    TableRowColumn,
+  } from 'material-ui/Table';
 import Spinner from '../../shared/Spinner'
 
 import { fetchExercisesHistory } from './ExercisesHistoryActions'
@@ -53,6 +60,7 @@ const styles = {
 }
 
 class ExercisesHistory extends Component {
+    // todo: add a filter for exerciseId based on path
     constructor(props) {
         super(props);
 
@@ -103,6 +111,16 @@ class ExercisesHistory extends Component {
     }
 
     render() {
+        // todo: create a list of all metric names in the set
+        
+        let history = this.props.exercisesHistory;
+        let exercises = history && history.exercises ? history.exercises : undefined;
+        let metrics
+        if (exercises) 
+            metrics = exercises.map(e => e.metrics).reduce((acc, e) => acc.concat(e));
+
+        console.log(metrics);
+
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
@@ -116,7 +134,29 @@ class ExercisesHistory extends Component {
                             defaultFilters={this.state.filters}
                             onFilterChange={this.handleFiltersChange}
                         >
-                            hello world! 
+                            <Table>
+                                <TableHeader
+                                    adjustForCheckbox={false}
+                                    displaySelectAll={false}
+                                >
+                                    <TableRow>
+                                        {/* todo: add a header for every metric */}
+                                        <TableHeaderColumn>Name</TableHeaderColumn>
+                                        <TableHeaderColumn>Metrics</TableHeaderColumn>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody
+                                    displayRowCheckbox={false}
+                                >
+                                    {this.props.exercisesHistory.exercises.map((e, index) => 
+                                        <TableRow key={index}>
+                                            {/* todo: map metrics to headers */}
+                                            <TableRowColumn>{e.name}</TableRowColumn>
+                                            <TableRowColumn>{JSON.stringify(e.metrics)}</TableRowColumn>
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
                         </History>
                     </div>
         )
