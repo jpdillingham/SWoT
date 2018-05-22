@@ -24,7 +24,7 @@ export const FILTER_LIMIT_OPTIONS = [
     { caption: '5', value: 5 }, 
     { caption: '10', value: 10 }, 
     { caption: '25', value: 25 }, 
-    { caption: '50', value: 25 } 
+    { caption: '50', value: 50 } 
 ];
 
 export const FILTER_SORT_ORDER_OPTIONS = [ 
