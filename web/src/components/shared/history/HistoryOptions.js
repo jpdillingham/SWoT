@@ -87,24 +87,6 @@ class HistoryOptions extends Component {
                     />
                 </div>
                 <SelectField 
-                    floatingLabelText={'Filter By'}
-                    style={styles.routine} 
-                    value={this.props.filters.routineId} 
-                    onChange={(event, index, value) => this.handleChange('routineId', event, index, value)}
-                    disabled={this.props.disabled}
-                >
-                    {this.props.routines.map((r, index) => 
-                        <MenuItem 
-                            key={index} 
-                            value={r.id} 
-                            primaryText={r.name} 
-                        />                    
-                    )}
-                </SelectField>
-                {this.props.filters.routineId !== undefined ? 
-                    <NavigationCancel style={styles.routineClearIcon} onClick={this.handleRoutineFilterClearClick}/>
-                : '' }
-                <SelectField 
                     floatingLabelText="Sort By"
                     style={styles.order} 
                     value={FILTER_SORT_ORDER_OPTIONS.find(o => o.value.toLowerCase() === this.props.filters.order.toLowerCase()).value} 

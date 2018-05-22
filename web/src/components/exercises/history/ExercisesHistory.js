@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
@@ -11,11 +12,13 @@ import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-a
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 import ContentClear from 'material-ui/svg-icons/content/clear'
 
-import HistoryOptions from './HistoryOptions'
-import HistoryCard from './HistoryCard'
 import Spinner from '../../shared/Spinner'
 
+import History from '../../shared/history/History';
+import { EXERCISE_AVATAR_COLOR } from '../../../constants'
+
 const initialState = {
+    workouts: [],
     filters: {
         offset: 0,
         limit: 5,
@@ -56,7 +59,7 @@ const styles = {
     }
 }
 
-class History extends Component {
+class ExercisesHistory extends Component {
     constructor(props) {
         super(props);
 
@@ -88,6 +91,7 @@ class History extends Component {
     }
 
     handleNextClick = () => {
+
     }
 
     handleFiltersChange = (filters) => {
@@ -98,69 +102,41 @@ class History extends Component {
         if (routineChanged || fromDateChanged || toDateChanged) {
             filters.offset = 0;
         }
+
     }
 
-    handlePreviousClick = () => {     
+    handlePreviousClick = () => {
+ 
     }
+
 
     render() {
         let filters = this.state.filters;
         let start;
-        let end;
+        let end;       
+
 
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
-                        <HistoryCard 
-                            title={this.props.title}
-                            color={this.props.color}
-                            icon={<ActionRestore/>}
-                            header={
-                                <HistoryOptions 
-                                    filters={this.state.filters} 
-                                    routines={this.props.routines}
-                                    onChange={this.handleFiltersChange}
-                                    disabled={this.state.refreshApi.isExecuting}
-                                />
-                            }
-                            itemRightIcon={<ActionInfo/>}
-                            sort={this.state.filters.order}
-                            timePrefix={'Completed'}
-                            timeField={'endTime'}
-                            onClick={this.handleWorkoutClick}
-                            refreshing={this.state.refreshApi.isExecuting}
-                            emptyContent={
-                                <ListItem 
-                                    primaryText={'No records match the current filter criteria'}
-                                    leftIcon={<ContentClear/>}
-                                />
-                            }
-                            footer={
-                                <div style={styles.buttonRow}>
-                                <FlatButton
-                                    onClick={this.handlePreviousClick}
-                                    disabled={this.state.refreshApi.isExecuting || start === 1}
-                                    icon={<HardwareKeyboardArrowLeft/>}
-                                />
-                                <FlatButton 
-                                    label={'pagination info'}
-                                    disabled={true}
-                                    style={styles.paginationButton}
-                                />
-                                <FlatButton 
-                                    onClick={this.handleNextClick} 
-                                    icon={<HardwareKeyboardArrowRight/>}
-                                />
-                                </div>
-                            }
+                        <History
+                            title={'History'}
+                            color={EXERCISE_AVATAR_COLOR}
                         >
-                            {this.props.children}
-
-                        </HistoryCard>
+                            hello world! 
+                        </History>
                     </div>
         )
     }
 }
 
-export default History
+const mapStateToProps = (state) => ({
+    workoutsHistory: state.workoutsHistory,
+    routines: state.routines,
+})
+
+const mapDispatchToProps = {
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExercisesHistory)
