@@ -47,16 +47,10 @@ const styles = {
 
 class HistoryOptions extends Component {
     handleChange = (filter, event, index, value) => {
+        console.log(filter, index, value)
         if (!this.props.disabled) {
             this.props.onChange({ ...this.props.filters, [filter]: value });
         }
-    }
-
-    handleRoutineFilterClearClick = () => {
-        let filters = { ...this.props.filters };
-        delete filters.routineId;
-
-        this.props.onChange(filters);
     }
 
     render() {

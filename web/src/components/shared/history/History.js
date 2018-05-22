@@ -15,23 +15,12 @@ import HistoryOptions from './HistoryOptions'
 import HistoryCard from './HistoryCard'
 import Spinner from '../../shared/Spinner'
 
-const initialState = {
-    filters: {
-        offset: 0,
-        limit: 5,
-        order: 'desc',
-        routineId: undefined,
-        toDate: undefined,
-        fromDate: undefined,
-    },
-    loadApi: {
-        isExecuting: false,
-        isErrored: false,
-    },
-    refreshApi: {
-        isExecuting: false,
-        isErrored: false,
-    }
+const defaultFilters = {
+    offset: 0,
+    limit: 5,
+    order: 'desc',
+    toDate: undefined,
+    fromDate: undefined,
 }
 
 const styles = {
@@ -66,28 +55,29 @@ class History extends Component {
         let defaultFromDate = new Date(defaultToDate);
         defaultFromDate.setDate(defaultFromDate.getDate() - 30);
     
-        this.state = { 
-            ...initialState, 
-            filters: { 
-                ...initialState.filters, 
+        this.state = {  
+            filters: props.defaultFilters ? props.defaultFilters : { 
+                ...defaultFilters, 
                 toDate: defaultToDate.getTime(), 
                 fromDate: defaultFromDate.getTime() 
             } 
-        };        
-    }
-
-    componentWillMount() {
-    }
-
-    navigate = (url) => {
-        this.props.history.push(url);
-    }
-
-    handleWorkoutClick = (workoutId) => {
-        this.navigate('/workouts/' + workoutId)
+        }; 
+        
+        if (!props.defaultFilters) this.props.onFilterChange(this.state.filters);
     }
 
     handleNextClick = () => {
+        this.updateFilters({
+            ...this.state.filters,
+            offset: this.state.filters.offset + this.state.filters.limit
+        });
+    }
+
+    handlePreviousClick = () => {     
+        this.updateFilters({
+            ...this.state.filters,
+            offset: this.state.filters.offset - this.state.filters.limit
+        });
     }
 
     handleFiltersChange = (filters) => {
@@ -98,9 +88,14 @@ class History extends Component {
         if (routineChanged || fromDateChanged || toDateChanged) {
             filters.offset = 0;
         }
+
+        this.updateFilters(filters);
     }
 
-    handlePreviousClick = () => {     
+    updateFilters = (filters) => {
+        this.setState({ filters: filters }, () => {
+            this.props.onFilterChange(this.state.filters);
+        })
     }
 
     render() {
@@ -108,57 +103,54 @@ class History extends Component {
         let start;
         let end;
 
-        return (
-            this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
-                this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    <div style={styles.grid}>
-                        <HistoryCard 
-                            title={this.props.title}
-                            color={this.props.color}
-                            icon={<ActionRestore/>}
-                            header={
-                                <HistoryOptions 
-                                    filters={this.state.filters} 
-                                    routines={this.props.routines}
-                                    onChange={this.handleFiltersChange}
-                                    disabled={this.state.refreshApi.isExecuting}
-                                />
-                            }
-                            itemRightIcon={<ActionInfo/>}
-                            sort={this.state.filters.order}
-                            timePrefix={'Completed'}
-                            timeField={'endTime'}
-                            onClick={this.handleWorkoutClick}
-                            refreshing={this.state.refreshApi.isExecuting}
-                            emptyContent={
-                                <ListItem 
-                                    primaryText={'No records match the current filter criteria'}
-                                    leftIcon={<ContentClear/>}
-                                />
-                            }
-                            footer={
-                                <div style={styles.buttonRow}>
-                                <FlatButton
-                                    onClick={this.handlePreviousClick}
-                                    disabled={this.state.refreshApi.isExecuting || start === 1}
-                                    icon={<HardwareKeyboardArrowLeft/>}
-                                />
-                                <FlatButton 
-                                    label={'pagination info'}
-                                    disabled={true}
-                                    style={styles.paginationButton}
-                                />
-                                <FlatButton 
-                                    onClick={this.handleNextClick} 
-                                    icon={<HardwareKeyboardArrowRight/>}
-                                />
-                                </div>
-                            }
-                        >
-                            {this.props.children}
+        if (this.props.data) {
+            start = filters.offset + 1;
+            end = start - 1 + this.props.data.length;
+        }
 
-                        </HistoryCard>
+        return (
+            <HistoryCard 
+                title={this.props.title}
+                color={this.props.color}
+                icon={<ActionRestore/>}
+                header={
+                    <HistoryOptions 
+                        filters={this.state.filters} 
+                        onChange={this.handleFiltersChange}
+                        disabled={this.props.refreshing}
+                    />
+                }
+                refreshing={this.props.refreshing}
+                emptyContent={
+                    <ListItem 
+                        primaryText={'No records match the current filter criteria'}
+                        leftIcon={<ContentClear/>}
+                    />
+                }
+                footer={
+                    <div style={styles.buttonRow}>
+                        <FlatButton
+                            onClick={this.handlePreviousClick}
+                            disabled={this.props.refreshing || start === 1}
+                            icon={<HardwareKeyboardArrowLeft/>}
+                        />
+                        <FlatButton 
+                            label={this.props.refreshing ? ' ' : 
+                                this.props.total > 0 ? start + '-' + end + ' of ' + this.props.total : 'No Results'
+                            }
+                            disabled={true}
+                            style={styles.paginationButton}
+                        />
+                        <FlatButton 
+                            onClick={this.handleNextClick} 
+                            icon={<HardwareKeyboardArrowRight/>}
+                            disabled={this.props.refreshing || end === this.props.total}
+                        />
                     </div>
+                }
+            >
+                {this.props.children}
+            </HistoryCard>
         )
     }
 }

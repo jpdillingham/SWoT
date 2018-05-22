@@ -14,6 +14,8 @@ import ContentClear from 'material-ui/svg-icons/content/clear'
 
 import Spinner from '../../shared/Spinner'
 
+import { fetchExercisesHistory } from './ExercisesHistoryActions'
+
 import History from '../../shared/history/History';
 import { EXERCISE_AVATAR_COLOR } from '../../../constants'
 
@@ -23,7 +25,6 @@ const initialState = {
         offset: 0,
         limit: 5,
         order: 'desc',
-        routineId: undefined,
         toDate: undefined,
         fromDate: undefined,
     },
@@ -76,46 +77,40 @@ class ExercisesHistory extends Component {
                 toDate: defaultToDate.getTime(), 
                 fromDate: defaultFromDate.getTime() 
             } 
-        };        
+        }; 
     }
 
-    componentWillMount() {
+    componentWillMount = () => {
+        this.fetchHistory(this.state.filters, 'loadApi');
     }
 
     navigate = (url) => {
         this.props.history.push(url);
     }
 
-    handleWorkoutClick = (workoutId) => {
-        this.navigate('/workouts/' + workoutId)
-    }
-
-    handleNextClick = () => {
-
+    handleItemClick = (id) => {
+        this.navigate('/exercises/' + id)
     }
 
     handleFiltersChange = (filters) => {
-        let routineChanged = this.state.filters.routineId !== filters.routineId;
-        let fromDateChanged = this.state.filters.fromDate !== filters.fromDate;
-        let toDateChanged = this.state.filters.toDate !== filters.toDate;
-
-        if (routineChanged || fromDateChanged || toDateChanged) {
-            filters.offset = 0;
-        }
-
+        this.fetchHistory(filters);
     }
 
-    handlePreviousClick = () => {
- 
-    }
+    fetchHistory = (filters, api = 'refreshApi') => {
+        this.setState({ 
+            [api]: { ...this.state[api], isExecuting: true }
+        }, () => {
+            this.props.fetchExercisesHistory(filters)
+            .then(response => {
+                this.setState({ filters: filters, [api]: { isExecuting: false, isErrored: false }})
+            }, error => {
+                this.setState({ filters: filters, [api]: { isExecuting: false, isErrored: true }})
+            })
+        })
 
+    }
 
     render() {
-        let filters = this.state.filters;
-        let start;
-        let end;       
-
-
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
@@ -123,6 +118,11 @@ class ExercisesHistory extends Component {
                         <History
                             title={'History'}
                             color={EXERCISE_AVATAR_COLOR}
+                            data={this.props.exercisesHistory.exercises}
+                            total={this.props.exercisesHistory.totalCount}
+                            refreshing={this.state.refreshApi.isExecuting}
+                            defaultFilters={this.state.filters}
+                            onFilterChange={this.handleFiltersChange}
                         >
                             hello world! 
                         </History>
@@ -132,11 +132,11 @@ class ExercisesHistory extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    workoutsHistory: state.workoutsHistory,
-    routines: state.routines,
+    exercisesHistory: state.exercisesHistory,
 })
 
 const mapDispatchToProps = {
+    fetchExercisesHistory
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExercisesHistory)
