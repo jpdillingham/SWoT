@@ -97,7 +97,7 @@ class Workouts extends Component {
                             <FlatButton 
                                 label="View Full History" 
                                 fullWidth={true}
-                                onClick={() => this.navigate('/history')}
+                                onClick={() => this.navigate('/workouts/history')}
                             />
                         </WorkoutsListCard>
                         <AddFloatingAddButton dialog={<WorkoutDialog/>}/>

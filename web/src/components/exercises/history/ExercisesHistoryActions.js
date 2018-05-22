@@ -9,9 +9,8 @@ const exercisesHistoryGet = (exercises, totalCount) => ({
     totalCount: totalCount,
 });
 
-export const fetchexercisesHistory = (filters) => (dispatch, getState) => {
+export const fetchExercisesHistory = (filters) => (dispatch, getState) => {
     let queryParams = '?';
-    queryParams += 'status=done';
 
     Object.keys(filters).forEach(f => {
         if (filters[f] !== undefined) {
