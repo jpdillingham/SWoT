@@ -110,6 +110,16 @@ class ExercisesHistory extends Component {
     }
 
     render() {
+        // todo: create a list of all metric names in the set
+        
+        let history = this.props.exercisesHistory;
+        let exercises = history && history.exercises ? history.exercises : undefined;
+        let metrics
+        if (exercises) 
+            metrics = exercises.map(e => e.metrics).reduce((acc, e) => acc.concat(e));
+
+        console.log(metrics);
+
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
@@ -129,6 +139,7 @@ class ExercisesHistory extends Component {
                                     displaySelectAll={false}
                                 >
                                     <TableRow>
+                                        {/* todo: add a header for every metric */}
                                         <TableHeaderColumn>Name</TableHeaderColumn>
                                         <TableHeaderColumn>Metrics</TableHeaderColumn>
                                     </TableRow>
@@ -136,8 +147,9 @@ class ExercisesHistory extends Component {
                                 <TableBody
                                     displayRowCheckbox={false}
                                 >
-                                    {this.props.exercisesHistory.exercises.map(e => 
-                                        <TableRow>
+                                    {this.props.exercisesHistory.exercises.map((e, index) => 
+                                        <TableRow key={index}>
+                                            {/* todo: map metrics to headers */}
                                             <TableRowColumn>{e.name}</TableRowColumn>
                                             <TableRowColumn>{JSON.stringify(e.metrics)}</TableRowColumn>
                                         </TableRow>
