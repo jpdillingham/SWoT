@@ -60,6 +60,7 @@ const styles = {
 }
 
 class ExercisesHistory extends Component {
+    // todo: add a filter for exerciseId based on path
     constructor(props) {
         super(props);
 
