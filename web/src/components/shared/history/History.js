@@ -14,6 +14,7 @@ import ContentClear from 'material-ui/svg-icons/content/clear'
 import HistoryOptions from './HistoryOptions'
 import HistoryCard from './HistoryCard'
 import Spinner from '../../shared/Spinner'
+import HistoryPagination from './HistoryPagination';
 
 const defaultFilters = {
     offset: 0,
@@ -128,25 +129,14 @@ class History extends Component {
                     />
                 }
                 footer={
-                    <div style={styles.buttonRow}>
-                        <FlatButton
-                            onClick={this.handlePreviousClick}
-                            disabled={this.props.refreshing || start === 1}
-                            icon={<HardwareKeyboardArrowLeft/>}
-                        />
-                        <FlatButton 
-                            label={this.props.refreshing ? ' ' : 
-                                this.props.total > 0 ? start + '-' + end + ' of ' + this.props.total : 'No Results'
-                            }
-                            disabled={true}
-                            style={styles.paginationButton}
-                        />
-                        <FlatButton 
-                            onClick={this.handleNextClick} 
-                            icon={<HardwareKeyboardArrowRight/>}
-                            disabled={this.props.refreshing || end === this.props.total}
-                        />
-                    </div>
+                    <HistoryPagination
+                        start={start}
+                        end={end}
+                        total={this.props.total}
+                        refreshing={this.props.refreshing}
+                        onPreviousClick={this.handlePreviousClick}
+                        onNextClick={this.handleNextClick}
+                    />
                 }
             >
                 {this.props.children}
