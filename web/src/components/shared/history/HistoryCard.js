@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
-import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
 import { black, grey300 } from 'material-ui/styles/colors'
 import Divider from 'material-ui/Divider'
 
-import { WORKOUT_AVATAR_COLOR } from '../../../constants'
-import { List, ListItem } from 'material-ui/List';
 import Spinner from '../Spinner';
 
 const styles = {
@@ -33,29 +29,12 @@ const styles = {
 }
 
 class HistoryCard extends Component {
-    sort = (a, b) => {
-        let f = this.props.timeField;
-        if (this.props.sort.toLowerCase() === 'desc') {
-            return a[f] > b[f] ? -1 : 
-                a[f] === b[f] ? 0 : 1 
-        }
-        else {
-            return a[f] < b[f] ? -1 : 
-                a[f] === b[f] ? 0 : 1 
-        }        
-    }
-
     render() {
         return (
-            (!this.props.workouts || this.props.workouts.length === 0) && this.props.hideIfEmpty ? '' :
+            !this.props.children && this.props.hideIfEmpty ? '' :
                 <Card 
                     zDepth={2}                 
-                    style={!this.props.refreshing ? styles.card : 
-                        { 
-                            ...styles.card, 
-                            backgroundColor: grey300 
-                        }
-                    }
+                    style={!this.props.refreshing ? styles.card : { ...styles.card, backgroundColor: grey300 } }
                 >
                     <CardHeader
                         title={this.props.title}

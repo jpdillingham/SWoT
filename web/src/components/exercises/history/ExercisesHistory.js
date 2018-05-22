@@ -3,14 +3,6 @@ import { connect } from 'react-redux';
 
 import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
-import FlatButton from 'material-ui/FlatButton'
-import { ListItem } from 'material-ui/List'
-
-import ActionRestore from 'material-ui/svg-icons/action/restore'
-import ActionInfo from 'material-ui/svg-icons/action/info'
-import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
-import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
-import ContentClear from 'material-ui/svg-icons/content/clear'
 
 import Spinner from '../../shared/Spinner'
 

@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 
-import { black, red500 } from 'material-ui/styles/colors'
-import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
-import FlatButton from 'material-ui/FlatButton'
 import { ListItem } from 'material-ui/List'
 
 import ActionRestore from 'material-ui/svg-icons/action/restore'
-import ActionInfo from 'material-ui/svg-icons/action/info'
-import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
-import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 import ContentClear from 'material-ui/svg-icons/content/clear'
 
 import HistoryOptions from './HistoryOptions'
 import HistoryCard from './HistoryCard'
-import Spinner from '../../shared/Spinner'
 import HistoryPagination from './HistoryPagination';
 
 const defaultFilters = {
@@ -22,28 +15,6 @@ const defaultFilters = {
     order: 'desc',
     toDate: undefined,
     fromDate: undefined,
-}
-
-const styles = {
-    grid: {
-        display: 'grid',
-        gridGap: 10,
-    },
-    icon: {
-        height: 48,
-        width: 48,
-        position: 'fixed',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)'
-    },
-    paginationButton: {
-        color: black,
-        width: 150
-    },
-    buttonRow: {
-        textAlign: 'center'
-    }
 }
 
 class History extends Component {

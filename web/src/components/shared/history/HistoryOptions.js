@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 
-import { red500 } from 'material-ui/styles/colors'
 import SelectField from 'material-ui/SelectField/SelectField';
 import MenuItem from 'material-ui/MenuItem'
-import NavigationCancel from 'material-ui/svg-icons/navigation/cancel'
 import DatePicker from 'material-ui/DatePicker'
 
 import { FILTER_SORT_ORDER_OPTIONS, FILTER_LIMIT_OPTIONS } from '../../../constants'
@@ -16,18 +14,6 @@ const styles = {
     limit: {
         width: 75,
         marginRight: 5,
-    },
-    routine: {
-        width: 300,
-        marginRight: 5,
-    },
-    routineClearIcon: {
-        width: 18,
-        height: 18,
-        color: red500,
-        cursor: 'pointer',
-        marginBottom: 15,
-        marginRight: 10,
     },
     dateWrapper: {
         marginBottom: -15,
@@ -47,7 +33,6 @@ const styles = {
 
 class HistoryOptions extends Component {
     handleChange = (filter, event, index, value) => {
-        console.log(filter, index, value)
         if (!this.props.disabled) {
             this.props.onChange({ ...this.props.filters, [filter]: value });
         }
