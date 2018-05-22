@@ -123,6 +123,27 @@ class ExercisesHistory extends Component {
                             defaultFilters={this.state.filters}
                             onFilterChange={this.handleFiltersChange}
                         >
+                            <Table>
+                                <TableHeader
+                                    adjustForCheckbox={false}
+                                    displaySelectAll={false}
+                                >
+                                    <TableRow>
+                                        <TableHeaderColumn>Name</TableHeaderColumn>
+                                        <TableHeaderColumn>Metrics</TableHeaderColumn>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody
+                                    displayRowCheckbox={false}
+                                >
+                                    {this.props.exercisesHistory.exercises.map(e => 
+                                        <TableRow>
+                                            <TableRowColumn>{e.name}</TableRowColumn>
+                                            <TableRowColumn>{JSON.stringify(e.metrics)}</TableRowColumn>
+                                        </TableRow>
+                                    )}
+                                </TableBody>
+                            </Table>
                         </History>
                     </div>
         )
