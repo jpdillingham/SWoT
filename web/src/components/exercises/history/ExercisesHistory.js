@@ -118,14 +118,11 @@ class ExercisesHistory extends Component {
         // todo: create a list of all metric names in the set        
         let history = this.props.exercisesHistory;
         let exercises = history && history.exercises ? history.exercises : undefined;
-        let metrics
-        if (exercises) {
-            metrics = exercises
-                        .map(e => e.metrics)
-                        .reduce((acc, e) => acc.concat(e))
-                        .sort(sortByProp('name'))
-                        .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true)
-        }
+        let metrics = !exercises ? [] : exercises
+                                        .map(e => e.metrics)
+                                        .reduce((acc, e) => acc.concat(e))
+                                        .sort(sortByProp('name'))
+                                        .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true);
 
         console.log(metrics);
 
