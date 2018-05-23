@@ -2,7 +2,7 @@ exports.getUserId = (req) => {
     return req.apiGateway.event.requestContext.authorizer.claims.sub;
 }
 
-export const sortByProp = (prop, predicate = 'asc') => {
+exports.sortByProp = (prop, predicate = 'asc') => {
     return (a, b) => {
         a = a[prop];
         b = b[prop];
