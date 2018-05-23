@@ -111,11 +111,14 @@ class ExercisesHistory extends Component {
                 this.setState({ filters: filters, [api]: { isExecuting: false, isErrored: true }})
             })
         })
+    }
 
+    getValue = (exercise, metric) => {
+        var foundMetric = exercise.metrics.find(m => m.name === metric);
+        return !foundMetric ? '' : !foundMetric.value ? '-' : foundMetric.value;
     }
 
     render() {
-        // todo: create a list of all metric names in the set        
         let history = this.props.exercisesHistory;
         let exercises = history && history.exercises ? history.exercises : undefined;
         let metrics = !exercises ? [] : exercises
@@ -144,7 +147,11 @@ class ExercisesHistory extends Component {
                                 >
                                     <TableRow>
                                         <TableHeaderColumn>Name</TableHeaderColumn>
-                                        {metrics.map(m => <TableHeaderColumn>{m.name}{m.uom ? ' (' + m.uom + ')' : ''}</TableHeaderColumn>)}
+                                        {metrics.map((m, index) => 
+                                            <TableHeaderColumn key={index}>
+                                                {m.name}{m.uom ? ' (' + m.uom + ')' : ''}
+                                            </TableHeaderColumn>
+                                        )}
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody
@@ -152,9 +159,12 @@ class ExercisesHistory extends Component {
                                 >
                                     {this.props.exercisesHistory.exercises.map((e, index) => 
                                         <TableRow key={index}>
-                                            {/* todo: map metrics to headers */}
                                             <TableRowColumn>{e.name}</TableRowColumn>
-                                            <TableRowColumn>{JSON.stringify(e.metrics)}</TableRowColumn>
+                                            {metrics.map((m, index) => 
+                                                <TableHeaderColumn key={index}>
+                                                    {this.getValue(e, m.name)}
+                                                </TableHeaderColumn>
+                                            )}
                                         </TableRow>
                                     )}
                                 </TableBody>
