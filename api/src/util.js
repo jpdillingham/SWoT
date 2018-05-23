@@ -2,10 +2,10 @@ exports.getUserId = (req) => {
     return req.apiGateway.event.requestContext.authorizer.claims.sub;
 }
 
-exports.sortByEndTime = (predicate) => {
+export const sortByProp = (prop, predicate = 'asc') => {
     return (a, b) => {
-        a = a.endTime;
-        b = b.endTime;
+        a = a[prop];
+        b = b[prop];
         
         if (predicate === 'asc') {
             if (a > b) return 1;
