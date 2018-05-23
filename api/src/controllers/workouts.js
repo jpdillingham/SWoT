@@ -4,24 +4,6 @@ const util = require('../util')
 
 const router = express.Router();
 
-const workoutSort = (predicate) => {
-    return (a, b) => {
-        a = a.endTime;
-        b = b.endTime;
-        
-        if (predicate === 'asc') {
-            if (a > b) return 1;
-            if (a < b) return -1;
-            return 0;
-        }
-        else { 
-            if (a > b) return -1;
-            if (a < b) return 1;
-            return 0;
-        }
-    }
-}
-
 router.get('/history/:id', (req, res) => {
     let userId = util.getUserId(req);
     let id = req.params.id;
@@ -72,7 +54,7 @@ router.get('/history', (req, res) => {
 
         if (order) {
             if (order === 'asc' || order === 'desc') {
-                workouts = workouts.sort(workoutSort(order))
+                workouts = workouts.sort(sortByProp('endTime', order))
             }
             else {
                 res.status(400);
