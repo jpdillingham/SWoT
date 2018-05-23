@@ -31,7 +31,7 @@ router.get('/history', (req, res) => {
 
         if (order) {
             if (order === 'asc' || order === 'desc') {
-                exercises = exercises.sort(sortByProp('endTime', order))
+                exercises = exercises.sort(util.sortByProp('endTime', order))
             }
             else {
                 res.status(400);
