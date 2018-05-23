@@ -124,8 +124,6 @@ class ExercisesHistory extends Component {
                                         .sort(sortByProp('name'))
                                         .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true);
 
-        console.log(metrics);
-
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
@@ -145,9 +143,8 @@ class ExercisesHistory extends Component {
                                     displaySelectAll={false}
                                 >
                                     <TableRow>
-                                        {/* todo: add a header for every metric */}
                                         <TableHeaderColumn>Name</TableHeaderColumn>
-                                        <TableHeaderColumn>Metrics</TableHeaderColumn>
+                                        {metrics.map(m => <TableHeaderColumn>{m.name}{m.uom ? ' (' + m.uom + ')' : ''}</TableHeaderColumn>)}
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody
