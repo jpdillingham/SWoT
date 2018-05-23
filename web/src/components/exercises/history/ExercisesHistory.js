@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 
 import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
+
+import { sortByProp } from '../../../util'
+
 import {
     Table,
     TableBody,
@@ -26,6 +29,7 @@ const initialState = {
         order: 'desc',
         toDate: undefined,
         fromDate: undefined,
+        // exerciseId: '4465b1e2-5af9-81ae-2335-84e09598d63c'
     },
     loadApi: {
         isExecuting: false,
@@ -111,13 +115,17 @@ class ExercisesHistory extends Component {
     }
 
     render() {
-        // todo: create a list of all metric names in the set
-        
+        // todo: create a list of all metric names in the set        
         let history = this.props.exercisesHistory;
         let exercises = history && history.exercises ? history.exercises : undefined;
         let metrics
-        if (exercises) 
-            metrics = exercises.map(e => e.metrics).reduce((acc, e) => acc.concat(e));
+        if (exercises) {
+            metrics = exercises
+                        .map(e => e.metrics)
+                        .reduce((acc, e) => acc.concat(e))
+                        .sort(sortByProp('name'))
+                        .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true)
+        }
 
         console.log(metrics);
 
