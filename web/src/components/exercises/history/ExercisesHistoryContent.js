@@ -9,6 +9,10 @@ import {
     TableRowColumn,
 } from 'material-ui/Table';
 
+import { ListItem } from 'material-ui/List'
+
+import ActionRestore from 'material-ui/svg-icons/action/restore'
+import ContentClear from 'material-ui/svg-icons/content/clear'
 import { sortByProp } from '../../../util'
 import { grey300 } from 'material-ui/styles/colors'
 
@@ -20,6 +24,7 @@ class ExercisesHistoryContent extends Component {
 
     render() {
         return (
+            this.props.exercisesHistory.exercises && this.props.exercisesHistory.totalCount > 0 ?
             <Table>
                 <TableHeader
                     adjustForCheckbox={false}
@@ -51,7 +56,11 @@ class ExercisesHistoryContent extends Component {
                         </TableRow>
                     )}
                 </TableBody>
-            </Table>
+            </Table> : 
+            <ListItem 
+                primaryText={'No records match the current filter criteria'}
+                leftIcon={<ContentClear/>}
+            />
         )
     }
 }

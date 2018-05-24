@@ -45,7 +45,7 @@ class HistoryCard extends Component {
                     <CardText>
                         {this.props.header}
                         {this.props.header ? <Divider style={styles.headerDivider}/> : ''}
-                        {this.props.children}
+                        {this.props.children ? this.props.children : this.props.emptyContent}
                         {this.props.footer ? <Divider style={styles.footerDivider}/> : ''}
                         {this.props.footer}
                         {this.props.refreshing ? <Spinner/> : ''}
