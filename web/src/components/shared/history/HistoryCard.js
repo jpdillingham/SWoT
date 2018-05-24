@@ -31,7 +31,7 @@ const styles = {
 class HistoryCard extends Component {
     render() {
         return (
-            !this.props.children && this.props.hideIfEmpty ? '' :
+            this.props.isEmpty && this.props.hideIfEmpty ? '' :
                 <Card 
                     zDepth={2}                 
                     style={!this.props.refreshing ? styles.card : { ...styles.card, backgroundColor: grey300 } }
@@ -45,7 +45,7 @@ class HistoryCard extends Component {
                     <CardText>
                         {this.props.header}
                         {this.props.header ? <Divider style={styles.headerDivider}/> : ''}
-                        {this.props.children}
+                        {!this.props.isEmpty ? this.props.children : this.props.emptyContent}
                         {this.props.footer ? <Divider style={styles.footerDivider}/> : ''}
                         {this.props.footer}
                         {this.props.refreshing ? <Spinner/> : ''}

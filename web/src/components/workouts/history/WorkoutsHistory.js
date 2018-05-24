@@ -26,8 +26,8 @@ const initialState = {
         limit: 5,
         order: 'desc',
         routineId: undefined,
-        toDate: undefined,
-        fromDate: undefined,
+        toTime: undefined,
+        fromTime: undefined,
     },
     loadApi: {
         isExecuting: false,
@@ -65,18 +65,18 @@ class WorkoutsHistory extends Component {
     constructor(props) {
         super(props);
 
-        let defaultToDate = new Date();
-        defaultToDate.setDate(defaultToDate.getDate() + 1);
+        let defaulttoTime = new Date();
+        defaulttoTime.setDate(defaulttoTime.getDate() + 1);
     
-        let defaultFromDate = new Date(defaultToDate);
-        defaultFromDate.setDate(defaultFromDate.getDate() - 30);
+        let defaultfromTime = new Date(defaulttoTime);
+        defaultfromTime.setDate(defaultfromTime.getDate() - 30);
     
         this.state = { 
             ...initialState, 
             filters: { 
                 ...initialState.filters, 
-                toDate: defaultToDate.getTime(), 
-                fromDate: defaultFromDate.getTime() 
+                toTime: defaulttoTime.getTime(), 
+                fromTime: defaultfromTime.getTime() 
             } 
         };        
     }
@@ -103,10 +103,10 @@ class WorkoutsHistory extends Component {
 
     handleFiltersChange = (filters) => {
         let routineChanged = this.state.filters.routineId !== filters.routineId;
-        let fromDateChanged = this.state.filters.fromDate !== filters.fromDate;
-        let toDateChanged = this.state.filters.toDate !== filters.toDate;
+        let fromTimeChanged = this.state.filters.fromTime !== filters.fromTime;
+        let toTimeChanged = this.state.filters.toTime !== filters.toTime;
 
-        if (routineChanged || fromDateChanged || toDateChanged) {
+        if (routineChanged || fromTimeChanged || toTimeChanged) {
             filters.offset = 0;
         }
 
