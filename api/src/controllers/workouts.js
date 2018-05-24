@@ -42,6 +42,11 @@ router.get('/history', (req, res) => {
 
     database.queryAll(userId, fromTime, toTime)
     .then(workouts => {
+        if (!workouts || !workouts.routine) {
+            res.status(200);
+            res.json([]);
+        }
+
         if (fromTime && toTime) {
             workouts = workouts.filter(w => w.endTime >= fromTime && w.endTime <= toTime);
         }

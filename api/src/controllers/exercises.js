@@ -19,6 +19,11 @@ router.get('/history', (req, res) => {
 
     database.queryAll(userId, fromTime, toTime)
     .then(workouts => {
+        if (!workouts || !workouts.routine || !workouts.routine.exercises || workouts.routine.exercises.length === 0) {
+            res.status(200);
+            res.json([]);
+        }
+        
         let exercises = workouts
                         .map(w => w.routine.exercises)
                         .reduce((acc, e) => acc.concat(e))
