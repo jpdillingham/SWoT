@@ -37,9 +37,9 @@ class ExercisesHistoryContent extends Component {
                         <TableRow style={this.props.refreshing ? { backgroundColor: grey300 } : {}} key={index}>
                             <TableRowColumn>{e.name}</TableRowColumn>
                             {this.props.metrics.map((m, index) => 
-                                <TableHeaderColumn key={index}>
+                                <TableRowColumn key={index}>
                                     {this.getValue(e, m.name)}
-                                </TableHeaderColumn>
+                                </TableRowColumn>
                             )}
                         </TableRow>
                     )}
