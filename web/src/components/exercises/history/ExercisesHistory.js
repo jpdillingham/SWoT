@@ -184,7 +184,9 @@ class ExercisesHistory extends Component {
                                 <TableBody
                                     displayRowCheckbox={false}
                                 >
-                                    {this.props.exercisesHistory.exercises.map((e, index) => 
+                                    {this.props.exercisesHistory.exercises
+                                        .sort(sortByProp('endTime', this.state.filters.order))
+                                        .map((e, index) => 
                                         <TableRow key={index}>
                                             <TableRowColumn>{e.name}</TableRowColumn>
                                             {metrics.map((m, index) => 
