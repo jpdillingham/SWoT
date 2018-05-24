@@ -7,6 +7,7 @@ import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import { sortByProp } from '../../../util'
 import SelectField from 'material-ui/SelectField/SelectField';
 import MenuItem from 'material-ui/MenuItem'
+import NavigationCancel from 'material-ui/svg-icons/navigation/cancel'
 
 import {
     Table,
@@ -64,7 +65,15 @@ const styles = {
     },
     buttonRow: {
         textAlign: 'center'
-    }
+    },
+    clearIcon: {
+        width: 18,
+        height: 18,
+        color: red500,
+        cursor: 'pointer',
+        marginBottom: 15,
+        marginRight: 10,
+    },
 }
 
 class ExercisesHistory extends Component {
@@ -109,7 +118,12 @@ class ExercisesHistory extends Component {
         this.fetchHistory({ ...this.state.filters, exerciseId: value })
     }
 
+    handleCustomFilterClearClick = () => {
+        this.fetchHistory({ ...this.state.filters, exerciseId: undefined })
+    }
+
     fetchHistory = (filters, api = 'refreshApi') => {
+        console.log(filters);
         this.setState({ 
             [api]: { ...this.state[api], isExecuting: true },
             filters: filters
@@ -150,21 +164,26 @@ class ExercisesHistory extends Component {
                             defaultFilters={this.state.filters}
                             onFilterChange={this.handleFiltersChange}
                             customFilters={
-                                <SelectField 
-                                    floatingLabelText={'Filter By'}
-                                    style={styles.exercise} 
-                                    value={this.state.filters.exerciseId} 
-                                    onChange={(event, index, value) => this.handleCustomFilterChange('exerciseId', event, index, value)}
-                                    disabled={this.state.refreshApi.isExecuting}
-                                >
-                                    {this.props.exercises.map((e, index) => 
-                                        <MenuItem 
-                                            key={index} 
-                                            value={e.id} 
-                                            primaryText={e.name} 
-                                        />                    
-                                    )}
-                                </SelectField>
+                                <span>
+                                    <SelectField 
+                                        floatingLabelText={'Filter By'}
+                                        style={styles.exercise} 
+                                        value={this.state.filters.exerciseId} 
+                                        onChange={(event, index, value) => this.handleCustomFilterChange('exerciseId', event, index, value)}
+                                        disabled={this.state.refreshApi.isExecuting}
+                                    >
+                                        {this.props.exercises.map((e, index) => 
+                                            <MenuItem 
+                                                key={index} 
+                                                value={e.id} 
+                                                primaryText={e.name} 
+                                            />                    
+                                        )}
+                                    </SelectField>
+                                    {this.state.filters.exerciseId ? 
+                                        <NavigationCancel style={styles.clearIcon} onClick={this.handleCustomFilterClearClick}/>
+                                    : '' }
+                                </span>
                             }
                         >
                             <Table>
