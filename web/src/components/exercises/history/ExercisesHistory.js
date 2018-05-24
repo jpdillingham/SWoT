@@ -5,6 +5,8 @@ import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { sortByProp } from '../../../util'
+import SelectField from 'material-ui/SelectField/SelectField';
+import MenuItem from 'material-ui/MenuItem'
 
 import {
     Table,
@@ -17,18 +19,20 @@ import {
 import Spinner from '../../shared/Spinner'
 
 import { fetchExercisesHistory } from './ExercisesHistoryActions'
+import { fetchExercises } from '../ExercisesActions'
 
 import History from '../../shared/history/History';
 import { EXERCISE_AVATAR_COLOR } from '../../../constants'
 
 const initialState = {
-    workouts: [],
+    exercises: [],
     filters: {
         offset: 0,
         limit: 5,
         order: 'desc',
         toDate: undefined,
         fromDate: undefined,
+        exerciseId: undefined
         // exerciseId: '4465b1e2-5af9-81ae-2335-84e09598d63c'
     },
     loadApi: {
@@ -86,6 +90,7 @@ class ExercisesHistory extends Component {
 
     componentWillMount = () => {
         this.fetchHistory(this.state.filters, 'loadApi');
+        this.props.fetchExercises();
     }
 
     navigate = (url) => {
@@ -97,18 +102,23 @@ class ExercisesHistory extends Component {
     }
 
     handleFiltersChange = (filters) => {
-        this.fetchHistory(filters);
+        this.fetchHistory({ ...filters, exerciseId: this.state.filters.exerciseId });
+    }
+
+    handleCustomFilterChange = (filter, event, index, value) => {
+        this.fetchHistory({ ...this.state.filters, exerciseId: value })
     }
 
     fetchHistory = (filters, api = 'refreshApi') => {
         this.setState({ 
-            [api]: { ...this.state[api], isExecuting: true }
+            [api]: { ...this.state[api], isExecuting: true },
+            filters: filters
         }, () => {
             this.props.fetchExercisesHistory(filters)
             .then(response => {
-                this.setState({ filters: filters, [api]: { isExecuting: false, isErrored: false }})
+                this.setState({ [api]: { isExecuting: false, isErrored: false }})
             }, error => {
-                this.setState({ filters: filters, [api]: { isExecuting: false, isErrored: true }})
+                this.setState({ [api]: { isExecuting: false, isErrored: true }})
             })
         })
     }
@@ -139,6 +149,23 @@ class ExercisesHistory extends Component {
                             refreshing={this.state.refreshApi.isExecuting}
                             defaultFilters={this.state.filters}
                             onFilterChange={this.handleFiltersChange}
+                            customFilters={
+                                <SelectField 
+                                    floatingLabelText={'Filter By'}
+                                    style={styles.exercise} 
+                                    value={this.state.filters.exerciseId} 
+                                    onChange={(event, index, value) => this.handleCustomFilterChange('exerciseId', event, index, value)}
+                                    disabled={this.state.refreshApi.isExecuting}
+                                >
+                                    {this.props.exercises.map((e, index) => 
+                                        <MenuItem 
+                                            key={index} 
+                                            value={e.id} 
+                                            primaryText={e.name} 
+                                        />                    
+                                    )}
+                                </SelectField>
+                            }
                         >
                             <Table>
                                 <TableHeader
@@ -177,10 +204,12 @@ class ExercisesHistory extends Component {
 
 const mapStateToProps = (state) => ({
     exercisesHistory: state.exercisesHistory,
+    exercises: state.exercises
 })
 
 const mapDispatchToProps = {
-    fetchExercisesHistory
+    fetchExercisesHistory,
+    fetchExercises
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExercisesHistory)
