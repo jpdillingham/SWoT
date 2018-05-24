@@ -131,11 +131,11 @@ class ExercisesHistory extends Component {
     render() {
         let history = this.props.exercisesHistory;
         let exercises = history && history.exercises ? history.exercises : undefined;
-        let metrics = !exercises ? [] : exercises
-                                        .map(e => e.metrics)
-                                        .reduce((acc, e) => acc.concat(e))
-                                        .sort(sortByProp('name'))
-                                        .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true);
+        let metrics = !exercises ? undefined : exercises.map(e => e.metrics);
+        metrics = !metrics || metrics.length === 0 ? [] : metrics
+                                    .reduce((acc, e) => acc.concat(e))
+                                    .sort(sortByProp('name'))
+                                    .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true);
 
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
