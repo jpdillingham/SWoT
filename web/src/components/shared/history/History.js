@@ -90,7 +90,9 @@ class History extends Component {
                         filters={this.state.filters} 
                         onChange={this.handleFiltersChange}
                         disabled={this.props.refreshing}
-                    />
+                    >
+                        {this.props.customFilters}
+                    </HistoryOptions>
                 }
                 refreshing={this.props.refreshing}
                 emptyContent={
