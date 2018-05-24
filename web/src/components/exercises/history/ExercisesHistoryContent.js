@@ -1,20 +1,9 @@
 import React, { Component } from 'react';
 
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    TableHeaderColumn,
-    TableRow,
-    TableRowColumn,
-} from 'material-ui/Table';
-
-import { ListItem } from 'material-ui/List'
-
-import ActionRestore from 'material-ui/svg-icons/action/restore'
-import ContentClear from 'material-ui/svg-icons/content/clear'
 import { sortByProp } from '../../../util'
+
 import { grey300 } from 'material-ui/styles/colors'
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 class ExercisesHistoryContent extends Component {
     getValue = (exercise, metric) => {
