@@ -94,6 +94,8 @@ class History extends Component {
                         {this.props.customFilters}
                     </HistoryOptions>
                 }
+                isEmpty={this.props.isEmpty}
+                hideIfEmpty={false}
                 refreshing={this.props.refreshing}
                 emptyContent={
                     <ListItem 

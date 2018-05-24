@@ -149,6 +149,7 @@ class ExercisesHistory extends Component {
                             refreshing={this.state.refreshApi.isExecuting}
                             defaultFilters={this.state.filters}
                             onFilterChange={this.handleFiltersChange}
+                            isEmpty={this.props.exercisesHistory.totalCount === 0}
                             customFilters={
                                 <span>
                                     <SelectField 

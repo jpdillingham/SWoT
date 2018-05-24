@@ -24,7 +24,6 @@ class ExercisesHistoryContent extends Component {
 
     render() {
         return (
-            this.props.exercisesHistory.exercises && this.props.exercisesHistory.totalCount > 0 ?
             <Table>
                 <TableHeader
                     adjustForCheckbox={false}
@@ -56,11 +55,7 @@ class ExercisesHistoryContent extends Component {
                         </TableRow>
                     )}
                 </TableBody>
-            </Table> : 
-            <ListItem 
-                primaryText={'No records match the current filter criteria'}
-                leftIcon={<ContentClear/>}
-            />
+            </Table>
         )
     }
 }
