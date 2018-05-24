@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import { sortByProp } from '../../../util'
 
@@ -20,6 +21,7 @@ class ExercisesHistoryContent extends Component {
                     style={this.props.refreshing ? { backgroundColor: grey300 } : {}}
                 >
                     <TableRow>
+                        <TableHeaderColumn>Date</TableHeaderColumn>
                         <TableHeaderColumn>Name</TableHeaderColumn>
                         {this.props.metrics.map((m, index) => 
                             <TableHeaderColumn key={index}>
@@ -35,6 +37,7 @@ class ExercisesHistoryContent extends Component {
                         .sort(sortByProp('endTime', this.props.filters.order))
                         .map((e, index) => 
                         <TableRow style={this.props.refreshing ? { backgroundColor: grey300 } : {}} key={index}>
+                            <TableRowColumn>{moment(e.endTime).format('ddd M/DD')}</TableRowColumn>
                             <TableRowColumn>{e.name}</TableRowColumn>
                             {this.props.metrics.map((m, index) => 
                                 <TableRowColumn key={index}>
