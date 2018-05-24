@@ -95,6 +95,7 @@ class HistoryOptions extends Component {
                         />                    
                     )}
                 </SelectField>
+                {this.props.children}
             </div>
         )
     }
