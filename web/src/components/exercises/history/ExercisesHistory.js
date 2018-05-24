@@ -24,8 +24,8 @@ const initialState = {
         offset: 0,
         limit: 5,
         order: 'desc',
-        toDate: undefined,
-        fromDate: undefined,
+        toTime: undefined,
+        fromTime: undefined,
         exerciseId: undefined
     },
     loadApi: {
@@ -73,18 +73,18 @@ class ExercisesHistory extends Component {
     constructor(props) {
         super(props);
 
-        let defaultToDate = new Date();
-        defaultToDate.setDate(defaultToDate.getDate() + 1);
+        let defaultToTime = new Date();
+        defaultToTime.setDate(defaultToTime.getDate() + 1);
     
-        let defaultFromDate = new Date(defaultToDate);
-        defaultFromDate.setDate(defaultFromDate.getDate() - 30);
+        let defaultFromTime = new Date(defaultToTime);
+        defaultFromTime.setDate(defaultFromTime.getDate() - 30);
     
         this.state = { 
             ...initialState, 
             filters: { 
                 ...initialState.filters, 
-                toDate: defaultToDate.getTime(), 
-                fromDate: defaultFromDate.getTime() 
+                toTime: defaultToTime.getTime(), 
+                fromTime: defaultFromTime.getTime() 
             } 
         }; 
     }

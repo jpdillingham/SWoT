@@ -46,23 +46,23 @@ class HistoryOptions extends Component {
                         floatingLabelText="From"
                         hintText="From" 
                         firstDayOfWeek={0}
-                        defaultDate={new Date(this.props.filters.fromDate)}
-                        maxDate={new Date(this.props.filters.toDate)}
+                        defaultDate={new Date(this.props.filters.fromTime)}
+                        maxDate={new Date(this.props.filters.toTime)}
                         disabled={this.props.disabled}
                         style={styles.date}
                         textFieldStyle={styles.dateField}
-                        onChange={(a, date) => this.handleChange('fromDate', undefined, undefined, date.getTime())}
+                        onChange={(a, date) => this.handleChange('fromTime', undefined, undefined, date.getTime())}
                     />
                     <DatePicker 
                         floatingLabelText="To"
                         hintText="To" 
                         firstDayOfWeek={0}
-                        defaultDate={new Date(this.props.filters.toDate)}
-                        minDate={new Date(this.props.filters.fromDate)}
+                        defaultDate={new Date(this.props.filters.toTime)}
+                        minDate={new Date(this.props.filters.fromTime)}
                         disabled={this.props.disabled}
                         style={styles.date}
                         textFieldStyle={styles.dateField}
-                        onChange={(a, date) => this.handleChange('toDate', undefined, undefined, date.getTime())}
+                        onChange={(a, date) => this.handleChange('toTime', undefined, undefined, date.getTime())}
                     />
                 </div>
                 <SelectField 
