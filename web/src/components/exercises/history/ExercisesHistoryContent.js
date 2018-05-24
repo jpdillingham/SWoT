@@ -37,7 +37,7 @@ class ExercisesHistoryContent extends Component {
                         .sort(sortByProp('endTime', this.props.filters.order))
                         .map((e, index) => 
                         <TableRow style={this.props.refreshing ? { backgroundColor: grey300 } : {}} key={index}>
-                            <TableRowColumn>{moment(e.endTime).format('ddd M/DD')}</TableRowColumn>
+                            <TableRowColumn>{moment(e.endTime).format('ddd M/DD [at] h:mmp')}</TableRowColumn>
                             <TableRowColumn>{e.name}</TableRowColumn>
                             {this.props.metrics.map((m, index) => 
                                 <TableRowColumn key={index}>
