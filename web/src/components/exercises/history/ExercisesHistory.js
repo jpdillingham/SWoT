@@ -176,6 +176,7 @@ class ExercisesHistory extends Component {
                                 metrics={metrics}
                                 exercisesHistory={this.props.exercisesHistory}
                                 filters={this.state.filters}
+                                refreshing={this.state.refreshApi.isExecuting}
                             />
                         </History>
                     </div>

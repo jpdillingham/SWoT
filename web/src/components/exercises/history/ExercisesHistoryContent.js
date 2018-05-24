@@ -7,9 +7,10 @@ import {
     TableHeaderColumn,
     TableRow,
     TableRowColumn,
-  } from 'material-ui/Table';
+} from 'material-ui/Table';
 
-  import { sortByProp } from '../../../util'
+import { sortByProp } from '../../../util'
+import { grey300 } from 'material-ui/styles/colors'
 
 class ExercisesHistoryContent extends Component {
     getValue = (exercise, metric) => {
@@ -23,6 +24,7 @@ class ExercisesHistoryContent extends Component {
                 <TableHeader
                     adjustForCheckbox={false}
                     displaySelectAll={false}
+                    style={this.props.refreshing ? { backgroundColor: grey300 } : {}}
                 >
                     <TableRow>
                         <TableHeaderColumn>Name</TableHeaderColumn>
@@ -39,7 +41,7 @@ class ExercisesHistoryContent extends Component {
                     {this.props.exercisesHistory.exercises
                         .sort(sortByProp('endTime', this.props.filters.order))
                         .map((e, index) => 
-                        <TableRow key={index}>
+                        <TableRow style={this.props.refreshing ? { backgroundColor: grey300 } : {}} key={index}>
                             <TableRowColumn>{e.name}</TableRowColumn>
                             {this.props.metrics.map((m, index) => 
                                 <TableHeaderColumn key={index}>
