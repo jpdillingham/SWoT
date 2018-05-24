@@ -9,14 +9,6 @@ import SelectField from 'material-ui/SelectField/SelectField';
 import MenuItem from 'material-ui/MenuItem'
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel'
 
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    TableHeaderColumn,
-    TableRow,
-    TableRowColumn,
-  } from 'material-ui/Table';
 import Spinner from '../../shared/Spinner'
 
 import { fetchExercisesHistory } from './ExercisesHistoryActions'
@@ -24,6 +16,7 @@ import { fetchExercises } from '../ExercisesActions'
 
 import History from '../../shared/history/History';
 import { EXERCISE_AVATAR_COLOR } from '../../../constants'
+import ExercisesHistoryContent from './ExercisesHistoryContent';
 
 const initialState = {
     exercises: [],
@@ -34,7 +27,6 @@ const initialState = {
         toDate: undefined,
         fromDate: undefined,
         exerciseId: undefined
-        // exerciseId: '4465b1e2-5af9-81ae-2335-84e09598d63c'
     },
     loadApi: {
         isExecuting: false,
@@ -123,7 +115,6 @@ class ExercisesHistory extends Component {
     }
 
     fetchHistory = (filters, api = 'refreshApi') => {
-        console.log(filters);
         this.setState({ 
             [api]: { ...this.state[api], isExecuting: true },
             filters: filters
@@ -135,11 +126,6 @@ class ExercisesHistory extends Component {
                 this.setState({ [api]: { isExecuting: false, isErrored: true }})
             })
         })
-    }
-
-    getValue = (exercise, metric) => {
-        var foundMetric = exercise.metrics.find(m => m.name === metric);
-        return !foundMetric ? '' : !foundMetric.value ? '-' : foundMetric.value;
     }
 
     render() {
@@ -186,37 +172,11 @@ class ExercisesHistory extends Component {
                                 </span>
                             }
                         >
-                            <Table>
-                                <TableHeader
-                                    adjustForCheckbox={false}
-                                    displaySelectAll={false}
-                                >
-                                    <TableRow>
-                                        <TableHeaderColumn>Name</TableHeaderColumn>
-                                        {metrics.map((m, index) => 
-                                            <TableHeaderColumn key={index}>
-                                                {m.name}{m.uom ? ' (' + m.uom + ')' : ''}
-                                            </TableHeaderColumn>
-                                        )}
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody
-                                    displayRowCheckbox={false}
-                                >
-                                    {this.props.exercisesHistory.exercises
-                                        .sort(sortByProp('endTime', this.state.filters.order))
-                                        .map((e, index) => 
-                                        <TableRow key={index}>
-                                            <TableRowColumn>{e.name}</TableRowColumn>
-                                            {metrics.map((m, index) => 
-                                                <TableHeaderColumn key={index}>
-                                                    {this.getValue(e, m.name)}
-                                                </TableHeaderColumn>
-                                            )}
-                                        </TableRow>
-                                    )}
-                                </TableBody>
-                            </Table>
+                            <ExercisesHistoryContent
+                                metrics={metrics}
+                                exercisesHistory={this.props.exercisesHistory}
+                                filters={this.state.filters}
+                            />
                         </History>
                     </div>
         )
