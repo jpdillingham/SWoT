@@ -27,7 +27,8 @@ class History extends Component {
         let defaultFromDate = new Date(defaultToDate);
         defaultFromDate.setDate(defaultFromDate.getDate() - 30);
     
-        this.state = {  
+        this.state = {
+            lastTotal: 0,  
             filters: props.defaultFilters ? props.defaultFilters : { 
                 ...defaultFilters, 
                 toDate: defaultToDate.getTime(), 
@@ -53,11 +54,10 @@ class History extends Component {
     }
 
     handleFiltersChange = (filters) => {
-        let routineChanged = this.state.filters.routineId !== filters.routineId;
-        let fromDateChanged = this.state.filters.fromDate !== filters.fromDate;
-        let toDateChanged = this.state.filters.toDate !== filters.toDate;
+        let fromTimeChanged = this.state.filters.fromTime !== filters.fromTime;
+        let toTimeChanged = this.state.filters.toTime !== filters.toTime;
 
-        if (routineChanged || fromDateChanged || toDateChanged) {
+        if (fromTimeChanged || toTimeChanged) {
             filters.offset = 0;
         }
 
@@ -68,6 +68,12 @@ class History extends Component {
         this.setState({ filters: filters }, () => {
             this.props.onFilterChange(this.state.filters);
         })
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        if (this.props.total !== nextProps.total) {
+            this.updateFilters({ ...this.state.filters, offset: 0 })          
+        }
     }
 
     render() {
@@ -94,7 +100,7 @@ class History extends Component {
                         {this.props.customFilters}
                     </HistoryOptions>
                 }
-                isEmpty={this.props.isEmpty}
+                isEmpty={this.props.total === 0}
                 hideIfEmpty={false}
                 refreshing={this.props.refreshing}
                 emptyContent={
