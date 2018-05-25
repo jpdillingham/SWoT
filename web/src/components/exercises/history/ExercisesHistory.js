@@ -107,7 +107,7 @@ class ExercisesHistory extends Component {
     }
 
     handleCustomFilterChange = (filter, event, index, value) => {
-        this.fetchHistory({ ...this.state.filters, exerciseId: value })
+        this.fetchHistory({ ...this.state.filters, offset: 0, exerciseId: value })
     }
 
     handleCustomFilterClearClick = () => {
@@ -149,7 +149,6 @@ class ExercisesHistory extends Component {
                             refreshing={this.state.refreshApi.isExecuting}
                             defaultFilters={this.state.filters}
                             onFilterChange={this.handleFiltersChange}
-                            isEmpty={this.props.exercisesHistory.totalCount === 0}
                             customFilters={
                                 <span>
                                     <SelectField 
