@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { fetchWorkoutsHistory } from '../../workouts/history/WorkoutsHistoryActions'
 import { fetchRoutines } from '../../routines/RoutinesActions'
 
 import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
+import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in'
 import FlatButton from 'material-ui/FlatButton'
-import { ListItem } from 'material-ui/List'
+import { List, ListItem } from 'material-ui/List'
 
 import ActionRestore from 'material-ui/svg-icons/action/restore'
 import ActionInfo from 'material-ui/svg-icons/action/info'
@@ -18,6 +20,9 @@ import ContentClear from 'material-ui/svg-icons/content/clear'
 import WorkoutsListCard from '../../workouts/WorkoutsListCard'
 import WorkoutsHistoryOptions from './WorkoutsHistoryOptions'
 import Spinner from '../../shared/Spinner'
+import { WORKOUT_AVATAR_COLOR } from '../../../constants';
+import History from '../../shared/history/History';
+import { sortByProp } from '../../../util';
 
 const initialState = {
     workouts: [],
@@ -82,7 +87,7 @@ class WorkoutsHistory extends Component {
     }
 
     componentWillMount() {
-        this.refreshWorkoutsHistory(this.state.filters, 'loadApi');
+        this.fetchHistory(this.state.filters, 'loadApi');
         this.props.fetchRoutines();
     }
 
@@ -90,111 +95,66 @@ class WorkoutsHistory extends Component {
         this.props.history.push(url);
     }
 
-    handleWorkoutClick = (workoutId) => {
+    handleItemClick = (workoutId) => {
         this.navigate('/workouts/' + workoutId)
     }
 
-    handleNextClick = () => {
-        this.refreshWorkoutsHistory({
-            ...this.state.filters,
-            offset: this.state.filters.offset + this.state.filters.limit
-        })
-    }
-
     handleFiltersChange = (filters) => {
-        let routineChanged = this.state.filters.routineId !== filters.routineId;
-        let fromTimeChanged = this.state.filters.fromTime !== filters.fromTime;
-        let toTimeChanged = this.state.filters.toTime !== filters.toTime;
-
-        if (routineChanged || fromTimeChanged || toTimeChanged) {
-            filters.offset = 0;
-        }
-
-        this.refreshWorkoutsHistory(filters);
+        this.fetchHistory({ ...filters, routineId: this.state.filters.routineId });
     }
 
-    handlePreviousClick = () => {
-        this.refreshWorkoutsHistory({
-            ...this.state.filters,
-            offset: this.state.filters.offset - this.state.filters.limit
-        })        
+    handleCustomFilterChange = (filter, event, index, value) => {
+        this.fetchHistory({ ...this.state.filters, offset: 0, routineId: value })
     }
 
-    refreshWorkoutsHistory = (filters, api = 'refreshApi') => {
+    handleCustomFilterClearClick = () => {
+        this.fetchHistory({ ...this.state.filters, routineId: undefined })
+    }
+
+    fetchHistory = (filters, api = 'refreshApi') => {
         this.setState({ 
-            [api]: { ...this.state[api], isExecuting: true }
+            [api]: { ...this.state[api], isExecuting: true },
+            filters: filters
         }, () => {
             this.props.fetchWorkoutsHistory(filters)
             .then(response => {
-                this.setState({ filters: filters, [api]: { isExecuting: false, isErrored: false }})
+                this.setState({ [api]: { isExecuting: false, isErrored: false }})
             }, error => {
-                this.setState({ filters: filters, [api]: { isExecuting: false, isErrored: true }})
+                this.setState({ [api]: { isExecuting: false, isErrored: true }})
             })
         })
-
     }
 
     render() {
-        let workouts = this.props.workoutsHistory.workouts;
-        let filters = this.state.filters;
-        let start;
-        let end;
-
-        if (workouts) {
-            start = filters.offset + 1;
-            end = start - 1 + workouts.length;
-        }
-        
-        let total = this.props.workoutsHistory.totalCount;
-
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
-                        <WorkoutsListCard 
+                        <History
                             title={'History'}
-                            icon={<ActionRestore/>}
-                            options={
-                                <WorkoutsHistoryOptions 
-                                    filters={this.state.filters} 
-                                    routines={this.props.routines}
-                                    onChange={this.handleFiltersChange}
-                                    disabled={this.state.refreshApi.isExecuting}
-                                />
-                            }
-                            itemRightIcon={<ActionInfo/>}
-                            workouts={workouts}
-                            sort={this.state.filters.order}
-                            timePrefix={'Completed'}
-                            timeField={'endTime'}
-                            onClick={this.handleWorkoutClick}
-                            hideIfEmpty={false}
+                            color={WORKOUT_AVATAR_COLOR}
+                            data={this.props.workoutsHistory.workouts}
+                            total={this.props.workoutsHistory.totalCount}
                             refreshing={this.state.refreshApi.isExecuting}
-                            emptyContent={
-                                <ListItem 
-                                    primaryText={'No records match the current filter criteria'}
-                                    leftIcon={<ContentClear/>}
-                                />
-                            }
+                            defaultFilters={this.state.filters}
+                            onFilterChange={this.handleFiltersChange}
                         >
-                            <div style={styles.buttonRow}>
-                                <FlatButton
-                                    onClick={this.handlePreviousClick}
-                                    disabled={this.state.refreshApi.isExecuting || start === 1}
-                                    icon={<HardwareKeyboardArrowLeft/>}
-                                />
-                                <FlatButton 
-                                    label={this.state.refreshApi.isExecuting ? ' ' : total > 0 ? start + '-' + end + ' of ' + total : 'No Results'}
-                                    disabled={true}
-                                    style={styles.paginationButton}
-                                />
-                                <FlatButton 
-                                    onClick={this.handleNextClick}
-                                    disabled={this.state.refreshApi.isExecuting || end === total} 
-                                    icon={<HardwareKeyboardArrowRight/>}
-                                />
-                            </div>
-                        </WorkoutsListCard>
+                            <List>
+                                {this.props.workoutsHistory.workouts
+                                .sort(sortByProp('endTime', this.state.filters.order))
+                                .map(w => 
+                                    <ListItem
+                                        key={w.id}
+                                        primaryText={w.routine.name}
+                                        secondaryText={'Completed ' + moment(w.endTime).calendar()}
+                                        leftIcon={<ActionAssignmentTurnedIn/>}
+                                        rightIcon={<ActionInfo/>}
+                                        onClick={() => this.props.onClick(w.id)}
+                                        disabled={this.props.refreshing}
+                                    />
+                                )}
+                            </List>
+                        </History>
                     </div>
         )
     }
