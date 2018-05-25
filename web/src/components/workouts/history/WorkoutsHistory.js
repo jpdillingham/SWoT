@@ -5,7 +5,7 @@ import moment from 'moment';
 import { fetchWorkoutsHistory } from '../../workouts/history/WorkoutsHistoryActions'
 import { fetchRoutines } from '../../routines/RoutinesActions'
 
-import { black, red500 } from 'material-ui/styles/colors'
+import { red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in'
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel'
@@ -21,7 +21,6 @@ import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem';
 
 const initialState = {
-    workouts: [],
     filters: {
         offset: 0,
         limit: 5,
@@ -52,13 +51,6 @@ const styles = {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)'
-    },
-    paginationButton: {
-        color: black,
-        width: 150
-    },
-    buttonRow: {
-        textAlign: 'center'
     },
     clearIcon: {
         width: 18,
