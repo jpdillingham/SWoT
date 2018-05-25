@@ -2,23 +2,23 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { fetchWorkoutsHistory } from '../../workouts/history/WorkoutsHistoryActions'
-import { fetchRoutines } from '../../routines/RoutinesActions'
-
-import { red500 } from 'material-ui/styles/colors'
-import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
-import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in'
-import NavigationCancel from 'material-ui/svg-icons/navigation/cancel'
-import { List, ListItem } from 'material-ui/List'
-
-import ActionInfo from 'material-ui/svg-icons/action/info'
-
-import Spinner from '../../shared/Spinner'
-import { WORKOUT_AVATAR_COLOR } from '../../../constants';
-import History from '../../shared/history/History';
 import { sortByProp } from '../../../util';
-import SelectField from 'material-ui/SelectField'
+import { WORKOUT_AVATAR_COLOR } from '../../../constants';
+
+import { fetchWorkoutsHistory } from '../../workouts/history/WorkoutsHistoryActions';
+import { fetchRoutines } from '../../routines/RoutinesActions';
+
+import Spinner from '../../shared/Spinner';
+import History from '../../shared/history/History';
+
+import { red500 } from 'material-ui/styles/colors';
+import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
+import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
+import ActionInfo from 'material-ui/svg-icons/action/info';
+import { List, ListItem } from 'material-ui/List';
 import MenuItem from 'material-ui/MenuItem';
+import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
+import SelectField from 'material-ui/SelectField';
 
 const initialState = {
     filters: {
