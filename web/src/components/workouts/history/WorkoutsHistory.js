@@ -8,6 +8,7 @@ import { fetchRoutines } from '../../routines/RoutinesActions'
 import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in'
+import NavigationCancel from 'material-ui/svg-icons/navigation/cancel'
 import FlatButton from 'material-ui/FlatButton'
 import { List, ListItem } from 'material-ui/List'
 
@@ -23,6 +24,8 @@ import Spinner from '../../shared/Spinner'
 import { WORKOUT_AVATAR_COLOR } from '../../../constants';
 import History from '../../shared/history/History';
 import { sortByProp } from '../../../util';
+import SelectField from 'material-ui/SelectField'
+import MenuItem from 'material-ui/MenuItem';
 
 const initialState = {
     workouts: [],
@@ -126,6 +129,7 @@ class WorkoutsHistory extends Component {
     }
 
     render() {
+        console.log(this.props)
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
@@ -138,6 +142,28 @@ class WorkoutsHistory extends Component {
                             refreshing={this.state.refreshApi.isExecuting}
                             defaultFilters={this.state.filters}
                             onFilterChange={this.handleFiltersChange}
+                            customFilters={
+                                <span>
+                                    <SelectField 
+                                        floatingLabelText={'Filter By'}
+                                        style={styles.routine} 
+                                        value={this.state.filters.routineId} 
+                                        onChange={(event, index, value) => this.handleCustomFilterChange('routineId', event, index, value)}
+                                        disabled={this.state.refreshApi.isExecuting}
+                                    >
+                                        {this.props.routines.map((r, index) => 
+                                            <MenuItem 
+                                                key={index} 
+                                                value={r.id} 
+                                                primaryText={r.name} 
+                                            />                    
+                                        )}
+                                    </SelectField>
+                                    {this.state.filters.routineId ? 
+                                        <NavigationCancel style={styles.clearIcon} onClick={this.handleCustomFilterClearClick}/>
+                                    : '' }
+                                </span>
+                            }
                         >
                             <List>
                                 {this.props.workoutsHistory.workouts
