@@ -9,17 +9,10 @@ import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in'
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel'
-import FlatButton from 'material-ui/FlatButton'
 import { List, ListItem } from 'material-ui/List'
 
-import ActionRestore from 'material-ui/svg-icons/action/restore'
 import ActionInfo from 'material-ui/svg-icons/action/info'
-import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
-import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
-import ContentClear from 'material-ui/svg-icons/content/clear'
 
-import WorkoutsListCard from '../../workouts/WorkoutsListCard'
-import WorkoutsHistoryOptions from './WorkoutsHistoryOptions'
 import Spinner from '../../shared/Spinner'
 import { WORKOUT_AVATAR_COLOR } from '../../../constants';
 import History from '../../shared/history/History';
