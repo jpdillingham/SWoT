@@ -66,7 +66,15 @@ const styles = {
     },
     buttonRow: {
         textAlign: 'center'
-    }
+    },
+    clearIcon: {
+        width: 18,
+        height: 18,
+        color: red500,
+        cursor: 'pointer',
+        marginBottom: 15,
+        marginRight: 10,
+    },
 }
 
 class WorkoutsHistory extends Component {
@@ -129,7 +137,6 @@ class WorkoutsHistory extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
@@ -146,7 +153,6 @@ class WorkoutsHistory extends Component {
                                 <span>
                                     <SelectField 
                                         floatingLabelText={'Filter By'}
-                                        style={styles.routine} 
                                         value={this.state.filters.routineId} 
                                         onChange={(event, index, value) => this.handleCustomFilterChange('routineId', event, index, value)}
                                         disabled={this.state.refreshApi.isExecuting}
