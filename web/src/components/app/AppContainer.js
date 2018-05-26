@@ -4,8 +4,6 @@ import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import LogoutButton from '../security/LogoutButton';
 
-import AppLinks from './AppLinks'
-
 class AppContainer extends Component {
     state = {
         drawerOpen: false,
@@ -33,7 +31,7 @@ class AppContainer extends Component {
                     onRequestChange={this.toggleDrawer}
                 >
                     <AppBar title="SWoT" showMenuIconButton={false}/>
-                    <AppLinks/>
+                    {this.props.links}
                 </Drawer>
                 </div>
                 : ''}
