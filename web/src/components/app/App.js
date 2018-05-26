@@ -78,8 +78,8 @@ class App extends Component {
                                     <MenuItem containerElement={<Link to="/" />} leftIcon={<ActionAssignmentTurnedIn />}>Calendar</MenuItem>
                                     <Divider/>
                                     <Subheader>Reports</Subheader>
-                                    <MenuItem containerElement={<Link to="/" />} leftIcon={<ActionAssignmentTurnedIn />}>Workouts</MenuItem>
-                                    <MenuItem containerElement={<Link to="/" />} leftIcon={<ActionAssignmentTurnedIn />}>Exercises</MenuItem>
+                                    <MenuItem containerElement={<Link to="/workouts/history" />} leftIcon={<ActionAssignmentTurnedIn />}>Workouts</MenuItem>
+                                    <MenuItem containerElement={<Link to="/exercises/history" />} leftIcon={<ActionAssignmentTurnedIn />}>Exercises</MenuItem>
                                     <Divider/>
                                     <Subheader>Configuration</Subheader>
                                     <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ActionAssignment />}>Routines</MenuItem>
