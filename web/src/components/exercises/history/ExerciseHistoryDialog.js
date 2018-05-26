@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -65,7 +66,16 @@ class ExerciseHistoryDialog extends Component {
         this.props.onClose()
     }
 
+    handleViewFullHistoryClick = () => {
+        this.navigate('/exercises/history/' + this.props.exercise.id);
+    }
+
+    navigate = (url) => {
+        this.props.history.push(url);
+    }
+
     render() {
+        console.log(this.props)
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
 
         return (
@@ -79,6 +89,11 @@ class ExerciseHistoryDialog extends Component {
                     autoScrollBodyContent={true}
                     actions={
                         <div>
+                            <FlatButton 
+                                label="View Full history" 
+                                onClick={this.handleViewFullHistoryClick} 
+                                disabled={this.state.api.isExecuting}
+                            />
                             <FlatButton 
                                 label="Close" 
                                 onClick={this.handleCloseClick} 
@@ -106,4 +121,4 @@ const mapDispatchToProps = {
     showSnackbar
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExerciseHistoryDialog)
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ExerciseHistoryDialog))
