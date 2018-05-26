@@ -10,7 +10,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Snackbar from 'material-ui/Snackbar'
 
 import AppContainer from './AppContainer'
-import AppLinks from './AppLinks'
 
 import Workouts from '../workouts/Workouts'
 import Workout from '../workouts/Workout'
