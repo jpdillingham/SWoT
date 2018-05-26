@@ -1,0 +1,109 @@
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import TextField from 'material-ui/TextField';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import { addExercise, updateExercise } from '../ExercisesActions'
+import { showSnackbar } from '../../app/AppActions.js'
+import { grey300 } from 'material-ui/styles/colors'
+
+import Spinner from '../../shared/Spinner'
+
+import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../../constants';
+import { getGuid, swapArrayElements } from '../../../util';
+
+const styles = {
+    name: {
+        width: '100%'
+    },
+    type: {
+        width: '100%'
+    },
+    url: {
+        width: '100%'
+    },
+    dialogContent: {
+        width: 400,
+    },
+    addMetric: {
+        float: 'left'
+    },
+}
+
+const initialState = {
+    exercise: {
+        id: getGuid(),
+        name: '',
+        type: '',
+        url: '',
+        metrics: []
+    },
+    metricDialog: {
+        open: false,
+        intent: '',
+        metric: {}
+    },
+    validationErrors: {
+        name: '',
+        type: '',
+        url: '',
+    },
+    api: {
+        isExecuting: false,
+        isErrored: false,
+    }
+}
+
+class ExerciseHistoryDialog extends Component {
+    state = initialState
+
+    handleCloseClick = () => {
+        this.setState({ api: { isExecuting: false, isErrored: false }})
+        this.props.onClose()
+    }
+
+    render() {
+        let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
+
+        return (
+            <div>
+                <Dialog
+                    bodyStyle={refreshStyle}
+                    actionsContainerStyle={refreshStyle}
+                    titleStyle={refreshStyle}
+                    contentStyle={{ ...styles.dialogContent, refreshStyle }}
+                    title={this.props.exercise.name + ' History'} 
+                    autoScrollBodyContent={true}
+                    actions={
+                        <div>
+                            <FlatButton 
+                                label="Close" 
+                                onClick={this.handleCloseClick} 
+                                disabled={this.state.api.isExecuting}
+                            />
+                        </div>
+                    }
+                    modal={true}
+                    open={this.props.open}
+                >
+                    {this.state.api.isExecuting ? <Spinner/> : ''}
+                </Dialog>
+            </div>
+        )
+    }
+}
+
+const mapStateToProps = (state) => ({
+    existingNames: state.exercises.map(e => e.name)
+})
+
+const mapDispatchToProps = {
+    addExercise,
+    updateExercise,
+    showSnackbar
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExerciseHistoryDialog)
