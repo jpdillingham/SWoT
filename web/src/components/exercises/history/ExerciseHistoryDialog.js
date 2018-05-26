@@ -4,17 +4,13 @@ import { withRouter } from 'react-router-dom';
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import TextField from 'material-ui/TextField';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import { addExercise, updateExercise } from '../ExercisesActions'
 import { showSnackbar } from '../../app/AppActions.js'
 import { grey300 } from 'material-ui/styles/colors'
 
 import Spinner from '../../shared/Spinner'
 
-import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../../constants';
-import { getGuid, swapArrayElements } from '../../../util';
+import { getGuid } from '../../../util';
 
 const styles = {
     name: {
