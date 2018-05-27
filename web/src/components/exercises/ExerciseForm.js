@@ -15,6 +15,7 @@ import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constan
 import { getElapsedTime } from '../../util';
 
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
+import ExerciseHistoryDialog from './history/ExerciseHistoryDialog';
 
 const styles = {
     cardHeader: {
@@ -60,6 +61,9 @@ const initialState = {
         isExecuting: false,
         isErrored: false,
     },
+    historyDialog: {
+        open: false,
+    },
     validationErrors: {}
 }
 
@@ -68,7 +72,13 @@ class ExerciseForm extends Component {
 
     timer;
 
-    handleHistoryClick = () => { }
+    handleHistoryClick = () => { 
+        this.setState({ historyDialog: { open: true }});
+    }
+
+    handleHistoryClose = () => {
+        this.setState({ historyDialog: { open: false }});
+    }
 
     handleMetricChange = (event, value, metric) => {
         this.setState({ 
@@ -161,99 +171,106 @@ class ExerciseForm extends Component {
         }
 
         return (
-            <Card 
-                zDepth={2} 
-                style={!this.state.api.isExecuting ? styles.card : 
-                    { 
-                        ...styles.card, 
-                        backgroundColor: grey300 
-                    }
-                }
-            >
-                <CardHeader                        
-                    titleStyle={styles.cardTitle}
-                    style={styles.cardHeader}
-                    title={
-                        <span 
-                            style={styles.link}
-                            onClick={() => window.open(this.props.exercise.url)}
-                        >
-                            {this.props.exercise.name}
-                        </span>
-                    }
-                    avatar={
-                        <Avatar 
-                            backgroundColor={EXERCISE_AVATAR_COLOR} 
-                            size={32} 
-                            src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'} 
-                        />
+            <div>
+                <Card 
+                    zDepth={2} 
+                    style={!this.state.api.isExecuting ? styles.card : 
+                        { 
+                            ...styles.card, 
+                            backgroundColor: grey300 
+                        }
                     }
                 >
-                    <FloatingActionButton 
-                        secondary={false} 
-                        zDepth={2} 
-                        style={styles.fab}
-                        mini={true}
-                        onClick={this.handleHistoryClick}
-                    >
-                        <ActionHistory />
-                    </FloatingActionButton>
-                </CardHeader>
-                <CardText style={styles.text}>
-                    {this.props.exercise.metrics ? 
-                        this.props.exercise.metrics.map((m, index) =>    
-                            <TextField
-                                key={index}
-                                hintText={this.getMetricDisplayName(m)}
-                                defaultValue={m.value}
-                                errorText={this.state.validationErrors[m.name]}
-                                floatingLabelText={this.getMetricDisplayName(m)}
-                                onChange={(e,v) => this.handleMetricChange(e,v,m)}
-                                disabled={this.props.exercise.endTime !== undefined || this.props.exercise.startTime === undefined}
+                    <CardHeader                        
+                        titleStyle={styles.cardTitle}
+                        style={styles.cardHeader}
+                        title={
+                            <span 
+                                style={styles.link}
+                                onClick={() => window.open(this.props.exercise.url)}
+                            >
+                                {this.props.exercise.name}
+                            </span>
+                        }
+                        avatar={
+                            <Avatar 
+                                backgroundColor={EXERCISE_AVATAR_COLOR} 
+                                size={32} 
+                                src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'} 
                             />
-                        ) : ''
-                    }
-                    <TextField
-                        hintText={'Notes'}
-                        floatingLabelText={'Notes'}
-                        defaultValue={this.props.exercise.notes}
-                        multiLine={true}
-                        onChange={this.handleNotesChange}
-                        disabled={this.props.exercise.endTime !== undefined  || this.props.exercise.startTime === undefined}
-                    />
-                </CardText>
-                <CardActions>
-                    {!this.props.exercise.startTime ? 
-                        <SaveRetryFlatButton 
-                            label={'Start'}
-                            onClick={this.handleStartClick} 
-                            api={this.state.api} 
-                            validation={this.state.validationErrors} 
-                            style={styles.button}
-                        /> : !this.props.exercise.endTime ?
-                        <SaveRetryFlatButton 
-                            label={'Complete'}
-                            onClick={this.handleCompleteClick} 
-                            api={this.state.api} 
-                            validation={this.state.validationErrors} 
-                            style={styles.button}
-                        /> : 
-                        <SaveRetryFlatButton 
-                            label={'Restart'}
-                            onClick={this.handleRestartClick} 
-                            api={this.state.api} 
-                            validation={this.state.validationErrors} 
-                            style={styles.button}
-                        /> 
-                    }
-                    <FlatButton 
-                        label={this.props.exercise.startTime ? getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
-                        disabled={true} 
-                        style={styles.time}
-                    />
-                </CardActions>
-                {this.state.api.isExecuting ? <Spinner/> : ''}
-            </Card>
+                        }
+                    >
+                        <FloatingActionButton 
+                            secondary={false} 
+                            zDepth={2} 
+                            style={styles.fab}
+                            mini={true}
+                            onClick={this.handleHistoryClick}
+                        >
+                            <ActionHistory />
+                        </FloatingActionButton>
+                    </CardHeader>
+                    <CardText style={styles.text}>
+                        {this.props.exercise.metrics ? 
+                            this.props.exercise.metrics.map((m, index) =>    
+                                <TextField
+                                    key={index}
+                                    hintText={this.getMetricDisplayName(m)}
+                                    defaultValue={m.value}
+                                    errorText={this.state.validationErrors[m.name]}
+                                    floatingLabelText={this.getMetricDisplayName(m)}
+                                    onChange={(e,v) => this.handleMetricChange(e,v,m)}
+                                    disabled={this.props.exercise.endTime !== undefined || this.props.exercise.startTime === undefined}
+                                />
+                            ) : ''
+                        }
+                        <TextField
+                            hintText={'Notes'}
+                            floatingLabelText={'Notes'}
+                            defaultValue={this.props.exercise.notes}
+                            multiLine={true}
+                            onChange={this.handleNotesChange}
+                            disabled={this.props.exercise.endTime !== undefined  || this.props.exercise.startTime === undefined}
+                        />
+                    </CardText>
+                    <CardActions>
+                        {!this.props.exercise.startTime ? 
+                            <SaveRetryFlatButton 
+                                label={'Start'}
+                                onClick={this.handleStartClick} 
+                                api={this.state.api} 
+                                validation={this.state.validationErrors} 
+                                style={styles.button}
+                            /> : !this.props.exercise.endTime ?
+                            <SaveRetryFlatButton 
+                                label={'Complete'}
+                                onClick={this.handleCompleteClick} 
+                                api={this.state.api} 
+                                validation={this.state.validationErrors} 
+                                style={styles.button}
+                            /> : 
+                            <SaveRetryFlatButton 
+                                label={'Restart'}
+                                onClick={this.handleRestartClick} 
+                                api={this.state.api} 
+                                validation={this.state.validationErrors} 
+                                style={styles.button}
+                            /> 
+                        }
+                        <FlatButton 
+                            label={this.props.exercise.startTime ? getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
+                            disabled={true} 
+                            style={styles.time}
+                        />
+                    </CardActions>
+                    {this.state.api.isExecuting ? <Spinner/> : ''}
+                </Card>
+                <ExerciseHistoryDialog
+                    open={this.state.historyDialog.open}
+                    onClose={this.handleHistoryClose}
+                    exercise={this.props.exercise}
+                />
+            </div>
         )
     }
 }

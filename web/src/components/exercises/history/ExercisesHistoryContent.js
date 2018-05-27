@@ -13,6 +13,9 @@ class ExercisesHistoryContent extends Component {
     }
 
     render() {
+        let history = this.props.exercisesHistory;
+        let exercises = history ? history.exercises : [];
+
         return (
             <Table>
                 <TableHeader
@@ -22,7 +25,7 @@ class ExercisesHistoryContent extends Component {
                 >
                     <TableRow>
                         <TableHeaderColumn>Date</TableHeaderColumn>
-                        <TableHeaderColumn>Name</TableHeaderColumn>
+                        {this.props.hideName ? '' : <TableHeaderColumn>Name</TableHeaderColumn>}
                         {this.props.metrics.map((m, index) => 
                             <TableHeaderColumn key={index}>
                                 {m.name}{m.uom ? ' (' + m.uom + ')' : ''}
@@ -33,19 +36,19 @@ class ExercisesHistoryContent extends Component {
                 <TableBody
                     displayRowCheckbox={false}
                 >
-                    {this.props.exercisesHistory.exercises
+                    {!exercises ? '' : exercises
                         .sort(sortByProp('endTime', this.props.filters.order))
                         .map((e, index) => 
-                        <TableRow style={this.props.refreshing ? { backgroundColor: grey300 } : {}} key={index}>
-                            <TableRowColumn>{moment(e.endTime).format('ddd M/DD [at] h:mmp')}</TableRowColumn>
-                            <TableRowColumn>{e.name}</TableRowColumn>
-                            {this.props.metrics.map((m, index) => 
-                                <TableRowColumn key={index}>
-                                    {this.getValue(e, m.name)}
-                                </TableRowColumn>
-                            )}
-                        </TableRow>
-                    )}
+                            <TableRow style={this.props.refreshing ? { backgroundColor: grey300 } : {}} key={index}>
+                                <TableRowColumn>{moment(e.endTime).format('ddd M/DD [at] h:mmp')}</TableRowColumn>
+                                {this.props.hideName ? '' : <TableRowColumn>{e.name}</TableRowColumn>}
+                                {this.props.metrics.map((m, index) => 
+                                    <TableRowColumn key={index}>
+                                        {this.getValue(e, m.name)}
+                                    </TableRowColumn>
+                                )}
+                            </TableRow>
+                        )}
                 </TableBody>
             </Table>
         )
