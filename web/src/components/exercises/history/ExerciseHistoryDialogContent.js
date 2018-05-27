@@ -6,19 +6,24 @@ import { sortByProp } from '../../../util'
 import { grey300 } from 'material-ui/styles/colors'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
+const styles = {
+    date: {
+        width: 60
+    }
+}
+
 class ExerciseHistoryDialogContent extends Component {
-    getMetricsColumnText = () => {
-        return !this.props.metrics || !this.props.metrics.length ? '' : 
-                this.props.metrics
-                    .map(m => m.name)
-                    .sort()
+    getLabels = () => {
+        let metrics = this.props.exercise.metrics;
+        return !metrics || !metrics.length ? '' : 
+                metrics.map(m => m.name)
                     .reduce((acc, m) => acc.concat('/' + m));
     }
     getValues = (exercise) => {
-        return !exercise.metrics || !exercise.metrics.length ? '' :
-                exercise.metrics
+        let metrics = this.props.exercise.metrics;
+        return !metrics || !metrics.length ? '' :
+                metrics
                 .map(m => this.getValue(exercise, m.name))
-                .sort()
                 .reduce((acc, v) => acc.concat('/' + v)) 
     }
 
@@ -28,7 +33,7 @@ class ExerciseHistoryDialogContent extends Component {
     }
 
     render() {
-        let history = this.props.exercisesHistory;
+        let history = this.props.history;
         let exercises = history ? history.exercises : [];
 
         return (
@@ -39,8 +44,8 @@ class ExerciseHistoryDialogContent extends Component {
                     style={this.props.refreshing ? { backgroundColor: grey300 } : {}}
                 >
                     <TableRow>
-                        <TableHeaderColumn>Date</TableHeaderColumn>
-                        <TableHeaderColumn>{this.getMetricsColumnText()}</TableHeaderColumn>
+                        <TableHeaderColumn style={styles.date}>Date</TableHeaderColumn>
+                        <TableHeaderColumn>{this.getLabels()}</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
                 <TableBody
@@ -50,7 +55,7 @@ class ExerciseHistoryDialogContent extends Component {
                         .sort(sortByProp('endTime', this.props.filters.order))
                         .map((e, index) => 
                             <TableRow style={this.props.refreshing ? { backgroundColor: grey300 } : {}} key={index}>
-                                <TableRowColumn>{moment(e.endTime).format('ddd M/DD')}</TableRowColumn>
+                                <TableRowColumn style={styles.date}>{moment(e.endTime).format('ddd M/DD')}</TableRowColumn>
                                 <TableRowColumn key={index}>
                                     {this.getValues(e)}
                                 </TableRowColumn>
