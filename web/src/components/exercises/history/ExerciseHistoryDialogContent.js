@@ -7,6 +7,21 @@ import { grey300 } from 'material-ui/styles/colors'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 class ExerciseHistoryDialogContent extends Component {
+    getMetricsColumnText = () => {
+        return !this.props.metrics || !this.props.metrics.length ? '' : 
+                this.props.metrics
+                    .map(m => m.name)
+                    .sort()
+                    .reduce((acc, m) => acc.concat('/' + m));
+    }
+    getValues = (exercise) => {
+        return !exercise.metrics || !exercise.metrics.length ? '' :
+                exercise.metrics
+                .map(m => this.getValue(exercise, m.name))
+                .sort()
+                .reduce((acc, v) => acc.concat('/' + v)) 
+    }
+
     getValue = (exercise, metric) => {
         var foundMetric = exercise.metrics.find(m => m.name === metric);
         return !foundMetric ? '' : !foundMetric.value ? '-' : foundMetric.value;
@@ -25,12 +40,7 @@ class ExerciseHistoryDialogContent extends Component {
                 >
                     <TableRow>
                         <TableHeaderColumn>Date</TableHeaderColumn>
-                        {this.props.tinyView ? '' : <TableHeaderColumn>Name</TableHeaderColumn>}
-                        {this.props.metrics.map((m, index) => 
-                            <TableHeaderColumn key={index}>
-                                {m.name}{!this.props.tinyView ? m.uom ? ' (' + m.uom + ')' : '' : ''}
-                            </TableHeaderColumn>
-                        )}
+                        <TableHeaderColumn>{this.getMetricsColumnText()}</TableHeaderColumn>
                     </TableRow>
                 </TableHeader>
                 <TableBody
@@ -40,13 +50,10 @@ class ExerciseHistoryDialogContent extends Component {
                         .sort(sortByProp('endTime', this.props.filters.order))
                         .map((e, index) => 
                             <TableRow style={this.props.refreshing ? { backgroundColor: grey300 } : {}} key={index}>
-                                <TableRowColumn>{moment(e.endTime).format('ddd M/DD [at] h:mmp')}</TableRowColumn>
-                                {this.props.tinyView ? '' : <TableRowColumn>{e.name}</TableRowColumn>}
-                                {this.props.metrics.map((m, index) => 
-                                    <TableRowColumn key={index}>
-                                        {this.getValue(e, m.name)}
-                                    </TableRowColumn>
-                                )}
+                                <TableRowColumn>{moment(e.endTime).format('ddd M/DD')}</TableRowColumn>
+                                <TableRowColumn key={index}>
+                                    {this.getValues(e)}
+                                </TableRowColumn>
                             </TableRow>
                         )}
                 </TableBody>
