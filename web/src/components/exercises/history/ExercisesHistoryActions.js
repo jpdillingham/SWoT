@@ -9,6 +9,10 @@ const exercisesHistoryGet = (exercises, totalCount) => ({
     totalCount: totalCount,
 });
 
+const exercisesHistoryClear = () => ({
+    type: 'EXERCISES_HISTORY_CLEAR'
+})
+
 export const fetchExercisesHistory = (filters) => (dispatch, getState) => {
     let queryParams = '?';
 
@@ -28,4 +32,11 @@ export const fetchExercisesHistory = (filters) => (dispatch, getState) => {
             reject('API error: ' + error);
         });    
     });
+}
+
+export const clearExercisesHistory = () => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        dispatch(exercisesHistoryClear());
+        resolve();
+    })
 }
