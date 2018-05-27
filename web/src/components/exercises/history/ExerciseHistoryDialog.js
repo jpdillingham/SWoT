@@ -6,7 +6,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import { grey300 } from 'material-ui/styles/colors'
 
-import ExercisesHistoryContent from './ExercisesHistoryContent'
+import ExerciseHistoryDialogContent from './ExerciseHistoryDialogContent'
 import { fetchExercisesHistory, clearExercisesHistory } from './ExercisesHistoryActions'
 import Spinner from '../../shared/Spinner'
 import { sortByProp } from '../../../util';
@@ -108,10 +108,9 @@ class ExerciseHistoryDialog extends Component {
                     open={this.props.open}
                 >
                     {!this.props.exercisesHistory ? '' : 
-                        <ExercisesHistoryContent
+                        <ExerciseHistoryDialogContent
                             metrics={metrics}
                             exercisesHistory={this.props.exercisesHistory}
-                            hideName={true}
                             filters={this.state.filters}
                             refreshing={this.state.api.isExecuting}
                         />
