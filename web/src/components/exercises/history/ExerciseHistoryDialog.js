@@ -69,14 +69,6 @@ class ExerciseHistoryDialog extends Component {
     }
 
     render() {
-        let history = this.props.exercisesHistory;
-        let exercises = history && history.exercises ? history.exercises : undefined;
-        let metrics = !exercises ? undefined : exercises.map(e => e.metrics);
-        metrics = !metrics || metrics.length === 0 ? [] : metrics
-                                    .reduce((acc, e) => acc.concat(e))
-                                    .sort(sortByProp('name'))
-                                    .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true);
-                                    
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
 
         return (
@@ -107,8 +99,8 @@ class ExerciseHistoryDialog extends Component {
                 >
                     {!this.props.exercisesHistory ? '' : 
                         <ExerciseHistoryDialogContent
-                            metrics={metrics}
-                            exercisesHistory={this.props.exercisesHistory}
+                            exercise={this.props.exercise}
+                            history={this.props.exercisesHistory}
                             filters={this.state.filters}
                             refreshing={this.state.api.isExecuting}
                         />
