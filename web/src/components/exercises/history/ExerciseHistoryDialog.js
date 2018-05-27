@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import { fetchExercisesHistory, clearExercisesHistory } from './ExercisesHistoryActions'
-import { showSnackbar } from '../../app/AppActions.js'
+import FlatButton from 'material-ui/FlatButton';
 import { grey300 } from 'material-ui/styles/colors'
+
 import ExercisesHistoryContent from './ExercisesHistoryContent'
-
+import { fetchExercisesHistory, clearExercisesHistory } from './ExercisesHistoryActions'
 import Spinner from '../../shared/Spinner'
-
 import { sortByProp } from '../../../util';
 
 const styles = {
