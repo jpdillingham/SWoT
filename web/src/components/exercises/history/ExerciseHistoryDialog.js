@@ -9,7 +9,6 @@ import { showSnackbar } from '../../app/AppActions.js'
 import { grey300 } from 'material-ui/styles/colors'
 import ExercisesHistoryContent from './ExercisesHistoryContent'
 
-
 import Spinner from '../../shared/Spinner'
 
 import { sortByProp } from '../../../util';
@@ -49,7 +48,6 @@ class ExerciseHistoryDialog extends Component {
             api: { ...this.state.api, isExecuting: true },
             filters: { ...filters, exerciseId: this.props.exercise.id }
         }, () => {
-            console.log('fetch')
             this.props.fetchExercisesHistory(filters)
             .then(response => {
                 this.setState({ api: { isExecuting: false, isErrored: false }})
@@ -83,7 +81,6 @@ class ExerciseHistoryDialog extends Component {
                                     
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
 
-        console.log(this.props.exercisesHistory)
         return (
             <div>
                 <Dialog
