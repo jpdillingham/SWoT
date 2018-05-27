@@ -13,9 +13,7 @@ import { sortByProp } from '../../../util';
 
 const styles = {
     dialogContent: {
-        minWidth: 400,
-        width: '100%',
-        maxWidth: 'none'
+        width: 400,
     },
 }
 
