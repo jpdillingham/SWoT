@@ -9,7 +9,6 @@ import { grey300 } from 'material-ui/styles/colors'
 import ExerciseHistoryDialogContent from './ExerciseHistoryDialogContent'
 import { fetchExercisesHistory, clearExercisesHistory } from './ExercisesHistoryActions'
 import Spinner from '../../shared/Spinner'
-import { sortByProp } from '../../../util';
 
 const styles = {
     dialogContent: {
