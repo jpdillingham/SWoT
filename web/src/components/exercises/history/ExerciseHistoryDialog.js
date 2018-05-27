@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import { fetchExercisesHistory } from './ExercisesHistoryActions'
+import { fetchExercisesHistory, clearExercisesHistory } from './ExercisesHistoryActions'
 import { showSnackbar } from '../../app/AppActions.js'
 import { grey300 } from 'material-ui/styles/colors'
 import ExercisesHistoryContent from './ExercisesHistoryContent'
@@ -39,7 +39,9 @@ class ExerciseHistoryDialog extends Component {
 
     componentWillReceiveProps = (nextProps) => {
         if (!this.props.open && nextProps.open) {
-            this.fetchHistory({ ...this.state.filters, exerciseId: nextProps.exercise.id });
+            this.props.clearExercisesHistory().then(() => {
+                this.fetchHistory({ ...this.state.filters, exerciseId: nextProps.exercise.id });
+            })
         }
     }
 
@@ -128,7 +130,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-    fetchExercisesHistory
+    fetchExercisesHistory,
+    clearExercisesHistory
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ExerciseHistoryDialog))
