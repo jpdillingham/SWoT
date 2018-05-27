@@ -4,58 +4,60 @@ import { withRouter } from 'react-router-dom';
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import { addExercise, updateExercise } from '../ExercisesActions'
+import { fetchExercisesHistory } from './ExercisesHistoryActions'
 import { showSnackbar } from '../../app/AppActions.js'
 import { grey300 } from 'material-ui/styles/colors'
+import ExercisesHistoryContent from './ExercisesHistoryContent'
+
 
 import Spinner from '../../shared/Spinner'
 
-import { getGuid } from '../../../util';
+import { sortByProp } from '../../../util';
 
 const styles = {
-    name: {
-        width: '100%'
-    },
-    type: {
-        width: '100%'
-    },
-    url: {
-        width: '100%'
-    },
     dialogContent: {
-        width: 400,
-    },
-    addMetric: {
-        float: 'left'
+        minWidth: 400,
+        width: '100%',
+        maxWidth: 'none'
     },
 }
 
 const initialState = {
-    exercise: {
-        id: getGuid(),
-        name: '',
-        type: '',
-        url: '',
-        metrics: []
-    },
-    metricDialog: {
-        open: false,
-        intent: '',
-        metric: {}
-    },
-    validationErrors: {
-        name: '',
-        type: '',
-        url: '',
-    },
     api: {
         isExecuting: false,
         isErrored: false,
+    },
+    filters: {
+        offset: 0,
+        limit: 10,
+        order: 'desc',
+        exerciseId: undefined,
     }
 }
 
 class ExerciseHistoryDialog extends Component {
     state = initialState
+
+    componentWillReceiveProps = (nextProps) => {
+        if (!this.props.open && nextProps.open) {
+            this.fetchHistory({ ...this.state.filters, exerciseId: nextProps.exercise.id });
+        }
+    }
+
+    fetchHistory = (filters) => {
+        this.setState({ 
+            api: { ...this.state.api, isExecuting: true },
+            filters: { ...filters, exerciseId: this.props.exercise.id }
+        }, () => {
+            console.log('fetch')
+            this.props.fetchExercisesHistory(filters)
+            .then(response => {
+                this.setState({ api: { isExecuting: false, isErrored: false }})
+            }, error => {
+                this.setState({ api: { isExecuting: false, isErrored: true }})
+            })
+        })
+    }
 
     handleCloseClick = () => {
         this.setState({ api: { isExecuting: false, isErrored: false }})
@@ -71,9 +73,17 @@ class ExerciseHistoryDialog extends Component {
     }
 
     render() {
-        console.log(this.props)
+        let history = this.props.exercisesHistory;
+        let exercises = history && history.exercises ? history.exercises : undefined;
+        let metrics = !exercises ? undefined : exercises.map(e => e.metrics);
+        metrics = !metrics || metrics.length === 0 ? [] : metrics
+                                    .reduce((acc, e) => acc.concat(e))
+                                    .sort(sortByProp('name'))
+                                    .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true);
+                                    
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
 
+        console.log(this.props.exercisesHistory)
         return (
             <div>
                 <Dialog
@@ -100,6 +110,15 @@ class ExerciseHistoryDialog extends Component {
                     modal={true}
                     open={this.props.open}
                 >
+                    {!this.props.exercisesHistory ? '' : 
+                        <ExercisesHistoryContent
+                            metrics={metrics}
+                            exercisesHistory={this.props.exercisesHistory}
+                            hideName={true}
+                            filters={this.state.filters}
+                            refreshing={this.state.api.isExecuting}
+                        />
+                    }
                     {this.state.api.isExecuting ? <Spinner/> : ''}
                 </Dialog>
             </div>
@@ -108,13 +127,11 @@ class ExerciseHistoryDialog extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    existingNames: state.exercises.map(e => e.name)
+    exercisesHistory: state.exercisesHistory
 })
 
 const mapDispatchToProps = {
-    addExercise,
-    updateExercise,
-    showSnackbar
+    fetchExercisesHistory
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ExerciseHistoryDialog))
