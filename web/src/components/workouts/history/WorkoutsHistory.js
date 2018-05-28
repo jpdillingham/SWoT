@@ -77,7 +77,8 @@ class WorkoutsHistory extends Component {
             filters: { 
                 ...initialState.filters, 
                 toTime: defaulttoTime.getTime(), 
-                fromTime: defaultfromTime.getTime() 
+                fromTime: defaultfromTime.getTime(),
+                routineId: this.props.match.params.id,
             } 
         };        
     }
@@ -149,6 +150,9 @@ class WorkoutsHistory extends Component {
                                                 primaryText={r.name} 
                                             />                    
                                         )}
+                                        {!this.state.filters.routineId || this.props.routines.find(r => r.id === this.state.filters.routineId) ? '' :
+                                            <MenuItem key={-1} value={this.state.filters.routineId} primaryText={'Invalid Routine Id'}/>
+                                        }
                                     </SelectField>
                                     {this.state.filters.routineId ? 
                                         <NavigationCancel style={styles.clearIcon} onClick={this.handleCustomFilterClearClick}/>

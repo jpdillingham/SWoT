@@ -15,8 +15,11 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 
 import ExerciseRoutineReferenceList from './ExerciseRoutineReferenceList'
+import ExerciseHistoryDialog from './history/ExerciseHistoryDialog'
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR, INTENTS } from '../../constants';
+import Divider from 'material-ui/Divider/Divider';
+import { ContentContentCopy, ActionDelete, ActionHistory } from 'material-ui/svg-icons';
 
 const styles = {
     deleteDialog: {
@@ -65,7 +68,10 @@ const initialState = {
         open: false,
         exercise: {},
         intent: INTENTS.EDIT
-    }    
+    },
+    historyDialog: {
+        open: false,
+    } 
 }
 
 class ExerciseCard extends Component {
@@ -95,6 +101,18 @@ class ExerciseCard extends Component {
 
     handleDeleteClick = () => {
         this.setState({ deleteDialog: { open: true }})
+    }
+
+    handleHistoryClick = () => {
+        this.setState({ historyDialog: { open: true }});
+    }
+
+    handleHistoryClose = () => {
+        this.setState({ historyDialog: { open: false }});
+    }
+
+    navigate = (url) => {
+        this.props.history.push(url);
     }
 
     handleDuplicateClick = () => {
@@ -154,8 +172,10 @@ class ExerciseCard extends Component {
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem primaryText="Duplicate" onClick={this.handleDuplicateClick} />
-                        <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
+                        <MenuItem primaryText="Duplicate" onClick={this.handleDuplicateClick} leftIcon={<ContentContentCopy/>}/>
+                        <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
+                        <Divider/>
+                        <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
                     </IconMenu>
                     <CardText style={styles.text}>
                         <List>
@@ -187,6 +207,11 @@ class ExerciseCard extends Component {
                     intent={this.state.exerciseDialog.intent}
                     exercise={this.state.exerciseDialog.exercise}
                     handleClose={this.handleExerciseDialogClose}
+                />
+                <ExerciseHistoryDialog
+                    open={this.state.historyDialog.open}
+                    onClose={this.handleHistoryClose}
+                    exercise={this.props.exercise}
                 />
             </div>
         )

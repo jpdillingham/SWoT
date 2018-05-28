@@ -14,6 +14,7 @@ import { black } from 'material-ui/styles/colors';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
+import { ContentContentCopy, ActionDelete } from 'material-ui/svg-icons';
 
 import ConfirmDialog from '../shared/ConfirmDialog'
 import RoutineDialog from './RoutineDialog'
@@ -135,8 +136,8 @@ class RoutineCard extends Component {
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem primaryText="Duplicate" onClick={this.handleDuplicateClick} />
-                        <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
+                        <MenuItem primaryText="Duplicate" onClick={this.handleDuplicateClick} leftIcon={<ContentContentCopy/>}/>
+                        <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                     </IconMenu>
                     <CardText style={styles.text}>
                         <List>

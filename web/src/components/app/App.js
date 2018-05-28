@@ -4,10 +4,9 @@ import { withRouter } from 'react-router-dom'
 import { Route, Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-import ActionAssignment from 'material-ui/svg-icons/action/assignment';
-import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
-import ActionDescription from 'material-ui/svg-icons/action/description'
-import Divider from 'material-ui/Divider/Divider';
+import ActionDashboard from 'material-ui/svg-icons/action/dashboard'
+import ActionEvent from 'material-ui/svg-icons/action/event'
+import ActionHistory from 'material-ui/svg-icons/action/history'
 import { getMuiTheme } from 'material-ui/styles';
 import MenuItem from 'material-ui/MenuItem'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -29,6 +28,7 @@ import ConfirmRegistration from '../security/ConfirmRegistration'
 
 import { ensureSession } from '../security/SecurityActions'
 import { hideSnackbar } from './AppActions'
+import { ActionBuild, ActionTrendingUp } from 'material-ui/svg-icons';
 
 const styles = {
     content: {
@@ -74,16 +74,15 @@ class App extends Component {
                             links={
                                 <div>
                                     <Subheader>Workouts</Subheader>
-                                    <MenuItem containerElement={<Link to="/" />} leftIcon={<ActionAssignmentTurnedIn />}>List</MenuItem>
-                                    <MenuItem containerElement={<Link to="/" />} leftIcon={<ActionAssignmentTurnedIn />}>Calendar</MenuItem>
-                                    <Divider/>
-                                    <Subheader>Reports</Subheader>
-                                    <MenuItem containerElement={<Link to="/workouts/history" />} leftIcon={<ActionAssignmentTurnedIn />}>Workouts</MenuItem>
-                                    <MenuItem containerElement={<Link to="/exercises/history" />} leftIcon={<ActionAssignmentTurnedIn />}>Exercises</MenuItem>
-                                    <Divider/>
-                                    <Subheader>Configuration</Subheader>
-                                    <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ActionAssignment />}>Routines</MenuItem>
-                                    <MenuItem containerElement={<Link to="/exercises" />} leftIcon={<ActionDescription />}>Exercises</MenuItem>
+                                    <MenuItem containerElement={<Link to='/workouts'/>} leftIcon={<ActionDashboard/>}>Dashboard</MenuItem>
+                                    <MenuItem containerElement={<Link to="/workouts/calendar" />} leftIcon={<ActionEvent/>}>Calendar</MenuItem>
+                                    <MenuItem containerElement={<Link to='/workouts/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
+                                    <Subheader>Routines</Subheader>
+                                    <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
+                                    <Subheader>Exercises</Subheader>
+                                    <MenuItem containerElement={<Link to='/exercises'/>} leftIcon={<ActionTrendingUp/>}>Progress</MenuItem>
+                                    <MenuItem containerElement={<Link to='/exercises/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
+                                    <MenuItem containerElement={<Link to='/exercises'/>} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
                                 </div>
                             }
                         >
@@ -92,6 +91,7 @@ class App extends Component {
                                 <Route exact path="/history" component={WorkoutsHistory}/>
                                 <Route exact path="/workouts" component={Workouts}/>
                                 <Route exact path="/workouts/history" component={WorkoutsHistory}/>
+                                <Route path="/workouts/history/:id" component={WorkoutsHistory}/>
                                 <Route path="/workouts/:id" component={Workout}/>
                                 <Route exact path="/exercises" component={Exercises}/>
                                 <Route exact path="/exercises/history" component={ExercisesHistory}/>
