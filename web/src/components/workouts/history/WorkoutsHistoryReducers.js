@@ -8,6 +8,8 @@ const WorkoutsHistoryReducer = (state = initialState, action) => {
             return { workouts: [], totalCount: 0 }
         case 'WORKOUT_HISTORY_GET':
             return { workout: action.workout }
+        case 'WORKOUT_HISTORY_CLEAR':
+            return { workout: {} }
         default:
             return state;
     }
