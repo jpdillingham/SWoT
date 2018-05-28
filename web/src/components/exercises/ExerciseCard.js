@@ -19,6 +19,7 @@ import ExerciseHistoryDialog from './history/ExerciseHistoryDialog'
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR, INTENTS } from '../../constants';
 import Divider from 'material-ui/Divider/Divider';
+import { ContentContentCopy, ActionDelete, ActionHistory } from 'material-ui/svg-icons';
 
 const styles = {
     deleteDialog: {
@@ -171,10 +172,10 @@ class ExerciseCard extends Component {
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem primaryText="Duplicate" onClick={this.handleDuplicateClick} />
-                        <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} />
+                        <MenuItem primaryText="Duplicate" onClick={this.handleDuplicateClick} leftIcon={<ContentContentCopy/>}/>
+                        <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                         <Divider/>
-                        <MenuItem primaryText="History" onClick={this.handleHistoryClick} />
+                        <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
                     </IconMenu>
                     <CardText style={styles.text}>
                         <List>
