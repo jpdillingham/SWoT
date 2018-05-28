@@ -84,15 +84,19 @@ class WorkoutCard extends Component {
             notes: this.state.workout.notes
         };
 
+        let notification;
+
         if (workout.startTime === undefined) {
             workout.startTime = new Date().getTime();
+            notification = 'Started'
         }
         else if (workout.endTime === undefined) {
             workout.endTime = new Date().getTime();
+            notification = 'Stopped'
         }
 
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
-            this.props.onWorkoutChange(workout)
+            this.props.onWorkoutChange(workout, notification)
             .then(response => { 
                 if (response.data.endTime === undefined) {
                     this.setState({ api: { isExecuting: false, isErrored: false }});
