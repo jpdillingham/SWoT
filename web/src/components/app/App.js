@@ -4,13 +4,9 @@ import { withRouter } from 'react-router-dom'
 import { Route, Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-import ActionAssignment from 'material-ui/svg-icons/action/assignment';
-import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
-import ActionDescription from 'material-ui/svg-icons/action/description'
 import ActionDashboard from 'material-ui/svg-icons/action/dashboard'
 import ActionEvent from 'material-ui/svg-icons/action/event'
 import ActionHistory from 'material-ui/svg-icons/action/history'
-import Divider from 'material-ui/Divider/Divider';
 import { getMuiTheme } from 'material-ui/styles';
 import MenuItem from 'material-ui/MenuItem'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
