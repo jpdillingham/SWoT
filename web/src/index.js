@@ -9,17 +9,17 @@ import { loadState, saveState } from './localStorage';
 import App from './components/app/App'
 
 import ExercisesReducer from './components/exercises/ExercisesReducer'
-import ExercisesHistoryReducers from './components/exercises/history/ExercisesHistoryReducers'
+import ExercisesHistoryReducer from './components/exercises/history/ExercisesHistoryReducer'
 import AppReducer from './components/app/AppReducer';
 import RoutinesReducer from './components/routines/RoutinesReducer'
-import WorkoutsReducer from './components/workouts/WorkoutsReducers'
-import WorkoutsHistoryReducer from './components/workouts/history/WorkoutsHistoryReducers'
+import WorkoutsReducer from './components/workouts/WorkoutsReducer'
+import WorkoutsHistoryReducer from './components/workouts/history/WorkoutsHistoryReducer'
 import SecurityReducer from './components/security/SecurityReducer'
 
 const rootReducer = combineReducers({ 
     app: AppReducer, 
     exercises: ExercisesReducer,
-    exercisesHistory: ExercisesHistoryReducers,
+    exercisesHistory: ExercisesHistoryReducer,
     routines: RoutinesReducer,
     workouts: WorkoutsReducer,
     workoutsHistory: WorkoutsHistoryReducer,
