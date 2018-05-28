@@ -6,16 +6,13 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import { grey300 } from 'material-ui/styles/colors'
 
-import ExercisesHistoryContent from './ExercisesHistoryContent'
+import ExerciseHistoryDialogContent from './ExerciseHistoryDialogContent'
 import { fetchExercisesHistory, clearExercisesHistory } from './ExercisesHistoryActions'
 import Spinner from '../../shared/Spinner'
-import { sortByProp } from '../../../util';
 
 const styles = {
     dialogContent: {
-        minWidth: 400,
-        width: '100%',
-        maxWidth: 'none'
+        width: 400,
     },
 }
 
@@ -71,14 +68,6 @@ class ExerciseHistoryDialog extends Component {
     }
 
     render() {
-        let history = this.props.exercisesHistory;
-        let exercises = history && history.exercises ? history.exercises : undefined;
-        let metrics = !exercises ? undefined : exercises.map(e => e.metrics);
-        metrics = !metrics || metrics.length === 0 ? [] : metrics
-                                    .reduce((acc, e) => acc.concat(e))
-                                    .sort(sortByProp('name'))
-                                    .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true);
-                                    
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
 
         return (
@@ -108,10 +97,9 @@ class ExerciseHistoryDialog extends Component {
                     open={this.props.open}
                 >
                     {!this.props.exercisesHistory ? '' : 
-                        <ExercisesHistoryContent
-                            metrics={metrics}
-                            exercisesHistory={this.props.exercisesHistory}
-                            hideName={true}
+                        <ExerciseHistoryDialogContent
+                            exercise={this.props.exercise}
+                            history={this.props.exercisesHistory}
                             filters={this.state.filters}
                             refreshing={this.state.api.isExecuting}
                         />

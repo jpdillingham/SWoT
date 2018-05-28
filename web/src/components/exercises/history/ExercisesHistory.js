@@ -19,7 +19,6 @@ import { EXERCISE_AVATAR_COLOR } from '../../../constants'
 import ExercisesHistoryContent from './ExercisesHistoryContent';
 
 const initialState = {
-    exercises: [],
     filters: {
         offset: 0,
         limit: 5,
@@ -69,7 +68,6 @@ const styles = {
 }
 
 class ExercisesHistory extends Component {
-    // todo: add a filter for exerciseId based on path
     constructor(props) {
         super(props);
 
@@ -84,8 +82,9 @@ class ExercisesHistory extends Component {
             filters: { 
                 ...initialState.filters, 
                 toTime: defaultToTime.getTime(), 
-                fromTime: defaultFromTime.getTime() 
-            } 
+                fromTime: defaultFromTime.getTime(),
+                exerciseId: this.props.match.params.id,
+            },
         }; 
     }
 
@@ -165,6 +164,9 @@ class ExercisesHistory extends Component {
                                                 primaryText={e.name} 
                                             />                    
                                         )}
+                                        {!this.state.filters.exerciseId || this.props.exercises.find(e => e.id === this.state.filters.exerciseId) ? '' :
+                                            <MenuItem key={-1} value={this.state.filters.exerciseId} primaryText={'Invalid Exercise Id'}/>
+                                        }
                                     </SelectField>
                                     {this.state.filters.exerciseId ? 
                                         <NavigationCancel style={styles.clearIcon} onClick={this.handleCustomFilterClearClick}/>

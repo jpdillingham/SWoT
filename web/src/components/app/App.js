@@ -94,6 +94,7 @@ class App extends Component {
                                 <Route exact path="/workouts/history" component={WorkoutsHistory}/>
                                 <Route path="/workouts/:id" component={Workout}/>
                                 <Route exact path="/exercises" component={Exercises}/>
+                                <Route exact path="/exercises/history" component={ExercisesHistory}/>
                                 <Route path="/exercises/history/:id" component={ExercisesHistory}/>
                                 <Route path="/routines" component={Routines}/>
                                 <Route path="/login" component={Login}/>
