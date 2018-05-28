@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment'
 
 import { red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
@@ -75,7 +76,7 @@ class Workout extends Component {
 
                 resolve(response);
             }, error => {
-                this.props.showSnackbar('Error updating Workout')
+                this.props.showSnackbar('Error updating Workout \'' + workout.routine.name + '\'.');
                 reject(error);
             })
         })
@@ -85,16 +86,16 @@ class Workout extends Component {
         return new Promise((resolve, reject) => {
             this.props.deleteWorkout(workout.id)
             .then(response => {
-                this.props.showSnackbar('Deleted Workout');
+                this.props.showSnackbar('Deleted Workout \'' + workout.routine.name + '\'.');
                 resolve(response);
             }, error => {
-                this.props.showSnackbar('Error deleting Workout');
+                this.props.showSnackbar('Error deleting Workout \'' + workout.routine.name + '\'.');
                 reject(error);
             })
         })
     }
 
-    handleWorkoutReset = (workout, notify = { show: false, caption: ''}) => {
+    handleWorkoutReset = (workout, notify = { show: true, caption: 'Reset Workout \'' + workout.routine.name + '\'.' }) => {
         delete workout.startTime;
         delete workout.endTime;
         delete workout.notes;
