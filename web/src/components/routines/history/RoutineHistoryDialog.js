@@ -99,7 +99,7 @@ class RoutineHistoryDialog extends Component {
                     {!this.props.workoutsHistory ? '' : 
                         <RoutineHistoryDialogContent
                             routine={this.props.routine}
-                            history={this.props.workoutsHistory.workouts}
+                            history={this.props.workoutsHistory}
                             filters={this.state.filters}
                             refreshing={this.state.api.isExecuting}
                         />

@@ -14,7 +14,8 @@ const styles = {
 
 class RoutineHistoryDialogContent extends Component {
     render() {
-        console.log(this.props)
+        let workouts = this.props.history.workouts || [];
+
         return (
             <Table>
                 <TableHeader
@@ -29,11 +30,11 @@ class RoutineHistoryDialogContent extends Component {
                 <TableBody
                     displayRowCheckbox={false}
                 >
-                    {!this.props.history || !this.props.history.length ? '' : this.props.history
+                    {!workouts || !workouts.length ? '' : workouts
                         .sort(sortByProp('endTime', this.props.filters.order))
                         .map((w, index) => 
                             <TableRow style={this.props.refreshing ? { backgroundColor: grey300 } : {}} key={index}>
-                                <TableRowColumn style={styles.date}>{moment(w.endTime).format('ddd M/DD')}</TableRowColumn>
+                                <TableRowColumn style={styles.date}>{moment(w.endTime).calendar()}</TableRowColumn>
                             </TableRow>
                         )}
                 </TableBody>
