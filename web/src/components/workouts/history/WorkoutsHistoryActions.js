@@ -9,10 +9,18 @@ const workoutsHistoryGet = (workouts, totalCount) => ({
     totalCount: totalCount,
 });
 
+const workoutsHistoryClear = () => ({
+    type: 'WORKOUTS_HISTORY_CLEAR'
+})
+
 const workoutHistoryGet = (workout) => ({
     type: 'WORKOUT_HISTORY_GET',
     workout: workout,
 });
+
+const workoutHistoryClear = () => ({
+    type: 'WORKOUT_HISTORY_CLEAR'
+})
 
 export const fetchWorkoutHistory = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
@@ -46,4 +54,18 @@ export const fetchWorkoutsHistory = (filters) => (dispatch, getState) => {
             reject('API error: ' + error);
         });    
     });
+}
+
+export const clearWorkoutsHistory = () => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        dispatch(workoutsHistoryClear());
+        resolve();
+    })
+}
+
+export const clearWorkoutHistory = () => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        dispatch(workoutHistoryClear());
+        resolve();
+    })
 }

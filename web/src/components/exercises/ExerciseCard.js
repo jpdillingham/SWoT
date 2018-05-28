@@ -107,7 +107,7 @@ class ExerciseCard extends Component {
         this.setState({ historyDialog: { open: true }});
     }
 
-    handleHistoryClose = () => {
+    handleHistoryDialogClose = () => {
         this.setState({ historyDialog: { open: false }});
     }
 
@@ -210,7 +210,7 @@ class ExerciseCard extends Component {
                 />
                 <ExerciseHistoryDialog
                     open={this.state.historyDialog.open}
-                    onClose={this.handleHistoryClose}
+                    onClose={this.handleHistoryDialogClose}
                     exercise={this.props.exercise}
                 />
             </div>
