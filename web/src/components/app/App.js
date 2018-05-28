@@ -32,6 +32,7 @@ import ConfirmRegistration from '../security/ConfirmRegistration'
 
 import { ensureSession } from '../security/SecurityActions'
 import { hideSnackbar } from './AppActions'
+import { ActionBuild, ActionTrendingUp } from 'material-ui/svg-icons';
 
 const styles = {
     content: {
@@ -80,14 +81,12 @@ class App extends Component {
                                     <MenuItem containerElement={<Link to='/workouts'/>} leftIcon={<ActionDashboard/>}>Dashboard</MenuItem>
                                     <MenuItem containerElement={<Link to="/workouts/calendar" />} leftIcon={<ActionEvent/>}>Calendar</MenuItem>
                                     <MenuItem containerElement={<Link to='/workouts/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
-                                    <Divider/>
                                     <Subheader>Routines</Subheader>
-                                    <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ActionAssignment />}>Routines</MenuItem>
-                                    <MenuItem containerElement={<Link to="/workouts/history" />} leftIcon={<ActionAssignmentTurnedIn />}>Workouts</MenuItem>
-                                    <Divider/>
+                                    <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
                                     <Subheader>Exercises</Subheader>
-                                    <MenuItem containerElement={<Link to='/exercises'/>} leftIcon={<ActionDescription/>}>Configuration</MenuItem>
+                                    <MenuItem containerElement={<Link to='/exercises'/>} leftIcon={<ActionTrendingUp/>}>Progress</MenuItem>
                                     <MenuItem containerElement={<Link to='/exercises/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
+                                    <MenuItem containerElement={<Link to='/exercises'/>} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
                                 </div>
                             }
                         >
