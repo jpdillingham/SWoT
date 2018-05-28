@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import {Card, CardHeader, CardText } from 'material-ui/Card';
 import { List } from 'material-ui/List';
@@ -15,9 +16,12 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import { ContentContentCopy, ActionDelete } from 'material-ui/svg-icons';
+import Divider from 'material-ui/Divider';
+import ActionHistory from 'material-ui/svg-icons/action/history';
 
 import ConfirmDialog from '../shared/ConfirmDialog'
 import RoutineDialog from './RoutineDialog'
+import RoutineHistoryDialog from './history/RoutineHistoryDialog';
 
 import { INTENTS } from '../../constants'
 
@@ -65,7 +69,10 @@ const initialState = {
         open: false,
         routine: {},
         intent: INTENTS.EDIT
-    } 
+    },
+    historyDialog: {
+        open: false,
+    },
 }
 
 class RoutineCard extends Component {
@@ -92,6 +99,14 @@ class RoutineCard extends Component {
                 intent: INTENTS.COPY
             }
         }))
+    }
+
+    handleHistoryClick = () => {
+        this.setState({ historyDialog: { open: true }});
+    }
+
+    handleHistoryDialogClose = () => {
+        this.setState({ historyDialog: { open: false }});
     }
 
     handleRoutineDialogClose = () => {
@@ -138,6 +153,8 @@ class RoutineCard extends Component {
                     >
                         <MenuItem primaryText="Duplicate" onClick={this.handleDuplicateClick} leftIcon={<ContentContentCopy/>}/>
                         <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
+                        <Divider/>
+                        <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
                     </IconMenu>
                     <CardText style={styles.text}>
                         <List>
@@ -162,9 +179,14 @@ class RoutineCard extends Component {
                     routine={this.state.routineDialog.routine}
                     handleClose={this.handleRoutineDialogClose}
                 />
+                <RoutineHistoryDialog
+                    open={this.state.historyDialog.open}
+                    onClose={this.handleHistoryDialogClose}
+                    routine={this.props.routine}
+                />
             </div>
         )
     }
 }
 
-export default RoutineCard
+export default withRouter(RoutineCard)
