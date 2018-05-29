@@ -30,12 +30,27 @@ const styles = {
     },
 }
 
+const initialState = {
+    api: {
+        isExecuting: false,
+        isErrored: false,
+    },
+}
+
 class Exercises extends Component {
-    state = {
-        api: {
-            isExecuting: false,
-            isErrored: false,
-        }
+    state = initialState;
+
+    componentWillMount() {
+        this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
+            this.props.fetchExercises()
+            .then(response => {
+                this.setState({ api: { isExecuting: false, isErrored: false }})
+            }, error => {
+                console.error(error.response.data);
+                this.props.showSnackbar('Error fetching Exercises. Review the console (F12) for details.');
+                this.setState({ api: { isExecuting: false, isErrored: true }})
+            })
+        })
     }
 
     handleExerciseDelete = (exercise) => {
@@ -45,24 +60,11 @@ class Exercises extends Component {
                 this.props.showSnackbar('Deleted Exercise \'' + exercise.name + '\'.')
                 resolve(response);
             }, error => {
-                let message = 'Error deleting Exercise'
-                message += error.response ? ': ' + JSON.stringify(error.exercise.data).replace(/"/g, "") : '.'
-
-                this.props.showSnackbar(message);
+                console.error(error.response.data);
+                this.props.showSnackbar('Error deleting Exercise \'' + exercise.name + '\'. Review the console (F12) for details.');
                 reject(error);
             })
         });
-    }
-
-    componentWillMount() {
-        this.setState({ api: { ...this.state.api, isExecuting: true }})
-
-        this.props.fetchExercises()
-        .then(response => {
-            this.setState({ api: { isExecuting: false, isErrored: false }})
-        }, error => {
-            this.setState({ api: { isExecuting: false, isErrored: true }})
-        })
     }
 
     render() {
