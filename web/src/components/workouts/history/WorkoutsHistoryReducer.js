@@ -1,18 +1,18 @@
-const initialState = []
+const initialState = [];
 
 const WorkoutsHistoryReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'WORKOUTS_HISTORY_GET':
-            return { workouts: action.workouts, totalCount: action.totalCount }
+            return { workouts: action.workouts, totalCount: action.totalCount };
         case 'WORKOUTS_HISTORY_CLEAR':
-            return { workouts: [], totalCount: 0 }
+            return { workouts: [], totalCount: 0 };
         case 'WORKOUT_HISTORY_GET':
-            return { workout: action.workout }
+            return { workout: action.workout };
         case 'WORKOUT_HISTORY_CLEAR':
-            return { workout: {} }
+            return { workout: {} };
         default:
             return state;
     }
 }
 
-export default WorkoutsHistoryReducer
+export default WorkoutsHistoryReducer;
