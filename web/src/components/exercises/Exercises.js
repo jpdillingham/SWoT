@@ -46,8 +46,7 @@ class Exercises extends Component {
             .then(response => {
                 this.setState({ api: { isExecuting: false, isErrored: false }})
             }, error => {
-                console.error(error.response.data);
-                this.props.showSnackbar('Error fetching Exercises. Review the console (F12) for details.');
+                this.props.showSnackbar('Error fetching Exercises: ' + error);
                 this.setState({ api: { isExecuting: false, isErrored: true }})
             })
         })
@@ -60,8 +59,7 @@ class Exercises extends Component {
                 this.props.showSnackbar('Deleted Exercise \'' + exercise.name + '\'.')
                 resolve(response);
             }, error => {
-                console.error(error.response.data);
-                this.props.showSnackbar('Error deleting Exercise \'' + exercise.name + '\'. Review the console (F12) for details.');
+                this.props.showSnackbar('Error deleting Exercise \'' + exercise.name + '\': ' + error);
                 reject(error);
             })
         });
