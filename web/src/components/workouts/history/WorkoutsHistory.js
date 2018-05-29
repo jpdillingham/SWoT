@@ -163,9 +163,9 @@ class WorkoutsHistory extends Component {
                             <List>
                                 {this.props.workoutsHistory.workouts
                                 .sort(sortByProp('endTime', this.state.filters.order))
-                                .map(w => 
+                                .map((w, index) => 
                                     <ListItem
-                                        key={w.id}
+                                        key={index}
                                         primaryText={w.routine.name}
                                         secondaryText={'Completed ' + moment(w.endTime).calendar()}
                                         leftIcon={<ActionAssignmentTurnedIn/>}
