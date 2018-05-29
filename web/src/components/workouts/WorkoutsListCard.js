@@ -70,9 +70,9 @@ class WorkoutsListCard extends Component {
                         <List>
                             {this.props.workouts && this.props.workouts.length > 0 ? this.props.workouts
                                 .sort(this.sort)
-                                .map(w => 
+                                .map((w, index) => 
                                     <ListItem
-                                        key={w.id}
+                                        key={index}
                                         primaryText={w.routine.name}
                                         secondaryText={this.props.timePrefix + ' ' + moment(w[this.props.timeField]).calendar()}
                                         leftIcon={<ActionAssignmentTurnedIn/>}
