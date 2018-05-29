@@ -8,6 +8,7 @@ import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import Spinner from '../shared/Spinner'
 
 import { fetchRoutines } from '../routines/RoutinesActions'
+import { showSnackbar } from '../app/AppActions'
 
 const styles = {
     icon: {
@@ -41,6 +42,7 @@ class ExerciseRoutineReferenceList extends Component {
         .then(() => {
             this.setState({ api: { ...this.state.api, isExecuting: false }})
         }, error => {
+            this.props.showSnackbar('Error fetching Routines: ' + error);
             this.setState({ api: { isExecuting: false, isErrored: true }})
         })
     }
@@ -80,6 +82,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     fetchRoutines,
+    showSnackbar,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExerciseRoutineReferenceList)
