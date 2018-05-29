@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { fetchRoutines } from '../routines/RoutinesActions'
 import { addWorkout } from '../workouts/WorkoutsActions'
@@ -87,7 +88,7 @@ class WorkoutDialog extends Component {
                 }, () => 
                     this.props.addWorkout(this.state.workout)
                     .then(response => {
-                        this.handleApiSuccess('Added Workout \'' + response.data.id + '\'.')
+                        this.handleApiSuccess('Scheduled Workout \'' + response.data.routine.name + '\' for ' + moment(response.data.scheduledTime).calendar() + '.')
                     }, error => {
                         this.handleApiError(error);
                     })
@@ -159,7 +160,7 @@ class WorkoutDialog extends Component {
                 contentStyle={{ ...styles.dialogContent, refreshStyle }}
                 titleStyle={refreshStyle}
                 actionsContainerStyle={refreshStyle}
-                title={'Add Workout'} 
+                title={'Schedule Workout'} 
                 autoScrollBodyContent={true}
                 actions={
                     <div>

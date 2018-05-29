@@ -35,6 +35,8 @@ const styles = {
 class Workout extends Component {
     state = initialState;
 
+    // todo: refactor this.  display the workout stepper for an active workout, or a history report
+    // for an inactive one.  it doesn't look like it is fetching old workouts currently.
     componentWillMount = () => {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
         
@@ -65,36 +67,9 @@ class Workout extends Component {
         this.setState({ workout: nextProps.workouts.find(w => w.id === this.props.match.params.id) })
     }
 
-    handleWorkoutChange = (workout, notify = { show: false, caption: ''}) => {
-        return new Promise((resolve, reject) => {
-            this.props.updateWorkout(workout)
-            .then(response => {
-                if (notify.show) {
-                    this.props.showSnackbar(notify.caption);
-                }
+    handleWorkoutReset = () => {
+        let workout = this.state.workout;
 
-                resolve(response);
-            }, error => {
-                this.props.showSnackbar('Error updating Workout')
-                reject(error);
-            })
-        })
-    }
-
-    handleWorkoutDelete = (workout) => {
-        return new Promise((resolve, reject) => {
-            this.props.deleteWorkout(workout.id)
-            .then(response => {
-                this.props.showSnackbar('Deleted Workout');
-                resolve(response);
-            }, error => {
-                this.props.showSnackbar('Error deleting Workout');
-                reject(error);
-            })
-        })
-    }
-
-    handleWorkoutReset = (workout, notify = { show: false, caption: ''}) => {
         delete workout.startTime;
         delete workout.endTime;
         delete workout.notes;
@@ -109,15 +84,48 @@ class Workout extends Component {
             });
         });
 
-        return this.handleWorkoutChange(workout, notify);
+        return this.handleWorkoutChange(workout, 'Reset Workout \'' + workout.routine.name + '\'.');
     }
 
-    handleWorkoutExerciseChange = (workout, exercise, notify = { show: false, caption: ''}) => {
+    handleWorkoutExerciseChange = (exercise) => {
+        let workout = this.state.workout; 
+
         workout.routine.exercises = workout.routine.exercises.map(e => {
             return e.sequence === exercise.sequence && e.id === exercise.id ? exercise : e;
         });
 
-        return this.handleWorkoutChange(workout, notify);
+        return this.handleWorkoutChange(workout);
+    }
+
+    handleWorkoutChange = (workout, notify = undefined) => {
+        return new Promise((resolve, reject) => {
+            this.props.updateWorkout(workout)
+            .then(response => {
+                if (notify) {
+                    this.props.showSnackbar(notify);
+                }
+
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error updating Workout \'' + workout.routine.name + '\'.');
+                reject(error);
+            })
+        })
+    }
+
+    handleWorkoutDelete = () => {
+        let workout = this.state.workout;
+
+        return new Promise((resolve, reject) => {
+            this.props.deleteWorkout(workout.id)
+            .then(response => {
+                this.props.showSnackbar('Deleted Workout \'' + workout.routine.name + '\'.');
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error deleting Workout \'' + workout.routine.name + '\'.');
+                reject(error);
+            })
+        })
     }
 
     render() {
@@ -131,9 +139,9 @@ class Workout extends Component {
                             <WorkoutCard
                                 workout={workout}
                                 onWorkoutChange={this.handleWorkoutChange}
-                                onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(workout, exercise)}
-                                onDelete={() => this.handleWorkoutDelete(workout)}
-                                onReset={() => this.handleWorkoutReset(workout)}
+                                onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(exercise)}
+                                onDelete={this.handleWorkoutDelete}
+                                onReset={this.handleWorkoutReset}
                             /> :
                             <WorkoutReportCard workout={workout}/>
         )
