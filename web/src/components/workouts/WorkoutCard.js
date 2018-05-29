@@ -66,6 +66,9 @@ const initialState = {
     resetDialog: {
         open: false,
     },
+    completeDialog: {
+        open: false,
+    },
     workout: {
         notes: '',
     },
@@ -78,7 +81,7 @@ const initialState = {
 class WorkoutCard extends Component {
     state = initialState;
 
-    handleStartStopClick = () => {
+    handleStartCompleteClick = (event, confirmComplete = false) => {
         let workout = { 
             ...this.props.workout,
             notes: this.state.workout.notes
@@ -91,8 +94,14 @@ class WorkoutCard extends Component {
             notification = 'Started'
         }
         else if (workout.endTime === undefined) {
-            workout.endTime = new Date().getTime();
-            notification = 'Stopped'
+            if (!confirmComplete) {
+                this.setState({ completeDialog: { open: true }});
+                return;
+            } 
+            else {
+                workout.endTime = new Date().getTime();
+                notification = 'Stopped'
+            }
         }
 
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
@@ -105,6 +114,17 @@ class WorkoutCard extends Component {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
             })
         })
+    }
+
+    handleCompleteDialogClose = () => {
+        this.setState({ completeDialog: { open: false }});
+    }
+
+    handleCompleteConfirm = () => {
+        return new Promise((resolve, reject) => {
+            this.handleStartCompleteClick(null, true);
+            resolve(true);
+        });
     }
 
     handleNotesChange = (event, value) => {
@@ -153,7 +173,7 @@ class WorkoutCard extends Component {
                             zDepth={2} 
                             style={styles.fab}
                             mini={true}
-                            onClick={this.handleStartStopClick}
+                            onClick={this.handleStartCompleteClick}
                         >
                             {this.props.workout.startTime === undefined ? <AvPlayArrow/> : <AvStop/> }
                         </FloatingActionButton>
@@ -187,6 +207,16 @@ class WorkoutCard extends Component {
                         {this.state.api.isExecuting ? <Spinner/> : ''}
                     </CardText>
                 </Card>
+                <ConfirmDialog 
+                    title={'Complete Workout'}
+                    buttonCaption={'Complete'}
+                    onConfirm={this.handleCompleteConfirm}
+                    onClose={this.handleCompleteDialogClose}
+                    open={this.state.completeDialog.open} 
+                >
+                    <p>Are you sure you want to complete Workout '{this.props.workout.routine.name}'?</p>
+                    <p>Once completed, the Workout can't be restarted.</p>
+                </ConfirmDialog>
                 <ConfirmDialog 
                     title={'Delete Workout'}
                     buttonCaption={'Delete'}
