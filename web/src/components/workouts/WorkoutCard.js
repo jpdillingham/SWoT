@@ -91,7 +91,7 @@ class WorkoutCard extends Component {
 
         if (workout.startTime === undefined) {
             workout.startTime = new Date().getTime();
-            notification = 'Started'
+            notification = 'Started Workout \'' + workout.routine.name + '\'.';
         }
         else if (workout.endTime === undefined) {
             if (!confirmComplete) {
@@ -100,7 +100,7 @@ class WorkoutCard extends Component {
             } 
             else {
                 workout.endTime = new Date().getTime();
-                notification = 'Stopped'
+                notification = 'Completed Workout \'' + workout.routine.name + '\'.';
             }
         }
 
