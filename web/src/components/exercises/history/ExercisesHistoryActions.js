@@ -29,7 +29,7 @@ export const fetchExercisesHistory = (filters) => (dispatch, getState) => {
             dispatch(exercisesHistoryGet(response.data, totalCount));
             resolve(response);
         }, error => {
-            reject('API error: ' + error);
+            reject(error.response.message);
         });    
     });
 }
