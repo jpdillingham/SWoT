@@ -13,7 +13,6 @@ import WorkoutCard from './WorkoutCard'
 import WorkoutReportCard from './WorkoutReportCard'
 
 const initialState = {
-    workout: undefined,
     stepIndex: 0,
     api: {
         isExecuting: false,
@@ -35,37 +34,20 @@ const styles = {
 class Workout extends Component {
     state = initialState;
 
-    // todo: refactor this.  display the workout stepper for an active workout, or a history report
-    // for an inactive one.  it doesn't look like it is fetching old workouts currently.
     componentWillMount = () => {
         this.fetchWorkout();
     }
 
     componentWillReceiveProps = (nextProps) => {
-        let workout = nextProps.workouts.find(w => w.id === this.props.match.params.id);
-
-        if (workout) {
-            console.log('found workout in workouts prop')
-            this.setState({ workout: workout })
-        }
-        else {
-            console.log('workout not found in workouts prop')
-            console.log(nextProps);
-            workout = nextProps.workoutsHistory ? nextProps.workoutsHistory.workout : undefined;
-
-            if (workout) {
-                console.log('workout found in history prop')
-                this.setState({ workout: workout })
-            }
-            else {
-                console.log('workout not found in history prop, fetching')
-                this.fetchWorkout();
-            }
+        if (!this.getWorkout()) {
+            this.fetchWorkout();
         }
     }
 
     fetchWorkout = () => {
-        this.setState({ api: { ...this.state.api, isExecuting: true }})
+        this.setState({ 
+            api: { ...this.state.api, isExecuting: true }}
+        )
 
         this.props.fetchWorkouts()
         .then(response => {
@@ -155,8 +137,15 @@ class Workout extends Component {
         })
     }
 
+    getWorkout = () => {
+        let workout = this.props.workouts.find(w => w.id === this.props.match.params.id);
+        workout = workout ? workout : this.props.workoutsHistory ? this.props.workoutsHistory.workout : undefined;
+
+        return workout;
+    }
+
     render() {
-        let workout = this.state.workout;
+        let workout = this.getWorkout();
 
         return (
             this.state.api.isExecuting ? <Spinner size={48}/> : 
