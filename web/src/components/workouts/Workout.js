@@ -38,8 +38,35 @@ class Workout extends Component {
     // todo: refactor this.  display the workout stepper for an active workout, or a history report
     // for an inactive one.  it doesn't look like it is fetching old workouts currently.
     componentWillMount = () => {
+        this.fetchWorkout();
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        let workout = nextProps.workouts.find(w => w.id === this.props.match.params.id);
+
+        if (workout) {
+            console.log('found workout in workouts prop')
+            this.setState({ workout: workout })
+        }
+        else {
+            console.log('workout not found in workouts prop')
+            console.log(nextProps);
+            workout = nextProps.workoutsHistory ? nextProps.workoutsHistory.workout : undefined;
+
+            if (workout) {
+                console.log('workout found in history prop')
+                this.setState({ workout: workout })
+            }
+            else {
+                console.log('workout not found in history prop, fetching')
+                this.fetchWorkout();
+            }
+        }
+    }
+
+    fetchWorkout = () => {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
-        
+
         this.props.fetchWorkouts()
         .then(response => {
             this.setState({ 
@@ -65,10 +92,6 @@ class Workout extends Component {
             this.props.showSnackbar('Error fetching Workouts: ' + error);
             this.setState({ api: { isExecuting: false, isErrored: true }});
         });
-    }
-
-    componentWillReceiveProps = (nextProps) => {
-        this.setState({ workout: nextProps.workouts.find(w => w.id === this.props.match.params.id) })
     }
 
     handleWorkoutReset = () => {
@@ -153,7 +176,8 @@ class Workout extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    workouts: state.workouts
+    workouts: state.workouts,
+    workoutsHistory: state.workoutsHistory,
 })
 
 const mapDispatchToProps = {
