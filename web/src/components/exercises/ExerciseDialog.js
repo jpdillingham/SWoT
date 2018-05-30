@@ -167,17 +167,17 @@ class ExerciseDialog extends Component {
                 if (this.props.intent === INTENTS.EDIT) {
                     this.props.updateExercise(this.state.exercise)
                     .then((response) => {
-                        this.handleApiSuccess('Updated Exercise \'' + response.data.name + '\'.')
+                        this.handleApiSuccess('Updated Exercise \'' + response.data.name + '\'.');
                     }, (error) => {
-                        this.handleApiError(error);
+                        this.handleApiError('Error updating Exercise \'' + this.state.exercise.name + '\': ' + error);
                     })
                 }
                 else {
                     this.props.addExercise(this.state.exercise)
                     .then((response) => {
-                        this.handleApiSuccess('Added Exercise \'' + response.data.name + '\'.')
+                        this.handleApiSuccess('Added Exercise \'' + response.data.name + '\'.');
                     }, (error) => {
-                        this.handleApiError(error);
+                        this.handleApiError('Error adding Exercise \'' + this.state.exercise.name + '\': ' + error);
                     })
                 }
             }
@@ -190,16 +190,7 @@ class ExerciseDialog extends Component {
         this.props.handleClose();
     }
 
-    handleApiError = (error) => {
-        let message = 'Error saving Exercise: '
-
-        if (error.response) {
-            message += JSON.stringify(error.response.data).replace(/"/g, "")
-        }
-        else {
-            message += error
-        }
-
+    handleApiError = (message) => {
         this.setState({ api: { isExecuting: false, isErrored: true }})
         this.props.showSnackbar(message);
     }

@@ -57,9 +57,9 @@ export const ensureSession = () => (dispatch, getState) => {
             if (!session.isValid()) {
                 dispatch(refreshSession()).then((result) => {
                     resolve(result);
-                }, (err) => {
+                }, error => {
                     dispatch(logoutAction());
-                    reject(err);
+                    reject(error.response.message);
                 })
             }
             else {

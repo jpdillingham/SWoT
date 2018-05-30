@@ -51,16 +51,20 @@ class Workout extends Component {
                         this.setState({
                             workout: response.data,
                             api: { isExecuting: false, isErrored: false }
-                        })
+                        });
+                    }, error => {
+                        this.props.showSnackbar('Error fetching Workout history: ' + error);
+                        this.setState({ api: { isExecuting: false, isErrored: true }});
                     })
                 }
                 else {
-                    this.setState({ api: { isExecuting: false, isErrored: false }})
+                    this.setState({ api: { isExecuting: false, isErrored: false }});
                 }
             })
         }, error => {
-            this.setState({ api: { isExecuting: false, isErrored: true }})
-        })
+            this.props.showSnackbar('Error fetching Workouts: ' + error);
+            this.setState({ api: { isExecuting: false, isErrored: true }});
+        });
     }
 
     componentWillReceiveProps = (nextProps) => {

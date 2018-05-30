@@ -90,7 +90,7 @@ class WorkoutDialog extends Component {
                     .then(response => {
                         this.handleApiSuccess('Scheduled Workout \'' + response.data.routine.name + '\' for ' + moment(response.data.scheduledTime).calendar() + '.')
                     }, error => {
-                        this.handleApiError(error);
+                        this.handleApiError('Error scheduling Workout: ' + error);
                     })
                 )
             }
@@ -110,16 +110,7 @@ class WorkoutDialog extends Component {
         this.props.handleClose();
     }
 
-    handleApiError = (error) => {
-        let message = 'Error saving Workout: '
-
-        if (error.response) {
-            message += JSON.stringify(error.response.data).replace(/"/g, "")
-        }
-        else {
-            message += error
-        }
-
+    handleApiError = (message) => {
         this.setState({ api: { isExecuting: false, isErrored: true }})
         this.props.showSnackbar(message);
     }

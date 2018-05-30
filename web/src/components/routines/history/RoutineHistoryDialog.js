@@ -9,6 +9,7 @@ import { grey300 } from 'material-ui/styles/colors'
 import RoutineHistoryDialogContent from './RoutineHistoryDialogContent'
 import { fetchWorkoutsHistory, clearWorkoutsHistory } from '../../workouts/history/WorkoutsHistoryActions'
 import Spinner from '../../shared/Spinner'
+import { showSnackbar } from '../../app/AppActions'
 
 const styles = {
     dialogContent: {
@@ -49,7 +50,8 @@ class RoutineHistoryDialog extends Component {
             .then(response => {
                 this.setState({ api: { isExecuting: false, isErrored: false }})
             }, error => {
-                this.setState({ api: { isExecuting: false, isErrored: true }})
+                this.props.showSnackbar('Error fetching Workout history: ' + error);
+                this.setState({ api: { isExecuting: false, isErrored: true }});
             })
         })
     }
@@ -117,7 +119,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     fetchWorkoutsHistory,
-    clearWorkoutsHistory
+    clearWorkoutsHistory,
+    showSnackbar,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RoutineHistoryDialog))

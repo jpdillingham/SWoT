@@ -39,7 +39,7 @@ export const fetchWorkoutsHistory = (filters) => (dispatch, getState) => {
             dispatch(workoutsHistoryGet(response.data, totalCount));
             resolve(response);
         }, error => {
-            reject('API error: ' + error);
+            reject(error.response.message);
         });    
     });
 }
@@ -58,7 +58,7 @@ export const fetchWorkoutHistory = (id) => (dispatch, getState) => {
             dispatch(workoutHistoryGet(response.data));
             resolve(response);        
         }, error => {
-            reject(error);
+            reject(error.response.message);
         });
     });
 }
