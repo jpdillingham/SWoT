@@ -4,8 +4,8 @@ class WorkoutReportCard extends Component {
     render() {
         return (
             <ul>
-                {this.props.workout.routine.exercises.map(e => 
-                    <li key={e.id}>
+                {this.props.workout.routine.exercises.map((e, index) => 
+                    <li key={index}>
                         {e.name}
                         <ul>
                             {e.metrics.map((m, index) => 
