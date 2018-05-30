@@ -167,9 +167,9 @@ class ExerciseDialog extends Component {
                 if (this.props.intent === INTENTS.EDIT) {
                     this.props.updateExercise(this.state.exercise)
                     .then((response) => {
-                        this.handleApiSuccess('Updated Exercise \'' + response.data.name + '\.');
+                        this.handleApiSuccess('Updated Exercise \'' + response.data.name + '\'.');
                     }, (error) => {
-                        this.handleApiError('Error updating Exercise \'' + this.state.exercise.name + '\: ' + error);
+                        this.handleApiError('Error updating Exercise \'' + this.state.exercise.name + '\': ' + error);
                     })
                 }
                 else {
@@ -177,7 +177,7 @@ class ExerciseDialog extends Component {
                     .then((response) => {
                         this.handleApiSuccess('Added Exercise \'' + response.data.name + '\'.');
                     }, (error) => {
-                        this.handleApiError('Error adding Exercise \'' + this.state.exercise.name + '\: ' + error);
+                        this.handleApiError('Error adding Exercise \'' + this.state.exercise.name + '\': ' + error);
                     })
                 }
             }

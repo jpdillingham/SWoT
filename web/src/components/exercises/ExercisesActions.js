@@ -1,5 +1,5 @@
 import api from '../../api';
-import { API_ROOT, FILTER_SORT_ORDER_OPTIONS } from '../../constants';
+import { API_ROOT } from '../../constants';
 
 const endpoint = API_ROOT + '/exercises';
 
