@@ -13,6 +13,7 @@ import Spinner from '../../shared/Spinner'
 
 import { fetchExercisesHistory } from './ExercisesHistoryActions'
 import { fetchExercises } from '../ExercisesActions'
+import { showSnackbar } from '../../app/AppActions'
 
 import History from '../../shared/history/History';
 import { EXERCISE_AVATAR_COLOR } from '../../../constants'
@@ -122,6 +123,7 @@ class ExercisesHistory extends Component {
             .then(response => {
                 this.setState({ [api]: { isExecuting: false, isErrored: false }})
             }, error => {
+                this.props.showSnackbar('Error fetching Exercise history: ' + error);
                 this.setState({ [api]: { isExecuting: false, isErrored: true }})
             })
         })
@@ -193,7 +195,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     fetchExercisesHistory,
-    fetchExercises
+    fetchExercises,
+    showSnackbar,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExercisesHistory)

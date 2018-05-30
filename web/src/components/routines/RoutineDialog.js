@@ -95,7 +95,7 @@ class RoutineDialog extends Component {
                     .then((response) => {
                         this.handleApiSuccess('Updated Routine \'' + response.data.name + '\'.')
                     }, (error) => {
-                        this.handleApiError(error);
+                        this.handleApiError('Error updating Routine \'' + routine.name + ': ' + error);
                     })
                 }
                 else {
@@ -103,7 +103,7 @@ class RoutineDialog extends Component {
                     .then((response) => {
                         this.handleApiSuccess('Added Routine \'' + response.data.name + '\'.')
                     }, (error) => {
-                        this.handleApiError(error);
+                        this.handleApiError('Error adding Routine \'' + routine.name + ': ' + error);
                     })
                 }
             }
@@ -117,15 +117,6 @@ class RoutineDialog extends Component {
     }
 
     handleApiError = (error) => {
-        let message = 'Error saving Routine: '
-
-        if (error.response) {
-            message += JSON.stringify(error.response.data).replace(/"/g, "")
-        }
-        else {
-            message += error
-        }
-
         this.setState({ api: { isExecuting: false, isErrored: true }})
         this.props.showSnackbar(message);
     }

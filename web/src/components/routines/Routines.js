@@ -38,22 +38,6 @@ class Routines extends Component {
         }
     }
 
-    handleRoutineDelete = (routine) => {
-        return new Promise((resolve, reject) => {
-            this.props.deleteRoutine(routine.id)
-            .then(response => {
-                this.props.showSnackbar('Deleted Routine \'' + routine.name + '\'.')
-                resolve(response);
-            }, error => {
-                let message = 'Error deleting Routine'
-                message += error.response ? ': ' + JSON.stringify(error.routine.data).replace(/"/g, "") : '.'
-
-                this.props.showSnackbar(message);
-                reject(error);
-            })
-        })
-    }
-
     componentWillMount() {
         this.setState({ api: { ...this.state.api, isExecuting: true }})
 
@@ -61,8 +45,22 @@ class Routines extends Component {
             .then(response => {
                 this.setState({ api: { isExecuting: false, isErrored: false }})
             }, error => {
+                this.props.showSnackbar('Error fetching Routines: ' + error);
                 this.setState({ api: { isExecuting: false, isErrored: true }})
             })
+    }
+
+    handleRoutineDelete = (routine) => {
+        return new Promise((resolve, reject) => {
+            this.props.deleteRoutine(routine.id)
+            .then(response => {
+                this.props.showSnackbar('Deleted Routine \'' + routine.name + '\'.')
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error deleting Routine \'' + routine.name + '\': ' + error);
+                reject(error);
+            })
+        })
     }
 
     render() {

@@ -7,6 +7,7 @@ import { WORKOUT_AVATAR_COLOR } from '../../../constants';
 
 import { fetchWorkoutsHistory } from '../../workouts/history/WorkoutsHistoryActions';
 import { fetchRoutines } from '../../routines/RoutinesActions';
+import { showSnackbar } from '../../app/AppActions';
 
 import Spinner from '../../shared/Spinner';
 import History from '../../shared/history/History';
@@ -117,7 +118,8 @@ class WorkoutsHistory extends Component {
             .then(response => {
                 this.setState({ [api]: { isExecuting: false, isErrored: false }})
             }, error => {
-                this.setState({ [api]: { isExecuting: false, isErrored: true }})
+                this.props.showSnackbar('Error updating Workout history: ' + error);
+                this.setState({ [api]: { isExecuting: false, isErrored: true }});
             })
         })
     }
@@ -189,6 +191,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     fetchWorkoutsHistory,
     fetchRoutines,
+    showSnackbar,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutsHistory)

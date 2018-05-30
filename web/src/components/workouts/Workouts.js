@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchWorkouts } from './WorkoutsActions'
 import { fetchWorkoutsHistory } from './history/WorkoutsHistoryActions'
+import { showSnackbar } from '../app/AppActions'
 
 import { red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
@@ -44,7 +45,8 @@ class Workouts extends Component {
         ]).then(responses => {
             this.setState({ api: { isExecuting: false, isErrored: false }})
         }, error => {
-            this.setState({ api: { isExecuting: false, isErrored: true }})
+            this.props.showSnackbar('Error fetching Workout data: ' + error);
+            this.setState({ api: { isExecuting: false, isErrored: true }});
         })
     }
 
@@ -113,7 +115,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     fetchWorkouts,
-    fetchWorkoutsHistory
+    fetchWorkoutsHistory,
+    showSnackbar,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workouts)
