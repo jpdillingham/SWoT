@@ -110,7 +110,7 @@ class WorkoutDialog extends Component {
         this.props.handleClose();
     }
 
-    handleApiError = (error) => {
+    handleApiError = (message) => {
         this.setState({ api: { isExecuting: false, isErrored: true }})
         this.props.showSnackbar(message);
     }
