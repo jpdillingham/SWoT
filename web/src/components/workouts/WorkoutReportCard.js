@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
-import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ActionSpeakerNotes } from 'material-ui/svg-icons';
+import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ActionSpeakerNotes, NavigationExpandLess, NavigationExpandMore } from 'material-ui/svg-icons';
 import { black } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
@@ -35,9 +35,24 @@ const styles = {
         right: 0,
         top: 10,
     },
+    notes: {
+        marginLeft: 20
+    },
+}
+
+const initialState = {
+    notes: {
+        expanded: true,
+    },
 }
 
 class WorkoutReportCard extends Component {
+    state = initialState;
+
+    handleNotesToggle = () => {
+        this.setState({ notes: { expanded: !this.state.notes.expanded }});
+    }
+
     render() {
         return (
             <div>
@@ -73,15 +88,19 @@ class WorkoutReportCard extends Component {
                     )}
                     <List>
                         <LeftRightListItem
-                            leftIcon={<ActionSpeakerNotes color={black}/>}
-                            leftText={'Notes'}
-                            rightText={this.props.workout.notes}
-                            />
-                        <LeftRightListItem
                             leftIcon={<ActionWatchLater color={black}/>}
                             leftText={'Duration'}
                             rightText={getElapsedTime(this.props.workout.startTime, this.props.workout.endTime)}
                         />
+                        <LeftRightListItem
+                            leftIcon={<ActionSpeakerNotes color={black}/>}
+                            leftText={'Notes'}
+                            rightIcon={this.state.notes.expanded ? <NavigationExpandLess color={black}/> : <NavigationExpandMore color={black}/>}
+                            onClick={this.handleNotesToggle}
+                        />
+                        {!this.props.workout.notes || !this.state.notes.expanded ? '' : 
+                            <p style={styles.notes}>{this.props.workout.notes}</p>
+                        }
                     </List>
                 </CardText>
             </Card>

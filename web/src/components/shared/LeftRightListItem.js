@@ -11,9 +11,13 @@ const styles = {
 
 class LeftRightListItem extends Component {
     render() {
+        let props = { ...this.props }
+        delete props.rightText
+        delete props.leftText
+
         return (
             <ListItem
-                leftIcon={this.props.leftIcon} 
+                {...props}
                 primaryText={
                     <span>
                         <span>{this.props.leftText}</span>
