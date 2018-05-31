@@ -32,9 +32,9 @@ const styles = {
         width: CARD_WIDTH - 100,
         height: '100%',
         position: 'relative',
-        marginBottom: 5,
+        marginBottom: 20,
         marginLeft: 5,
-        marginTop: 20,
+        marginTop: 5,
     },
     fab: {
         margin: 0,
