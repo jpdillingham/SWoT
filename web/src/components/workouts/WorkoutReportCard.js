@@ -47,7 +47,7 @@ class WorkoutReportCard extends Component {
                     style={styles.cardHeader}
                     title={this.props.workout.routine.name}
                     subtitle={
-                        'Completed ' + moment(this.props.workout.endTime).calendar() + ' (' + getElapsedTime(this.props.workout.startTime, this.props.workout.endTime) + ')'
+                        'Completed ' + moment(this.props.workout.endTime).calendar()
                     }
                     avatar={
                         <Avatar 
