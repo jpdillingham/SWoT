@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Avatar from 'material-ui/Avatar';
-import { ActionAssessment, ActionWatchLater, ActionSpeakerNotes } from 'material-ui/svg-icons';
+import { ActionAssessment, ActionWatchLater, ActionSpeakerNotes, NavigationExpandLess, NavigationExpandMore } from 'material-ui/svg-icons';
 import { black } from 'material-ui/styles/colors';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import LeftRightListItem from '../shared/LeftRightListItem'
@@ -29,12 +29,27 @@ const styles = {
     },
     link: {
         cursor: 'pointer',
+    },
+    notes: {
+        marginLeft: 20
     }
 }
 
+const initialState = {
+    notes: {
+        expanded: true,
+    },
+}
+
 class ExerciseReportCard extends Component {
+    state = initialState;
+
     getMetricDisplayName = (metric) => {
         return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
+    }
+
+    handleNotesToggle = () => {
+        this.setState({ notes: { expanded: !this.state.notes.expanded }});
     }
 
     render() {
@@ -71,28 +86,32 @@ class ExerciseReportCard extends Component {
                     </CardHeader>
                     <CardText style={styles.text}>
                         <List>
-                            {this.props.exercise.metrics ? 
+                            {!this.props.exercise.metrics ? '' :
                                 this.props.exercise.metrics.map((m, index) =>    
-                                <LeftRightListItem
-                                key={index}
-                                leftIcon={<ActionAssessment color={ black }/>} 
-                                leftText={this.getMetricDisplayName(m)}
-                                rightText={m.value ? m.value : '-'}
-                                />
-                            ) : ''
-                        }
-                            {this.props.exercise.notes ? 
-                                <LeftRightListItem 
-                                leftIcon={<ActionSpeakerNotes color={ black }/>} 
-                                leftText={'Notes'}
-                                rightText={this.props.exercise.notes}
-                                />: ''
+                                    <LeftRightListItem
+                                        key={index}
+                                        leftIcon={<ActionAssessment color={ black }/>} 
+                                        leftText={this.getMetricDisplayName(m)}
+                                        rightText={m.value ? m.value : '-'}
+                                    />
+                                )
                             }
                             <LeftRightListItem
                                 leftIcon={<ActionWatchLater color={ black }/>} 
                                 leftText={'Duration'}
                                 rightText={this.props.exercise.startTime ? getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
                             />
+                            {!this.props.exercise.notes ? '' :
+                                <div>
+                                    <LeftRightListItem 
+                                        leftIcon={<ActionSpeakerNotes color={ black }/>} 
+                                        leftText={'Notes'}
+                                        rightIcon={this.state.notes.expanded ? <NavigationExpandLess color={black}/> : <NavigationExpandMore color={black}/>}
+                                        onClick={this.handleNotesToggle}
+                                    />
+                                    {this.state.notes.expanded ? <p style={styles.notes}>{this.props.exercise.notes}</p> : ''}
+                                </div>
+                            }
                         </List>
                     </CardText>
                 </Card>
