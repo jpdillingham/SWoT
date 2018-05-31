@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import ActionHistory from 'material-ui/svg-icons/action/history';
+import ActionAssessment from 'material-ui/svg-icons/action/assessment'
 import Avatar from 'material-ui/Avatar';
 import { black } from 'material-ui/styles/colors';
 import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
@@ -8,6 +9,7 @@ import FlatButton from 'material-ui/FlatButton/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
 import { grey300 } from 'material-ui/styles/colors';
+import LeftRightListItem from '../shared/LeftRightListItem'
 
 import Spinner from '../shared/Spinner';
 
@@ -18,6 +20,9 @@ import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 import ExerciseHistoryDialog from './history/ExerciseHistoryDialog';
 import { List } from 'material-ui/List';
 import ListItem from 'material-ui/List/ListItem';
+import { Table, TableRow, TableRowColumn } from 'material-ui/Table';
+import TableBody from 'material-ui/Table/TableBody';
+import { ActionSchedule } from 'material-ui/svg-icons';
 
 const styles = {
     cardHeader: {
@@ -29,21 +34,12 @@ const styles = {
         marginTop: 6,
     },
     card: {
-        width: CARD_WIDTH - 100,
+        width: CARD_WIDTH - 35,
         height: '100%',
         position: 'relative',
         marginBottom: 20,
         marginLeft: 5,
         marginTop: 5,
-    },
-    fab: {
-        margin: 0,
-        top: 47,
-        right: 20,
-        bottom: 'auto',
-        left: 'auto',
-        position: 'absolute',
-        zIndex: 1000,
     },
     link: {
         cursor: 'pointer',
@@ -54,6 +50,21 @@ const styles = {
     time: {
         color: black,
     },
+    table: {
+    },
+    text: {
+        padding: 5,
+    },
+    metric: {
+        fontWeight: '500',
+        fontSize: 16,
+        paddingLeft: 15,
+        paddingRight: 15,
+    },
+    value: {
+        float: 'right',
+        marginRight: 10,
+    }
 }
 
 class ExerciseReportCard extends Component {
@@ -95,29 +106,29 @@ class ExerciseReportCard extends Component {
                     </CardHeader>
                     <CardText style={styles.text}>
                         <List>
+                            <LeftRightListItem
+                                leftIcon={<ActionSchedule color={ black }/>} 
+                                leftText={'Duration'}
+                                rightText={this.props.exercise.startTime ? getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
+                            />
                             {this.props.exercise.metrics ? 
                                 this.props.exercise.metrics.map((m, index) =>    
-                                    <ListItem
-                                        key={index}
-                                        primaryText={this.getMetricDisplayName(m)}
-                                        secondaryText={m.value}
+                                    <LeftRightListItem
+                                        leftIcon={<ActionAssessment color={ black }/>} 
+                                        leftText={this.getMetricDisplayName(m)}
+                                        rightText={m.value ? m.value : '-'}
                                     />
                                 ) : ''
                             }
                             {this.props.exercise.notes ? 
-                            <ListItem
-                                primaryText={'Notes'}
-                                secondaryText={this.props.exercise.notes}
-                            /> : ''}
+                                <LeftRightListItem 
+                                    leftIcon={<ActionAssessment color={ black }/>} 
+                                    leftText={'Notes'}
+                                    rightText={this.props.exercise.notes}
+                                />: ''
+                            }
                         </List>
                     </CardText>
-                    <CardActions>
-                        <FlatButton 
-                            label={this.props.exercise.startTime ? getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
-                            disabled={true} 
-                            style={styles.time}
-                        />
-                    </CardActions>
                 </Card>
             </div>
         )
