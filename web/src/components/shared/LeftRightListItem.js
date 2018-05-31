@@ -14,6 +14,7 @@ class LeftRightListItem extends Component {
         return (
             <ListItem
                 leftIcon={this.props.leftIcon} 
+                rightIcon={this.props.rightIcon}
                 primaryText={
                     <span>
                         <span>{this.props.leftText}</span>
