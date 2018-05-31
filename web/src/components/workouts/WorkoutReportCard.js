@@ -1,26 +1,18 @@
 import React, { Component } from 'react'
-
 import moment from 'moment';
 
-import { black, grey300 } from 'material-ui/styles/colors'
-import {Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
-import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
-import IconMenu from 'material-ui/IconMenu'
+import { AvReplay, ActionAssignmentTurnedIn, ActionDelete } from 'material-ui/svg-icons';
+import { black } from 'material-ui/styles/colors'
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
-import { AvPlayArrow, AvStop, AvReplay } from 'material-ui/svg-icons';
-import Divider from 'material-ui/Divider';
-import TextField from 'material-ui/TextField/TextField';
-import ActionDelete from 'material-ui/svg-icons/action/delete';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
+import { getElapsedTime } from '../../util'
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
-import WorkoutStepper from './WorkoutStepper';
-import ConfirmDialog from '../shared/ConfirmDialog';
-import Spinner from '../shared/Spinner';
 import ExerciseReportCard from '../exercises/ExerciseReportCard'
 
 const styles = {
@@ -36,30 +28,11 @@ const styles = {
         height: '100%',
         position: 'relative',
     },
-    stepper: {
-        marginLeft: 'auto',
-        marginRight: 'auto',
-    },
     iconMenu: {
         position: 'absolute',
         right: 0,
         top: 10,
     },
-    fab: {
-        margin: 0,
-        top: 47,
-        right: 40,
-        bottom: 'auto',
-        left: 'auto',
-        position: 'absolute',
-        zIndex: 1000,
-    },
-    divider: {
-        marginTop: 30,
-    },
-    notes: {
-        width: '100%',
-    }
 }
 
 class WorkoutReportCard extends Component {
@@ -72,8 +45,7 @@ class WorkoutReportCard extends Component {
                     style={styles.cardHeader}
                     title={this.props.workout.routine.name}
                     subtitle={
-                        this.props.workout.startTime === undefined ? 'Scheduled for ' + moment(this.props.workout.scheduledTime).calendar() :
-                        'Started ' + moment(this.props.workout.startTime).calendar()
+                        'Completed ' + moment(this.props.workout.endTime).calendar() + ' (' + getElapsedTime(this.props.workout.startTime, this.props.workout.endTime) + ')'
                     }
                     avatar={
                         <Avatar 
