@@ -12,7 +12,7 @@ import { showSnackbar } from '../../app/AppActions';
 import Spinner from '../../shared/Spinner';
 import History from '../../shared/history/History';
 
-import { red500 } from 'material-ui/styles/colors';
+import { black, red500 } from 'material-ui/styles/colors';
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import ActionInfo from 'material-ui/svg-icons/action/info';
@@ -170,9 +170,9 @@ class WorkoutsHistory extends Component {
                                         key={index}
                                         primaryText={w.routine.name}
                                         secondaryText={'Completed ' + moment(w.endTime).calendar()}
-                                        leftIcon={<ActionAssignmentTurnedIn/>}
-                                        rightIcon={<ActionInfo/>}
-                                        onClick={() => this.props.onClick(w.id)}
+                                        leftIcon={<ActionAssignmentTurnedIn color={black}/>}
+                                        rightIcon={<ActionInfo color={black}/>}
+                                        onClick={() => this.handleItemClick(w.id)}
                                         disabled={this.props.refreshing}
                                     />
                                 )}

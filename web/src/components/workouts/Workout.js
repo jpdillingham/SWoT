@@ -13,7 +13,6 @@ import WorkoutCard from './WorkoutCard'
 import WorkoutReportCard from './WorkoutReportCard'
 
 const initialState = {
-    workout: undefined,
     stepIndex: 0,
     api: {
         isExecuting: false,
@@ -35,11 +34,21 @@ const styles = {
 class Workout extends Component {
     state = initialState;
 
-    // todo: refactor this.  display the workout stepper for an active workout, or a history report
-    // for an inactive one.  it doesn't look like it is fetching old workouts currently.
     componentWillMount = () => {
-        this.setState({ api: { ...this.state.api, isExecuting: true }})
-        
+        this.fetchWorkout();
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        if (!this.getWorkout()) {
+            this.fetchWorkout();
+        }
+    }
+
+    fetchWorkout = () => {
+        this.setState({ 
+            api: { ...this.state.api, isExecuting: true }}
+        )
+
         this.props.fetchWorkouts()
         .then(response => {
             this.setState({ 
@@ -65,10 +74,6 @@ class Workout extends Component {
             this.props.showSnackbar('Error fetching Workouts: ' + error);
             this.setState({ api: { isExecuting: false, isErrored: true }});
         });
-    }
-
-    componentWillReceiveProps = (nextProps) => {
-        this.setState({ workout: nextProps.workouts.find(w => w.id === this.props.match.params.id) })
     }
 
     handleWorkoutReset = () => {
@@ -132,8 +137,15 @@ class Workout extends Component {
         })
     }
 
+    getWorkout = () => {
+        let workout = this.props.workouts.find(w => w.id === this.props.match.params.id);
+        workout = workout ? workout : this.props.workoutsHistory ? this.props.workoutsHistory.workout : undefined;
+
+        return workout;
+    }
+
     render() {
-        let workout = this.state.workout;
+        let workout = this.getWorkout();
 
         return (
             this.state.api.isExecuting ? <Spinner size={48}/> : 
@@ -153,7 +165,8 @@ class Workout extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    workouts: state.workouts
+    workouts: state.workouts,
+    workoutsHistory: state.workoutsHistory,
 })
 
 const mapDispatchToProps = {

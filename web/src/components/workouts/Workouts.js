@@ -5,7 +5,7 @@ import { fetchWorkouts } from './WorkoutsActions'
 import { fetchWorkoutsHistory } from './history/WorkoutsHistoryActions'
 import { showSnackbar } from '../app/AppActions'
 
-import { red500 } from 'material-ui/styles/colors'
+import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 import FlatButton from 'material-ui/FlatButton'
 
@@ -66,7 +66,7 @@ class Workouts extends Component {
                         <WorkoutsListCard 
                             title={'In Progress'}
                             icon={<AvPlayArrow/>}
-                            itemRightIcon={<AvPlayArrow/>}
+                            itemRightIcon={<AvPlayArrow color={black}/>}
                             workouts={this.props.workouts.filter(workout => workout.startTime !== undefined && workout.endTime === undefined)}
                             sort={'desc'}
                             timePrefix={'Started'}
@@ -76,8 +76,8 @@ class Workouts extends Component {
                         />
                         <WorkoutsListCard 
                             title={'Scheduled'}
-                            icon={<ActionSchedule/>}
-                            itemRightIcon={<AvPlayArrow/>}
+                            icon={<ActionSchedule color={black}/>}
+                            itemRightIcon={<AvPlayArrow color={black}/>}
                             workouts={this.props.workouts.filter(workout => workout.startTime === undefined)}
                             sort={'asc'}
                             timePrefix={'Scheduled for'}
@@ -88,7 +88,7 @@ class Workouts extends Component {
                         <WorkoutsListCard 
                             title={'Completed'}
                             icon={<AvStop/>}
-                            itemRightIcon={<ActionInfo/>}
+                            itemRightIcon={<ActionInfo color={black}/>}
                             workouts={this.props.workoutsHistory.workouts}
                             sort={'desc'}
                             timePrefix={'Completed'}

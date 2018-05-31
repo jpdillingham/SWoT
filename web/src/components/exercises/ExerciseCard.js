@@ -177,7 +177,7 @@ class ExerciseCard extends Component {
                         <Divider/>
                         <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
                     </IconMenu>
-                    <CardText style={styles.text}>
+                    <CardText>
                         <List>
                             {this.props.exercise.metrics ? this.props.exercise.metrics.map(m =>                     
                                 <ListItem

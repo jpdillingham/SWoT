@@ -75,7 +75,7 @@ class WorkoutsListCard extends Component {
                                         key={index}
                                         primaryText={w.routine.name}
                                         secondaryText={this.props.timePrefix + ' ' + moment(w[this.props.timeField]).calendar()}
-                                        leftIcon={<ActionAssignmentTurnedIn/>}
+                                        leftIcon={<ActionAssignmentTurnedIn color={black}/>}
                                         rightIcon={this.props.itemRightIcon}
                                         onClick={() => this.props.onClick(w.id)}
                                         disabled={this.props.refreshing}
