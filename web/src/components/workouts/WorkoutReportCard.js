@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
-import { AvReplay, ActionAssignmentTurnedIn, ActionDelete } from 'material-ui/svg-icons';
+import { AvReplay, ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ActionSpeakerNotes } from 'material-ui/svg-icons';
 import { black } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
+import List from 'material-ui/List'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
@@ -14,6 +15,7 @@ import { getElapsedTime } from '../../util'
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
 import ExerciseReportCard from '../exercises/ExerciseReportCard'
+import LeftRightListItem from '../shared/LeftRightListItem';
 
 const styles = {
     cardHeader: {
@@ -75,6 +77,18 @@ class WorkoutReportCard extends Component {
                     {this.props.workout.routine.exercises.map((e, index) => 
                         <ExerciseReportCard key={index} exercise={e}/>
                     )}
+                    <List>
+                        <LeftRightListItem
+                            leftIcon={<ActionSpeakerNotes color={black}/>}
+                            leftText={'Notes'}
+                            rightText={this.props.workout.notes}
+                            />
+                        <LeftRightListItem
+                            leftIcon={<ActionWatchLater color={black}/>}
+                            leftText={'Duration'}
+                            rightText={getElapsedTime(this.props.workout.startTime, this.props.workout.endTime)}
+                        />
+                    </List>
                 </CardText>
             </Card>
         </div>
