@@ -172,7 +172,7 @@ class WorkoutsHistory extends Component {
                                         secondaryText={'Completed ' + moment(w.endTime).calendar()}
                                         leftIcon={<ActionAssignmentTurnedIn/>}
                                         rightIcon={<ActionInfo/>}
-                                        onClick={() => this.props.onClick(w.id)}
+                                        onClick={() => this.handleItemClick(w.id)}
                                         disabled={this.props.refreshing}
                                     />
                                 )}
