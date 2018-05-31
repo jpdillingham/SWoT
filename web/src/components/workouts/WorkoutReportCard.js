@@ -65,12 +65,6 @@ class WorkoutReportCard extends Component {
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                    <MenuItem 
-                        primaryText="Reset" 
-                        onClick={this.handleResetClick} 
-                        leftIcon={<AvReplay/>}
-                        disabled={!this.props.workout.startTime}
-                    />
                     <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                 </IconMenu>
                 <CardText>
