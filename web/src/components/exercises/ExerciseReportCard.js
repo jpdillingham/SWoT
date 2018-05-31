@@ -22,7 +22,7 @@ import { List } from 'material-ui/List';
 import ListItem from 'material-ui/List/ListItem';
 import { Table, TableRow, TableRowColumn } from 'material-ui/Table';
 import TableBody from 'material-ui/Table/TableBody';
-import { ActionSchedule } from 'material-ui/svg-icons';
+import { ActionSchedule, ActionWatchLater, ActionSpeakerNotes } from 'material-ui/svg-icons';
 
 const styles = {
     cardHeader: {
@@ -43,27 +43,6 @@ const styles = {
     },
     link: {
         cursor: 'pointer',
-    },
-    button: {
-        float: 'right',
-    },
-    time: {
-        color: black,
-    },
-    table: {
-    },
-    text: {
-        padding: 5,
-    },
-    metric: {
-        fontWeight: '500',
-        fontSize: 16,
-        paddingLeft: 15,
-        paddingRight: 15,
-    },
-    value: {
-        float: 'right',
-        marginRight: 10,
     }
 }
 
@@ -106,27 +85,28 @@ class ExerciseReportCard extends Component {
                     </CardHeader>
                     <CardText style={styles.text}>
                         <List>
+                            {this.props.exercise.metrics ? 
+                                this.props.exercise.metrics.map((m, index) =>    
+                                <LeftRightListItem
+                                key={index}
+                                leftIcon={<ActionAssessment color={ black }/>} 
+                                leftText={this.getMetricDisplayName(m)}
+                                rightText={m.value ? m.value : '-'}
+                                />
+                            ) : ''
+                        }
+                            {this.props.exercise.notes ? 
+                                <LeftRightListItem 
+                                leftIcon={<ActionSpeakerNotes color={ black }/>} 
+                                leftText={'Notes'}
+                                rightText={this.props.exercise.notes}
+                                />: ''
+                            }
                             <LeftRightListItem
-                                leftIcon={<ActionSchedule color={ black }/>} 
+                                leftIcon={<ActionWatchLater color={ black }/>} 
                                 leftText={'Duration'}
                                 rightText={this.props.exercise.startTime ? getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
                             />
-                            {this.props.exercise.metrics ? 
-                                this.props.exercise.metrics.map((m, index) =>    
-                                    <LeftRightListItem
-                                        leftIcon={<ActionAssessment color={ black }/>} 
-                                        leftText={this.getMetricDisplayName(m)}
-                                        rightText={m.value ? m.value : '-'}
-                                    />
-                                ) : ''
-                            }
-                            {this.props.exercise.notes ? 
-                                <LeftRightListItem 
-                                    leftIcon={<ActionAssessment color={ black }/>} 
-                                    leftText={'Notes'}
-                                    rightText={this.props.exercise.notes}
-                                />: ''
-                            }
                         </List>
                     </CardText>
                 </Card>
