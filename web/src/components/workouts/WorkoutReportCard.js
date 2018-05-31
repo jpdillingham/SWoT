@@ -35,6 +35,9 @@ const styles = {
         right: 0,
         top: 10,
     },
+    notes: {
+        marginLeft: 20
+    },
 }
 
 class WorkoutReportCard extends Component {
@@ -73,15 +76,17 @@ class WorkoutReportCard extends Component {
                     )}
                     <List>
                         <LeftRightListItem
-                            leftIcon={<ActionSpeakerNotes color={black}/>}
-                            leftText={'Notes'}
-                            rightText={this.props.workout.notes}
-                            />
-                        <LeftRightListItem
                             leftIcon={<ActionWatchLater color={black}/>}
                             leftText={'Duration'}
                             rightText={getElapsedTime(this.props.workout.startTime, this.props.workout.endTime)}
                         />
+                        <LeftRightListItem
+                            leftIcon={<ActionSpeakerNotes color={black}/>}
+                            leftText={'Notes'}
+                        />
+                        {!this.props.workout.notes ? '' : 
+                            <p style={styles.notes}>{this.props.workout.notes}</p>
+                        }
                     </List>
                 </CardText>
             </Card>
