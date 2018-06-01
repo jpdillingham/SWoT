@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 
 import Avatar from 'material-ui/Avatar';
-import { ActionAssessment, ActionWatchLater, ActionSpeakerNotes, NavigationExpandLess, NavigationExpandMore } from 'material-ui/svg-icons';
+import { ActionAssessment, ActionWatchLater, ActionSpeakerNotes } from 'material-ui/svg-icons';
 import { black } from 'material-ui/styles/colors';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import LeftRightListItem from '../shared/LeftRightListItem'
+import ToggledLeftRightListItem from '../shared/ToggledLeftRightListItem'
 import { List } from 'material-ui/List';
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
@@ -35,21 +36,9 @@ const styles = {
     }
 }
 
-const initialState = {
-    notes: {
-        expanded: true,
-    },
-}
-
 class ExerciseReportCard extends Component {
-    state = initialState;
-
     getMetricDisplayName = (metric) => {
         return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
-    }
-
-    handleNotesToggle = () => {
-        this.setState({ notes: { expanded: !this.state.notes.expanded }});
     }
 
     render() {
@@ -102,15 +91,13 @@ class ExerciseReportCard extends Component {
                                 rightText={this.props.exercise.startTime ? getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
                             />
                             {!this.props.exercise.notes ? '' :
-                                <div>
-                                    <LeftRightListItem 
-                                        leftIcon={<ActionSpeakerNotes color={ black }/>} 
-                                        leftText={'Notes'}
-                                        rightIcon={this.state.notes.expanded ? <NavigationExpandLess color={black}/> : <NavigationExpandMore color={black}/>}
-                                        onClick={this.handleNotesToggle}
-                                    />
-                                    {this.state.notes.expanded ? <p style={styles.notes}>{this.props.exercise.notes}</p> : ''}
-                                </div>
+                                <ToggledLeftRightListItem
+                                    leftIcon={<ActionSpeakerNotes color={black}/>}
+                                    leftText={'Notes'}
+                                    defaultToggleOpen={false}
+                                >
+                                    <p>{this.props.exercise.notes}</p>
+                                </ToggledLeftRightListItem>
                             }
                         </List>
                     </CardText>
