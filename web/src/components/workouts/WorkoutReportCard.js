@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
-import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ActionSpeakerNotes, NavigationExpandLess, NavigationExpandMore } from 'material-ui/svg-icons';
+import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ActionSpeakerNotes } from 'material-ui/svg-icons';
 import { black } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
@@ -88,7 +88,6 @@ class WorkoutReportCard extends Component {
                         >
                             {!this.props.workout.notes ? '' : <p>{this.props.workout.notes}</p>}
                         </ToggledLeftRightListItem>
-
                     </List>
                 </CardText>
             </Card>

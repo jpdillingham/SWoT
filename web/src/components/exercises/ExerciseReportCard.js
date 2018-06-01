@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Avatar from 'material-ui/Avatar';
-import { ActionAssessment, ActionWatchLater, ActionSpeakerNotes, NavigationExpandLess, NavigationExpandMore } from 'material-ui/svg-icons';
+import { ActionAssessment, ActionWatchLater, ActionSpeakerNotes } from 'material-ui/svg-icons';
 import { black } from 'material-ui/styles/colors';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import LeftRightListItem from '../shared/LeftRightListItem'
