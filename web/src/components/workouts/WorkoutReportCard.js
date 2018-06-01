@@ -41,19 +41,7 @@ const styles = {
     },
 }
 
-const initialState = {
-    notes: {
-        expanded: true,
-    },
-}
-
 class WorkoutReportCard extends Component {
-    state = initialState;
-
-    handleNotesToggle = () => {
-        this.setState({ notes: { expanded: !this.state.notes.expanded }});
-    }
-
     render() {
         return (
             <div>
@@ -98,7 +86,7 @@ class WorkoutReportCard extends Component {
                             leftText={'Notes'}
                             defaultToggleOpen={true}
                         >
-                            {this.props.workout.notes ? '' : <p>{this.props.workout.notes}</p>}
+                            {!this.props.workout.notes ? '' : <p>{this.props.workout.notes}</p>}
                         </ToggledLeftRightListItem>
 
                     </List>
