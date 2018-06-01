@@ -36,21 +36,9 @@ const styles = {
     }
 }
 
-const initialState = {
-    notes: {
-        expanded: true,
-    },
-}
-
 class ExerciseReportCard extends Component {
-    state = initialState;
-
     getMetricDisplayName = (metric) => {
         return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
-    }
-
-    handleNotesToggle = () => {
-        this.setState({ notes: { expanded: !this.state.notes.expanded }});
     }
 
     render() {
