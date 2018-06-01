@@ -16,6 +16,7 @@ import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
 import ExerciseReportCard from '../exercises/ExerciseReportCard'
 import LeftRightListItem from '../shared/LeftRightListItem';
+import ToggledLeftRightListItem from '../shared/ToggledLeftRightListItem';
 
 const styles = {
     cardHeader: {
@@ -92,15 +93,14 @@ class WorkoutReportCard extends Component {
                             leftText={'Duration'}
                             rightText={getElapsedTime(this.props.workout.startTime, this.props.workout.endTime)}
                         />
-                        <LeftRightListItem
+                        <ToggledLeftRightListItem
                             leftIcon={<ActionSpeakerNotes color={black}/>}
                             leftText={'Notes'}
-                            rightIcon={this.state.notes.expanded ? <NavigationExpandLess color={black}/> : <NavigationExpandMore color={black}/>}
-                            onClick={this.handleNotesToggle}
-                        />
-                        {!this.props.workout.notes || !this.state.notes.expanded ? '' : 
-                            <p style={styles.notes}>{this.props.workout.notes}</p>
-                        }
+                            defaultToggleOpen={true}
+                        >
+                            {this.props.workout.notes ? '' : <p>{this.props.workout.notes}</p>}
+                        </ToggledLeftRightListItem>
+
                     </List>
                 </CardText>
             </Card>
