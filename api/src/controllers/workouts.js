@@ -27,6 +27,25 @@ router.get('/history/:id', (req, res) => {
     })
 })
 
+router.delete('/history/:id', (req, res) => {
+    let userId = util.getUserId(req);
+    let id = req.params.id;
+
+    database.queryAll(userId, 0, new Date().getTime())
+    .then(workouts => {
+        let workout = workouts.find(w => w.id === id);
+
+        database.delete(userId, workout.endTime)
+        .then(response => {
+            res.status(204);
+            res.json();
+        }, error => {
+            res.status(500);
+            res.json(error);
+        })
+    })
+})
+
 // pagination - /workouts?limit=N&offset=M
 // sort - /workouts?order=<ASC|DESC>
 // filter by routine - /workouts?routineId=guid
