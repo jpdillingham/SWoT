@@ -87,16 +87,23 @@ class Workout extends Component {
     }
 
     handleWorkoutHistoryDelete = () => {
+        let workout = this.getWorkout(); 
+
         return new Promise((resolve, reject) => {
-            this.props.deleteWorkoutHistory(this.getWorkout().id)
+            this.props.deleteWorkoutHistory(workout.id)
             .then(response => {
-                //todo: navigate
+                this.props.showSnackbar('Deleted Workout history for \'' + workout.routine.name + '\'.');
+                this.navigate('../');
                 resolve(response);
             }, error => {
                 this.props.showSnackbar('Error deleting Workout: ' + error);
                 reject(error);
             })
         })
+    }
+
+    navigate = (url) => {
+        this.props.history.push(url);
     }
 
     handleWorkoutReset = () => {
@@ -152,16 +159,13 @@ class Workout extends Component {
             this.props.deleteWorkout(workout.id)
             .then(response => {
                 this.props.showSnackbar('Deleted Workout \'' + workout.routine.name + '\'.');
+                this.navigate('../');
                 resolve(response);
             }, error => {
                 this.props.showSnackbar('Error deleting Workout \'' + workout.routine.name + '\'.');
                 reject(error);
             })
         })
-    }
-
-    handleDeleteDialogClose = () => {
-        this.setState({})
     }
 
     render() {
