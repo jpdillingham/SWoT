@@ -11,6 +11,8 @@ import List from 'material-ui/List'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
+import ConfirmDialog from '../shared/ConfirmDialog'
+
 import { getElapsedTime } from '../../util'
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 
@@ -41,7 +43,25 @@ const styles = {
     },
 }
 
+const initialState = {
+    deleteDialog: {
+        open: false,
+    },
+}
+
 class WorkoutReportCard extends Component {
+    state = initialState;
+
+    handleDeleteClick = () => {
+        this.setState({ deleteDialog: { open: true }})
+    }
+
+    handleDeleteDialogClose = (result) => {
+        if (result.cancelled) { 
+            this.setState({ deleteDialog: { open: false }})
+        }
+    }
+
     render() {
         return (
             <div>
@@ -91,6 +111,15 @@ class WorkoutReportCard extends Component {
                     </List>
                 </CardText>
             </Card>
+            <ConfirmDialog 
+                title={'Delete Workout History'}
+                buttonCaption={'Delete'}
+                onConfirm={this.props.onDelete}
+                onClose={this.handleDeleteDialogClose}
+                open={this.state.deleteDialog.open} 
+            >
+                Are you sure you want to delete the history for Workout '{this.props.workout.routine.name}'?
+            </ConfirmDialog>
         </div>
 
         )

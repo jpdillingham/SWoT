@@ -137,7 +137,9 @@ class WorkoutCard extends Component {
     }
 
     handleDeleteDialogClose = (result) => {
-        this.setState({ deleteDialog: { open: false }})
+        if (result.cancelled) {
+            this.setState({ deleteDialog: { open: false }})
+        }
     }
 
     handleResetClick = () => {

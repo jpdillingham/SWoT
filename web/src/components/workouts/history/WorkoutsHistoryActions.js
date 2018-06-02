@@ -22,6 +22,11 @@ const workoutHistoryClear = () => ({
     type: 'WORKOUT_HISTORY_CLEAR'
 });
 
+const workoutHistoryDelete = (id) => ({
+    type: 'WORKOUT_HISTORY_DELETE',
+    workoutId: id
+})
+
 export const fetchWorkoutsHistory = (filters) => (dispatch, getState) => {
     let queryParams = '?';
     queryParams += 'status=done';
@@ -58,7 +63,8 @@ export const fetchWorkoutHistory = (id) => (dispatch, getState) => {
             dispatch(workoutHistoryGet(response.data));
             resolve(response);        
         }, error => {
-            reject(error.response.message);
+            console.log(error.response)
+            reject(error.response.data || error.response.status);
         });
     });
 }
@@ -67,5 +73,22 @@ export const clearWorkoutHistory = () => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         dispatch(workoutHistoryClear());
         resolve();
+    });
+}
+
+export const deleteWorkoutHistory = (id) => (dispatch, getState) => {
+    return new Promise((resolve, reject) => {
+        api.delete(endpoint + '/' + id)
+        .then(response => {
+            if (response.status === 204) {
+                dispatch(workoutHistoryDelete(id));
+                resolve(response);
+            }
+            else {
+                reject("Unknown DELETE response code (expected 204, received " + response.status + ").");
+            } 
+        }, error => {
+            reject(error.response.message);
+        });
     });
 }

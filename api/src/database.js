@@ -43,6 +43,18 @@ exports.put = (userId, workout) => {
     return dynamoDB.put(params).promise();
 }
 
+exports.delete = (userId, endTime) => {
+    let params = {
+        TableName: constants.HISTORY_TABLE,
+        Key: {
+            user: userId,
+            endTime: endTime
+        }
+    }
+
+    return dynamoDB.delete(params).promise();
+}
+
 exports.query = (userId, fromTime, toTime, lastEvaluatedKey) => {
     fromTime = Number(fromTime);
     toTime = Number(toTime);
