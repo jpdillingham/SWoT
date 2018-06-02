@@ -11,6 +11,7 @@ import { showSnackbar } from '../app/AppActions';
 import Spinner from '../shared/Spinner'
 import WorkoutCard from './WorkoutCard'
 import WorkoutReportCard from './WorkoutReportCard'
+import ConfirmDialog from '../shared/ConfirmDialog';
 
 const initialState = {
     stepIndex: 0,
@@ -18,7 +19,7 @@ const initialState = {
     api: {
         isExecuting: false,
         isErrored: false,
-    }
+    },
 }
 
 const styles = {
@@ -47,9 +48,9 @@ class Workout extends Component {
         }
     }
 
-    getWorkout = (props) => {
-        let workout = props.workouts.find(w => w.id === props.match.params.id);
-        workout = workout ? workout : props.workoutsHistory ? props.workoutsHistory.workout : undefined;
+    getWorkout = (props = this.props) => {
+        let workout = props && props.workouts ? props.workouts.find(w => w.id === props.match.params.id) : undefined;
+        workout = workout ? workout : props && props.workoutsHistory && props.workoutsHistory.workout ? props.workoutsHistory.workout : undefined;
 
         return workout;
     }
@@ -68,7 +69,6 @@ class Workout extends Component {
                     this.props.fetchWorkoutHistory(this.props.match.params.id)
                     .then(response => {
                         this.setState({
-                            workout: response.data,
                             api: { isExecuting: false, isErrored: false }
                         });
                     }, error => {
@@ -86,22 +86,21 @@ class Workout extends Component {
         });
     }
 
-    handleWorkoutHistoryDeleteClick = (id) => {
-        this.setState({
-            api: { ...this.state.api, isExecuting: true }
-        })
-
-        this.props.deleteWorkoutHistory(id)
-        .then(response => {
-            this.setState({ api: { isExecuting: false, isErrored: false }})
-        }, error => {
-            this.props.showSnackbar('Error deleting Workout: ' + error);
-            this.setState({ api: { isExecuting: false, isErrored: true }})
+    handleWorkoutHistoryDelete = () => {
+        return new Promise((resolve, reject) => {
+            this.props.deleteWorkoutHistory(this.getWorkout().id)
+            .then(response => {
+                //todo: navigate
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error deleting Workout: ' + error);
+                reject(error);
+            })
         })
     }
 
     handleWorkoutReset = () => {
-        let workout = this.state.workout;
+        let workout = this.getWorkout();
 
         delete workout.startTime;
         delete workout.endTime;
@@ -121,7 +120,7 @@ class Workout extends Component {
     }
 
     handleWorkoutExerciseChange = (exercise) => {
-        let workout = this.state.workout; 
+        let workout = this.getWorkout(); 
 
         workout.routine.exercises = workout.routine.exercises.map(e => {
             return e.sequence === exercise.sequence && e.id === exercise.id ? exercise : e;
@@ -147,7 +146,7 @@ class Workout extends Component {
     }
 
     handleWorkoutDelete = () => {
-        let workout = this.state.workout;
+        let workout = this.getWorkout();
 
         return new Promise((resolve, reject) => {
             this.props.deleteWorkout(workout.id)
@@ -159,6 +158,10 @@ class Workout extends Component {
                 reject(error);
             })
         })
+    }
+
+    handleDeleteDialogClose = () => {
+        this.setState({})
     }
 
     render() {
@@ -175,7 +178,10 @@ class Workout extends Component {
                             onDelete={this.handleWorkoutDelete}
                             onReset={this.handleWorkoutReset}
                         /> :
-                        <WorkoutReportCard workout={workout} onDeleteClick={this.handleWorkoutHistoryDeleteClick}/>
+                        <WorkoutReportCard 
+                            workout={workout} 
+                            onDelete={this.handleWorkoutHistoryDelete}
+                        />
         )
     }
 }
