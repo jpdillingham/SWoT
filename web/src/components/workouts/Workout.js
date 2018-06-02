@@ -5,7 +5,7 @@ import { red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { fetchWorkouts, updateWorkout, deleteWorkout } from './WorkoutsActions'
-import { fetchWorkoutHistory } from './history/WorkoutsHistoryActions'
+import { fetchWorkoutHistory, deleteWorkoutHistory } from './history/WorkoutsHistoryActions'
 import { showSnackbar } from '../app/AppActions';
 
 import Spinner from '../shared/Spinner'
@@ -14,6 +14,7 @@ import WorkoutReportCard from './WorkoutReportCard'
 
 const initialState = {
     stepIndex: 0,
+    retry: true,
     api: {
         isExecuting: false,
         isErrored: false,
@@ -39,9 +40,18 @@ class Workout extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        if (!this.getWorkout()) {
-            this.fetchWorkout();
+        if (!this.getWorkout(nextProps) && this.state.retry) {
+            this.setState({ retry: false }, () => {
+                this.fetchWorkout();
+            })
         }
+    }
+
+    getWorkout = (props) => {
+        let workout = props.workouts.find(w => w.id === props.match.params.id);
+        workout = workout ? workout : props.workoutsHistory ? props.workoutsHistory.workout : undefined;
+
+        return workout;
     }
 
     fetchWorkout = () => {
@@ -74,6 +84,20 @@ class Workout extends Component {
             this.props.showSnackbar('Error fetching Workouts: ' + error);
             this.setState({ api: { isExecuting: false, isErrored: true }});
         });
+    }
+
+    handleWorkoutHistoryDelete = (id) => {
+        this.setState({
+            api: { ...this.state.api, isExecuting: true }
+        })
+
+        this.props.deleteWorkoutHistory(id)
+        .then(response => {
+            this.setState({ api: { isExecuting: false, isErrored: false }})
+        }, error => {
+            this.props.showSnackbar('Error deleting Workout: ' + error);
+            this.setState({ api: { isExecuting: false, isErrored: true }})
+        })
     }
 
     handleWorkoutReset = () => {
@@ -137,29 +161,21 @@ class Workout extends Component {
         })
     }
 
-    getWorkout = () => {
-        let workout = this.props.workouts.find(w => w.id === this.props.match.params.id);
-        workout = workout ? workout : this.props.workoutsHistory ? this.props.workoutsHistory.workout : undefined;
-
-        return workout;
-    }
-
     render() {
-        let workout = this.getWorkout();
+        let workout = this.getWorkout(this.props);
 
         return (
             this.state.api.isExecuting ? <Spinner size={48}/> : 
-                this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    workout === undefined ? <span>Invalid Workout Id.</span> : 
-                        workout.endTime === undefined ?
-                            <WorkoutCard
-                                workout={workout}
-                                onWorkoutChange={this.handleWorkoutChange}
-                                onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(exercise)}
-                                onDelete={this.handleWorkoutDelete}
-                                onReset={this.handleWorkoutReset}
-                            /> :
-                            <WorkoutReportCard workout={workout}/>
+                this.state.api.isErrored || workout === undefined ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
+                    workout.endTime === undefined ?
+                        <WorkoutCard
+                            workout={workout}
+                            onWorkoutChange={this.handleWorkoutChange}
+                            onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(exercise)}
+                            onDelete={this.handleWorkoutDelete}
+                            onReset={this.handleWorkoutReset}
+                        /> :
+                        <WorkoutReportCard workout={workout} onDelete={this.handleWorkoutHistoryDelete}/>
         )
     }
 }
@@ -174,6 +190,7 @@ const mapDispatchToProps = {
     updateWorkout,
     deleteWorkout,
     fetchWorkoutHistory,
+    deleteWorkoutHistory,
     showSnackbar,
 }
 
