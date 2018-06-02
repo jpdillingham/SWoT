@@ -57,7 +57,9 @@ class WorkoutReportCard extends Component {
     }
 
     handleDeleteDialogClose = (result) => {
-        this.setState({ deleteDialog: { open: false }})
+        if (result.cancelled) { 
+            this.setState({ deleteDialog: { open: false }})
+        }
     }
 
     render() {
