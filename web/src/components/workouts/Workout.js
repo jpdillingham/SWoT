@@ -86,7 +86,7 @@ class Workout extends Component {
         });
     }
 
-    handleWorkoutHistoryDelete = (id) => {
+    handleWorkoutHistoryDeleteClick = (id) => {
         this.setState({
             api: { ...this.state.api, isExecuting: true }
         })
@@ -175,7 +175,7 @@ class Workout extends Component {
                             onDelete={this.handleWorkoutDelete}
                             onReset={this.handleWorkoutReset}
                         /> :
-                        <WorkoutReportCard workout={workout} onDelete={this.handleWorkoutHistoryDelete}/>
+                        <WorkoutReportCard workout={workout} onDeleteClick={this.handleWorkoutHistoryDeleteClick}/>
         )
     }
 }
