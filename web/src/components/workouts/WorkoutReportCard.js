@@ -69,7 +69,7 @@ class WorkoutReportCard extends Component {
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                    <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
+                    <MenuItem primaryText="Delete" onClick={() => this.props.onDelete(this.props.workout.id)} leftIcon={<ActionDelete/>}/>
                 </IconMenu>
                 <CardText>
                     {this.props.workout.routine.exercises.map((e, index) => 
