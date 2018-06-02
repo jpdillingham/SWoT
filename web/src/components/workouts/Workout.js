@@ -11,7 +11,6 @@ import { showSnackbar } from '../app/AppActions';
 import Spinner from '../shared/Spinner'
 import WorkoutCard from './WorkoutCard'
 import WorkoutReportCard from './WorkoutReportCard'
-import ConfirmDialog from '../shared/ConfirmDialog';
 
 const initialState = {
     stepIndex: 0,
