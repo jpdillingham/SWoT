@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { fetchWorkouts } from './WorkoutsActions'
 import { fetchWorkoutsHistory } from './history/WorkoutsHistoryActions'
-import { showSnackbar } from '../app/AppActions'
+import { setTitle, showSnackbar } from '../app/AppActions'
 
 import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
@@ -37,6 +37,7 @@ class Workouts extends Component {
     state = initialState;
 
     componentWillMount() {
+        this.props.setTitle('Workouts');
         this.setState({ api: { ...this.state.api, isExecuting: true }})
 
         Promise.all([
@@ -117,6 +118,7 @@ const mapDispatchToProps = {
     fetchWorkouts,
     fetchWorkoutsHistory,
     showSnackbar,
+    setTitle,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workouts)

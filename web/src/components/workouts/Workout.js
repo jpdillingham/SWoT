@@ -7,7 +7,7 @@ import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { fetchWorkouts, updateWorkout, deleteWorkout } from './WorkoutsActions'
 import { fetchWorkoutHistory, deleteWorkoutHistory } from './history/WorkoutsHistoryActions'
-import { showSnackbar } from '../app/AppActions';
+import { setTitle, showSnackbar } from '../app/AppActions';
 
 import Spinner from '../shared/Spinner'
 import WorkoutCard from './WorkoutCard'
@@ -37,6 +37,7 @@ class Workout extends Component {
     state = initialState;
 
     componentWillMount = () => {
+        this.props.setTitle('Workout');
         this.fetchWorkout();
     }
 
@@ -214,6 +215,7 @@ const mapDispatchToProps = {
     fetchWorkoutHistory,
     deleteWorkoutHistory,
     showSnackbar,
+    setTitle,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Workout)

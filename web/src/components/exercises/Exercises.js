@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchExercises, deleteExercise } from './ExercisesActions'
-import { showSnackbar } from '../app/AppActions'
+import { setTitle, showSnackbar } from '../app/AppActions'
 
 import Spinner from '../shared/Spinner'
 import ExerciseCard from './ExerciseCard'
@@ -41,6 +41,8 @@ class Exercises extends Component {
     state = initialState;
 
     componentWillMount() {
+        this.props.setTitle('Exercises');
+        
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
             this.props.fetchExercises()
             .then(response => {
@@ -93,6 +95,7 @@ const mapDispatchToProps = {
     fetchExercises,
     deleteExercise,
     showSnackbar,
+    setTitle,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Exercises)

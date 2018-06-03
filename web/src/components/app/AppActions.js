@@ -1,12 +1,17 @@
 export const showSnackbar = (message) => ({
     type: 'SNACKBAR_SHOW',
-    message: message
-})
+    message: message,
+});
 
 export const hideSnackbar = () => ({
-    type: 'SNACKBAR_HIDE'
-})
+    type: 'SNACKBAR_HIDE',
+});
 
 export const noop = () => ({
-    type: 'NOOP'
-})
+    type: 'NOOP',
+});
+
+export const setTitle = (title) => ({
+    type: 'SET_TITLE',
+    title: title,
+});

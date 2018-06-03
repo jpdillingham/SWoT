@@ -4,37 +4,35 @@ import { withRouter } from 'react-router-dom'
 import { Route, Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-import ActionDashboard from 'material-ui/svg-icons/action/dashboard'
-import ActionEvent from 'material-ui/svg-icons/action/event'
-import ActionHistory from 'material-ui/svg-icons/action/history'
+import { ActionDashboard, ActionEvent, ActionHistory } from 'material-ui/svg-icons';
 import { getMuiTheme } from 'material-ui/styles';
-import MenuItem from 'material-ui/MenuItem'
+import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Snackbar from 'material-ui/Snackbar'
+import Snackbar from 'material-ui/Snackbar';
 import Subheader from 'material-ui/Subheader/Subheader';
 
-import AppContainer from './AppContainer'
+import AppContainer from './AppContainer';
 
-import Workouts from '../workouts/Workouts'
-import Workout from '../workouts/Workout'
-import WorkoutsHistory from '../workouts/history/WorkoutsHistory'
-import Exercises from '../exercises/Exercises'
-import ExercisesHistory from '../exercises/history/ExercisesHistory'
-import Routines from '../routines/Routines'
+import Workouts from '../workouts/Workouts';
+import Workout from '../workouts/Workout';
+import WorkoutsHistory from '../workouts/history/WorkoutsHistory';
+import Exercises from '../exercises/Exercises';
+import ExercisesHistory from '../exercises/history/ExercisesHistory';
+import Routines from '../routines/Routines';
 
-import Login from '../security/Login'
-import Register from '../security/Register'
-import ConfirmRegistration from '../security/ConfirmRegistration'
+import Login from '../security/Login';
+import Register from '../security/Register';
+import ConfirmRegistration from '../security/ConfirmRegistration';
 
-import { ensureSession } from '../security/SecurityActions'
-import { hideSnackbar } from './AppActions'
+import { ensureSession } from '../security/SecurityActions';
+import { hideSnackbar } from './AppActions';
 import { ActionBuild, ActionTrendingUp } from 'material-ui/svg-icons';
 
 const styles = {
     content: {
-        marginTop: 73
-    }
-}
+        marginTop: 73.
+    },
+};
 
 class App extends Component {
     theme = getMuiTheme({
@@ -42,8 +40,8 @@ class App extends Component {
             primary1Color: "#2196f3",
             primary2Color: "#64b5f6",
             pickerHeaderColor: "#29b6f6"
-        }
-    })
+        },
+    });
 
     navigate = (url) => {
         this.props.history.push(url);
@@ -53,7 +51,7 @@ class App extends Component {
         this.props.ensureSession()
             .then((result) => { }, (err) => {
                 this.navigate('/login');
-            })
+            });
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -61,7 +59,7 @@ class App extends Component {
             if (nextProps.session === undefined) {
                 this.navigate('/login');
             }
-        }
+        };
     }
 
     render() {
@@ -71,6 +69,7 @@ class App extends Component {
                     <div style={styles.content}>
                         <AppContainer 
                             show={this.props.user !== undefined}
+                            title={this.props.title}
                             links={
                                 <div>
                                     <Subheader>Workouts</Subheader>
@@ -120,12 +119,13 @@ const mapStateToProps = (state, ownProps) => {
         snackbar: state.app.snackbar,
         user: state.security.user,
         session: state.security.session,
-    }
-}
+        title: state.app.title,
+    };
+};
 
 const mapDispatchToProps = {
     hideSnackbar,
-    ensureSession
-}
+    ensureSession,
+};
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

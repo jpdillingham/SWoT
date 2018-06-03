@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchRoutines, deleteRoutine } from './RoutinesActions'
-import { showSnackbar } from '../app/AppActions'
+import { setTitle, showSnackbar } from '../app/AppActions'
 
 import { red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
@@ -39,6 +39,7 @@ class Routines extends Component {
     }
 
     componentWillMount() {
+        this.props.setTitle('Routines');
         this.setState({ api: { ...this.state.api, isExecuting: true }})
 
         this.props.fetchRoutines()
@@ -90,7 +91,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     fetchRoutines,
     deleteRoutine,
-    showSnackbar
+    showSnackbar,
+    setTitle,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Routines)

@@ -13,7 +13,7 @@ import Spinner from '../../shared/Spinner'
 
 import { fetchExercisesHistory } from './ExercisesHistoryActions'
 import { fetchExercises } from '../ExercisesActions'
-import { showSnackbar } from '../../app/AppActions'
+import { setTitle, showSnackbar } from '../../app/AppActions'
 
 import History from '../../shared/history/History';
 import { EXERCISE_AVATAR_COLOR } from '../../../constants'
@@ -90,6 +90,7 @@ class ExercisesHistory extends Component {
     }
 
     componentWillMount = () => {
+        this.props.setTitle('Exercises');
         this.fetchHistory(this.state.filters, 'loadApi');
         this.props.fetchExercises();
     }
@@ -197,6 +198,7 @@ const mapDispatchToProps = {
     fetchExercisesHistory,
     fetchExercises,
     showSnackbar,
+    setTitle,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ExercisesHistory)
