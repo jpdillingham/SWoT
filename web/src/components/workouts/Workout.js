@@ -127,15 +127,13 @@ class Workout extends Component {
         return this.handleWorkoutChange(workout, 'Reset Workout \'' + workout.routine.name + '\'.');
     }
 
-    handleWorkoutReschedule(datetime) {
-        datetime = datetime || { date: undefined, time: undefined} 
+    handleWorkoutReschedule = (datetime = { date: undefined, time: undefined}) => {
         let date = datetime.date || new Date();
         let time = datetime.time || new Date();
 
         let scheduledTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), 0).getTime();
 
-        let workout = this.getWorkout();
-        workout = { ...workout, scheduledTime: scheduledTime };
+        let workout = { ...this.getWorkout(), scheduledTime: scheduledTime };
         
         return this.handleWorkoutChange(workout, 'Rescheduled Workout \'' + workout.routine.name + '\' for ' + moment(scheduledTime).calendar() + '.');
     }
