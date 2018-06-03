@@ -263,6 +263,7 @@ class WorkoutCard extends Component {
                     <p>All data will be lost!</p>
                 </ConfirmDialog>
                 <WorkoutRescheduleDialog
+                    workout={this.props.workout}
                     open={this.state.rescheduleDialog.open}
                     onSave={this.props.onReschedule}
                     onClose={this.handleRescheduleDialogClose}
