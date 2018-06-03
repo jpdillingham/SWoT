@@ -10,7 +10,7 @@ import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
-import { AvPlayArrow, AvStop, AvReplay } from 'material-ui/svg-icons';
+import { AvPlayArrow, AvStop, AvReplay, ActionUpdate } from 'material-ui/svg-icons';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField/TextField';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
@@ -187,12 +187,18 @@ class WorkoutCard extends Component {
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem 
-                            primaryText="Reset" 
-                            onClick={this.handleResetClick} 
-                            leftIcon={<AvReplay/>}
-                            disabled={!this.props.workout.startTime}
-                        />
+                        {this.props.workout.startTime ? 
+                            <MenuItem 
+                                primaryText="Reset" 
+                                onClick={this.handleResetClick} 
+                                leftIcon={<AvReplay/>}
+                            /> :
+                            <MenuItem 
+                                primaryText="Reschedule" 
+                                onClick={this.handleRescheduleClick} 
+                                leftIcon={<ActionUpdate/>}
+                            />                        
+                        }
                         <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                     </IconMenu>
                     <CardText>
