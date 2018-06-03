@@ -20,6 +20,7 @@ import { WORKOUT_AVATAR_COLOR } from '../../constants'
 import WorkoutStepper from './WorkoutStepper';
 import ConfirmDialog from '../shared/ConfirmDialog';
 import Spinner from '../shared/Spinner';
+import WorkoutRescheduleDialog from './WorkoutRescheduleDialog';
 
 const styles = {
     cardHeader: {
@@ -68,6 +69,9 @@ const initialState = {
         open: false,
     },
     completeDialog: {
+        open: false,
+    },
+    rescheduleDialog: {
         open: false,
     },
     workout: {
@@ -148,6 +152,14 @@ class WorkoutCard extends Component {
 
     handleResetDialogClose = (result) => {
         this.setState({ resetDialog: { open: false }})
+    }
+
+    handleRescheduleClick = () => {
+        this.setState({ rescheduleDialog: { open: true }})
+    }
+
+    handleRescheduleDialogClose = (result) => {
+        this.setState({ rescheduleDialog: { open: false }})
     }
 
     render() {
@@ -250,6 +262,11 @@ class WorkoutCard extends Component {
                     <p>Are you sure you want to reset Workout '{this.props.workout.routine.name}'?</p>
                     <p>All data will be lost!</p>
                 </ConfirmDialog>
+                <WorkoutRescheduleDialog
+                    open={this.state.rescheduleDialog.open}
+                    onSave={this.props.onReschedule}
+                    onClose={this.handleRescheduleDialogClose}
+                />
             </div>
         )
     }
