@@ -71,6 +71,7 @@ class App extends Component {
                     <div style={styles.content}>
                         <AppContainer 
                             show={this.props.user !== undefined}
+                            title={this.props.title}
                             links={
                                 <div>
                                     <Subheader>Workouts</Subheader>
@@ -120,6 +121,7 @@ const mapStateToProps = (state, ownProps) => {
         snackbar: state.app.snackbar,
         user: state.security.user,
         session: state.security.session,
+        title: state.app.title,
     }
 }
 
