@@ -10,3 +10,8 @@ export const hideSnackbar = () => ({
 export const noop = () => ({
     type: 'NOOP'
 })
+
+export const setTitle = (title) => ({
+    type: 'SET_TITLE',
+    title: title,
+})

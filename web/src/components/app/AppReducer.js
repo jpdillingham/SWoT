@@ -2,7 +2,8 @@ const initialState = {
     snackbar: {
         visible: false,
         message: ''
-    }
+    },
+    title: 'SWoT'
 }
 
 const AppReducer = (state = initialState, action) => { 
@@ -13,6 +14,8 @@ const AppReducer = (state = initialState, action) => {
             return { ...state, snackbar: { visible: false, message: '' } }
         case 'NOOP':
             return { ...state }
+        case 'SET_TITLE':
+            return { ...state, title: action.title }
         default:
             return state;
     }
