@@ -8,8 +8,6 @@ import Dialog from 'material-ui/Dialog';
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from 'material-ui/TimePicker'
 
-import { getGuid } from '../../util';
-
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 
 const styles = {
