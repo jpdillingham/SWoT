@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
@@ -11,6 +12,7 @@ import { showSnackbar } from '../app/AppActions';
 import Spinner from '../shared/Spinner'
 import WorkoutCard from './WorkoutCard'
 import WorkoutReportCard from './WorkoutReportCard'
+import schedule from 'material-ui/svg-icons/action/schedule';
 
 const initialState = {
     stepIndex: 0,
@@ -125,6 +127,19 @@ class Workout extends Component {
         return this.handleWorkoutChange(workout, 'Reset Workout \'' + workout.routine.name + '\'.');
     }
 
+    handleWorkoutReschedule(datetime) {
+        datetime = datetime || { date: undefined, time: undefined} 
+        let date = datetime.date || new Date();
+        let time = datetime.time || new Date();
+
+        let scheduledTime = new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), 0).getTime();
+
+        let workout = this.getWorkout();
+        workout = { ...workout, scheduledTime: scheduledTime };
+        
+        return this.handleWorkoutChange(workout, 'Rescheduled Workout \'' + workout.routine.name + '\' for ' + moment(scheduledTime).calendar() + '.');
+    }
+
     handleWorkoutExerciseChange = (exercise) => {
         let workout = this.getWorkout(); 
 
@@ -180,6 +195,7 @@ class Workout extends Component {
                             onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(exercise)}
                             onDelete={this.handleWorkoutDelete}
                             onReset={this.handleWorkoutReset}
+                            onReschedule={this.handleWorkoutReschedule}
                         /> :
                         <WorkoutReportCard 
                             workout={workout} 
