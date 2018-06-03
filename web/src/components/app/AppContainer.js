@@ -19,7 +19,7 @@ class AppContainer extends Component {
                 {this.props.show ? 
                     <div>
                 <AppBar 
-                    title="SWoT" 
+                    title={this.props.title}
                     style={styles.appBar}
                     onLeftIconButtonClick={this.toggleDrawer}
                 >
