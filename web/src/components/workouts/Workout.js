@@ -12,7 +12,6 @@ import { showSnackbar } from '../app/AppActions';
 import Spinner from '../shared/Spinner'
 import WorkoutCard from './WorkoutCard'
 import WorkoutReportCard from './WorkoutReportCard'
-import schedule from 'material-ui/svg-icons/action/schedule';
 
 const initialState = {
     stepIndex: 0,

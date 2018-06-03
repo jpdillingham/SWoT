@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import moment from 'moment';
 
-import { fetchRoutines } from '../routines/RoutinesActions'
-import { addWorkout } from '../workouts/WorkoutsActions'
 import Spinner from '../shared/Spinner'
 import { grey300 } from 'material-ui/styles/colors'
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
-import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from 'material-ui/TimePicker'
-
-import { showSnackbar } from '../app/AppActions.js'
 
 import { getGuid } from '../../util';
 
