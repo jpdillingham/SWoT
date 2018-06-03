@@ -39,16 +39,6 @@ const styles = {
 const getInitialState = () => ({
     selectedDate: new Date(),
     selectedTime: new Date(),
-    workout: {
-        id: getGuid(),
-        routine: { id: undefined },
-        scheduledTime: undefined,
-        startTime: undefined,
-        endTime: undefined,
-    },
-    validationErrors: {
-        routine: '',
-    },
     api: {
         isExecuting: false,
         isErrored: false,
@@ -76,6 +66,13 @@ class WorkoutRescheduleDialog extends Component {
     componentWillReceiveProps = (nextProps) => {
         if (this.props.open && !nextProps.open) {
             this.setState(getInitialState());
+        }
+        else if (!this.props.open && nextProps.open) {
+            this.setState({ 
+                ...getInitialState(), 
+                selectedDate: new Date(nextProps.workout.scheduledTime), 
+                selectedTime: new Date(nextProps.workout.scheduledTime),
+            });
         }
     }
 
@@ -110,7 +107,7 @@ class WorkoutRescheduleDialog extends Component {
                         <SaveRetryFlatButton 
                             onClick={this.handleSaveClick} 
                             api={this.state.api} 
-                            validation={this.state.validationErrors} 
+                            validation={{}} 
                         />
                     </div>
                 }
