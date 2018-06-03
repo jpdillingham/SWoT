@@ -7,7 +7,7 @@ import { WORKOUT_AVATAR_COLOR } from '../../../constants';
 
 import { fetchWorkoutsHistory } from '../../workouts/history/WorkoutsHistoryActions';
 import { fetchRoutines } from '../../routines/RoutinesActions';
-import { showSnackbar } from '../../app/AppActions';
+import { setTitle, showSnackbar } from '../../app/AppActions';
 
 import Spinner from '../../shared/Spinner';
 import History from '../../shared/history/History';
@@ -85,6 +85,7 @@ class WorkoutsHistory extends Component {
     }
 
     componentWillMount() {
+        this.props.setTitle('Workouts');
         this.fetchHistory(this.state.filters, 'loadApi');
         this.props.fetchRoutines();
     }
@@ -192,6 +193,7 @@ const mapDispatchToProps = {
     fetchWorkoutsHistory,
     fetchRoutines,
     showSnackbar,
+    setTitle,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(WorkoutsHistory)
