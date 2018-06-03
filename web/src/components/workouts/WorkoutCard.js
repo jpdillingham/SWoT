@@ -10,7 +10,7 @@ import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MenuItem from 'material-ui/MenuItem'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
-import { AvPlayArrow, AvStop, AvReplay } from 'material-ui/svg-icons';
+import { AvPlayArrow, AvStop, AvReplay, ActionUpdate } from 'material-ui/svg-icons';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField/TextField';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
@@ -20,6 +20,7 @@ import { WORKOUT_AVATAR_COLOR } from '../../constants'
 import WorkoutStepper from './WorkoutStepper';
 import ConfirmDialog from '../shared/ConfirmDialog';
 import Spinner from '../shared/Spinner';
+import WorkoutRescheduleDialog from './WorkoutRescheduleDialog';
 
 const styles = {
     cardHeader: {
@@ -68,6 +69,9 @@ const initialState = {
         open: false,
     },
     completeDialog: {
+        open: false,
+    },
+    rescheduleDialog: {
         open: false,
     },
     workout: {
@@ -150,6 +154,14 @@ class WorkoutCard extends Component {
         this.setState({ resetDialog: { open: false }})
     }
 
+    handleRescheduleClick = () => {
+        this.setState({ rescheduleDialog: { open: true }})
+    }
+
+    handleRescheduleDialogClose = (result) => {
+        this.setState({ rescheduleDialog: { open: false }})
+    }
+
     render() {
         return (
             <div>
@@ -187,12 +199,18 @@ class WorkoutCard extends Component {
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem 
-                            primaryText="Reset" 
-                            onClick={this.handleResetClick} 
-                            leftIcon={<AvReplay/>}
-                            disabled={!this.props.workout.startTime}
-                        />
+                        {this.props.workout.startTime ? 
+                            <MenuItem 
+                                primaryText="Reset" 
+                                onClick={this.handleResetClick} 
+                                leftIcon={<AvReplay/>}
+                            /> :
+                            <MenuItem 
+                                primaryText="Reschedule" 
+                                onClick={this.handleRescheduleClick} 
+                                leftIcon={<ActionUpdate/>}
+                            />                        
+                        }
                         <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                     </IconMenu>
                     <CardText>
@@ -244,6 +262,12 @@ class WorkoutCard extends Component {
                     <p>Are you sure you want to reset Workout '{this.props.workout.routine.name}'?</p>
                     <p>All data will be lost!</p>
                 </ConfirmDialog>
+                <WorkoutRescheduleDialog
+                    workout={this.props.workout}
+                    open={this.state.rescheduleDialog.open}
+                    onSave={this.props.onReschedule}
+                    onClose={this.handleRescheduleDialogClose}
+                />
             </div>
         )
     }
