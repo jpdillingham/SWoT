@@ -64,38 +64,8 @@ const getInitialState = () => ({
     }
 })
 
-class WorkoutDialog extends Component {
+class WorkoutRescheduleDialog extends Component {
     state = getInitialState();
-
-    handleCancelClick = () => {
-        this.setState({ api: { isExecuting: false, isErrored: false }});
-        this.props.handleClose();
-    }
-
-    handleSaveClick = () => {
-        this.setState({
-            validationErrors: {
-                routine: this.state.workout.routine.id === undefined ? 'A Routine must be selected.' : ''
-            }
-        }, () => {
-            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.setState({ 
-                    api: { ...this.state.api, isExecuting: true },
-                    workout: {
-                        ...this.state.workout,
-                        scheduledTime: this.getScheduledTime(),
-                    }
-                }, () => 
-                    this.props.addWorkout(this.state.workout)
-                    .then(response => {
-                        this.handleApiSuccess('Scheduled Workout \'' + response.data.routine.name + '\' for ' + moment(response.data.scheduledTime).calendar() + '.')
-                    }, error => {
-                        this.handleApiError('Error scheduling Workout: ' + error);
-                    })
-                )
-            }
-        })
-    }
 
     getScheduledTime = () => {
         let date = this.state.selectedDate;
@@ -104,32 +74,11 @@ class WorkoutDialog extends Component {
         return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), 0).getTime();
     }
 
-    handleApiSuccess = (message) => {
-        this.setState({ ...this.state.api, isExecuting: false })
-        this.props.showSnackbar(message)
-        this.props.handleClose();
-    }
-
-    handleApiError = (message) => {
-        this.setState({ api: { isExecuting: false, isErrored: true }})
-        this.props.showSnackbar(message);
-    }
-
-    handleRoutineChange = (event, index, value) => {
-        this.setState({ 
-            workout: { 
-                ...this.state.workout, 
-                routine: this.props.routines.find(r => r.id === value)
-            } 
-        });
-    }
-
     handleDateChange = (event, value) => {
         this.setState({ selectedDate: value });
     }
 
     handleTimeChange = (event, value) => {
-
         this.setState({ selectedTime: value })
     }
 
@@ -137,9 +86,20 @@ class WorkoutDialog extends Component {
         if (this.props.open && !nextProps.open) {
             this.setState(getInitialState());
         }
-        else if (!this.props.open && nextProps.open) {
-            this.props.fetchRoutines();
-        }
+    }
+
+    handleSaveClick = () => {
+        this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
+            this.props.onSave({ date: this.state.selectedDate, time: this.state.selectedTime })
+            .then(response => { 
+                this.props.onClose({ cancelled: false }) }, error => {
+                this.setState({ api: { isExecuting: false, isErrored: true }});
+            })
+        })
+    }
+
+    handleCancelClick = () => {
+        this.setState(getInitialState(), () => this.props.onClose({ cancelled: true }))
     }
 
     render() {
@@ -151,7 +111,7 @@ class WorkoutDialog extends Component {
                 contentStyle={{ ...styles.dialogContent, refreshStyle }}
                 titleStyle={refreshStyle}
                 actionsContainerStyle={refreshStyle}
-                title={'Schedule Workout'} 
+                title={'Reschedule Workout'} 
                 autoScrollBodyContent={true}
                 actions={
                     <div>
@@ -184,36 +144,10 @@ class WorkoutDialog extends Component {
                     minutesStep={5}
                     autoOk={true}
                 />
-                <SelectField
-                    floatingLabelText="Routine"
-                    value={this.state.workout.routine.id}
-                    onChange={this.handleRoutineChange}
-                    errorText={this.state.validationErrors.routine}
-                    style={styles.routine}
-                >
-                    {this.props.routines.map(r => 
-                        <MenuItem 
-                            key={r.id} 
-                            value={r.id} 
-                            primaryText={r.name}
-                            leftIcon={<ActionAssignment />}
-                        />
-                    )}
-                </SelectField>
                 {this.state.api.isExecuting? <Spinner /> : ''}
             </Dialog>
         )
     }
 }
 
-const mapStateToProps = (state) => ({
-    routines: state.routines
-})
-
-const mapDispatchToProps = {
-    showSnackbar,
-    fetchRoutines,
-    addWorkout
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(WorkoutDialog)
+export default WorkoutRescheduleDialog
