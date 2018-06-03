@@ -11,25 +11,13 @@ import TimePicker from 'material-ui/TimePicker'
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 
 const styles = {
-    name: {
-        width: '100%'
-    },
-    type: {
-        width: '100%'
-    },
-    url: {
-        width: '100%'
-    },
     dialogContent: {
         width: 400,
     },
-    addMetric: {
-        float: 'left'
-    },
-    routine: {
+    date: {
         width: '100%',
     },
-    date: {
+    time: {
         width: '100%',
     }
 }
@@ -120,6 +108,7 @@ class WorkoutRescheduleDialog extends Component {
                     onChange={this.handleDateChange}
                     value={this.state.selectedDate}
                     autoOk={true}
+                    style={styles.date}
                 />
                 <TimePicker
                     floatingLabelText="Time"
@@ -129,6 +118,7 @@ class WorkoutRescheduleDialog extends Component {
                     value={this.state.selectedTime}
                     minutesStep={5}
                     autoOk={true}
+                    style={styles.time}
                 />
                 {this.state.api.isExecuting? <Spinner /> : ''}
             </Dialog>
