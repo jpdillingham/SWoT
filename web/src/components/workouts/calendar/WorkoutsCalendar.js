@@ -6,7 +6,7 @@ import { sortByProp } from '../../../util';
 import { WORKOUT_AVATAR_COLOR } from '../../../constants';
 
 import { fetchWorkoutsHistory } from '../../workouts/history/WorkoutsHistoryActions';
-import { fetchRoutines } from '../../routines/RoutinesActions';
+import { fetchWorkouts } from '../WorkoutsActions';
 import { setTitle, showSnackbar } from '../../app/AppActions';
 
 import Spinner from '../../shared/Spinner';
@@ -85,7 +85,7 @@ class WorkoutsCalendar extends Component {
 
     componentWillMount() {
         this.props.setTitle('Workouts');
-        this.fetchWorkouts();
+        this.props.fetchWorkouts();
         this.fetchHistory(this.state.filters, 'loadApi');
     }
 
