@@ -71,7 +71,7 @@ class WorkoutsCalendar extends Component {
         defaulttoTime.setDate(defaulttoTime.getDate() + 1);
     
         let defaultfromTime = new Date(defaulttoTime);
-        defaultfromTime.setDate(defaultfromTime.getDate() - 30);
+        defaultfromTime.setDate(defaultfromTime.getDate() - 31);
     
         this.state = { 
             ...initialState, 
@@ -79,35 +79,26 @@ class WorkoutsCalendar extends Component {
                 ...initialState.filters, 
                 toTime: defaulttoTime.getTime(), 
                 fromTime: defaultfromTime.getTime(),
-                routineId: this.props.match.params.id,
             } 
         };        
     }
 
     componentWillMount() {
         this.props.setTitle('Workouts');
+        this.fetchWorkouts();
         this.fetchHistory(this.state.filters, 'loadApi');
-        this.props.fetchRoutines();
     }
 
     navigate = (url) => {
         this.props.history.push(url);
     }
 
-    handleItemClick = (workoutId) => {
+    handleWorkoutClick = (workoutId) => {
         this.navigate('/workouts/' + workoutId)
     }
 
     handleFiltersChange = (filters) => {
-        this.fetchHistory({ ...filters, routineId: this.state.filters.routineId });
-    }
 
-    handleCustomFilterChange = (filter, event, index, value) => {
-        this.fetchHistory({ ...this.state.filters, offset: 0, routineId: value })
-    }
-
-    handleCustomFilterClearClick = () => {
-        this.fetchHistory({ ...this.state.filters, routineId: undefined })
     }
 
     fetchHistory = (filters, api = 'refreshApi') => {
@@ -130,55 +121,7 @@ class WorkoutsCalendar extends Component {
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
-                        <History
-                            title={'History'}
-                            color={WORKOUT_AVATAR_COLOR}
-                            data={this.props.workoutsHistory.workouts}
-                            total={this.props.workoutsHistory.totalCount}
-                            refreshing={this.state.refreshApi.isExecuting}
-                            defaultFilters={this.state.filters}
-                            onFilterChange={this.handleFiltersChange}
-                            customFilters={
-                                <span>
-                                    <SelectField 
-                                        floatingLabelText={'Filter By'}
-                                        value={this.state.filters.routineId} 
-                                        onChange={(event, index, value) => this.handleCustomFilterChange('routineId', event, index, value)}
-                                        disabled={this.state.refreshApi.isExecuting}
-                                    >
-                                        {this.props.routines.map((r, index) => 
-                                            <MenuItem 
-                                                key={index} 
-                                                value={r.id} 
-                                                primaryText={r.name} 
-                                            />                    
-                                        )}
-                                        {!this.state.filters.routineId || this.props.routines.find(r => r.id === this.state.filters.routineId) ? '' :
-                                            <MenuItem key={-1} value={this.state.filters.routineId} primaryText={'Invalid Routine Id'}/>
-                                        }
-                                    </SelectField>
-                                    {this.state.filters.routineId ? 
-                                        <NavigationCancel style={styles.clearIcon} onClick={this.handleCustomFilterClearClick}/>
-                                    : '' }
-                                </span>
-                            }
-                        >
-                            <List>
-                                {this.props.workoutsHistory.workouts
-                                .sort(sortByProp('endTime', this.state.filters.order))
-                                .map((w, index) => 
-                                    <ListItem
-                                        key={index}
-                                        primaryText={w.routine.name}
-                                        secondaryText={'Completed ' + moment(w.endTime).calendar()}
-                                        leftIcon={<ActionAssignmentTurnedIn color={black}/>}
-                                        rightIcon={<ActionInfo color={black}/>}
-                                        onClick={() => this.handleItemClick(w.id)}
-                                        disabled={this.props.refreshing}
-                                    />
-                                )}
-                            </List>
-                        </History>
+                        hello world!
                     </div>
         )
     }
