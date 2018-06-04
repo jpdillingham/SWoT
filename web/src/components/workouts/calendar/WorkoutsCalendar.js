@@ -109,11 +109,17 @@ class WorkoutsCalendar extends Component {
     }
 
     render() {
+        let workouts = this.props.workouts.concat(this.props.workoutsHistory.workouts);
+
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div style={styles.grid}>
-                        hello world!
+                        <ul>
+                            {workouts.map(w => 
+                                <li key={w.id}>{w.endTime !== undefined ? 'COMPLETE: ' : w.startTime !== undefined ? 'IN PROGRESS: ' : 'SCHEDULED: '}{w.id}</li>
+                            )}
+                        </ul>
                     </div>
         )
     }
