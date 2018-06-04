@@ -27,6 +27,7 @@ import ConfirmRegistration from '../security/ConfirmRegistration';
 import { ensureSession } from '../security/SecurityActions';
 import { hideSnackbar } from './AppActions';
 import { ActionBuild, ActionTrendingUp } from 'material-ui/svg-icons';
+import WorkoutsCalendar from '../workouts/calendar/WorkoutsCalendar';
 
 const styles = {
     content: {
@@ -90,6 +91,7 @@ class App extends Component {
                                 <Route exact path="/history" component={WorkoutsHistory}/>
                                 <Route exact path="/workouts" component={Workouts}/>
                                 <Route exact path="/workouts/history" component={WorkoutsHistory}/>
+                                <Route path='/workouts/calendar' component={WorkoutsCalendar}/>
                                 <Route path="/workouts/history/:id" component={WorkoutsHistory}/>
                                 <Route path="/workouts/:id" component={Workout}/>
                                 <Route exact path="/exercises" component={Exercises}/>
