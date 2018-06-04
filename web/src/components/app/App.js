@@ -13,11 +13,12 @@ import Subheader from 'material-ui/Subheader/Subheader';
 
 import AppContainer from './AppContainer';
 
-import Workouts from '../workouts/Workouts';
-import Workout from '../workouts/Workout';
-import WorkoutsHistory from '../workouts/history/WorkoutsHistory';
 import Exercises from '../exercises/Exercises';
 import ExercisesHistory from '../exercises/history/ExercisesHistory';
+import Workout from '../workouts/Workout';
+import Workouts from '../workouts/Workouts';
+import WorkoutsCalendar from '../workouts/calendar/WorkoutsCalendar';
+import WorkoutsHistory from '../workouts/history/WorkoutsHistory';
 import Routines from '../routines/Routines';
 
 import Login from '../security/Login';
@@ -27,7 +28,6 @@ import ConfirmRegistration from '../security/ConfirmRegistration';
 import { ensureSession } from '../security/SecurityActions';
 import { hideSnackbar } from './AppActions';
 import { ActionBuild, ActionTrendingUp } from 'material-ui/svg-icons';
-import WorkoutsCalendar from '../workouts/calendar/WorkoutsCalendar';
 
 const styles = {
     content: {
