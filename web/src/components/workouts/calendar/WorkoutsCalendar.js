@@ -185,13 +185,13 @@ class WorkoutsCalendar extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    workouts: state.workouts,
     workoutsHistory: state.workoutsHistory,
-    routines: state.routines,
 })
 
 const mapDispatchToProps = {
+    fetchWorkouts,
     fetchWorkoutsHistory,
-    fetchRoutines,
     showSnackbar,
     setTitle,
 }
