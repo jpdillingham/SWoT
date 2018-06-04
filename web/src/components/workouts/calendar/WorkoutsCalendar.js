@@ -22,14 +22,7 @@ import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
 import SelectField from 'material-ui/SelectField';
 
 const initialState = {
-    filters: {
-        offset: 0,
-        limit: 5,
-        order: 'desc',
-        routineId: undefined,
-        toTime: undefined,
-        fromTime: undefined,
-    },
+    filters: {},
     loadApi: {
         isExecuting: false,
         isErrored: false,
@@ -76,7 +69,6 @@ class WorkoutsCalendar extends Component {
         this.state = { 
             ...initialState, 
             filters: { 
-                ...initialState.filters, 
                 toTime: defaulttoTime.getTime(), 
                 fromTime: defaultfromTime.getTime(),
             } 
