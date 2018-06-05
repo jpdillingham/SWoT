@@ -8,7 +8,10 @@ import { setTitle, showSnackbar } from '../../app/AppActions';
 
 import Spinner from '../../shared/Spinner';
 
-import { red500 } from 'material-ui/styles/colors';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
+import { black, red500, grey300 } from 'material-ui/styles/colors';
+import { WORKOUT_AVATAR_COLOR } from '../../../constants'
+import Avatar from 'material-ui/Avatar'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -26,6 +29,19 @@ const initialState = {
 }
 
 const styles = {
+    cardHeader: {
+        backgroundColor: WORKOUT_AVATAR_COLOR,
+        marginBottom: 0,
+    },
+    cardTitle: {
+        fontSize: '20px',
+        marginTop: 6,
+    },
+    card: {
+        width: '100%',
+        height: '100%',
+        position: 'relative',
+    },
     grid: {
         display: 'grid',
         gridGap: 10,
@@ -123,14 +139,33 @@ class WorkoutsCalendar extends Component {
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    <BigCalendar
-                        events={workouts}
-                        views={allViews}
-                        step={60}
-                        showMultiDayTimes
-                        defaultDate={new Date()}
-                        style={{height: 600}}
-                    />
+                    <Card 
+                        zDepth={2}                 
+                        style={!this.props.refreshing ? styles.card : 
+                            { 
+                                ...styles.card, 
+                                backgroundColor: grey300 
+                            }
+                        }
+                    >
+                        <CardHeader
+                            title={'Calendar'}
+                            titleStyle={styles.cardTitle}
+                            style={styles.cardHeader}
+                            avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={this.props.icon}></Avatar>}
+                        />
+                        <CardText>
+                            <BigCalendar
+                                events={workouts}
+                                views={allViews}
+                                step={60}
+                                showMultiDayTimes
+                                defaultDate={new Date()}
+                                style={{height: 600}}
+                            />
+                            {this.props.refreshing ? <Spinner/> : ''}
+                        </CardText>
+                    </Card> 
         )
     }
 }
