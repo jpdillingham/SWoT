@@ -148,7 +148,7 @@ class WorkoutsCalendar extends Component {
             status: w.startTime === undefined ? 'scheduled' : w.endTime === undefined ? 'started' : 'completed'
         }});
 
-        let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
+        let views = [ 'month', 'week', 'work_week', 'day'];
 
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
@@ -171,7 +171,7 @@ class WorkoutsCalendar extends Component {
                         <CardText>
                             <BigCalendar
                                 events={workouts}
-                                views={allViews}
+                                views={views}
                                 step={60}
                                 showMultiDayTimes
                                 defaultDate={new Date()}
