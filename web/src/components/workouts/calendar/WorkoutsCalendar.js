@@ -15,6 +15,7 @@ import Avatar from 'material-ui/Avatar'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import { ActionEvent } from 'material-ui/svg-icons';
 
 const initialState = {
     filters: {},
@@ -152,7 +153,7 @@ class WorkoutsCalendar extends Component {
                             title={'Calendar'}
                             titleStyle={styles.cardTitle}
                             style={styles.cardHeader}
-                            avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={this.props.icon}></Avatar>}
+                            avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionEvent/>}></Avatar>}
                         />
                         <CardText>
                             <BigCalendar
