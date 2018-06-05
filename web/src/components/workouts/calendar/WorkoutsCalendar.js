@@ -9,7 +9,7 @@ import { setTitle, showSnackbar } from '../../app/AppActions';
 import Spinner from '../../shared/Spinner';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import { black, red500, grey300 } from 'material-ui/styles/colors';
+import { black, red500, grey300, yellow500, green500 } from 'material-ui/styles/colors';
 import { WORKOUT_AVATAR_COLOR } from '../../../constants'
 import Avatar from 'material-ui/Avatar'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
@@ -122,6 +122,18 @@ class WorkoutsCalendar extends Component {
         })
     }
 
+    eventStyleGetter = (event, start, end, isSelected) => {
+        console.log(event);
+
+        var backgroundColor = event.status === 'scheduled' ? red500 : event.status === 'started' ? yellow500 : green500;
+        var style = {
+            backgroundColor: backgroundColor,
+        };
+        return {
+            style: style
+        };
+    }
+
     render() {
         let workoutsHistory = this.props.workoutsHistory && this.props.workoutsHistory.workouts ? this.props.workoutsHistory.workouts : [];
         let workouts = this.props.workouts || [];
@@ -132,7 +144,8 @@ class WorkoutsCalendar extends Component {
             id: w.id, 
             title: w.routine.name, 
             start: w.startTime || w.scheduledTime, 
-            end: w.endTime || w.startTime || w.scheduledTime
+            end: w.endTime || w.startTime || w.scheduledTime,
+            status: w.startTime === undefined ? 'scheduled' : w.endTime === undefined ? 'started' : 'completed'
         }});
 
         let allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
@@ -163,6 +176,7 @@ class WorkoutsCalendar extends Component {
                                 showMultiDayTimes
                                 defaultDate={new Date()}
                                 style={{height: 600}}
+                                eventPropGetter={this.eventStyleGetter}
                             />
                             {this.props.refreshing ? <Spinner/> : ''}
                         </CardText>
