@@ -175,7 +175,7 @@ class WorkoutsCalendar extends Component {
                                 step={60}
                                 showMultiDayTimes
                                 defaultDate={new Date()}
-                                style={{height: 600}}
+                                style={{height: 300}}
                                 eventPropGetter={this.eventStyleGetter}
                             />
                             {this.props.refreshing ? <Spinner/> : ''}
