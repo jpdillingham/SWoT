@@ -143,8 +143,8 @@ class WorkoutsCalendar extends Component {
             return { 
             id: w.id, 
             title: w.routine.name, 
-            start: w.startTime || w.scheduledTime, 
-            end: w.endTime || w.startTime || w.scheduledTime,
+            start: moment(w.startTime || w.scheduledTime).toDate(), 
+            end: moment(w.endTime || w.startTime || w.scheduledTime).toDate(),
             status: w.startTime === undefined ? 'scheduled' : w.endTime === undefined ? 'started' : 'completed'
         }});
 
