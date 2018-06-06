@@ -197,39 +197,6 @@ class WorkoutsCalendar extends Component {
                                 style={{height: 600}}
                                 eventPropGetter={this.eventStyleGetter}
                             />
-                            <GridList cellHeight={30} cols={7} padding={0}>
-                                {daysOfWeek.map(d => 
-                                    <GridTile key={d}>{d}</GridTile>
-                                )}
-                            </GridList>
-                            <GridList
-                                cellHeight={120}
-                                cols={7}
-                                padding={0}
-                                style={{borderRight: '1px solid black', borderTop: '1px solid black'}}
-                            >
-                                {dates.map(d => 
-                                    <GridTile
-                                        key={d}
-                                        style={{
-                                            borderBottom: '1px solid black',
-                                            borderLeft: '1px solid black',
-                                        }}
-                                    >
-                                        <div style={{padding: 8}}>
-                                        <span>{d}</span>
-                                        <Chip style={{width: '100%', backgroundColor: EXERCISE_AVATAR_COLOR}}>
-                                            <Avatar 
-                                                backgroundColor={EXERCISE_AVATAR_COLOR} 
-                                                size={16} 
-                                                src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'} 
-                                            />
-                                            OHP/Squat (MF)
-                                        </Chip>
-                                        </div>
-                                    </GridTile>
-                                )}
-                            </GridList>
                             {this.props.refreshing ? <Spinner/> : ''}
                         </CardText>
                     </Card> 
