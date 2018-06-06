@@ -16,11 +16,6 @@ import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { ActionEvent } from 'material-ui/svg-icons';
-import { GridList, GridTile } from 'material-ui/GridList'
-import Subheader from 'material-ui/Subheader'
-import Chip from 'material-ui/Chip'
-
-import { EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../../constants';
 
 const initialState = {
     filters: {},
@@ -153,20 +148,7 @@ class WorkoutsCalendar extends Component {
             status: w.startTime === undefined ? 'scheduled' : w.endTime === undefined ? 'started' : 'completed'
         }});
 
-        let views = [ 'month', 'week', 'work_week', 'day'];
-
-        let dates = [];
-        var i;
-        for (i = 0; i < 35; i++) {
-            dates.push(i);
-        }
-
-        let exerciseImage = 'Weightlifting';
-        if (EXERCISE_TYPES.indexOf(exerciseImage) === -1) { 
-            exerciseImage = 'unknown'
-        }
-
-        let daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat']
+        let views = [ 'month', 'week' ];
 
         return (
             
