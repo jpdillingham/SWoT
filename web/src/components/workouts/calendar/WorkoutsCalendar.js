@@ -166,6 +166,8 @@ class WorkoutsCalendar extends Component {
             exerciseImage = 'unknown'
         }
 
+        let daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat']
+
         return (
             
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
@@ -186,7 +188,7 @@ class WorkoutsCalendar extends Component {
                             avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionEvent/>}></Avatar>}
                         />
                         <CardText>
-                            {/* <BigCalendar
+                            <BigCalendar
                                 events={workouts}
                                 views={views}
                                 step={60}
@@ -194,7 +196,12 @@ class WorkoutsCalendar extends Component {
                                 defaultDate={new Date()}
                                 style={{height: 600}}
                                 eventPropGetter={this.eventStyleGetter}
-                            /> */}
+                            />
+                            <GridList cellHeight={30} cols={7} padding={0}>
+                                {daysOfWeek.map(d => 
+                                    <GridTile key={d}>{d}</GridTile>
+                                )}
+                            </GridList>
                             <GridList
                                 cellHeight={120}
                                 cols={7}
@@ -210,7 +217,6 @@ class WorkoutsCalendar extends Component {
                                         }}
                                     >
                                         <div style={{padding: 8}}>
-                                        <span style={{display: 'block'}}>Mon</span>
                                         <span>{d}</span>
                                         <Chip style={{width: '100%', backgroundColor: EXERCISE_AVATAR_COLOR}}>
                                             <Avatar 
