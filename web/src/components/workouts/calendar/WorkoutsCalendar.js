@@ -18,6 +18,9 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { ActionEvent } from 'material-ui/svg-icons';
 import { GridList, GridTile } from 'material-ui/GridList'
 import Subheader from 'material-ui/Subheader'
+import Chip from 'material-ui/Chip'
+
+import { EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../../constants';
 
 const initialState = {
     filters: {},
@@ -158,7 +161,13 @@ class WorkoutsCalendar extends Component {
             dates.push(i);
         }
 
+        let exerciseImage = 'Weightlifting';
+        if (EXERCISE_TYPES.indexOf(exerciseImage) === -1) { 
+            exerciseImage = 'unknown'
+        }
+
         return (
+            
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <Card 
@@ -189,21 +198,27 @@ class WorkoutsCalendar extends Component {
                             <GridList
                                 cellHeight={100}
                                 cols={7}
+                                padding={0}
+                                style={{borderRight: '1px solid black', borderTop: '1px solid black'}}
                             >
                                 {dates.map(d => 
                                     <GridTile
                                         key={d}
-                                        title={'Mon'}
-                                        titleStyle={{
-                                            height: 10,
-                                            padding: 0,
-                                            margin: 0,
+                                        style={{
+                                            borderBottom: '1px solid black',
+                                            borderLeft: '1px solid black'
                                         }}
-                                        titlePosition={'top'}
-                                        style={{border: '1px solid black'}}
-                                        subtitle={d}
-                                        subtitleStyle={{}}
                                     >
+                                        <span style={{display: 'block'}}>Mon</span>
+                                        <span>{d}</span>
+                                        <Chip style={{marginLeft: 2, marginRight: 'auto', backgroundColor: EXERCISE_AVATAR_COLOR}}>
+                                            <Avatar 
+                                                backgroundColor={EXERCISE_AVATAR_COLOR} 
+                                                size={16} 
+                                                src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'} 
+                                            />
+                                            OHP/Squat (MF)
+                                        </Chip>
                                     </GridTile>
                                 )}
                             </GridList>
