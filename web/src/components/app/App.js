@@ -13,11 +13,12 @@ import Subheader from 'material-ui/Subheader/Subheader';
 
 import AppContainer from './AppContainer';
 
-import Workouts from '../workouts/Workouts';
-import Workout from '../workouts/Workout';
-import WorkoutsHistory from '../workouts/history/WorkoutsHistory';
 import Exercises from '../exercises/Exercises';
 import ExercisesHistory from '../exercises/history/ExercisesHistory';
+import Workout from '../workouts/Workout';
+import Workouts from '../workouts/Workouts';
+import WorkoutsCalendar from '../workouts/calendar/WorkoutsCalendar';
+import WorkoutsHistory from '../workouts/history/WorkoutsHistory';
 import Routines from '../routines/Routines';
 
 import Login from '../security/Login';
@@ -90,6 +91,7 @@ class App extends Component {
                                 <Route exact path="/history" component={WorkoutsHistory}/>
                                 <Route exact path="/workouts" component={Workouts}/>
                                 <Route exact path="/workouts/history" component={WorkoutsHistory}/>
+                                <Route path='/workouts/calendar' component={WorkoutsCalendar}/>
                                 <Route path="/workouts/history/:id" component={WorkoutsHistory}/>
                                 <Route path="/workouts/:id" component={Workout}/>
                                 <Route exact path="/exercises" component={Exercises}/>
