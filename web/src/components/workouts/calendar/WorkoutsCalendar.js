@@ -211,7 +211,7 @@ class WorkoutsCalendar extends Component {
                                     >
                                         <span style={{display: 'block'}}>Mon</span>
                                         <span>{d}</span>
-                                        <Chip style={{marginLeft: 2, marginRight: 'auto', backgroundColor: EXERCISE_AVATAR_COLOR}}>
+                                        <Chip style={{width: '100%', backgroundColor: EXERCISE_AVATAR_COLOR}}>
                                             <Avatar 
                                                 backgroundColor={EXERCISE_AVATAR_COLOR} 
                                                 size={16} 
