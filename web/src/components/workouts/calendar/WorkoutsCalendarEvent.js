@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 
 import { black } from 'material-ui/styles/colors'
 
-const styles = {
-}
-
 class WorkoutsCalendarEvent extends Component {
     render() {
         console.log(this.props)
