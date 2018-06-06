@@ -206,9 +206,10 @@ class WorkoutsCalendar extends Component {
                                         key={d}
                                         style={{
                                             borderBottom: '1px solid black',
-                                            borderLeft: '1px solid black'
+                                            borderLeft: '1px solid black',
                                         }}
                                     >
+                                        <div style={{padding: 8}}>
                                         <span style={{display: 'block'}}>Mon</span>
                                         <span>{d}</span>
                                         <Chip style={{width: '100%', backgroundColor: EXERCISE_AVATAR_COLOR}}>
@@ -219,6 +220,7 @@ class WorkoutsCalendar extends Component {
                                             />
                                             OHP/Squat (MF)
                                         </Chip>
+                                        </div>
                                     </GridTile>
                                 )}
                             </GridList>
