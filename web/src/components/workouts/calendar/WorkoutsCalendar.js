@@ -16,10 +16,10 @@ import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { ActionEvent } from 'material-ui/svg-icons';
+import WorkoutsCalendarEvent from './WorkoutsCalendarEvent';
 
 const initialState = {
     filters: {},
-    view: 'month',
     loadApi: {
         isExecuting: false,
         isErrored: false,
@@ -182,10 +182,8 @@ class WorkoutsCalendar extends Component {
                                 selectable
                                 events={workouts}
                                 views={views}
-                                defaultView={this.state.view}
-                                toolbar={false}
+                                toolbar
                                 popup
-                                view={this.state.view}
                                 step={60}
                                 showMultiDayTimes
                                 defaultDate={new Date()}
@@ -193,6 +191,9 @@ class WorkoutsCalendar extends Component {
                                 eventPropGetter={this.eventStyleGetter}
                                 onSelectEvent={this.handleSelectEvent}
                                 onSelectSlot={this.handleSelectSlot}
+                                components={{
+                                    eventWrapper: WorkoutsCalendarEvent
+                                }}
                             />
                             {this.props.refreshing ? <Spinner/> : ''}
                         </CardText>
