@@ -196,7 +196,7 @@ class WorkoutsCalendar extends Component {
                                 eventPropGetter={this.eventStyleGetter}
                             /> */}
                             <GridList
-                                cellHeight={100}
+                                cellHeight={120}
                                 cols={7}
                                 padding={0}
                                 style={{borderRight: '1px solid black', borderTop: '1px solid black'}}
