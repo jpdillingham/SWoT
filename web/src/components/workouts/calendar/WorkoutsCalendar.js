@@ -16,6 +16,8 @@ import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { ActionEvent } from 'material-ui/svg-icons';
+import { GridList, GridTile } from 'material-ui/GridList'
+import Subheader from 'material-ui/Subheader'
 
 const initialState = {
     filters: {},
@@ -150,6 +152,12 @@ class WorkoutsCalendar extends Component {
 
         let views = [ 'month', 'week', 'work_week', 'day'];
 
+        let dates = [];
+        var i;
+        for (i = 0; i < 35; i++) {
+            dates.push(i);
+        }
+
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
@@ -169,15 +177,36 @@ class WorkoutsCalendar extends Component {
                             avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionEvent/>}></Avatar>}
                         />
                         <CardText>
-                            <BigCalendar
+                            {/* <BigCalendar
                                 events={workouts}
                                 views={views}
                                 step={60}
                                 showMultiDayTimes
                                 defaultDate={new Date()}
-                                style={{height: 300}}
+                                style={{height: 600}}
                                 eventPropGetter={this.eventStyleGetter}
-                            />
+                            /> */}
+                            <GridList
+                                cellHeight={100}
+                                cols={7}
+                            >
+                                {dates.map(d => 
+                                    <GridTile
+                                        key={d}
+                                        title={'Mon'}
+                                        titleStyle={{
+                                            height: 10,
+                                            padding: 0,
+                                            margin: 0,
+                                        }}
+                                        titlePosition={'top'}
+                                        style={{border: '1px solid black'}}
+                                        subtitle={d}
+                                        subtitleStyle={{}}
+                                    >
+                                    </GridTile>
+                                )}
+                            </GridList>
                             {this.props.refreshing ? <Spinner/> : ''}
                         </CardText>
                     </Card> 
