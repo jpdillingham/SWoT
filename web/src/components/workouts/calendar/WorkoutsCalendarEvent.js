@@ -8,6 +8,7 @@ const styles = {
         position: 'relative',
         borderRadius: 0,
         height: 28,
+        display: 'block',
     },
     icon: {
         width: 16,
