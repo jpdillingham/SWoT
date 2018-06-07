@@ -1,25 +1,31 @@
 import React, { Component } from 'react';
 
 import { black, red500, yellow500, green500 } from 'material-ui/styles/colors'
+import { AvPlayArrow } from 'material-ui/svg-icons';
 
+const styles = {
+    container: {
+        position: 'relative'
+    },
+    title: {
+        position: 'absolute',
+        marginTop: 5,
+        textOverflow: 'ellipsis'
+    }
+}
 class WorkoutsCalendarEvent extends Component {
     render() {
-        console.log(this.props)
         let event = this.props.event;
         let backgroundColor = event.status === 'scheduled' ? red500 : event.status === 'started' ? yellow500 : green500;
 
         return (
             <div>
                 {React.Children.map(this.props.children, child =>
-                    React.cloneElement(child, { 
-                        style: { 
-                            ...child.props.style, 
-                            color: black,
-                            backgroundColor: backgroundColor, 
-                            borderRadius: 0 
-                        } 
-                    }))
-                }
+                    <div {...child.props} style={styles.container}>
+                        <AvPlayArrow/>
+                        <span style={styles.title}>{this.props.event.title}</span>
+                    </div>
+                )}
             </div>
         )
     }
