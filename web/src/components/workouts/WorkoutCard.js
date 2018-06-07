@@ -86,50 +86,28 @@ const initialState = {
 class WorkoutCard extends Component {
     state = initialState;
 
-    handleStartCompleteClick = (event, confirmComplete = false) => {
-        let workout = { 
-            ...this.props.workout,
-            notes: this.state.workout.notes
-        };
-
-        let notification;
+    handleStartCompleteClick = () => {
+        let workout = this.props.workout;
 
         if (workout.startTime === undefined) {
-            workout.startTime = new Date().getTime();
-            notification = 'Started Workout \'' + workout.routine.name + '\'.';
+            this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
+                this.props.onStart(workout)
+                .then(response => { 
+                    this.setState({ api: { isExecuting: false, isErrored: false }});
+                }, error => {
+                    this.setState({ api: { isExecuting: false, isErrored: true }});
+                })
+            })
         }
         else if (workout.endTime === undefined) {
-            if (!confirmComplete) {
-                this.setState({ completeDialog: { open: true }});
-                return;
-            } 
-            else {
-                workout.endTime = new Date().getTime();
-                notification = 'Completed Workout \'' + workout.routine.name + '\'.';
-            }
+            this.setState({ completeDialog: { open: true }});
         }
-
-        this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
-            this.props.onWorkoutChange(workout, notification)
-            .then(response => { 
-                if (response.data.endTime === undefined) {
-                    this.setState({ api: { isExecuting: false, isErrored: false }});
-                }
-            }, error => {
-                this.setState({ api: { isExecuting: false, isErrored: true }});
-            })
-        })
     }
 
-    handleCompleteDialogClose = () => {
-        this.setState({ completeDialog: { open: false }});
-    }
-
-    handleCompleteConfirm = () => {
-        return new Promise((resolve, reject) => {
-            this.handleStartCompleteClick(null, true);
-            resolve(true);
-        });
+    handleCompleteDialogClose = (result) => {
+        if (result.cancelled) {
+            this.setState({ completeDialog: { open: false }});
+        }
     }
 
     handleNotesChange = (event, value) => {
@@ -236,7 +214,7 @@ class WorkoutCard extends Component {
                 <ConfirmDialog 
                     title={'Complete Workout'}
                     buttonCaption={'Complete'}
-                    onConfirm={this.handleCompleteConfirm}
+                    onConfirm={() => this.props.onComplete({ ...this.props.workout, notes: this.state.workout.notes })}
                     onClose={this.handleCompleteDialogClose}
                     open={this.state.completeDialog.open} 
                 >
