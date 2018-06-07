@@ -11,7 +11,8 @@ const styles = {
     title: {
         position: 'absolute',
         marginTop: 5,
-        textOverflow: 'ellipsis'
+        textOverflow: 'ellipsis',
+        color: black,
     }
 }
 class WorkoutsCalendarEvent extends Component {
@@ -22,7 +23,7 @@ class WorkoutsCalendarEvent extends Component {
         return (
             <div>
                 {React.Children.map(this.props.children, child =>
-                    <div {...child.props} style={styles.container}>
+                    <div {...child.props} style={{ ...styles.container, backgroundColor: backgroundColor}}>
                         <AvPlayArrow/>
                         <span style={styles.title}>{this.props.event.title}</span>
                     </div>
