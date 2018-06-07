@@ -5,7 +5,8 @@ import { AvPlayArrow } from 'material-ui/svg-icons';
 
 const styles = {
     container: {
-        position: 'relative'
+        position: 'relative',
+        borderRadius: 0
     },
     title: {
         position: 'absolute',
