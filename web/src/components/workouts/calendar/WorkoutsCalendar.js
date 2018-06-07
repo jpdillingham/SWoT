@@ -123,16 +123,6 @@ class WorkoutsCalendar extends Component {
         })
     }
 
-    eventStyleGetter = (event, start, end, isSelected) => {
-        var backgroundColor = event.status === 'scheduled' ? red500 : event.status === 'started' ? yellow500 : green500;
-        var style = {
-            backgroundColor: backgroundColor,
-        };
-        return {
-            style: style
-        };
-    }
-
     handleSelectEvent = (event) => {
         console.log(event);
     }
@@ -188,7 +178,6 @@ class WorkoutsCalendar extends Component {
                                 showMultiDayTimes
                                 defaultDate={new Date()}
                                 style={{height: 600}}
-                                eventPropGetter={this.eventStyleGetter}
                                 onSelectEvent={this.handleSelectEvent}
                                 onSelectSlot={this.handleSelectSlot}
                                 components={{
