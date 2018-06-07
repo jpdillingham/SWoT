@@ -164,6 +164,30 @@ class Workout extends Component {
         })
     }
 
+    handleWorkoutComplete = (workout) => {
+        return new Promise((resolve, reject) => {
+            this.props.updateWorkout({ ...workout, endTime: new Date().getTime() })
+            .then(response => {
+                this.props.showSnackbar('Completed Workout \'' + workout.routine.name + '\'.');
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error completing Workout \'' + workout.routine.name + '\'.');
+            })
+        })
+    }
+
+    handleWorkoutStart = (workout) => {
+        return new Promise((resolve, reject) => {
+            this.props.updateWorkout({ ...workout, startTime: new Date().getTime() })
+            .then(response => {
+                this.props.showSnackbar('Started Workout \'' + workout.routine.name + '\'.');
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error starting Workout \'' + workout.routine.name + '\'.');
+            })
+        })
+    }
+
     handleWorkoutDelete = () => {
         let workout = this.getWorkout();
 
@@ -190,10 +214,12 @@ class Workout extends Component {
                         <WorkoutCard
                             workout={workout}
                             onWorkoutChange={this.handleWorkoutChange}
-                            onExerciseChange={(exercise) => this.handleWorkoutExerciseChange(exercise)}
+                            onExerciseChange={this.handleWorkoutExerciseChange}
                             onDelete={this.handleWorkoutDelete}
                             onReset={this.handleWorkoutReset}
                             onReschedule={this.handleWorkoutReschedule}
+                            onComplete={this.handleWorkoutComplete}
+                            onStart={this.handleWorkoutStart}
                         /> :
                         <WorkoutReportCard 
                             workout={workout} 
