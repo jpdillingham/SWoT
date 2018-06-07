@@ -9,7 +9,7 @@ import { setTitle, showSnackbar } from '../../app/AppActions';
 import Spinner from '../../shared/Spinner';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import { black, red500, grey300, yellow500, green500 } from 'material-ui/styles/colors';
+import { black, red500, grey300 } from 'material-ui/styles/colors';
 import { WORKOUT_AVATAR_COLOR } from '../../../constants'
 import Avatar from 'material-ui/Avatar'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
