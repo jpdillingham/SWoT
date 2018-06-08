@@ -7,12 +7,13 @@ const styles = {
     container: {
         position: 'relative',
         borderRadius: 0,
-        height: 28,
+        border: 0,
+        height: 24,
         display: 'block',
     },
     icon: {
-        width: 16,
-        height: 16,
+        width: 14,
+        height: 14,
         marginTop: 3,
         float: 'right'
     },
@@ -21,8 +22,10 @@ const styles = {
         marginTop: 3,
         textOverflow: 'ellipsis',
         color: black,
-        marginLeft: 3,
-        float: 'left'
+        float: 'left',
+        whiteSpace: 'pre',
+        overflow: 'hidden',
+        width: 'calc(100% - 25px)',
     }
 }
 class WorkoutsCalendarEvent extends Component {
@@ -36,7 +39,7 @@ class WorkoutsCalendarEvent extends Component {
             <div>
                 {React.Children.map(this.props.children, child =>
                     <div {...child.props} style={{ ...styles.container, backgroundColor: backgroundColor}}>
-                        <span style={styles.title}>{this.props.event.title}</span>{icon}
+                        <div style={styles.title}>{this.props.event.title}</div>{icon}
                     </div>
                 )}
             </div>
