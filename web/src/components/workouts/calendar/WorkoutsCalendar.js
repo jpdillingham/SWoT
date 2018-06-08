@@ -124,7 +124,7 @@ class WorkoutsCalendar extends Component {
     }
 
     handleSelectEvent = (event) => {
-        console.log(event);
+        this.navigate('/workouts/' + event.id)
     }
 
     handleSelectSlot = (slot) => {
