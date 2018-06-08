@@ -69,24 +69,7 @@ const styles = {
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
 class WorkoutsCalendar extends Component {
-    constructor(props) {
-        super(props);
-
-        let defaulttoTime = new Date();
-        defaulttoTime.setDate(defaulttoTime.getDate() + 1);
-    
-        let defaultfromTime = new Date(defaulttoTime);
-        defaultfromTime.setDate(defaultfromTime.getDate() - 31);
-    
-        this.state = { 
-            ...initialState, 
-            filters: { 
-                toTime: defaulttoTime.getTime(), 
-                fromTime: defaultfromTime.getTime(),
-            } 
-        };
-    }
-
+    state = initialState;
     componentWillMount() {
         Promise.all([
             this.props.setTitle('Workouts'),
@@ -124,10 +107,6 @@ class WorkoutsCalendar extends Component {
 
     handleSelectSlot = (slot) => {
         console.log(slot);
-    }
-
-    handleView = (view) => {
-        this.handleUpdate(new Date(), view);
     }
 
     handleNavigate = (date, view) => {
@@ -171,7 +150,7 @@ class WorkoutsCalendar extends Component {
             status: w.startTime === undefined ? 'scheduled' : w.endTime === undefined ? 'started' : 'completed'
         }});
 
-        let views = [ 'month', 'week' ];
+        let views = [ 'month' ];
 
         return (
             
