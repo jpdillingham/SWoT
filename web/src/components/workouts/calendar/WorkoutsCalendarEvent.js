@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
-import { black, red500, yellow500, green500 } from 'material-ui/styles/colors'
+import { black } from 'material-ui/styles/colors'
 import { AvPlayArrow, ActionSchedule, AvStop } from 'material-ui/svg-icons';
+import { WORKOUT_AVATAR_COLOR } from '../../../constants';
 
 const styles = {
     container: {
@@ -31,14 +32,16 @@ const styles = {
 class WorkoutsCalendarEvent extends Component {
     render() {
         let event = this.props.event;
-        let backgroundColor = event.status === 'scheduled' ? red500 : event.status === 'started' ? yellow500 : green500;
         let icon = event.status === 'scheduled' ? <ActionSchedule style={styles.icon}/> : 
             event.status === 'started' ? <AvPlayArrow style={styles.icon}/> : <AvStop style={styles.icon}/>;
 
         return (
             <div>
                 {React.Children.map(this.props.children, child =>
-                    <div {...child.props} style={{ ...styles.container, backgroundColor: backgroundColor}}>
+                    <div 
+                        {...child.props}
+                        style={{ ...styles.container, backgroundColor: WORKOUT_AVATAR_COLOR }}
+                    >
                         <div style={styles.title}>{this.props.event.title}</div>{icon}
                     </div>
                 )}
