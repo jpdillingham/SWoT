@@ -130,6 +130,10 @@ class WorkoutDialog extends Component {
         }
         else if (!this.props.open && nextProps.open) {
             this.props.fetchRoutines();
+            
+            if (nextProps.defaultDate) {
+                this.setState({ selectedDate: nextProps.defaultDate });
+            }
         }
     }
 
