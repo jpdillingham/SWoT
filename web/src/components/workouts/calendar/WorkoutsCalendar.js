@@ -17,6 +17,7 @@ import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { ActionEvent } from 'material-ui/svg-icons';
 import WorkoutsCalendarEvent from './WorkoutsCalendarEvent';
+import WorkoutsCalendarDate from './WorkoutsCalendarDate';
 
 const initialState = {
     filters: {},
@@ -187,9 +188,9 @@ class WorkoutsCalendar extends Component {
                                 onSelectEvent={this.handleSelectEvent}
                                 onSelectSlot={this.handleSelectSlot}
                                 components={{
-                                    eventWrapper: WorkoutsCalendarEvent
+                                    eventWrapper: WorkoutsCalendarEvent,
+                                    dateCellWrapper: WorkoutsCalendarDate,
                                 }}
-                                onView={this.handleView}
                                 onNavigate={this.handleNavigate}
                             />
                             {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
