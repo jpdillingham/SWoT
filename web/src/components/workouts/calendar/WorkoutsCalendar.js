@@ -17,7 +17,7 @@ import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { ActionEvent } from 'material-ui/svg-icons';
 import WorkoutsCalendarEvent from './WorkoutsCalendarEvent';
-import WorkoutsCalendarDate from './WorkoutsCalendarDate';
+import WorkoutsCalendarDateCell from './WorkoutsCalendarDateCell';
 import AddFloatingAddButton from '../../shared/AddFloatingActionButton';
 import WorkoutDialog from '../WorkoutDialog';
 
@@ -200,7 +200,7 @@ class WorkoutsCalendar extends Component {
                                     onSelectSlot={this.handleSelectSlot}
                                     components={{
                                         eventWrapper: WorkoutsCalendarEvent,
-                                        dateCellWrapper: WorkoutsCalendarDate,
+                                        dateCellWrapper: WorkoutsCalendarDateCell,
                                     }}
                                     onNavigate={this.handleNavigate}
                                 />

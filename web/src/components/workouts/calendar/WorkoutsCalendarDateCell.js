@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class WorkoutsCalendarDate extends Component {
+class WorkoutsCalendarDateCell extends Component {
     render() {
         let today = new Date();
         let day = new Date(this.props.value);
@@ -15,4 +15,4 @@ class WorkoutsCalendarDate extends Component {
     }
 }
 
-export default WorkoutsCalendarDate
+export default WorkoutsCalendarDateCell
