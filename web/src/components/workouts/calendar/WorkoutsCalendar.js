@@ -91,9 +91,8 @@ class WorkoutsCalendar extends Component {
         Promise.all([
             this.props.setTitle('Workouts'),
             this.props.fetchWorkouts(),
-            this.fetchHistory(this.state.filters, 'loadApi'),
+            this.handleUpdate(new Date(), 'month')
         ])
-
     }
 
     navigate = (url) => {
@@ -102,10 +101,6 @@ class WorkoutsCalendar extends Component {
 
     handleWorkoutClick = (workoutId) => {
         this.navigate('/workouts/' + workoutId)
-    }
-
-    handleFiltersChange = (filters) => {
-
     }
 
     fetchHistory = (filters, api = 'refreshApi') => {
@@ -131,6 +126,37 @@ class WorkoutsCalendar extends Component {
         console.log(slot);
     }
 
+    handleView = (view) => {
+        this.handleUpdate(new Date(), view);
+    }
+
+    handleNavigate = (date, view) => {
+        this.handleUpdate(date, view);
+    }
+
+    handleUpdate = (date, view) => {
+        let start, end;
+
+        if(view === 'day'){
+          start = moment(date).startOf('day');
+          end = moment(date).endOf('day');
+        }
+        else if(view === 'week'){
+          start = moment(date).startOf('isoWeek');
+          end = moment(date).endOf('isoWeek');
+        }
+        else if(view === 'month'){
+          start = moment(date).startOf('month').subtract(7, 'days');
+          end = moment(date).endOf('month').add(7, 'days');
+        }
+        else if(view === 'agenda'){
+          start = moment(date).startOf('day');
+          end = moment(date).endOf('day').add(1, 'month');
+        }
+
+        this.fetchHistory({ fromTime: start, toTime: end });
+    }
+
     render() {
         let workoutsHistory = this.props.workoutsHistory && this.props.workoutsHistory.workouts ? this.props.workoutsHistory.workouts : [];
         let workouts = this.props.workouts || [];
@@ -153,7 +179,7 @@ class WorkoutsCalendar extends Component {
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <Card 
                         zDepth={2}                 
-                        style={!this.props.refreshing ? styles.card : 
+                        style={!this.state.refreshApi.isExecuting ? styles.card : 
                             { 
                                 ...styles.card, 
                                 backgroundColor: grey300 
@@ -167,7 +193,6 @@ class WorkoutsCalendar extends Component {
                             avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionEvent/>}></Avatar>}
                         />
                         <CardText>
-                            <button onClick={() => this.setState({ view: 'day'})}>day</button>
                             <BigCalendar
                                 selectable
                                 events={workouts}
@@ -183,8 +208,10 @@ class WorkoutsCalendar extends Component {
                                 components={{
                                     eventWrapper: WorkoutsCalendarEvent
                                 }}
+                                onView={this.handleView}
+                                onNavigate={this.handleNavigate}
                             />
-                            {this.props.refreshing ? <Spinner/> : ''}
+                            {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
                         </CardText>
                     </Card> 
         )
