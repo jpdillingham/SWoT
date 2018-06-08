@@ -177,7 +177,7 @@ class WorkoutsCalendar extends Component {
                                 step={60}
                                 showMultiDayTimes
                                 defaultDate={new Date()}
-                                style={{height: 600}}
+                                style={{height: 500}}
                                 onSelectEvent={this.handleSelectEvent}
                                 onSelectSlot={this.handleSelectSlot}
                                 components={{
