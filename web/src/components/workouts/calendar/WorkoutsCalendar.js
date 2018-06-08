@@ -18,6 +18,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { ActionEvent } from 'material-ui/svg-icons';
 import WorkoutsCalendarEvent from './WorkoutsCalendarEvent';
 import WorkoutsCalendarDate from './WorkoutsCalendarDate';
+import AddFloatingAddButton from '../../shared/AddFloatingActionButton';
+import WorkoutDialog from '../WorkoutDialog';
 
 const initialState = {
     filters: {},
@@ -159,43 +161,46 @@ class WorkoutsCalendar extends Component {
             
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    <Card 
-                        zDepth={2}                 
-                        style={!this.state.refreshApi.isExecuting ? styles.card : 
-                            { 
-                                ...styles.card, 
-                                backgroundColor: grey300 
+                    <div>
+                        <Card 
+                            zDepth={2}                 
+                            style={!this.state.refreshApi.isExecuting ? styles.card : 
+                                { 
+                                    ...styles.card, 
+                                    backgroundColor: grey300 
+                                }
                             }
-                        }
-                    >
-                        <CardHeader
-                            title={'Calendar'}
-                            titleStyle={styles.cardTitle}
-                            style={styles.cardHeader}
-                            avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionEvent/>}></Avatar>}
-                        />
-                        <CardText>
-                            <BigCalendar
-                                selectable
-                                events={workouts}
-                                views={views}
-                                toolbar
-                                popup
-                                step={60}
-                                showMultiDayTimes
-                                defaultDate={new Date()}
-                                style={{height: 500}}
-                                onSelectEvent={this.handleSelectEvent}
-                                onSelectSlot={this.handleSelectSlot}
-                                components={{
-                                    eventWrapper: WorkoutsCalendarEvent,
-                                    dateCellWrapper: WorkoutsCalendarDate,
-                                }}
-                                onNavigate={this.handleNavigate}
+                        >
+                            <CardHeader
+                                title={'Calendar'}
+                                titleStyle={styles.cardTitle}
+                                style={styles.cardHeader}
+                                avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionEvent/>}></Avatar>}
                             />
-                            {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
-                        </CardText>
-                    </Card> 
+                            <CardText>
+                                <BigCalendar
+                                    selectable
+                                    events={workouts}
+                                    views={views}
+                                    toolbar
+                                    popup
+                                    step={60}
+                                    showMultiDayTimes
+                                    defaultDate={new Date()}
+                                    style={{height: 500}}
+                                    onSelectEvent={this.handleSelectEvent}
+                                    onSelectSlot={this.handleSelectSlot}
+                                    components={{
+                                        eventWrapper: WorkoutsCalendarEvent,
+                                        dateCellWrapper: WorkoutsCalendarDate,
+                                    }}
+                                    onNavigate={this.handleNavigate}
+                                />
+                                {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
+                            </CardText>
+                        </Card>
+                        <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
+                    </div> 
         )
     }
 }
