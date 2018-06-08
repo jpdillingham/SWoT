@@ -70,9 +70,11 @@ BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
 class WorkoutsCalendar extends Component {
     state = initialState;
+
     componentWillMount() {
+        this.props.setTitle('Workouts');
+
         Promise.all([
-            this.props.setTitle('Workouts'),
             this.props.fetchWorkouts(),
             this.handleUpdate(new Date(), 'month')
         ])
