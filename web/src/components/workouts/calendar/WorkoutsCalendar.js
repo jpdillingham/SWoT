@@ -22,7 +22,6 @@ import AddFloatingAddButton from '../../shared/AddFloatingActionButton';
 import WorkoutDialog from '../WorkoutDialog';
 
 const initialState = {
-    filters: {},
     loadApi: {
         isExecuting: false,
         isErrored: false,
@@ -30,7 +29,11 @@ const initialState = {
     refreshApi: {
         isExecuting: false,
         isErrored: false,
-    }
+    },
+    workoutDialog: {
+        open: false,
+        date: undefined,
+    },
 }
 
 const styles = {
@@ -112,6 +115,11 @@ class WorkoutsCalendar extends Component {
 
     handleSelectSlot = (slot) => {
         console.log(slot);
+        this.setState({ workoutDialog: { date: slot.start, open: true }});
+    }
+
+    handleWorkoutDialogClose = (result) => {
+        this.setState({ workoutDialog: { open: false }});
     }
 
     handleNavigate = (date, view) => {
@@ -199,6 +207,11 @@ class WorkoutsCalendar extends Component {
                                 {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
                             </CardText>
                         </Card>
+                        <WorkoutDialog
+                            open={this.state.workoutDialog.open}
+                            handleClose={this.handleWorkoutDialogClose}
+                            defaultDate={this.state.workoutDialog.date}
+                        />
                         <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
                     </div> 
         )
