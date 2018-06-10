@@ -34,19 +34,20 @@ class WorkoutsCalendarToolbar extends Component {
         this.props.onNavigate('current');
     };
 
-    label = () => {
-        const date = moment(this.props.date);
-        return (
-        <span><b>{date.format('MMMM')}</b><span> {date.format('YYYY')}</span></span>
-        );
-    };
-
     render() {
         return (
             <div style={styles.toolbar}>
-                <FlatButton style={styles.arrowButton} icon={<HardwareKeyboardArrowLeft/>} onClick={this.goToBack}/>
+                <FlatButton 
+                    style={styles.arrowButton} 
+                    icon={<HardwareKeyboardArrowLeft/>} 
+                    onClick={this.goToBack}
+                />
                 <FlatButton label={'Today'} onClick={this.goToCurrent}/>
-                <FlatButton style={styles.arrowButton} icon={<HardwareKeyboardArrowRight/>} onClick={this.goToNext}/>
+                <FlatButton 
+                    style={styles.arrowButton} 
+                    icon={<HardwareKeyboardArrowRight/>} 
+                    onClick={this.goToNext}
+                />
             </div>
         )
     }
