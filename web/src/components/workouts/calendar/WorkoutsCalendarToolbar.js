@@ -6,6 +6,16 @@ import FlatButton from 'material-ui/FlatButton'
 import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
 import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 
+const styles = {
+    toolbar: {
+        marginBottom: 15,
+    },
+    arrowButton: {
+        width: 40,
+        minWidth: 40,
+    },
+}
+
 class WorkoutsCalendarToolbar extends Component {
     goToBack = () => {
         this.props.date.setMonth(this.props.date.getMonth() - 1);
@@ -33,10 +43,10 @@ class WorkoutsCalendarToolbar extends Component {
 
     render() {
         return (
-            <div>
-                <FlatButton icon={<HardwareKeyboardArrowLeft/>} onClick={this.goToBack}/>
+            <div style={styles.toolbar}>
+                <FlatButton style={styles.arrowButton} icon={<HardwareKeyboardArrowLeft/>} onClick={this.goToBack}/>
                 <FlatButton label={'Today'} onClick={this.goToCurrent}/>
-                <FlatButton icon={<HardwareKeyboardArrowRight/>} onClick={this.goToNext}/>
+                <FlatButton style={styles.arrowButton} icon={<HardwareKeyboardArrowRight/>} onClick={this.goToNext}/>
             </div>
         )
     }
