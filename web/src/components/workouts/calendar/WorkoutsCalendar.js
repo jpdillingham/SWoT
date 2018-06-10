@@ -23,6 +23,7 @@ import AddFloatingAddButton from '../../shared/AddFloatingActionButton';
 import WorkoutDialog from '../WorkoutDialog';
 
 const initialState = {
+    title: 'Calendar',
     loadApi: {
         isExecuting: false,
         isErrored: false,
@@ -130,6 +131,8 @@ class WorkoutsCalendar extends Component {
     handleUpdate = (date, view) => {
         let start, end;
 
+        this.setState({ title: moment(date).format('MMMM YYYY') });
+
         if(view === 'day'){
           start = moment(date).startOf('day');
           end = moment(date).endOf('day');
@@ -181,7 +184,7 @@ class WorkoutsCalendar extends Component {
                             }
                         >
                             <CardHeader
-                                title={'Calendar'}
+                                title={this.state.title}
                                 titleStyle={styles.cardTitle}
                                 style={styles.cardHeader}
                                 avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionEvent/>}></Avatar>}
