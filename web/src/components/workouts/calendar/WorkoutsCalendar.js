@@ -18,10 +18,13 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { ActionEvent } from 'material-ui/svg-icons';
 import WorkoutsCalendarEvent from './WorkoutsCalendarEvent';
 import WorkoutsCalendarDateCell from './WorkoutsCalendarDateCell';
+import WorkoutsCalendarToolbar from './WorkoutsCalendarToolbar';
 import AddFloatingAddButton from '../../shared/AddFloatingActionButton';
 import WorkoutDialog from '../WorkoutDialog';
+import FlatButton from 'material-ui/FlatButton/FlatButton';
 
 const initialState = {
+    title: 'Calendar',
     loadApi: {
         isExecuting: false,
         isErrored: false,
@@ -69,6 +72,10 @@ const styles = {
         cursor: 'pointer',
         marginBottom: 15,
         marginRight: 10,
+    },
+    dateButton: {
+        color: black,
+        marginBottom: 15,
     },
 }
 
@@ -129,6 +136,8 @@ class WorkoutsCalendar extends Component {
     handleUpdate = (date, view) => {
         let start, end;
 
+        this.setState({ title: moment(date).format('MMMM YYYY') });
+
         if(view === 'day'){
           start = moment(date).startOf('day');
           end = moment(date).endOf('day');
@@ -186,6 +195,11 @@ class WorkoutsCalendar extends Component {
                                 avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionEvent/>}></Avatar>}
                             />
                             <CardText>
+                                <FlatButton 
+                                    style={styles.dateButton} 
+                                    label={this.state.title}
+                                    disabled
+                                />
                                 <BigCalendar
                                     selectable
                                     events={workouts}
@@ -201,6 +215,7 @@ class WorkoutsCalendar extends Component {
                                     components={{
                                         eventWrapper: WorkoutsCalendarEvent,
                                         dateCellWrapper: WorkoutsCalendarDateCell,
+                                        toolbar: WorkoutsCalendarToolbar,
                                     }}
                                     onNavigate={this.handleNavigate}
                                 />
