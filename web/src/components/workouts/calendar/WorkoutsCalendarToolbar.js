@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import moment from 'moment'
 
+import { black } from 'material-ui/styles/colors'
+import FlatButton from 'material-ui/FlatButton'
+import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
+import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
+
 class WorkoutsCalendarToolbar extends Component {
     goToBack = () => {
         this.props.date.setMonth(this.props.date.getMonth() - 1);
@@ -29,14 +34,10 @@ class WorkoutsCalendarToolbar extends Component {
     render() {
         return (
             <div>
-            <label>{this.label()}</label>
-        
-            <div>
-                <button onClick={this.goToBack}>&#8249;</button>
-                <button onClick={this.goToCurrent}>today</button>
-                <button onClick={this.goToNext}>&#8250;</button>
+                <FlatButton icon={<HardwareKeyboardArrowLeft/>} onClick={this.goToBack}/>
+                <FlatButton label={'Today'} onClick={this.goToCurrent}/>
+                <FlatButton icon={<HardwareKeyboardArrowRight/>} onClick={this.goToNext}/>
             </div>
-            </div >
         )
     }
 }
