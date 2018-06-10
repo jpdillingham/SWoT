@@ -21,6 +21,7 @@ import WorkoutsCalendarDateCell from './WorkoutsCalendarDateCell';
 import WorkoutsCalendarToolbar from './WorkoutsCalendarToolbar';
 import AddFloatingAddButton from '../../shared/AddFloatingActionButton';
 import WorkoutDialog from '../WorkoutDialog';
+import FlatButton from 'material-ui/FlatButton/FlatButton';
 
 const initialState = {
     title: 'Calendar',
@@ -71,6 +72,10 @@ const styles = {
         cursor: 'pointer',
         marginBottom: 15,
         marginRight: 10,
+    },
+    dateButton: {
+        color: black,
+        marginBottom: 15,
     },
 }
 
@@ -184,12 +189,17 @@ class WorkoutsCalendar extends Component {
                             }
                         >
                             <CardHeader
-                                title={this.state.title}
+                                title={'Calendar'}
                                 titleStyle={styles.cardTitle}
                                 style={styles.cardHeader}
                                 avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionEvent/>}></Avatar>}
                             />
                             <CardText>
+                                <FlatButton 
+                                    style={styles.dateButton} 
+                                    label={this.state.title}
+                                    disabled
+                                />
                                 <BigCalendar
                                     selectable
                                     events={workouts}
