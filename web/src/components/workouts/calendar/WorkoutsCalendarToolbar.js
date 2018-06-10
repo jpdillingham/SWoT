@@ -17,17 +17,17 @@ const styles = {
 }
 
 class WorkoutsCalendarToolbar extends Component {
-    goToBack = () => {
+    handlePreviousClick = () => {
         this.props.date.setMonth(this.props.date.getMonth() - 1);
         this.props.onNavigate('prev');
     };
 
-    goToNext = () => {
+    handleNextClick = () => {
         this.props.date.setMonth(this.props.date.getMonth() + 1);
         this.props.onNavigate('next');
     };
 
-    goToCurrent = () => {
+    handleTodayClick = () => {
         const now = new Date();
         this.props.date.setMonth(now.getMonth());
         this.props.date.setYear(now.getFullYear());
@@ -40,13 +40,13 @@ class WorkoutsCalendarToolbar extends Component {
                 <FlatButton 
                     style={styles.arrowButton} 
                     icon={<HardwareKeyboardArrowLeft/>} 
-                    onClick={this.goToBack}
+                    onClick={this.handlePreviousClick}
                 />
-                <FlatButton label={'Today'} onClick={this.goToCurrent}/>
+                <FlatButton label={'Today'} onClick={this.handleTodayClick}/>
                 <FlatButton 
                     style={styles.arrowButton} 
                     icon={<HardwareKeyboardArrowRight/>} 
-                    onClick={this.goToNext}
+                    onClick={this.handleNextClick}
                 />
             </div>
         )
