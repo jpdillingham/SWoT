@@ -73,9 +73,11 @@ const styles = {
         marginBottom: 15,
         marginRight: 10,
     },
-    dateButton: {
-        color: black,
+    date: {
+        fontSize: 16,
         marginBottom: 15,
+        display: 'block',
+        fontWeight: 400,
     },
 }
 
@@ -121,7 +123,6 @@ class WorkoutsCalendar extends Component {
     }
 
     handleSelectSlot = (slot) => {
-        console.log(slot);
         this.setState({ workoutDialog: { date: slot.start, open: true }});
     }
 
@@ -195,11 +196,7 @@ class WorkoutsCalendar extends Component {
                                 avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionEvent/>}></Avatar>}
                             />
                             <CardText>
-                                <FlatButton 
-                                    style={styles.dateButton} 
-                                    label={this.state.title}
-                                    disabled
-                                />
+                                <span style={styles.date}>{this.state.title}</span>
                                 <BigCalendar
                                     selectable
                                     events={workouts}
