@@ -108,6 +108,7 @@ class WorkoutDialog extends Component {
 
     handleRoutineChange = (event, index, value) => {
         this.setState({ 
+            validationErrors: { routine: '' },
             workout: { 
                 ...this.state.workout, 
                 routine: this.props.routines.find(r => r.id === value)
