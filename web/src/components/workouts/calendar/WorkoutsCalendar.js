@@ -21,7 +21,6 @@ import WorkoutsCalendarDateCell from './WorkoutsCalendarDateCell';
 import WorkoutsCalendarToolbar from './WorkoutsCalendarToolbar';
 import AddFloatingAddButton from '../../shared/AddFloatingActionButton';
 import WorkoutDialog from '../WorkoutDialog';
-import FlatButton from 'material-ui/FlatButton/FlatButton';
 
 const initialState = {
     title: 'Calendar',
