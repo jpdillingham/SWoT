@@ -5,14 +5,6 @@ import MenuItem from 'material-ui/MenuItem'
 import DatePicker from 'material-ui/DatePicker'
 
 const styles = {
-    order: {
-        width: 150,
-        marginRight: 5,
-    },
-    limit: {
-        width: 75,
-        marginRight: 5,
-    },
     dateWrapper: {
         marginBottom: -15,
         display: 'inline-block',
@@ -62,6 +54,20 @@ class ExercisesProgressOptions extends Component {
                         textFieldStyle={styles.dateField}
                         onChange={(a, date) => this.handleChange('toTime', undefined, undefined, date.getTime())}
                     />
+                    <SelectField 
+                        floatingLabelText="Filter By"
+                        onChange={(event, index, value) => this.handleChange('exerciseId', event, index, value)}
+                        value={this.props.filters.exerciseId}
+                        disabled={this.props.disabled}
+                    >
+                        {this.props.exercises.map((e, index) => 
+                            <MenuItem 
+                                key={index} 
+                                value={e.id} 
+                                primaryText={e.name} 
+                            />                    
+                        )}
+                    </SelectField>
                 </div>
             </div>
         )
