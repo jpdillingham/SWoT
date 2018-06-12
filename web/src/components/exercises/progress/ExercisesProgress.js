@@ -91,9 +91,12 @@ class ExercisesProgress extends Component {
         })
     }
 
+    handleFiltersChange = (filters) => {
+        this.setState({ filters: filters });
+    }
+
     render() {
         return (
-           
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div>
