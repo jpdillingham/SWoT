@@ -12,7 +12,8 @@ import { ActionTrendingUp } from 'material-ui/svg-icons';
 import ExercisesProgressOptions from './ExercisesProgressOptions';
 import Divider from 'material-ui/Divider/Divider';
 
-import { fetchExercises} from '../ExercisesActions';
+import { fetchExercises } from '../ExercisesActions';
+import { fetchExercisesHistory } from '../history/ExercisesHistoryActions';
 import { showSnackbar } from '../../app/AppActions';
 
 const initialState = {
@@ -82,7 +83,10 @@ class ExercisesProgress extends Component {
         // todo: fetch history
 
         this.setState({ loadApi: { isExecuting: true }}, () => {
-            this.props.fetchExercises()
+            Promise.all([
+                this.props.fetchExercises(),
+                this.props.fetchExercisesHistory(this.state.filters)
+            ])
             .then(response => {
                 this.setState({ loadApi: { isExecuting: false, isErrored: false }});
             }, error => {
@@ -93,7 +97,18 @@ class ExercisesProgress extends Component {
     }
 
     handleFiltersChange = (filters) => {
-        this.setState({ filters: filters });
+        this.setState({ 
+            filters: filters,
+            refreshApi: { isExecuting: true },
+        }, () => {
+            this.props.fetchExercisesHistory(filters)
+            .then(response => {
+                this.setState({ refreshApi: { isExecuting: false, isErrored: false }});
+            }, error => {
+                this.props.showSnackbar('Error fetching Exercises: ' + error);
+                this.setState({ refreshApi: { isExecuting: false, isErrored: true }});
+            })
+        });
     }
 
     render() {
@@ -124,7 +139,7 @@ class ExercisesProgress extends Component {
                                     disabled={this.props.refreshing}
                                 />
                                 <Divider style={styles.headerDivider}/>
-                                Hello!
+                                {this.props.exercisesHistory.exercises.map(e => JSON.stringify(e))}
                                 {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
                             </CardText>
                         </Card>
@@ -135,10 +150,12 @@ class ExercisesProgress extends Component {
 
 const mapStateToProps = (state) => ({
     exercises: state.exercises,
+    exercisesHistory: state.exercisesHistory,
 });
 
 const mapDispatchToProps = {
     fetchExercises,
+    fetchExercisesHistory,
     showSnackbar,
 };
 
