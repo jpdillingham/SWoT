@@ -19,6 +19,9 @@ const styles = {
         marginRight: 5,
         cursor: 'pointer',
     },
+    exercise: {
+        marginRight: 5,
+    }
 }
 
 class ExercisesProgressOptions extends Component {
@@ -37,6 +40,7 @@ class ExercisesProgressOptions extends Component {
                         onChange={(event, index, value) => this.handleChange('exerciseId', event, index, value)}
                         value={this.props.filters.exerciseId}
                         disabled={this.props.disabled}
+                        style={styles.exercise}
                     >
                         {this.props.exercises.map((e, index) => 
                             <MenuItem 
