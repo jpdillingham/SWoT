@@ -15,6 +15,7 @@ import AppContainer from './AppContainer';
 
 import Exercises from '../exercises/Exercises';
 import ExercisesHistory from '../exercises/history/ExercisesHistory';
+import ExercisesProgress from '../exercises/progress/ExercisesProgress';
 import Workout from '../workouts/Workout';
 import Workouts from '../workouts/Workouts';
 import WorkoutsCalendar from '../workouts/calendar/WorkoutsCalendar';
@@ -28,7 +29,6 @@ import ConfirmRegistration from '../security/ConfirmRegistration';
 import { ensureSession } from '../security/SecurityActions';
 import { hideSnackbar } from './AppActions';
 import { ActionBuild, ActionTrendingUp } from 'material-ui/svg-icons';
-import ExercisesProgress from '../exercises/progress/ExercisesProgress';
 
 const styles = {
     content: {
