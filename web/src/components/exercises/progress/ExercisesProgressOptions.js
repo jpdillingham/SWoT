@@ -32,6 +32,20 @@ class ExercisesProgressOptions extends Component {
         return (
             <div>
                 <div style={styles.dateWrapper}>
+                    <SelectField 
+                        floatingLabelText="Exercise"
+                        onChange={(event, index, value) => this.handleChange('exerciseId', event, index, value)}
+                        value={this.props.filters.exerciseId}
+                        disabled={this.props.disabled}
+                    >
+                        {this.props.exercises.map((e, index) => 
+                            <MenuItem 
+                                key={index} 
+                                value={e.id} 
+                                primaryText={e.name} 
+                            />                    
+                        )}
+                    </SelectField>
                     <DatePicker 
                         floatingLabelText="From"
                         hintText="From" 
@@ -54,20 +68,6 @@ class ExercisesProgressOptions extends Component {
                         textFieldStyle={styles.dateField}
                         onChange={(a, date) => this.handleChange('toTime', undefined, undefined, date.getTime())}
                     />
-                    <SelectField 
-                        floatingLabelText="Filter By"
-                        onChange={(event, index, value) => this.handleChange('exerciseId', event, index, value)}
-                        value={this.props.filters.exerciseId}
-                        disabled={this.props.disabled}
-                    >
-                        {this.props.exercises.map((e, index) => 
-                            <MenuItem 
-                                key={index} 
-                                value={e.id} 
-                                primaryText={e.name} 
-                            />                    
-                        )}
-                    </SelectField>
                 </div>
             </div>
         )
