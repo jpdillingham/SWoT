@@ -136,7 +136,7 @@ class ExercisesProgress extends Component {
                                     filters={this.state.filters} 
                                     exercises={this.props.exercises}
                                     onChange={this.handleFiltersChange}
-                                    disabled={this.props.refreshing}
+                                    disabled={this.state.loadApi.isExecuting || this.state.refreshApi.isExecuting}
                                 />
                                 <Divider style={styles.headerDivider}/>
                                 {this.props.exercisesHistory.exercises.map(e => JSON.stringify(e))}
