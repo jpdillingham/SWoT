@@ -73,9 +73,10 @@ class ExercisesProgress extends Component {
                 ...initialState.filters, 
                 toTime: defaulttoTime.getTime(), 
                 fromTime: defaultfromTime.getTime(),
-            } 
+                exerciseId: this.props.match.params.id,
+            },
         };        
-    }
+    };
 
     componentWillMount() {
         // todo: fetch history
