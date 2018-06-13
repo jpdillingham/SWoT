@@ -113,18 +113,39 @@ class ExercisesProgress extends Component {
         });
     }
 
+    getValue = (exercise, name) => {
+        let metric = exercise.metrics.find(m => m.name === name);
+        return !metric ? undefined : metric.value;
+    }
+
+    getValues = (exercises, metrics) => {
+        return !exercises ? undefined : exercises.map(e => { 
+            return { 
+                endTime: e.endTime,
+                values: metrics.map(m => { 
+                    return { 
+                        name: m.name, value: this.getValue(e, m.name) 
+                    }
+                }),
+            }
+        });
+    }
+
+    getDistinctMetrics = (exercises) => {
+        let metrics = !exercises ? undefined : exercises.map(e => e.metrics);
+        return !metrics || metrics.length === 0 ? [] : metrics
+            .reduce((acc, e) => acc.concat(e))
+            .sort(sortByProp('name'))
+            .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true)
+            .map(m => { return { name: m.name, uom: m.uom }});
+    }
+
     render() {
         let history = this.props.exercisesHistory;
         let exercises = history && history.exercises ? history.exercises : undefined;
 
-        let metrics = !exercises ? undefined : exercises.map(e => e.metrics);
-        metrics = !metrics || metrics.length === 0 ? [] : metrics
-                                    .reduce((acc, e) => acc.concat(e))
-                                    .sort(sortByProp('name'))
-                                    .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true)
-                                    .map(m => { return { name: m.name, uom: m.uom }});
-        
-        let values = !exercises ? undefined : exercises;
+        let metrics = this.getDistinctMetrics(exercises);
+        let values = this.getValues(exercises, metrics);
 
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
@@ -155,7 +176,7 @@ class ExercisesProgress extends Component {
                                 <Divider style={styles.headerDivider}/>
                                 {JSON.stringify(metrics)}
                                 <br/><br/>
-                                {values.map(v => JSON.stringify(v))}
+                                {JSON.stringify(values)}
                                 {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
                             </CardText>
                         </Card>
