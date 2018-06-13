@@ -16,6 +16,8 @@ import { fetchExercises } from '../ExercisesActions';
 import { fetchExercisesHistory } from '../history/ExercisesHistoryActions';
 import { showSnackbar } from '../../app/AppActions';
 
+import { sortByProp } from '../../../util';
+
 const initialState = {
     filters: {
         fromTime: undefined,
@@ -112,6 +114,18 @@ class ExercisesProgress extends Component {
     }
 
     render() {
+        let history = this.props.exercisesHistory;
+        let exercises = history && history.exercises ? history.exercises : undefined;
+
+        let metrics = !exercises ? undefined : exercises.map(e => e.metrics);
+        metrics = !metrics || metrics.length === 0 ? [] : metrics
+                                    .reduce((acc, e) => acc.concat(e))
+                                    .sort(sortByProp('name'))
+                                    .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true)
+                                    .map(m => { return { name: m.name, uom: m.uom }});
+        
+        let values = !exercises ? undefined : exercises;
+
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
@@ -139,7 +153,9 @@ class ExercisesProgress extends Component {
                                     disabled={this.state.loadApi.isExecuting || this.state.refreshApi.isExecuting}
                                 />
                                 <Divider style={styles.headerDivider}/>
-                                {this.props.exercisesHistory.exercises.map(e => JSON.stringify(e))}
+                                {JSON.stringify(metrics)}
+                                <br/><br/>
+                                {values.map(v => JSON.stringify(v))}
                                 {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
                             </CardText>
                         </Card>
