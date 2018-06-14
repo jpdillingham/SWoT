@@ -145,7 +145,21 @@ class ExercisesProgress extends Component {
     }
 
     process = (exercises) => {
-        exercises = exercises.sort(sortByProp('endTime'));
+        let datasets = this.getDistinctMetrics(exercises)
+            .reduce((acc, m) => acc.concat({ key: m.name, value: [] }), []);
+
+        exercises.forEach(e => datasets = e.metrics.reduce((acc, m) => { 
+                var set = acc.find(s => s.key === m.name);
+                set.value = set.value.concat(m.value);
+                acc[acc.indexOf(set)] = set;
+                return acc
+            }, datasets))
+        
+        console.log('datasets', datasets);
+    }
+
+    appendValue = (key, value) => {
+        
     }
 
     render() {
