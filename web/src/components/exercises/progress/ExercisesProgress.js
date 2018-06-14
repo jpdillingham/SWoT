@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect} from 'react-redux';
+import moment from 'moment';
 
 import Spinner from '../../shared/Spinner';
 
@@ -24,6 +25,7 @@ const initialState = {
     filters: {
         fromTime: undefined,
         toTime: undefined,
+        order: 'asc',
     },
     loadApi: {
         isExecuting: false,
@@ -142,35 +144,32 @@ class ExercisesProgress extends Component {
             .map(m => { return { name: m.name, uom: m.uom }});
     }
 
+    process = (exercises) => {
+        exercises = exercises.sort(sortByProp('endTime'));
+    }
+
     render() {
         let history = this.props.exercisesHistory;
-        let exercises = history && history.exercises ? history.exercises : undefined;
+
+        
+        let exercises = history && history.exercises ? history.exercises : [];
+        this.process(exercises);
 
         let metrics = this.getDistinctMetrics(exercises);
-        let values = this.getValues(exercises, metrics);
+        let values = this.getValues(exercises, metrics) || [];
+        values = values.sort(sortByProp('endTime'));
+
+        // let datasets = metrics.map(metric => {
+            
+        //     values.reduce((sets, value) => {
+        //         console.log(value.values.find(m => m.name === metric.name));
+        //     });
+        // });
 
         let chartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: values.map(v => moment(v.endTime).format('l')),
             datasets: [
                 {
-                    label: 'My First dataset',
-                    fill: false,
-                    lineTension: 0.1,
-                    backgroundColor: 'rgba(75,192,192,0.4)',
-                    borderColor: 'rgba(75,192,192,1)',
-                    borderCapStyle: 'butt',
-                    borderDash: [],
-                    borderDashOffset: 0.0,
-                    borderJoinStyle: 'miter',
-                    pointBorderColor: 'rgba(75,192,192,1)',
-                    pointBackgroundColor: '#fff',
-                    pointBorderWidth: 1,
-                    pointHoverRadius: 5,
-                    pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-                    pointHoverBorderColor: 'rgba(220,220,220,1)',
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 1,
-                    pointHitRadius: 10,
                     data: [65, 59, 80, 81, 56, 55, 40]
                 },
                 {
