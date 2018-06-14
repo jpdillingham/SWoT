@@ -201,7 +201,16 @@ class ExercisesProgress extends Component {
                                     disabled={this.state.loadApi.isExecuting || this.state.refreshApi.isExecuting}
                                 />
                                 <Divider style={styles.headerDivider}/>
-                                <Line data={chartData}/>
+                                <div style={{height: '300px'}}>
+                                    <Line 
+                                        data={chartData}
+                                        style={{height: '300px'}}
+                                        height={'300px'}
+                                        options={{
+                                            maintainAspectRatio: false
+                                        }}
+                                    />
+                                </div>
                                 {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
                             </CardText>
                         </Card>
