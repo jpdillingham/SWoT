@@ -9,7 +9,7 @@ import { black, red500, grey300 } from 'material-ui/styles/colors';
 import { WORKOUT_AVATAR_COLOR } from '../../../constants'
 import Avatar from 'material-ui/Avatar'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
-import { ActionTrendingUp } from 'material-ui/svg-icons';
+import { ActionTrendingUp, ActionInfo } from 'material-ui/svg-icons';
 import ExercisesProgressOptions from './ExercisesProgressOptions';
 import Divider from 'material-ui/Divider/Divider';
 import { List, ListItem } from 'material-ui/List';
@@ -201,7 +201,7 @@ class ExercisesProgress extends Component {
                                 {!this.state.filters.exerciseId ? 
                                     <List><ListItem 
                                         primaryText={'Select an Exercise to view progress'}
-                                        leftIcon={<ContentClear/>}
+                                        leftIcon={<ActionInfo/>}
                                     /></List> :
                                     !this.state.refreshApi.isExecuting && exercises.length === 0 ? 
                                         <List><ListItem 
