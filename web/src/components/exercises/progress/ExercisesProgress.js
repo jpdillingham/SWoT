@@ -94,10 +94,14 @@ class ExercisesProgress extends Component {
         this.updateDimensions();
 
         this.setState({ loadApi: { isExecuting: true }}, () => {
-            Promise.all([
-                this.props.fetchExercises(),
-                this.props.fetchExercisesHistory(this.state.filters)
-            ])
+            let promises = [];
+            promises.push(this.props.fetchExercises());
+
+            if (this.state.filters.exerciseId) {
+                promises.push(this.props.fetchExercisesHistory(this.state.filters));
+            }
+
+            Promise.all(promises)
             .then(response => {
                 this.setState({ loadApi: { isExecuting: false, isErrored: false }});
             }, error => {
@@ -105,10 +109,6 @@ class ExercisesProgress extends Component {
                 this.setState({ loadApi: { isExecuting: false, isErrored: true }});
             })
         })
-    }
-    
-    updateDimensions = () => {
-        this.setState({ window: { width: window.innerWidth, height: window.innerHeight }});
     }
 
     componentDidMount = () => {
@@ -118,7 +118,6 @@ class ExercisesProgress extends Component {
     componentWillUnmount = () => {
         window.removeEventListener("resize", this.updateDimensions);
     }
-
 
     handleFiltersChange = (filters) => {
         this.setState({ 
@@ -158,6 +157,10 @@ class ExercisesProgress extends Component {
         return datasets;
     }
 
+    updateDimensions = () => {
+        this.setState({ window: { width: window.innerWidth, height: window.innerHeight }});
+    }
+
     render() {
         let history = this.props.exercisesHistory;
         let exercises = history && history.exercises ? history.exercises : [];
@@ -166,6 +169,8 @@ class ExercisesProgress extends Component {
             labels: exercises.map(e => moment(e.endTime).format('l')),
             datasets: this.getDatasets(exercises),
         };
+
+        console.log(exercises);
 
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
@@ -194,15 +199,18 @@ class ExercisesProgress extends Component {
                                     disabled={this.state.loadApi.isExecuting || this.state.refreshApi.isExecuting}
                                 />
                                 <Divider style={styles.headerDivider}/>
-                                <div style={{height: this.state.window.height - 290}}>
-                                    <Line 
-                                        data={chartData}
-                                        options={{
-                                            responsive: true,
-                                            maintainAspectRatio: false
-                                        }}
-                                    />
-                                </div>
+                                {!this.state.filters.exerciseId ? 'select an exercise' :
+                                    !this.state.refreshApi.isExecuting && exercises.length === 0 ? 'no data' :
+                                        <div style={{height: this.state.window.height - 290}}>
+                                            <Line 
+                                                data={chartData}
+                                                options={{
+                                                    responsive: true,
+                                                    maintainAspectRatio: false
+                                                }}
+                                            />
+                                        </div>
+                                }
                                 {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
                             </CardText>
                         </Card>
