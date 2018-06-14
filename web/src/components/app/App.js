@@ -15,6 +15,7 @@ import AppContainer from './AppContainer';
 
 import Exercises from '../exercises/Exercises';
 import ExercisesHistory from '../exercises/history/ExercisesHistory';
+import ExercisesProgress from '../exercises/progress/ExercisesProgress';
 import Workout from '../workouts/Workout';
 import Workouts from '../workouts/Workouts';
 import WorkoutsCalendar from '../workouts/calendar/WorkoutsCalendar';
@@ -80,7 +81,7 @@ class App extends Component {
                                     <Subheader>Routines</Subheader>
                                     <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
                                     <Subheader>Exercises</Subheader>
-                                    <MenuItem containerElement={<Link to='/exercises'/>} leftIcon={<ActionTrendingUp/>}>Progress</MenuItem>
+                                    <MenuItem containerElement={<Link to='/exercises/progress'/>} leftIcon={<ActionTrendingUp/>}>Progress</MenuItem>
                                     <MenuItem containerElement={<Link to='/exercises/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
                                     <MenuItem containerElement={<Link to='/exercises'/>} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
                                 </div>
@@ -95,6 +96,8 @@ class App extends Component {
                                 <Route path="/workouts/history/:id" component={WorkoutsHistory}/>
                                 <Route path="/workouts/:id" component={Workout}/>
                                 <Route exact path="/exercises" component={Exercises}/>
+                                <Route exact path="/exercises/progress" component={ExercisesProgress}/>
+                                <Route path='/exercises/progress/:id' component={ExercisesProgress}/>
                                 <Route exact path="/exercises/history" component={ExercisesHistory}/>
                                 <Route path="/exercises/history/:id" component={ExercisesHistory}/>
                                 <Route path="/routines" component={Routines}/>
