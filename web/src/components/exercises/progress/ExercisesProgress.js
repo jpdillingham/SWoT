@@ -60,7 +60,8 @@ const styles = {
         transform: 'translate(-50%, -50%)'
     },
     headerDivider: {
-        marginTop: 10
+        marginTop: 10,
+        marginBottom: 15,
     },
 }
 
