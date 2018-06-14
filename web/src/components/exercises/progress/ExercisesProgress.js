@@ -170,8 +170,6 @@ class ExercisesProgress extends Component {
             datasets: this.getDatasets(exercises),
         };
 
-        console.log(exercises);
-
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
