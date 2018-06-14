@@ -201,12 +201,12 @@ class ExercisesProgress extends Component {
                                     disabled={this.state.loadApi.isExecuting || this.state.refreshApi.isExecuting}
                                 />
                                 <Divider style={styles.headerDivider}/>
-                                <div style={{height: '300px'}}>
+                                <div style={{height: '100%'}}>
                                     <Line 
                                         data={chartData}
-                                        style={{height: '300px'}}
-                                        height={'300px'}
+                                        
                                         options={{
+                                            responsive: true,
                                             maintainAspectRatio: false
                                         }}
                                     />
