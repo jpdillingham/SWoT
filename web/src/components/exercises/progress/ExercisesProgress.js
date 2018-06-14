@@ -22,6 +22,10 @@ import { sortByProp } from '../../../util';
 import { Line } from 'react-chartjs-2';
 
 const initialState = {
+    window: {
+        width: 0,
+        height: 0,
+    },
     filters: {
         fromTime: undefined,
         toTime: undefined,
@@ -86,8 +90,20 @@ class ExercisesProgress extends Component {
         };        
     };
 
+    updateDimensions = () => {
+        this.setState({ window: { width: window.innerWidth, height: window.innerHeight }});
+    }
+
+    componentDidMount = () => {
+        window.addEventListener("resize", this.updateDimensions);
+    }
+
+    componentWillUnmount = () => {
+        window.removeEventListener("resize", this.updateDimensions);
+    }
+
     componentWillMount() {
-        // todo: fetch history
+        this.updateDimensions();
 
         this.setState({ loadApi: { isExecuting: true }}, () => {
             Promise.all([
@@ -201,10 +217,9 @@ class ExercisesProgress extends Component {
                                     disabled={this.state.loadApi.isExecuting || this.state.refreshApi.isExecuting}
                                 />
                                 <Divider style={styles.headerDivider}/>
-                                <div style={{height: '100%'}}>
+                                <div style={{height: this.state.window.height - 290}}>
                                     <Line 
                                         data={chartData}
-                                        
                                         options={{
                                             responsive: true,
                                             maintainAspectRatio: false
