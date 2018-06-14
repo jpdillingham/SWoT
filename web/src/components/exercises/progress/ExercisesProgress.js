@@ -203,20 +203,21 @@ class ExercisesProgress extends Component {
                                         primaryText={'Select an Exercise to view progress'}
                                         leftIcon={<ActionInfo/>}
                                     /></List> :
-                                    !this.state.refreshApi.isExecuting && exercises.length === 0 ? 
-                                        <List><ListItem 
-                                            primaryText={'No records match the current filter criteria'}
-                                            leftIcon={<ContentClear/>}
-                                        /></List> :
-                                        <div style={{marginTop: 15, height: this.state.window.height - 290}}>
-                                            <Line 
-                                                data={chartData}
-                                                options={{
-                                                    responsive: true,
-                                                    maintainAspectRatio: false
-                                                }}
-                                            />
-                                        </div>
+                                    this.state.refreshApi.isExecuting ? '' : 
+                                        exercises.length === 0 ? 
+                                            <List><ListItem 
+                                                primaryText={'No records match the current filter criteria'}
+                                                leftIcon={<ContentClear/>}
+                                            /></List> :
+                                            <div style={{marginTop: 15, height: this.state.window.height - 290}}>
+                                                <Line 
+                                                    data={chartData}
+                                                    options={{
+                                                        responsive: true,
+                                                        maintainAspectRatio: false
+                                                    }}
+                                                />
+                                            </div>
                                 }
                                 {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
                             </CardText>
