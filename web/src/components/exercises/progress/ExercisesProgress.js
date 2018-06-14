@@ -117,23 +117,23 @@ class ExercisesProgress extends Component {
         });
     }
 
-    getValue = (exercise, name) => {
-        let metric = exercise.metrics.find(m => m.name === name);
-        return !metric ? undefined : metric.value;
-    }
+    // getValue = (exercise, name) => {
+    //     let metric = exercise.metrics.find(m => m.name === name);
+    //     return !metric ? undefined : metric.value;
+    // }
 
-    getValues = (exercises, metrics) => {
-        return !exercises ? undefined : exercises.map(e => { 
-            return { 
-                endTime: e.endTime,
-                values: metrics.map(m => { 
-                    return { 
-                        name: m.name, value: this.getValue(e, m.name) 
-                    }
-                }),
-            }
-        });
-    }
+    // getValues = (exercises, metrics) => {
+    //     return !exercises ? undefined : exercises.map(e => { 
+    //         return { 
+    //             endTime: e.endTime,
+    //             values: metrics.map(m => { 
+    //                 return { 
+    //                     name: m.name, value: this.getValue(e, m.name) 
+    //                 }
+    //             }),
+    //         }
+    //     });
+    // }
 
     getDistinctMetrics = (exercises) => {
         let metrics = !exercises ? undefined : exercises.map(e => e.metrics);
