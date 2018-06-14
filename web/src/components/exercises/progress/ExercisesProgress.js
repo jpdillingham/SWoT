@@ -198,7 +198,11 @@ class ExercisesProgress extends Component {
                                     disabled={this.state.loadApi.isExecuting || this.state.refreshApi.isExecuting}
                                 />
                                 <Divider style={styles.headerDivider}/>
-                                {!this.state.filters.exerciseId ? 'select an exercise' :
+                                {!this.state.filters.exerciseId ? 
+                                    <List><ListItem 
+                                        primaryText={'Select an Exercise to view progress'}
+                                        leftIcon={<ContentClear/>}
+                                    /></List> :
                                     !this.state.refreshApi.isExecuting && exercises.length === 0 ? 
                                         <List><ListItem 
                                             primaryText={'No records match the current filter criteria'}
