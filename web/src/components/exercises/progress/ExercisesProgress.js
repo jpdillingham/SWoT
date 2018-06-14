@@ -178,17 +178,11 @@ class ExercisesProgress extends Component {
     render() {
         let history = this.props.exercisesHistory;
         let exercises = history && history.exercises ? history.exercises : [];
-        let datasets = this.getDatasets(exercises);
-
-        // let metrics = this.getDistinctMetrics(exercises);
-        // let values = this.getValues(exercises, metrics) || [];
-        // values = values.sort(sortByProp('endTime'));
 
         let chartData = {
             labels: exercises.map(e => moment(e.endTime).format('l')),
-            datasets: datasets,
+            datasets: this.getDatasets(exercises),
         };
-
 
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
