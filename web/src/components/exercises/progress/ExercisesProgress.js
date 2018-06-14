@@ -12,6 +12,8 @@ import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import { ActionTrendingUp } from 'material-ui/svg-icons';
 import ExercisesProgressOptions from './ExercisesProgressOptions';
 import Divider from 'material-ui/Divider/Divider';
+import { List, ListItem } from 'material-ui/List';
+import { ContentClear } from 'material-ui/svg-icons';
 
 import { fetchExercises } from '../ExercisesActions';
 import { fetchExercisesHistory } from '../history/ExercisesHistoryActions';
@@ -65,7 +67,6 @@ const styles = {
     },
     headerDivider: {
         marginTop: 10,
-        marginBottom: 15,
     },
 }
 
@@ -198,8 +199,12 @@ class ExercisesProgress extends Component {
                                 />
                                 <Divider style={styles.headerDivider}/>
                                 {!this.state.filters.exerciseId ? 'select an exercise' :
-                                    !this.state.refreshApi.isExecuting && exercises.length === 0 ? 'no data' :
-                                        <div style={{height: this.state.window.height - 290}}>
+                                    !this.state.refreshApi.isExecuting && exercises.length === 0 ? 
+                                        <List><ListItem 
+                                            primaryText={'No records match the current filter criteria'}
+                                            leftIcon={<ContentClear/>}
+                                        /></List> :
+                                        <div style={{marginTop: 15, height: this.state.window.height - 290}}>
                                             <Line 
                                                 data={chartData}
                                                 options={{
