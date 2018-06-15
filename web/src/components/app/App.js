@@ -15,7 +15,7 @@ import AppContainer from './AppContainer';
 
 import Exercises from '../exercises/Exercises';
 import ExercisesHistory from '../exercises/history/ExercisesHistory';
-import ExercisesProgress from '../exercises/progress/ExercisesProgress';
+import ExerciseProgress from '../exercises/history/ExerciseProgress';
 import Workout from '../workouts/Workout';
 import Workouts from '../workouts/Workouts';
 import WorkoutsCalendar from '../workouts/calendar/WorkoutsCalendar';
@@ -96,8 +96,8 @@ class App extends Component {
                                 <Route path="/workouts/history/:id" component={WorkoutsHistory}/>
                                 <Route path="/workouts/:id" component={Workout}/>
                                 <Route exact path="/exercises" component={Exercises}/>
-                                <Route exact path="/exercises/progress" component={ExercisesProgress}/>
-                                <Route path='/exercises/progress/:id' component={ExercisesProgress}/>
+                                <Route exact path="/exercises/progress" component={ExerciseProgress}/>
+                                <Route path='/exercises/progress/:id' component={ExerciseProgress}/>
                                 <Route exact path="/exercises/history" component={ExercisesHistory}/>
                                 <Route path="/exercises/history/:id" component={ExercisesHistory}/>
                                 <Route path="/routines" component={Routines}/>

@@ -10,7 +10,7 @@ import { WORKOUT_AVATAR_COLOR } from '../../../constants'
 import Avatar from 'material-ui/Avatar'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import { ActionTrendingUp, ActionInfo } from 'material-ui/svg-icons';
-import ExercisesProgressOptions from './ExercisesProgressOptions';
+import ExerciseProgressOptions from './ExerciseProgressOptions';
 import Divider from 'material-ui/Divider/Divider';
 import { List, ListItem } from 'material-ui/List';
 import { ContentClear } from 'material-ui/svg-icons';
@@ -70,7 +70,7 @@ const styles = {
     },
 }
 
-class ExercisesProgress extends Component {
+class ExerciseProgress extends Component {
     constructor(props) {
         super(props);
 
@@ -191,7 +191,7 @@ class ExercisesProgress extends Component {
                                 avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionTrendingUp/>}></Avatar>}
                             />
                             <CardText>
-                                <ExercisesProgressOptions
+                                <ExerciseProgressOptions
                                     filters={this.state.filters} 
                                     exercises={this.props.exercises}
                                     onChange={this.handleFiltersChange}
@@ -238,4 +238,4 @@ const mapDispatchToProps = {
     showSnackbar,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExercisesProgress)
+export default connect(mapStateToProps, mapDispatchToProps)(ExerciseProgress)

@@ -24,7 +24,7 @@ const styles = {
     }
 }
 
-class ExercisesProgressOptions extends Component {
+class ExerciseProgressOptions extends Component {
     handleChange = (filter, event, index, value) => {
         if (!this.props.disabled) {
             this.props.onChange({ ...this.props.filters, [filter]: value });
@@ -78,4 +78,4 @@ class ExercisesProgressOptions extends Component {
     }
 }
 
-export default ExercisesProgressOptions
+export default ExerciseProgressOptions

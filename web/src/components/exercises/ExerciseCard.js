@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import {Card, CardHeader, CardText } from 'material-ui/Card';
 import { List, ListItem } from 'material-ui/List';
@@ -19,7 +20,7 @@ import ExerciseHistoryDialog from './history/ExerciseHistoryDialog'
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR, INTENTS } from '../../constants';
 import Divider from 'material-ui/Divider/Divider';
-import { ContentContentCopy, ActionDelete, ActionHistory } from 'material-ui/svg-icons';
+import { ContentContentCopy, ActionDelete, ActionHistory, ActionTrendingUp } from 'material-ui/svg-icons';
 
 const styles = {
     deleteDialog: {
@@ -103,6 +104,10 @@ class ExerciseCard extends Component {
         this.setState({ deleteDialog: { open: true }})
     }
 
+    handleProgressClick = () => {
+        this.navigate('exercises/progress/' + this.props.exercise.id)
+    }
+
     handleHistoryClick = () => {
         this.setState({ historyDialog: { open: true }});
     }
@@ -175,6 +180,7 @@ class ExerciseCard extends Component {
                         <MenuItem primaryText="Duplicate" onClick={this.handleDuplicateClick} leftIcon={<ContentContentCopy/>}/>
                         <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                         <Divider/>
+                        <MenuItem primaryText="Progress" onClick={this.handleProgressClick} leftIcon={<ActionTrendingUp/>}/>
                         <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
                     </IconMenu>
                     <CardText>
@@ -218,4 +224,4 @@ class ExerciseCard extends Component {
     }
 }
 
-export default ExerciseCard
+export default withRouter(ExerciseCard)
