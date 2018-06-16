@@ -42,7 +42,7 @@ const styles = {
     fab: {
         margin: 0,
         top: 47,
-        right: 20,
+        right: 40,
         bottom: 'auto',
         left: 'auto',
         position: 'absolute',
