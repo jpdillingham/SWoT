@@ -61,8 +61,8 @@ class ExerciseProgressDialog extends Component {
         this.props.onClose()
     }
 
-    handleViewFullHistoryClick = () => {
-        this.navigate('/exercises/history/' + this.props.exercise.id);
+    handleViewFullProgressClick = () => {
+        this.navigate('/exercises/progress/' + this.props.exercise.id);
     }
 
     navigate = (url) => {
@@ -79,13 +79,13 @@ class ExerciseProgressDialog extends Component {
                     actionsContainerStyle={refreshStyle}
                     titleStyle={refreshStyle}
                     contentStyle={{ ...styles.dialogContent, refreshStyle }}
-                    title={this.props.exercise.name + ' History'} 
+                    title={this.props.exercise.name + ' Progress'} 
                     autoScrollBodyContent={true}
                     actions={
                         <div>
                             <FlatButton 
-                                label="View Full history" 
-                                onClick={this.handleViewFullHistoryClick} 
+                                label="View Full progress" 
+                                onClick={this.handleViewFullProgressClick} 
                                 disabled={this.state.api.isExecuting}
                             />
                             <FlatButton 
@@ -99,12 +99,7 @@ class ExerciseProgressDialog extends Component {
                     open={this.props.open}
                 >
                     {!this.props.exercisesHistory ? '' : 
-                        <ExerciseHistoryDialogContent
-                            exercise={this.props.exercise}
-                            history={this.props.exercisesHistory}
-                            filters={this.state.filters}
-                            refreshing={this.state.api.isExecuting}
-                        />
+                        <span>content</span>
                     }
                     {this.state.api.isExecuting ? <Spinner/> : ''}
                 </Dialog>
