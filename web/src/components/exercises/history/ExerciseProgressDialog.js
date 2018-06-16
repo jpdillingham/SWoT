@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import moment from 'moment';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
@@ -10,6 +11,9 @@ import ExerciseHistoryDialogContent from './ExerciseHistoryDialogContent'
 import { fetchExercisesHistory, clearExercisesHistory } from './ExercisesHistoryActions'
 import Spinner from '../../shared/Spinner'
 import { showSnackbar } from '../../app/AppActions'
+
+import { Line } from 'react-chartjs-2';
+import { sortByProp } from '../../../util';
 
 const styles = {
     dialogContent: {
@@ -69,8 +73,39 @@ class ExerciseProgressDialog extends Component {
         this.props.history.push(url);
     }
 
+    getDistinctMetrics = (exercises) => {
+        let metrics = !exercises ? undefined : exercises.map(e => e.metrics);
+        return !metrics || metrics.length === 0 ? [] : metrics
+            .reduce((acc, e) => acc.concat(e))
+            .sort(sortByProp('name'))
+            .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true)
+            .map(m => { return { name: m.name, uom: m.uom }});
+    }
+
+    getDatasets = (exercises) => {
+        let datasets = this.getDistinctMetrics(exercises)
+            .reduce((acc, m) => acc.concat({ label: m.name, data: [] }), []);
+
+        exercises.forEach(e => datasets = e.metrics.reduce((acc, m) => { 
+                var set = acc.find(s => s.label === m.name);
+                set.data = set.data.concat(m.value);
+                acc[acc.indexOf(set)] = set;
+                return acc
+            }, datasets))
+        
+        return datasets;
+    }
+
     render() {
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};
+
+        let history = this.props.exercisesHistory;
+        let exercises = history && history.exercises ? history.exercises : [];
+
+        let chartData = {
+            labels: exercises.map(e => moment(e.endTime).format('l')),
+            datasets: this.getDatasets(exercises),
+        };
 
         return (
             <div>
@@ -99,7 +134,13 @@ class ExerciseProgressDialog extends Component {
                     open={this.props.open}
                 >
                     {!this.props.exercisesHistory ? '' : 
-                        <span>content</span>
+                        <Line 
+                            data={chartData}
+                            options={{
+                                responsive: true,
+                                maintainAspectRatio: false
+                            }}
+                        />
                     }
                     {this.state.api.isExecuting ? <Spinner/> : ''}
                 </Dialog>
