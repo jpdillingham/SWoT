@@ -8,6 +8,11 @@ import FlatButton from 'material-ui/FlatButton/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
 import { grey300 } from 'material-ui/styles/colors';
+import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton';
+import MenuItem from 'material-ui/MenuItem';
+import ActionTrendingUp from 'material-ui/svg-icons/action/trending-up';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import Spinner from '../shared/Spinner';
 
@@ -52,6 +57,11 @@ const styles = {
     time: {
         color: black,
     },
+    iconMenu: {
+        position: 'absolute',
+        right: 0,
+        top: 10,
+    },
 }
 
 const initialState = {
@@ -62,6 +72,9 @@ const initialState = {
         isErrored: false,
     },
     historyDialog: {
+        open: false,
+    },
+    progressDialog: {
         open: false,
     },
     validationErrors: {}
@@ -78,6 +91,14 @@ class ExerciseForm extends Component {
 
     handleHistoryClose = () => {
         this.setState({ historyDialog: { open: false }});
+    }
+
+    handleProgressClick = () => { 
+        this.setState({ progressDialog: { open: true }});
+    }
+
+    handleProgressClose = () => {
+        this.setState({ progressDialog: { open: false }});
     }
 
     handleMetricChange = (event, value, metric) => {
@@ -210,6 +231,15 @@ class ExerciseForm extends Component {
                             <ActionHistory />
                         </FloatingActionButton>
                     </CardHeader>
+                    <IconMenu
+                            style={styles.iconMenu}
+                            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                    >
+                        <MenuItem primaryText="Progress" onClick={this.handleProgressClick} leftIcon={<ActionTrendingUp/>}/>
+                        <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
+                    </IconMenu>
                     <CardText style={styles.text}>
                         {this.props.exercise.metrics ? 
                             this.props.exercise.metrics.map((m, index) =>    
