@@ -21,6 +21,7 @@ import { getElapsedTime } from '../../util';
 
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 import ExerciseHistoryDialog from './history/ExerciseHistoryDialog';
+import ExerciseProgressDialog from './history/ExerciseProgressDialog';
 
 const styles = {
     cardHeader: {
@@ -298,6 +299,11 @@ class ExerciseForm extends Component {
                 <ExerciseHistoryDialog
                     open={this.state.historyDialog.open}
                     onClose={this.handleHistoryClose}
+                    exercise={this.props.exercise}
+                />
+                <ExerciseProgressDialog
+                    open={this.state.progressDialog.open}
+                    onClose={this.handleProgressClose}
                     exercise={this.props.exercise}
                 />
             </div>
