@@ -29,7 +29,7 @@ const initialState = {
     filters: {
         offset: 0,
         limit: 10,
-        order: 'desc',
+        order: 'asc',
         exerciseId: undefined,
     }
 }
