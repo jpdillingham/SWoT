@@ -22,6 +22,7 @@ import { getElapsedTime } from '../../util';
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 import ExerciseHistoryDialog from './history/ExerciseHistoryDialog';
 import ExerciseProgressDialog from './history/ExerciseProgressDialog';
+import { AvPlayArrow, AvStop, AvFastRewind } from 'material-ui/svg-icons';
 
 const styles = {
     cardHeader: {
@@ -150,6 +151,25 @@ class ExerciseForm extends Component {
         this.invokeOnChange({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined })
     }
 
+    handleActionClick = () => {
+        if (!this.props.exercise.startTime) {
+            this.invokeOnChange({ ...this.state.exercise, startTime: new Date().getTime() });
+        }
+        else if (!this.props.exercise.endTime) {
+            this.setState({
+                ...this.state,
+                validationErrors: this.getValidationErrors(this.state)
+            }, () => {
+                if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
+                    this.invokeOnChange({ ...this.state.exercise, endTime: Date.now() })
+                }
+            })
+        }
+        else {
+            this.invokeOnChange({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined })
+        }
+    }
+
     invokeOnChange = (exercise) => {
         this.setState({ 
             api: { ...this.state.api, isExecuting: true }
@@ -230,9 +250,11 @@ class ExerciseForm extends Component {
                             zDepth={2} 
                             style={styles.fab}
                             mini={true}
-                            onClick={this.handleHistoryClick}
+                            onClick={this.handleActionClick}
                         >
-                            <ActionHistory />
+                            {!started ? <AvPlayArrow/> :
+                                !this.props.exercise.endTime ? <AvStop/> : <AvFastRewind/>
+                            }
                         </FloatingActionButton>
                     </CardHeader>
                     <IconMenu
