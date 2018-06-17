@@ -135,6 +135,7 @@ class ExerciseProgressDialog extends Component {
                 >
                     {!this.props.exercisesHistory ? '' : 
                         <Line 
+                            height={window.innerHeight - 410}
                             data={chartData}
                             options={{
                                 responsive: true,
