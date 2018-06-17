@@ -3,19 +3,24 @@ import React, { Component } from 'react';
 import ActionHistory from 'material-ui/svg-icons/action/history';
 import Avatar from 'material-ui/Avatar';
 import { black } from 'material-ui/styles/colors';
-import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton/FlatButton';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
 import { grey300 } from 'material-ui/styles/colors';
+import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton';
+import MenuItem from 'material-ui/MenuItem';
+import ActionTrendingUp from 'material-ui/svg-icons/action/trending-up';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import Spinner from '../shared/Spinner';
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
 import { getElapsedTime } from '../../util';
 
-import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 import ExerciseHistoryDialog from './history/ExerciseHistoryDialog';
+import ExerciseProgressDialog from './history/ExerciseProgressDialog';
+import { AvPlayArrow, AvStop, AvFastRewind } from 'material-ui/svg-icons';
 
 const styles = {
     cardHeader: {
@@ -24,7 +29,6 @@ const styles = {
     },
     cardTitle: {
         fontSize: '20px',
-        marginTop: 6,
     },
     card: {
         width: CARD_WIDTH - 100,
@@ -37,7 +41,7 @@ const styles = {
     fab: {
         margin: 0,
         top: 47,
-        right: 20,
+        right: 40,
         bottom: 'auto',
         left: 'auto',
         position: 'absolute',
@@ -52,6 +56,11 @@ const styles = {
     time: {
         color: black,
     },
+    iconMenu: {
+        position: 'absolute',
+        right: 0,
+        top: 10,
+    },
 }
 
 const initialState = {
@@ -62,6 +71,9 @@ const initialState = {
         isErrored: false,
     },
     historyDialog: {
+        open: false,
+    },
+    progressDialog: {
         open: false,
     },
     validationErrors: {}
@@ -78,6 +90,14 @@ class ExerciseForm extends Component {
 
     handleHistoryClose = () => {
         this.setState({ historyDialog: { open: false }});
+    }
+
+    handleProgressClick = () => { 
+        this.setState({ progressDialog: { open: true }});
+    }
+
+    handleProgressClose = () => {
+        this.setState({ progressDialog: { open: false }});
     }
 
     handleMetricChange = (event, value, metric) => {
@@ -109,24 +129,24 @@ class ExerciseForm extends Component {
     handleNotesChange = (event, value) => {
         this.setState({ exercise: { ...this.state.exercise, notes: value }});
     }
-    
-    handleCompleteClick = () => {
-        this.setState({
-            ...this.state,
-            validationErrors: this.getValidationErrors(this.state)
-        }, () => {
-            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.invokeOnChange({ ...this.state.exercise, endTime: Date.now() })
-            }
-        })
-    }
 
-    handleStartClick = () => {
-        this.invokeOnChange({ ...this.state.exercise, startTime: new Date().getTime() })
-    }
-
-    handleRestartClick = () => {
-        this.invokeOnChange({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined })
+    handleActionClick = () => {
+        if (!this.props.exercise.startTime) {
+            this.invokeOnChange({ ...this.state.exercise, startTime: new Date().getTime() });
+        }
+        else if (!this.props.exercise.endTime) {
+            this.setState({
+                ...this.state,
+                validationErrors: this.getValidationErrors(this.state)
+            }, () => {
+                if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
+                    this.invokeOnChange({ ...this.state.exercise, endTime: Date.now() })
+                }
+            })
+        }
+        else {
+            this.invokeOnChange({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined })
+        }
     }
 
     invokeOnChange = (exercise) => {
@@ -170,6 +190,8 @@ class ExerciseForm extends Component {
             exerciseImage = 'unknown'
         }
 
+        let started = this.props.exercise.startTime;
+
         return (
             <div>
                 <Card 
@@ -182,7 +204,7 @@ class ExerciseForm extends Component {
                     }
                 >
                     <CardHeader                        
-                        titleStyle={styles.cardTitle}
+                        titleStyle={{ ...styles.cardTitle, marginTop: started ? 0 : 6 }}
                         style={styles.cardHeader}
                         title={
                             <span 
@@ -192,8 +214,10 @@ class ExerciseForm extends Component {
                                 {this.props.exercise.name}
                             </span>
                         }
+                        subtitle={started ? 'Elapsed time ' + getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : undefined}
                         avatar={
                             <Avatar 
+                                style={{marginTop: started ? 4 : 0}}
                                 backgroundColor={EXERCISE_AVATAR_COLOR} 
                                 size={32} 
                                 src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'} 
@@ -205,11 +229,22 @@ class ExerciseForm extends Component {
                             zDepth={2} 
                             style={styles.fab}
                             mini={true}
-                            onClick={this.handleHistoryClick}
+                            onClick={this.handleActionClick}
                         >
-                            <ActionHistory />
+                            {!started ? <AvPlayArrow/> :
+                                !this.props.exercise.endTime ? <AvStop/> : <AvFastRewind/>
+                            }
                         </FloatingActionButton>
                     </CardHeader>
+                    <IconMenu
+                            style={styles.iconMenu}
+                            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                    >
+                        <MenuItem primaryText="Progress" onClick={this.handleProgressClick} leftIcon={<ActionTrendingUp/>}/>
+                        <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
+                    </IconMenu>
                     <CardText style={styles.text}>
                         {this.props.exercise.metrics ? 
                             this.props.exercise.metrics.map((m, index) =>    
@@ -233,41 +268,16 @@ class ExerciseForm extends Component {
                             disabled={this.props.exercise.endTime !== undefined  || this.props.exercise.startTime === undefined}
                         />
                     </CardText>
-                    <CardActions>
-                        {!this.props.exercise.startTime ? 
-                            <SaveRetryFlatButton 
-                                label={'Start'}
-                                onClick={this.handleStartClick} 
-                                api={this.state.api} 
-                                validation={this.state.validationErrors} 
-                                style={styles.button}
-                            /> : !this.props.exercise.endTime ?
-                            <SaveRetryFlatButton 
-                                label={'Complete'}
-                                onClick={this.handleCompleteClick} 
-                                api={this.state.api} 
-                                validation={this.state.validationErrors} 
-                                style={styles.button}
-                            /> : 
-                            <SaveRetryFlatButton 
-                                label={'Restart'}
-                                onClick={this.handleRestartClick} 
-                                api={this.state.api} 
-                                validation={this.state.validationErrors} 
-                                style={styles.button}
-                            /> 
-                        }
-                        <FlatButton 
-                            label={this.props.exercise.startTime ? getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
-                            disabled={true} 
-                            style={styles.time}
-                        />
-                    </CardActions>
                     {this.state.api.isExecuting ? <Spinner/> : ''}
                 </Card>
                 <ExerciseHistoryDialog
                     open={this.state.historyDialog.open}
                     onClose={this.handleHistoryClose}
+                    exercise={this.props.exercise}
+                />
+                <ExerciseProgressDialog
+                    open={this.state.progressDialog.open}
+                    onClose={this.handleProgressClose}
                     exercise={this.props.exercise}
                 />
             </div>
