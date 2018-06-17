@@ -3,8 +3,7 @@ import React, { Component } from 'react';
 import ActionHistory from 'material-ui/svg-icons/action/history';
 import Avatar from 'material-ui/Avatar';
 import { black } from 'material-ui/styles/colors';
-import { Card, CardHeader, CardText, CardActions } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton/FlatButton';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
 import { grey300 } from 'material-ui/styles/colors';
@@ -19,7 +18,6 @@ import Spinner from '../shared/Spinner';
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
 import { getElapsedTime } from '../../util';
 
-import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 import ExerciseHistoryDialog from './history/ExerciseHistoryDialog';
 import ExerciseProgressDialog from './history/ExerciseProgressDialog';
 import { AvPlayArrow, AvStop, AvFastRewind } from 'material-ui/svg-icons';
