@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { ListItem } from 'material-ui/List'
+import { black } from 'material-ui/styles/colors'
 
 import ActionRestore from 'material-ui/svg-icons/action/restore'
 import ContentClear from 'material-ui/svg-icons/content/clear'
