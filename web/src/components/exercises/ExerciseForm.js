@@ -131,25 +131,6 @@ class ExerciseForm extends Component {
     handleNotesChange = (event, value) => {
         this.setState({ exercise: { ...this.state.exercise, notes: value }});
     }
-    
-    handleCompleteClick = () => {
-        this.setState({
-            ...this.state,
-            validationErrors: this.getValidationErrors(this.state)
-        }, () => {
-            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.invokeOnChange({ ...this.state.exercise, endTime: Date.now() })
-            }
-        })
-    }
-
-    handleStartClick = () => {
-        this.invokeOnChange({ ...this.state.exercise, startTime: new Date().getTime() })
-    }
-
-    handleRestartClick = () => {
-        this.invokeOnChange({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined })
-    }
 
     handleActionClick = () => {
         if (!this.props.exercise.startTime) {
@@ -289,36 +270,6 @@ class ExerciseForm extends Component {
                             disabled={this.props.exercise.endTime !== undefined  || this.props.exercise.startTime === undefined}
                         />
                     </CardText>
-                    <CardActions>
-                        {!this.props.exercise.startTime ? 
-                            <SaveRetryFlatButton 
-                                label={'Start'}
-                                onClick={this.handleStartClick} 
-                                api={this.state.api} 
-                                validation={this.state.validationErrors} 
-                                style={styles.button}
-                            /> : !this.props.exercise.endTime ?
-                            <SaveRetryFlatButton 
-                                label={'Complete'}
-                                onClick={this.handleCompleteClick} 
-                                api={this.state.api} 
-                                validation={this.state.validationErrors} 
-                                style={styles.button}
-                            /> : 
-                            <SaveRetryFlatButton 
-                                label={'Restart'}
-                                onClick={this.handleRestartClick} 
-                                api={this.state.api} 
-                                validation={this.state.validationErrors} 
-                                style={styles.button}
-                            /> 
-                        }
-                        <FlatButton 
-                            label={this.props.exercise.startTime ? getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
-                            disabled={true} 
-                            style={styles.time}
-                        />
-                    </CardActions>
                     {this.state.api.isExecuting ? <Spinner/> : ''}
                 </Card>
                 <ExerciseHistoryDialog
