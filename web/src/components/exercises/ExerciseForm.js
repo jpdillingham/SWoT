@@ -30,7 +30,6 @@ const styles = {
     },
     cardTitle: {
         fontSize: '20px',
-        marginTop: 6,
     },
     card: {
         width: CARD_WIDTH - 100,
@@ -192,6 +191,8 @@ class ExerciseForm extends Component {
             exerciseImage = 'unknown'
         }
 
+        let started = this.props.exercise.startTime;
+
         return (
             <div>
                 <Card 
@@ -204,7 +205,7 @@ class ExerciseForm extends Component {
                     }
                 >
                     <CardHeader                        
-                        titleStyle={styles.cardTitle}
+                        titleStyle={{ ...styles.cardTitle, marginTop: started ? 0 : 6 }}
                         style={styles.cardHeader}
                         title={
                             <span 
@@ -214,8 +215,10 @@ class ExerciseForm extends Component {
                                 {this.props.exercise.name}
                             </span>
                         }
+                        subtitle={started ? 'Elapsed time ' + getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : undefined}
                         avatar={
                             <Avatar 
+                                style={{marginTop: started ? 4 : 0}}
                                 backgroundColor={EXERCISE_AVATAR_COLOR} 
                                 size={32} 
                                 src={process.env.PUBLIC_URL + '/img/' + exerciseImage.toLowerCase() + '.png'} 
