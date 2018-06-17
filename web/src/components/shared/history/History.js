@@ -106,7 +106,7 @@ class History extends Component {
                 emptyContent={
                     <ListItem 
                         primaryText={'No records match the current filter criteria'}
-                        leftIcon={<ContentClear/>}
+                        leftIcon={<ContentClear color={black}/>}
                     />
                 }
                 footer={

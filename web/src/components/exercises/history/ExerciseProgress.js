@@ -201,13 +201,13 @@ class ExerciseProgress extends Component {
                                 {!this.state.filters.exerciseId ? 
                                     <List><ListItem 
                                         primaryText={'Select an Exercise to view progress'}
-                                        leftIcon={<ActionInfo/>}
+                                        leftIcon={<ActionInfo color={black}/>}
                                     /></List> :
                                     this.state.refreshApi.isExecuting ? '' : 
                                         exercises.length === 0 ? 
                                             <List><ListItem 
                                                 primaryText={'No records match the current filter criteria'}
-                                                leftIcon={<ContentClear/>}
+                                                leftIcon={<ContentClear color={black}/>}
                                             /></List> :
                                             <div style={{marginTop: 15, height: this.state.window.height - 290}}>
                                                 <Line 
