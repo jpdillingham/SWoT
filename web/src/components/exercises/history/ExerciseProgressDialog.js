@@ -7,7 +7,6 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import { grey300 } from 'material-ui/styles/colors'
 
-import ExerciseHistoryDialogContent from './ExerciseHistoryDialogContent'
 import { fetchExercisesHistory, clearExercisesHistory } from './ExercisesHistoryActions'
 import Spinner from '../../shared/Spinner'
 import { showSnackbar } from '../../app/AppActions'
