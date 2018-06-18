@@ -58,3 +58,9 @@ export const CHART_OPTIONS = {
         intersect: true
     },
 };
+
+export const CHART_SERIES_OPTIONS = {
+    fill: false,
+    pointRadius: 4,
+    pointHoverRadius: 6,
+};
