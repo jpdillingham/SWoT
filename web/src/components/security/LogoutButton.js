@@ -35,8 +35,10 @@ class LogoutButton extends Component {
         this.setState({ dialog: { open: true }});
     }
 
-    handleDialogClose = () => {
-        this.setState({ dialog: { open: false }});
+    handleDialogClose = (result) => {
+        if (result.cancelled) {
+            this.setState({ dialog: { open: false }});
+        }
     }
 
     handleLogoutConfirm = () => {
