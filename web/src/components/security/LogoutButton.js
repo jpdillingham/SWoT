@@ -7,6 +7,7 @@ import { showSnackbar } from '../app/AppActions'
 import IconButton from 'material-ui/IconButton'
 import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import { white } from 'material-ui/styles/colors';
+import ConfirmDialog from '../shared/ConfirmDialog';
 
 const styles = {
     button: {
@@ -22,13 +23,24 @@ const styles = {
 }
 
 const initialState = {
+    dialog: {
+        open: false,
+    },
 }
 
 class LogoutButton extends Component {
     state = initialState
 
     handleLogoutClick = () => {
-        this.props.logout()
+        this.setState({ dialog: { open: true }});
+    }
+
+    handleDialogClose = () => {
+        this.setState({ dialog: { open: false }});
+    }
+
+    handleLogoutConfirm = () => {
+        return this.props.logout()
         .then(() => {
             this.props.showSnackbar("Successfully logged out!");
         });
@@ -42,6 +54,15 @@ class LogoutButton extends Component {
                 <IconButton style={styles.button}>
                     <ActionExitToApp color={white} onClick={this.handleLogoutClick} />
                 </IconButton>
+                <ConfirmDialog 
+                    title={'Confirm Log Out'}
+                    buttonCaption={'Log Out'}
+                    onConfirm={this.handleLogoutConfirm}
+                    onClose={this.handleDialogClose}
+                    open={this.state.dialog.open} 
+                >
+                    Are you sure you want to log out?
+                </ConfirmDialog>
             </div>
         )
     }
