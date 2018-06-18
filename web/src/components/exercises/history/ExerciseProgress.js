@@ -23,6 +23,8 @@ import { sortByProp } from '../../../util';
 
 import { Line } from 'react-chartjs-2';
 
+import { CHART_SERIES_COLORS } from '../../../constants';
+
 const initialState = {
     window: {
         width: 0,
@@ -146,7 +148,13 @@ class ExerciseProgress extends Component {
 
     getDatasets = (exercises) => {
         let datasets = this.getDistinctMetrics(exercises)
-            .reduce((acc, m) => acc.concat({ label: m.name, data: [] }), []);
+            .reduce((acc, m, index) => acc.concat({ 
+                label: m.name, 
+                data: [],
+                fill: false,
+                borderColor: CHART_SERIES_COLORS[index % 16],
+                backgroundColor: CHART_SERIES_COLORS[index % 16],
+            }), []);
 
         exercises.forEach(e => datasets = e.metrics.reduce((acc, m) => { 
                 var set = acc.find(s => s.label === m.name);
@@ -214,7 +222,7 @@ class ExerciseProgress extends Component {
                                                     data={chartData}
                                                     options={{
                                                         responsive: true,
-                                                        maintainAspectRatio: false
+                                                        maintainAspectRatio: false,
                                                     }}
                                                 />
                                             </div>
