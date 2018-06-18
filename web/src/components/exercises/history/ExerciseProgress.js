@@ -154,6 +154,8 @@ class ExerciseProgress extends Component {
                 fill: false,
                 borderColor: CHART_SERIES_COLORS[index % CHART_SERIES_COLORS.length],
                 backgroundColor: CHART_SERIES_COLORS[index % CHART_SERIES_COLORS.length],
+                pointRadius: 4,
+                pointHoverRadius: 6,
             }), []);
 
         exercises.forEach(e => datasets = e.metrics.reduce((acc, m) => { 
