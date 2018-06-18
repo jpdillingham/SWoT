@@ -44,4 +44,17 @@ export const CHART_SERIES_COLORS = [
     purple500, indigo500, lime500, yellow500,
     pink500, cyan500, teal500, deepOrange500,
     deepPurple500, lightBlue500, lightGreen500, amber500,
-]
+];
+
+export const CHART_OPTIONS = {
+    responsive: true,
+    maintainAspectRatio: false,
+    tooltips: {
+        mode: 'index',
+        intersect: false,
+    },
+    hover: {
+        mode: 'nearest',
+        intersect: true
+    },
+};
