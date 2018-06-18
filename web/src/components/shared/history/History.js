@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import { ListItem } from 'material-ui/List'
+import { black } from 'material-ui/styles/colors'
 
 import ActionRestore from 'material-ui/svg-icons/action/restore'
 import ContentClear from 'material-ui/svg-icons/content/clear'
@@ -106,7 +107,7 @@ class History extends Component {
                 emptyContent={
                     <ListItem 
                         primaryText={'No records match the current filter criteria'}
-                        leftIcon={<ContentClear/>}
+                        leftIcon={<ContentClear color={black}/>}
                     />
                 }
                 footer={

@@ -6,7 +6,7 @@ import Spinner from '../../shared/Spinner';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { black, red500, grey300 } from 'material-ui/styles/colors';
-import { WORKOUT_AVATAR_COLOR } from '../../../constants'
+import { WORKOUT_AVATAR_COLOR, CHART_OPTIONS, CHART_SERIES_OPTIONS, CHART_SERIES_COLORS } from '../../../constants'
 import Avatar from 'material-ui/Avatar'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import { ActionTrendingUp, ActionInfo } from 'material-ui/svg-icons';
@@ -146,7 +146,13 @@ class ExerciseProgress extends Component {
 
     getDatasets = (exercises) => {
         let datasets = this.getDistinctMetrics(exercises)
-            .reduce((acc, m) => acc.concat({ label: m.name, data: [] }), []);
+            .reduce((acc, m, index) => acc.concat({ 
+                ...CHART_SERIES_OPTIONS,
+                label: m.name, 
+                data: [],
+                borderColor: CHART_SERIES_COLORS[index % CHART_SERIES_COLORS.length],
+                backgroundColor: CHART_SERIES_COLORS[index % CHART_SERIES_COLORS.length],
+            }), []);
 
         exercises.forEach(e => datasets = e.metrics.reduce((acc, m) => { 
                 var set = acc.find(s => s.label === m.name);
@@ -201,21 +207,18 @@ class ExerciseProgress extends Component {
                                 {!this.state.filters.exerciseId ? 
                                     <List><ListItem 
                                         primaryText={'Select an Exercise to view progress'}
-                                        leftIcon={<ActionInfo/>}
+                                        leftIcon={<ActionInfo color={black}/>}
                                     /></List> :
                                     this.state.refreshApi.isExecuting ? '' : 
                                         exercises.length === 0 ? 
                                             <List><ListItem 
                                                 primaryText={'No records match the current filter criteria'}
-                                                leftIcon={<ContentClear/>}
+                                                leftIcon={<ContentClear color={black}/>}
                                             /></List> :
                                             <div style={{marginTop: 15, height: this.state.window.height - 290}}>
                                                 <Line 
                                                     data={chartData}
-                                                    options={{
-                                                        responsive: true,
-                                                        maintainAspectRatio: false
-                                                    }}
+                                                    options={CHART_OPTIONS}
                                                 />
                                             </div>
                                 }
