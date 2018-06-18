@@ -14,6 +14,9 @@ import { showSnackbar } from '../../app/AppActions'
 import { Line } from 'react-chartjs-2';
 import { sortByProp } from '../../../util';
 
+import { CHART_OPTIONS, CHART_SERIES_OPTIONS, CHART_SERIES_COLORS } from '../../../constants'
+
+
 const styles = {
     dialogContent: {
         width: 400,
@@ -83,8 +86,14 @@ class ExerciseProgressDialog extends Component {
 
     getDatasets = (exercises) => {
         let datasets = this.getDistinctMetrics(exercises)
-            .reduce((acc, m) => acc.concat({ label: m.name, data: [] }), []);
-
+            .reduce((acc, m, index) => acc.concat({ 
+                ...CHART_SERIES_OPTIONS,
+                label: m.name, 
+                data: [],
+                borderColor: CHART_SERIES_COLORS[index % CHART_SERIES_COLORS.length],
+                backgroundColor: CHART_SERIES_COLORS[index % CHART_SERIES_COLORS.length],
+            }), []);
+            
         exercises.forEach(e => datasets = e.metrics.reduce((acc, m) => { 
                 var set = acc.find(s => s.label === m.name);
                 set.data = set.data.concat(m.value);
@@ -136,10 +145,7 @@ class ExerciseProgressDialog extends Component {
                         <Line 
                             height={window.innerHeight - 410}
                             data={chartData}
-                            options={{
-                                responsive: true,
-                                maintainAspectRatio: false
-                            }}
+                            options={CHART_OPTIONS}
                         />
                     }
                     {this.state.api.isExecuting ? <Spinner/> : ''}

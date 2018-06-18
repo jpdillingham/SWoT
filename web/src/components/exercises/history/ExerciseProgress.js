@@ -6,7 +6,7 @@ import Spinner from '../../shared/Spinner';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { black, red500, grey300 } from 'material-ui/styles/colors';
-import { WORKOUT_AVATAR_COLOR, CHART_OPTIONS, CHART_SERIES_OPTIONS } from '../../../constants'
+import { WORKOUT_AVATAR_COLOR, CHART_OPTIONS, CHART_SERIES_OPTIONS, CHART_SERIES_COLORS } from '../../../constants'
 import Avatar from 'material-ui/Avatar'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import { ActionTrendingUp, ActionInfo } from 'material-ui/svg-icons';
@@ -22,8 +22,6 @@ import { showSnackbar } from '../../app/AppActions';
 import { sortByProp } from '../../../util';
 
 import { Line } from 'react-chartjs-2';
-
-import { CHART_SERIES_COLORS } from '../../../constants';
 
 const initialState = {
     window: {
