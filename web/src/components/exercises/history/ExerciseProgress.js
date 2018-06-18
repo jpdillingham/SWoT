@@ -6,7 +6,7 @@ import Spinner from '../../shared/Spinner';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { black, red500, grey300 } from 'material-ui/styles/colors';
-import { WORKOUT_AVATAR_COLOR } from '../../../constants'
+import { WORKOUT_AVATAR_COLOR, CHART_OPTIONS } from '../../../constants'
 import Avatar from 'material-ui/Avatar'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import { ActionTrendingUp, ActionInfo } from 'material-ui/svg-icons';
@@ -222,10 +222,7 @@ class ExerciseProgress extends Component {
                                             <div style={{marginTop: 15, height: this.state.window.height - 290}}>
                                                 <Line 
                                                     data={chartData}
-                                                    options={{
-                                                        responsive: true,
-                                                        maintainAspectRatio: false,
-                                                    }}
+                                                    options={CHART_OPTIONS}
                                                 />
                                             </div>
                                 }
