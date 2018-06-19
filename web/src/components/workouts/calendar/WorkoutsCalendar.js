@@ -91,7 +91,7 @@ class WorkoutsCalendar extends Component {
         this.setState({ loadApi: { isExecuting: true }}, () => {
             Promise.all([
                 this.props.fetchWorkouts(),
-                this.handleUpdate(new Date(), 'month')
+                this.handleUpdate(new Date(), 'month', 'loadApi')
             ])
             .then(response => {
                 this.setState({ loadApi: { isExecuting: false, isErrored: false }});
@@ -141,7 +141,7 @@ class WorkoutsCalendar extends Component {
         this.handleUpdate(date, view);
     }
 
-    handleUpdate = (date, view) => {
+    handleUpdate = (date, view, api = 'refreshApi') => {
         let start, end;
 
         this.setState({ title: moment(date).format('MMMM YYYY') });
@@ -163,7 +163,7 @@ class WorkoutsCalendar extends Component {
           end = moment(date).endOf('day').add(1, 'month');
         }
 
-        this.fetchHistory({ fromTime: start, toTime: end });
+        this.fetchHistory({ fromTime: start, toTime: end }, api);
     }
 
     render() {
