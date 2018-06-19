@@ -88,10 +88,18 @@ class WorkoutsCalendar extends Component {
     componentWillMount() {
         this.props.setTitle('Workouts');
 
-        Promise.all([
-            this.props.fetchWorkouts(),
-            this.handleUpdate(new Date(), 'month')
-        ])
+        this.setState({ loadApi: { isExecuting: true }}, () => {
+            Promise.all([
+                this.props.fetchWorkouts(),
+                this.handleUpdate(new Date(), 'month')
+            ])
+            .then(response => {
+                this.setState({ loadApi: { isExecuting: false, isErrored: false }});
+            }, error => {
+                this.props.showSnackbar('Error fetching Exercises: ' + error);
+                this.setState({ loadApi: { isExecuting: false, isErrored: true }});
+            })
+        })
     }
 
     navigate = (url) => {
