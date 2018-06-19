@@ -87,6 +87,7 @@ class App extends Component {
                                 </div>
                             }
                         >
+                        {this.props.user ?
                             <Switch>
                                 <Route exact path="/" component={Workouts}/>
                                 <Route exact path="/history" component={WorkoutsHistory}/>
@@ -101,10 +102,13 @@ class App extends Component {
                                 <Route exact path="/exercises/history" component={ExercisesHistory}/>
                                 <Route path="/exercises/history/:id" component={ExercisesHistory}/>
                                 <Route path="/routines" component={Routines}/>
+                            </Switch> :
+                            <Switch>
                                 <Route path="/login" component={Login}/>
                                 <Route path="/register" component={Register}/>
                                 <Route path="/confirm/:code?" component={ConfirmRegistration}/>
                             </Switch>
+                        }
                         </AppContainer>
                     </div>
                     <Snackbar

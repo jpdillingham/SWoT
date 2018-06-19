@@ -16,26 +16,26 @@ class AppContainer extends Component {
     render() {
         return (
             <div>
-                {this.props.show ? 
+                {!this.props.show ? '' :
                     <div>
-                <AppBar 
-                    title={this.props.title}
-                    style={styles.appBar}
-                    onLeftIconButtonClick={this.toggleDrawer}
-                >
-                    <LogoutButton/>
-                </AppBar>
-                <Drawer 
-                    open={this.state.drawerOpen}
-                    docked={false}
-                    onRequestChange={this.toggleDrawer}
-                >
-                    <AppBar title="SWoT" showMenuIconButton={false}/>
-                    {this.props.links}
-                </Drawer>
-                </div>
-                : ''}
-                    {this.props.children}
+                        <AppBar 
+                            title={this.props.title}
+                            style={styles.appBar}
+                            onLeftIconButtonClick={this.toggleDrawer}
+                        >
+                            <LogoutButton/>
+                        </AppBar>
+                        <Drawer 
+                            open={this.state.drawerOpen}
+                            docked={false}
+                            onRequestChange={this.toggleDrawer}
+                        >
+                            <AppBar title="SWoT" showMenuIconButton={false}/>
+                            {this.props.links}
+                        </Drawer>
+                    </div>
+                }
+                {this.props.children}
             </div>
         );
     }
