@@ -11,6 +11,7 @@ import SecurityCard from './SecurityCard';
 import { authenticate } from './SecurityActions';
 import { showSnackbar } from '../app/AppActions';
 import { validateEmail } from '../../util';
+import Spinner from '../shared/Spinner';
 
 const styles = {
     group: {
@@ -37,6 +38,10 @@ const styles = {
         fontSize: '9pt',
         textAlign: 'center',
         display: 'block'
+    },
+    spinner: {
+        top: 'initial',
+        bottom: 'initial',
     }
 }
 
@@ -52,7 +57,7 @@ const initialState = {
     api: {
         isExecuting: false,
         isErrored: false,
-    },
+    }
 }
 
 class Login extends Component {
@@ -156,6 +161,7 @@ class Login extends Component {
                             disabled={refreshing}
                         />
                     </div>
+                    {refreshing ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
