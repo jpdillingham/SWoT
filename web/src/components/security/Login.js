@@ -48,7 +48,11 @@ const initialState = {
     validationErrors: {
         email: undefined,
         password: undefined,
-    }
+    },
+    api: {
+        isExecuting: false,
+        isErrored: false,
+    },
 }
 
 class Login extends Component {
@@ -65,13 +69,18 @@ class Login extends Component {
     handleLoginClick = () => {
         this.setState({ validationErrors: this.validateState() }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
-                this.props.authenticate(this.state.info.email, this.state.info.password)
-                .then((response) => {
-                    this.props.showSnackbar('Successfully logged in!');
-                    setTimeout(() => this.navigate('/'), 0);
-                }, (error) => {
-                    this.setState({ info: { ...this.state.info, password: '' }}, () => {
-                        this.props.showSnackbar(error.message);
+                this.setState({ api: { isExecuting: true }}, () => {
+                    this.props.authenticate(this.state.info.email, this.state.info.password)
+                    .then((response) => {
+                        this.setState({ api: { isExecuting: false, isErrored: false }})
+                        this.props.showSnackbar('Successfully logged in!');
+                        setTimeout(() => this.navigate('/'), 0);
+                    }, (error) => {
+                        this.setState({ 
+                            info: { ...this.state.info, password: '' },
+                            api: { isExecuting: false, isErrored: true },
+                        })
+                        this.props.showSnackbar(error.message);    
                     })
                 })
             }
@@ -120,7 +129,7 @@ class Login extends Component {
 
     render() {
         return(
-            <SecurityCard>
+            <SecurityCard refreshing={this.state.api.isExecuting}>
                 <CardText>
                     <div style={styles.group}>
                         <CommunicationEmail style={styles.icon}/>
