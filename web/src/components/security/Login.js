@@ -11,6 +11,7 @@ import SecurityCard from './SecurityCard';
 import { authenticate } from './SecurityActions';
 import { showSnackbar } from '../app/AppActions';
 import { validateEmail } from '../../util';
+import Spinner from '../shared/Spinner';
 
 const styles = {
     group: {
@@ -37,6 +38,10 @@ const styles = {
         fontSize: '9pt',
         textAlign: 'center',
         display: 'block'
+    },
+    spinner: {
+        top: 'initial',
+        bottom: 'initial',
     }
 }
 
@@ -48,6 +53,10 @@ const initialState = {
     validationErrors: {
         email: undefined,
         password: undefined,
+    },
+    api: {
+        isExecuting: false,
+        isErrored: false,
     }
 }
 
@@ -65,13 +74,18 @@ class Login extends Component {
     handleLoginClick = () => {
         this.setState({ validationErrors: this.validateState() }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
-                this.props.authenticate(this.state.info.email, this.state.info.password)
-                .then((response) => {
-                    this.props.showSnackbar('Successfully logged in!');
-                    setTimeout(() => this.navigate('/'), 0);
-                }, (error) => {
-                    this.setState({ info: { ...this.state.info, password: '' }}, () => {
-                        this.props.showSnackbar(error.message);
+                this.setState({ api: { isExecuting: true }}, () => {
+                    this.props.authenticate(this.state.info.email, this.state.info.password)
+                    .then((response) => {
+                        this.setState({ api: { isExecuting: false, isErrored: false }})
+                        this.props.showSnackbar('Successfully logged in!');
+                        setTimeout(() => this.navigate('/'), 0);
+                    }, (error) => {
+                        this.setState({ 
+                            info: { ...this.state.info, password: '' },
+                            api: { isExecuting: false, isErrored: true },
+                        })
+                        this.props.showSnackbar(error.message);    
                     })
                 })
             }
@@ -119,8 +133,10 @@ class Login extends Component {
     }
 
     render() {
+        let refreshing = this.state.api.isExecuting;
+
         return(
-            <SecurityCard>
+            <SecurityCard refreshing={refreshing}>
                 <CardText>
                     <div style={styles.group}>
                         <CommunicationEmail style={styles.icon}/>
@@ -130,6 +146,7 @@ class Login extends Component {
                             value={this.state.info.email}
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
+                            disabled={refreshing}
                         />
                     </div>
                     <div style={styles.group}>
@@ -141,16 +158,29 @@ class Login extends Component {
                             errorText={this.state.validationErrors.password}
                             onChange={this.handlePasswordChange}
                             type="password"
+                            disabled={refreshing}
                         />
                     </div>
+                    {refreshing ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
-                        <RaisedButton style={styles.button} primary={true} label="Login" onClick={this.handleLoginClick} />
+                        <RaisedButton 
+                            style={styles.button} 
+                            primary={true}
+                            label="Login" 
+                            onClick={this.handleLoginClick} 
+                            disabled={refreshing}
+                        />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>No account?</span>
-                        <RaisedButton style={styles.button} label="Register" onClick={() => this.handleNavigateClick('register')} />
+                        <RaisedButton 
+                            style={styles.button} 
+                            label="Register" 
+                            onClick={() => this.handleNavigateClick('register')} 
+                            disabled={refreshing}
+                        />
                     </div>
                 </CardActions>
             </SecurityCard>

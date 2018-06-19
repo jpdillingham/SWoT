@@ -1,7 +1,8 @@
 
 import React, { Component } from 'react';
 
-import { Card, CardMedia } from 'material-ui/Card'
+import { Card, CardMedia } from 'material-ui/Card';
+import { grey300 } from 'material-ui/styles/colors';
 
 const styles = {
     card: {
@@ -38,7 +39,15 @@ const styles = {
 class SecurityCard extends Component {
     render() {
         return(
-            <Card zDepth={4} style={styles.card}>
+            <Card 
+                zDepth={4} 
+                style={!this.props.refreshing ? styles.card : 
+                    { 
+                        ...styles.card, 
+                        backgroundColor: grey300 
+                    }
+                }
+            >
                 <CardMedia style={styles.media}>
                     <div style={styles.iconGroup}>
                         <img style={styles.iconForeground} src="/img/weightlifting.png" alt="" />
