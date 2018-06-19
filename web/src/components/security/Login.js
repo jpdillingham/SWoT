@@ -128,8 +128,10 @@ class Login extends Component {
     }
 
     render() {
+        let refreshing = this.state.api.isExecuting;
+
         return(
-            <SecurityCard refreshing={this.state.api.isExecuting}>
+            <SecurityCard refreshing={refreshing}>
                 <CardText>
                     <div style={styles.group}>
                         <CommunicationEmail style={styles.icon}/>
@@ -139,6 +141,7 @@ class Login extends Component {
                             value={this.state.info.email}
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
+                            disabled={refreshing}
                         />
                     </div>
                     <div style={styles.group}>
@@ -150,16 +153,28 @@ class Login extends Component {
                             errorText={this.state.validationErrors.password}
                             onChange={this.handlePasswordChange}
                             type="password"
+                            disabled={refreshing}
                         />
                     </div>
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
-                        <RaisedButton style={styles.button} primary={true} label="Login" onClick={this.handleLoginClick} />
+                        <RaisedButton 
+                            style={styles.button} 
+                            primary={true}
+                            label="Login" 
+                            onClick={this.handleLoginClick} 
+                            disabled={refreshing}
+                        />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>No account?</span>
-                        <RaisedButton style={styles.button} label="Register" onClick={() => this.handleNavigateClick('register')} />
+                        <RaisedButton 
+                            style={styles.button} 
+                            label="Register" 
+                            onClick={() => this.handleNavigateClick('register')} 
+                            disabled={refreshing}
+                        />
                     </div>
                 </CardActions>
             </SecurityCard>
