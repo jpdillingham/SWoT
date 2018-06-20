@@ -25,7 +25,10 @@ const styles = {
     },
     footerDivider: {
         marginBottom: 10
-    }
+    },
+    content: {
+        position: 'relative',
+    },
 }
 
 class HistoryCard extends Component {
@@ -43,12 +46,14 @@ class HistoryCard extends Component {
                         avatar={<Avatar backgroundColor={this.props.color} color={black} size={36} icon={this.props.icon}></Avatar>}
                     />
                     <CardText>
-                        {this.props.header}
-                        {this.props.header ? <Divider style={styles.headerDivider}/> : ''}
-                        {!this.props.isEmpty ? this.props.children : this.props.emptyContent}
-                        {this.props.footer ? <Divider style={styles.footerDivider}/> : ''}
-                        {this.props.footer}
-                        {this.props.refreshing ? <Spinner/> : ''}
+                        <div style={styles.content}>
+                            {this.props.header}
+                            {this.props.header ? <Divider style={styles.headerDivider}/> : ''}
+                            {!this.props.isEmpty ? this.props.children : this.props.emptyContent}
+                            {this.props.refreshing ? <Spinner/> : ''}
+                            {this.props.footer ? <Divider style={styles.footerDivider}/> : ''}
+                            {this.props.footer}
+                        </div>
                     </CardText>
                 </Card> 
         )

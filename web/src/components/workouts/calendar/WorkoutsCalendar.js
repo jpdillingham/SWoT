@@ -36,6 +36,10 @@ const initialState = {
         open: false,
         date: undefined,
     },
+    window: {
+        width: 0,
+        height: 0,
+    },
 }
 
 const styles = {
@@ -78,6 +82,12 @@ const styles = {
         display: 'block',
         fontWeight: 400,
     },
+    container: {
+        position: 'relative',
+    },
+    spinner: {
+        zIndex: 1000,
+    },
 }
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
@@ -86,6 +96,7 @@ class WorkoutsCalendar extends Component {
     state = initialState;
 
     componentWillMount() {
+        this.updateDimensions();
         this.props.setTitle('Workouts');
 
         this.setState({ loadApi: { isExecuting: true }}, () => {
@@ -100,6 +111,14 @@ class WorkoutsCalendar extends Component {
                 this.setState({ loadApi: { isExecuting: false, isErrored: true }});
             })
         })
+    }
+
+    componentDidMount = () => {
+        window.addEventListener("resize", this.updateDimensions);
+    }
+
+    componentWillUnmount = () => {
+        window.removeEventListener("resize", this.updateDimensions);
     }
 
     navigate = (url) => {
@@ -166,6 +185,10 @@ class WorkoutsCalendar extends Component {
         this.fetchHistory({ fromTime: start, toTime: end }, api);
     }
 
+    updateDimensions = () => {
+        this.setState({ window: { width: window.innerWidth, height: window.innerHeight }});
+    }
+
     render() {
         let workoutsHistory = this.props.workoutsHistory && this.props.workoutsHistory.workouts ? this.props.workoutsHistory.workouts : [];
         let workouts = this.props.workouts || [];
@@ -203,27 +226,29 @@ class WorkoutsCalendar extends Component {
                                 avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionEvent/>}></Avatar>}
                             />
                             <CardText>
-                                <span style={styles.date}>{this.state.title}</span>
-                                <BigCalendar
-                                    selectable
-                                    events={workouts}
-                                    views={views}
-                                    toolbar
-                                    popup
-                                    step={60}
-                                    showMultiDayTimes
-                                    defaultDate={new Date()}
-                                    style={{height: 500}}
-                                    onSelectEvent={this.handleSelectEvent}
-                                    onSelectSlot={this.handleSelectSlot}
-                                    components={{
-                                        eventWrapper: WorkoutsCalendarEvent,
-                                        dateCellWrapper: WorkoutsCalendarDateCell,
-                                        toolbar: WorkoutsCalendarToolbar,
-                                    }}
-                                    onNavigate={this.handleNavigate}
-                                />
-                                {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
+                                <div style={styles.container}>
+                                    <span style={styles.date}>{this.state.title}</span>
+                                    <BigCalendar
+                                        selectable
+                                        events={workouts}
+                                        views={views}
+                                        toolbar
+                                        popup
+                                        step={60}
+                                        showMultiDayTimes
+                                        defaultDate={new Date()}
+                                        style={{height: this.state.window.height - 225}}
+                                        onSelectEvent={this.handleSelectEvent}
+                                        onSelectSlot={this.handleSelectSlot}
+                                        components={{
+                                            eventWrapper: WorkoutsCalendarEvent,
+                                            dateCellWrapper: WorkoutsCalendarDateCell,
+                                            toolbar: WorkoutsCalendarToolbar,
+                                        }}
+                                        onNavigate={this.handleNavigate}
+                                    />
+                                    {this.state.refreshApi.isExecuting ? <Spinner style={styles.spinner}/> : ''}
+                                </div>
                             </CardText>
                         </Card>
                         <WorkoutDialog
