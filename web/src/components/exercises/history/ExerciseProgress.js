@@ -68,6 +68,9 @@ const styles = {
     headerDivider: {
         marginTop: 10,
     },
+    container: {
+        position: 'relative',
+    },
 }
 
 class ExerciseProgress extends Component {
@@ -197,32 +200,34 @@ class ExerciseProgress extends Component {
                                 avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionTrendingUp/>}></Avatar>}
                             />
                             <CardText>
-                                <ExerciseProgressOptions
-                                    filters={this.state.filters} 
-                                    exercises={this.props.exercises}
-                                    onChange={this.handleFiltersChange}
-                                    disabled={this.state.loadApi.isExecuting || this.state.refreshApi.isExecuting}
-                                />
-                                <Divider style={styles.headerDivider}/>
-                                {!this.state.filters.exerciseId ? 
-                                    <List><ListItem 
-                                        primaryText={'Select an Exercise to view progress'}
-                                        leftIcon={<ActionInfo color={black}/>}
-                                    /></List> :
-                                    this.state.refreshApi.isExecuting ? '' : 
-                                        exercises.length === 0 ? 
-                                            <List><ListItem 
-                                                primaryText={'No records match the current filter criteria'}
-                                                leftIcon={<ContentClear color={black}/>}
-                                            /></List> :
-                                            <div style={{marginTop: 15, height: this.state.window.height - 290}}>
-                                                <Line 
-                                                    data={chartData}
-                                                    options={CHART_OPTIONS}
-                                                />
-                                            </div>
-                                }
-                                {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
+                                <div style={{ ...styles.container, height: this.state.window.height - 190}}>
+                                    <ExerciseProgressOptions
+                                        filters={this.state.filters} 
+                                        exercises={this.props.exercises}
+                                        onChange={this.handleFiltersChange}
+                                        disabled={this.state.loadApi.isExecuting || this.state.refreshApi.isExecuting}
+                                    />
+                                    <Divider style={styles.headerDivider}/>
+                                    {!this.state.filters.exerciseId ? 
+                                        <List><ListItem 
+                                            primaryText={'Select an Exercise to view progress'}
+                                            leftIcon={<ActionInfo color={black}/>}
+                                        /></List> :
+                                        this.state.refreshApi.isExecuting ? '' : 
+                                            exercises.length === 0 ? 
+                                                <List><ListItem 
+                                                    primaryText={'No records match the current filter criteria'}
+                                                    leftIcon={<ContentClear color={black}/>}
+                                                /></List> :
+                                                <div style={{marginTop: 15, height: this.state.window.height - 290}}>
+                                                    <Line 
+                                                        data={chartData}
+                                                        options={CHART_OPTIONS}
+                                                    />
+                                                </div>
+                                    }
+                                    {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
+                                </div>
                             </CardText>
                         </Card>
                     </div> 
