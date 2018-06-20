@@ -78,6 +78,12 @@ const styles = {
         display: 'block',
         fontWeight: 400,
     },
+    container: {
+        position: 'relative',
+    },
+    spinner: {
+        zIndex: 1000,
+    },
 }
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
@@ -203,27 +209,29 @@ class WorkoutsCalendar extends Component {
                                 avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionEvent/>}></Avatar>}
                             />
                             <CardText>
-                                <span style={styles.date}>{this.state.title}</span>
-                                <BigCalendar
-                                    selectable
-                                    events={workouts}
-                                    views={views}
-                                    toolbar
-                                    popup
-                                    step={60}
-                                    showMultiDayTimes
-                                    defaultDate={new Date()}
-                                    style={{height: 500}}
-                                    onSelectEvent={this.handleSelectEvent}
-                                    onSelectSlot={this.handleSelectSlot}
-                                    components={{
-                                        eventWrapper: WorkoutsCalendarEvent,
-                                        dateCellWrapper: WorkoutsCalendarDateCell,
-                                        toolbar: WorkoutsCalendarToolbar,
-                                    }}
-                                    onNavigate={this.handleNavigate}
-                                />
-                                {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
+                                <div style={styles.container}>
+                                    <span style={styles.date}>{this.state.title}</span>
+                                    <BigCalendar
+                                        selectable
+                                        events={workouts}
+                                        views={views}
+                                        toolbar
+                                        popup
+                                        step={60}
+                                        showMultiDayTimes
+                                        defaultDate={new Date()}
+                                        style={{height: 500}}
+                                        onSelectEvent={this.handleSelectEvent}
+                                        onSelectSlot={this.handleSelectSlot}
+                                        components={{
+                                            eventWrapper: WorkoutsCalendarEvent,
+                                            dateCellWrapper: WorkoutsCalendarDateCell,
+                                            toolbar: WorkoutsCalendarToolbar,
+                                        }}
+                                        onNavigate={this.handleNavigate}
+                                    />
+                                    {!this.state.refreshApi.isExecuting ? <Spinner style={styles.spinner}/> : ''}
+                                </div>
                             </CardText>
                         </Card>
                         <WorkoutDialog
