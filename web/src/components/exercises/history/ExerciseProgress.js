@@ -200,7 +200,7 @@ class ExerciseProgress extends Component {
                                 avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionTrendingUp/>}></Avatar>}
                             />
                             <CardText>
-                                <div style={{ ...styles.container, height: this.state.window.height - 190}}>
+                                <div style={styles.container}>
                                     <ExerciseProgressOptions
                                         filters={this.state.filters} 
                                         exercises={this.props.exercises}
