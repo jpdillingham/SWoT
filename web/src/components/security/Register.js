@@ -12,6 +12,7 @@ import { CardText, CardActions } from 'material-ui/Card'
 
 import { validateEmail } from '../../util'
 import SecurityCard from './SecurityCard';
+import Spinner from '../shared/Spinner';
 
 const styles = {
     group: {
@@ -38,7 +39,12 @@ const styles = {
         fontSize: '9pt',
         textAlign: 'center',
         display: 'block'
-    }
+    },
+    spinner: {
+        top: 'initial',
+        bottom: 'initial',
+        zIndex: 1000,
+    },
 }
 
 const initialState = {
@@ -152,41 +158,42 @@ class Register extends Component {
         return(
             <SecurityCard refreshing={refreshing}>
                 <CardText>
-                <div style={styles.group}>
-                    <CommunicationEmail style={styles.icon}/>
-                    <TextField
-                        hintText="Email"
-                        floatingLabelText="Email"
-                        value={this.state.info.email}
-                        errorText={this.state.validationErrors.email}
-                        onChange={this.handleEmailChange}
-                        disabled={refreshing}
-                    />
-                </div>
-                <div style={styles.group}>
-                    <CommunicationVpnKey style={styles.icon}/>
-                    <TextField
-                        hintText="Password"
-                        floatingLabelText="Password"
-                        value={this.state.info.password}
-                        errorText={this.state.validationErrors.password}
-                        onChange={this.handlePasswordChange}
-                        type="password"
-                        disabled={refreshing}
-                    />
-                </div>
-                <div style={styles.group}>
-                    <CommunicationVpnKey style={styles.icon}/>
-                    <TextField
-                        hintText="Repeat Password"
-                        floatingLabelText="Repeat Password"
-                        value={this.state.info.password2}
-                        errorText={this.state.validationErrors.password2}
-                        onChange={this.handlePassword2Change}
-                        type="password"
-                        disabled={refreshing}
-                    />
-                </div>
+                    <div style={styles.group}>
+                        <CommunicationEmail style={styles.icon}/>
+                        <TextField
+                            hintText="Email"
+                            floatingLabelText="Email"
+                            value={this.state.info.email}
+                            errorText={this.state.validationErrors.email}
+                            onChange={this.handleEmailChange}
+                            disabled={refreshing}
+                        />
+                    </div>
+                    <div style={styles.group}>
+                        <CommunicationVpnKey style={styles.icon}/>
+                        <TextField
+                            hintText="Password"
+                            floatingLabelText="Password"
+                            value={this.state.info.password}
+                            errorText={this.state.validationErrors.password}
+                            onChange={this.handlePasswordChange}
+                            type="password"
+                            disabled={refreshing}
+                        />
+                    </div>
+                    <div style={styles.group}>
+                        <CommunicationVpnKey style={styles.icon}/>
+                        <TextField
+                            hintText="Repeat Password"
+                            floatingLabelText="Repeat Password"
+                            value={this.state.info.password2}
+                            errorText={this.state.validationErrors.password2}
+                            onChange={this.handlePassword2Change}
+                            type="password"
+                            disabled={refreshing}
+                        />
+                    </div>
+                    {refreshing ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
