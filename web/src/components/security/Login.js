@@ -42,6 +42,7 @@ const styles = {
     spinner: {
         top: 'initial',
         bottom: 'initial',
+        zIndex: 1000,
     }
 }
 

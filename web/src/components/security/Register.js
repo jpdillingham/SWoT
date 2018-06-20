@@ -12,6 +12,7 @@ import { CardText, CardActions } from 'material-ui/Card'
 
 import { validateEmail } from '../../util'
 import SecurityCard from './SecurityCard';
+import Spinner from '../shared/Spinner';
 
 const styles = {
     group: {
@@ -38,7 +39,12 @@ const styles = {
         fontSize: '9pt',
         textAlign: 'center',
         display: 'block'
-    }
+    },
+    spinner: {
+        top: 'initial',
+        bottom: 'initial',
+        zIndex: 1000,
+    },
 }
 
 const initialState = {
@@ -53,6 +59,10 @@ const initialState = {
         password2: undefined,
     },
     registered: false,
+    api: {
+        isExecuting: false,
+        isErrored: false,
+    },
 }
 
 class Register extends Component {
@@ -90,14 +100,18 @@ class Register extends Component {
     handleRegisterClick = () => {
         this.setState({ validationErrors: this.validateState() }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
-                this.props.register(this.state.info.email, this.state.info.password)
-                .then((response) => {
-                    this.setState({ registered: true }, () => {
-                        this.props.showSnackbar("Registration successful!")
-                        setTimeout(() => this.navigate('/confirm?code=' + btoa(this.state.info.email)), 1000);
+                this.setState({ api: { isExecuting: true }}, () => {
+                    this.props.register(this.state.info.email, this.state.info.password)
+                    .then((response) => {
+                        this.setState({ registered: true }, () => {
+                            this.setState({ api: { isExecuting: false, isErrored: false }})
+                            this.props.showSnackbar("Registration successful!");
+                            setTimeout(() => this.navigate('/confirm?code=' + btoa(this.state.info.email)), 1000);
+                        })
+                    }, (error) => {
+                        this.setState({ api: { isExecuting: false, isErrored: true }});
+                        this.props.showSnackbar(error.message);
                     })
-                }, (error) => {
-                    this.props.showSnackbar(error.message);
                 })
             }
         })
@@ -139,41 +153,47 @@ class Register extends Component {
     }
 
     render() {
+        let refreshing = this.state.api.isExecuting;
+
         return(
-            <SecurityCard>
+            <SecurityCard refreshing={refreshing}>
                 <CardText>
-                <div style={styles.group}>
-                    <CommunicationEmail style={styles.icon}/>
-                    <TextField
-                        hintText="Email"
-                        floatingLabelText="Email"
-                        value={this.state.info.email}
-                        errorText={this.state.validationErrors.email}
-                        onChange={this.handleEmailChange}
-                    />
-                </div>
-                <div style={styles.group}>
-                    <CommunicationVpnKey style={styles.icon}/>
-                    <TextField
-                        hintText="Password"
-                        floatingLabelText="Password"
-                        value={this.state.info.password}
-                        errorText={this.state.validationErrors.password}
-                        onChange={this.handlePasswordChange}
-                        type="password"
-                    />
-                </div>
-                <div style={styles.group}>
-                    <CommunicationVpnKey style={styles.icon}/>
-                    <TextField
-                        hintText="Repeat Password"
-                        floatingLabelText="Repeat Password"
-                        value={this.state.info.password2}
-                        errorText={this.state.validationErrors.password2}
-                        onChange={this.handlePassword2Change}
-                        type="password"
-                    />
-                </div>
+                    <div style={styles.group}>
+                        <CommunicationEmail style={styles.icon}/>
+                        <TextField
+                            hintText="Email"
+                            floatingLabelText="Email"
+                            value={this.state.info.email}
+                            errorText={this.state.validationErrors.email}
+                            onChange={this.handleEmailChange}
+                            disabled={refreshing}
+                        />
+                    </div>
+                    <div style={styles.group}>
+                        <CommunicationVpnKey style={styles.icon}/>
+                        <TextField
+                            hintText="Password"
+                            floatingLabelText="Password"
+                            value={this.state.info.password}
+                            errorText={this.state.validationErrors.password}
+                            onChange={this.handlePasswordChange}
+                            type="password"
+                            disabled={refreshing}
+                        />
+                    </div>
+                    <div style={styles.group}>
+                        <CommunicationVpnKey style={styles.icon}/>
+                        <TextField
+                            hintText="Repeat Password"
+                            floatingLabelText="Repeat Password"
+                            value={this.state.info.password2}
+                            errorText={this.state.validationErrors.password2}
+                            onChange={this.handlePassword2Change}
+                            type="password"
+                            disabled={refreshing}
+                        />
+                    </div>
+                    {refreshing ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
@@ -181,15 +201,28 @@ class Register extends Component {
                             style={styles.button} 
                             primary={!this.state.registered} 
                             label="Register" 
-                            onClick={this.handleRegisterClick} />
+                            onClick={this.handleRegisterClick} 
+                            disabled={refreshing}
+                        />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Have a confirmation code?</span>
-                        <RaisedButton style={styles.button} primary={this.state.registered} label="Confirm Registration" onClick={() => this.handleNavigateClick('confirm')} />
+                        <RaisedButton 
+                            style={styles.button} 
+                            primary={this.state.registered} 
+                            label="Confirm Registration" 
+                            onClick={() => this.handleNavigateClick('confirm')} 
+                            disabled={refreshing}
+                        />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Already registered?</span>
-                        <RaisedButton style={styles.button} label="Login" onClick={() => this.handleNavigateClick('login')} />
+                        <RaisedButton 
+                            style={styles.button} 
+                            label="Login" 
+                            onClick={() => this.handleNavigateClick('login')} 
+                            disabled={refreshing}
+                        />
                     </div>
                 </CardActions>
             </SecurityCard>
