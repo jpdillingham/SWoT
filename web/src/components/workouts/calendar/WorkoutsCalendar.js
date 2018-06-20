@@ -36,6 +36,10 @@ const initialState = {
         open: false,
         date: undefined,
     },
+    window: {
+        width: 0,
+        height: 0,
+    },
 }
 
 const styles = {
@@ -92,6 +96,7 @@ class WorkoutsCalendar extends Component {
     state = initialState;
 
     componentWillMount() {
+        this.updateDimensions();
         this.props.setTitle('Workouts');
 
         this.setState({ loadApi: { isExecuting: true }}, () => {
@@ -106,6 +111,14 @@ class WorkoutsCalendar extends Component {
                 this.setState({ loadApi: { isExecuting: false, isErrored: true }});
             })
         })
+    }
+
+    componentDidMount = () => {
+        window.addEventListener("resize", this.updateDimensions);
+    }
+
+    componentWillUnmount = () => {
+        window.removeEventListener("resize", this.updateDimensions);
     }
 
     navigate = (url) => {
@@ -172,6 +185,10 @@ class WorkoutsCalendar extends Component {
         this.fetchHistory({ fromTime: start, toTime: end }, api);
     }
 
+    updateDimensions = () => {
+        this.setState({ window: { width: window.innerWidth, height: window.innerHeight }});
+    }
+
     render() {
         let workoutsHistory = this.props.workoutsHistory && this.props.workoutsHistory.workouts ? this.props.workoutsHistory.workouts : [];
         let workouts = this.props.workouts || [];
@@ -220,7 +237,7 @@ class WorkoutsCalendar extends Component {
                                         step={60}
                                         showMultiDayTimes
                                         defaultDate={new Date()}
-                                        style={{height: 500}}
+                                        style={{height: this.state.window.height - 225}}
                                         onSelectEvent={this.handleSelectEvent}
                                         onSelectSlot={this.handleSelectSlot}
                                         components={{
