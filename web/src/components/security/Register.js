@@ -53,6 +53,10 @@ const initialState = {
         password2: undefined,
     },
     registered: false,
+    api: {
+        isExecuting: false,
+        isErrored: false,
+    },
 }
 
 class Register extends Component {
@@ -90,14 +94,18 @@ class Register extends Component {
     handleRegisterClick = () => {
         this.setState({ validationErrors: this.validateState() }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
-                this.props.register(this.state.info.email, this.state.info.password)
-                .then((response) => {
-                    this.setState({ registered: true }, () => {
-                        this.props.showSnackbar("Registration successful!")
-                        setTimeout(() => this.navigate('/confirm?code=' + btoa(this.state.info.email)), 1000);
+                this.setState({ api: { isExecuting: true }}, () => {
+                    this.props.register(this.state.info.email, this.state.info.password)
+                    .then((response) => {
+                        this.setState({ registered: true }, () => {
+                            this.setState({ api: { isExecuting: false, isErrored: false }})
+                            this.props.showSnackbar("Registration successful!");
+                            setTimeout(() => this.navigate('/confirm?code=' + btoa(this.state.info.email)), 1000);
+                        })
+                    }, (error) => {
+                        this.setState({ api: { isExecuting: false, isErrored: true }});
+                        this.props.showSnackbar(error.message);
                     })
-                }, (error) => {
-                    this.props.showSnackbar(error.message);
                 })
             }
         })
@@ -139,8 +147,10 @@ class Register extends Component {
     }
 
     render() {
+        let refreshing = this.state.api.isExecuting;
+
         return(
-            <SecurityCard>
+            <SecurityCard refreshing={refreshing}>
                 <CardText>
                 <div style={styles.group}>
                     <CommunicationEmail style={styles.icon}/>
@@ -150,6 +160,7 @@ class Register extends Component {
                         value={this.state.info.email}
                         errorText={this.state.validationErrors.email}
                         onChange={this.handleEmailChange}
+                        disabled={refreshing}
                     />
                 </div>
                 <div style={styles.group}>
@@ -161,6 +172,7 @@ class Register extends Component {
                         errorText={this.state.validationErrors.password}
                         onChange={this.handlePasswordChange}
                         type="password"
+                        disabled={refreshing}
                     />
                 </div>
                 <div style={styles.group}>
@@ -172,6 +184,7 @@ class Register extends Component {
                         errorText={this.state.validationErrors.password2}
                         onChange={this.handlePassword2Change}
                         type="password"
+                        disabled={refreshing}
                     />
                 </div>
                 </CardText>
@@ -181,15 +194,28 @@ class Register extends Component {
                             style={styles.button} 
                             primary={!this.state.registered} 
                             label="Register" 
-                            onClick={this.handleRegisterClick} />
+                            onClick={this.handleRegisterClick} 
+                            disabled={refreshing}
+                        />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Have a confirmation code?</span>
-                        <RaisedButton style={styles.button} primary={this.state.registered} label="Confirm Registration" onClick={() => this.handleNavigateClick('confirm')} />
+                        <RaisedButton 
+                            style={styles.button} 
+                            primary={this.state.registered} 
+                            label="Confirm Registration" 
+                            onClick={() => this.handleNavigateClick('confirm')} 
+                            disabled={refreshing}
+                        />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Already registered?</span>
-                        <RaisedButton style={styles.button} label="Login" onClick={() => this.handleNavigateClick('login')} />
+                        <RaisedButton 
+                            style={styles.button} 
+                            label="Login" 
+                            onClick={() => this.handleNavigateClick('login')} 
+                            disabled={refreshing}
+                        />
                     </div>
                 </CardActions>
             </SecurityCard>
