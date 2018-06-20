@@ -230,7 +230,7 @@ class WorkoutsCalendar extends Component {
                                         }}
                                         onNavigate={this.handleNavigate}
                                     />
-                                    {!this.state.refreshApi.isExecuting ? <Spinner style={styles.spinner}/> : ''}
+                                    {this.state.refreshApi.isExecuting ? <Spinner style={styles.spinner}/> : ''}
                                 </div>
                             </CardText>
                         </Card>
