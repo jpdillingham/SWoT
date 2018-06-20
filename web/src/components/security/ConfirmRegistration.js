@@ -11,6 +11,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { CardText, CardActions } from 'material-ui/Card'
 import SecurityCard from './SecurityCard';
 import CommunicationEmail from 'material-ui/svg-icons/communication/email'
+import Spinner from '../shared/Spinner';
 
 import { validateEmail } from '../../util'
 
@@ -39,7 +40,12 @@ const styles = {
         fontSize: '9pt',
         textAlign: 'center',
         display: 'block'
-    }
+    },
+    spinner: {
+        top: 'initial',
+        bottom: 'initial',
+        zIndex: 1000,
+    },
 }
 
 const initialState = {
@@ -52,6 +58,10 @@ const initialState = {
         code: undefined,
     },
     confirmed: false,
+    api: {
+        isExecuting: false,
+        isErrored: false,
+    },
 }
 
 class ConfirmRegistration extends Component {
@@ -93,14 +103,18 @@ class ConfirmRegistration extends Component {
     handleConfirmClick = () => {
         this.setState({ validationErrors: this.validateState() }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== undefined) === undefined) {
-                this.props.confirm(this.state.info.email, this.state.info.code)
-                .then((response) => {
-                    this.setState({ confirmed: true }, () => {
-                        this.props.showSnackbar("Account confirmed!");
-                        setTimeout(() => this.navigate('/login'), 1000);
+                this.setState({ api: { isExecuting: true }}, () => {
+                    this.props.confirm(this.state.info.email, this.state.info.code)
+                    .then((response) => {
+                        this.setState({ confirmed: true }, () => {
+                            this.setState({ api: { isExecuting: false, isErrored: false }});
+                            this.props.showSnackbar("Account confirmed!");
+                            setTimeout(() => this.navigate('/login'), 1000);
+                        })
+                    }, (error) => {
+                        this.setState({ api: { isExecuting: false, isErrored: true }});
+                        this.props.showSnackbar(error.message);
                     })
-                }, (error) => {
-                    this.props.showSnackbar(error.message);
                 })
             }
         })
@@ -155,8 +169,10 @@ class ConfirmRegistration extends Component {
     }
 
     render() {
+        let refreshing = this.state.api.isExecuting;
+
         return(
-            <SecurityCard>
+            <SecurityCard refreshing={refreshing}>
                 <CardText>
                     <div style={styles.group}>
                         <CommunicationEmail style={styles.icon}/>
@@ -166,6 +182,7 @@ class ConfirmRegistration extends Component {
                             value={this.state.info.email}
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
+                            disabled={refreshing}
                         />
                     </div>
                     <div style={styles.group}>
@@ -176,8 +193,10 @@ class ConfirmRegistration extends Component {
                             value={this.state.info.code}
                             errorText={this.state.validationErrors.code}
                             onChange={this.handleCodeChange}
+                            disabled={refreshing}
                         />
                     </div>
+                    {refreshing ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
@@ -185,11 +204,19 @@ class ConfirmRegistration extends Component {
                             style={styles.button} 
                             primary={!this.state.confirmed} 
                             label="Confirm Registration" 
-                            onClick={this.handleConfirmClick} />
+                            onClick={this.handleConfirmClick} 
+                            disabled={refreshing}
+                        />
                     </div>
                     <div style={styles.center}>
                         <span style={styles.toggleText}>Ready to log in?</span>
-                        <RaisedButton style={styles.button} primary={this.state.confirmed} label="Login" onClick={() => this.handleNavigateClick('/login')} />
+                        <RaisedButton 
+                            style={styles.button} 
+                            primary={this.state.confirmed} 
+                            label="Login" 
+                            onClick={() => this.handleNavigateClick('/login')} 
+                            disabled={refreshing}
+                        />
                     </div>
                 </CardActions>
             </SecurityCard>
