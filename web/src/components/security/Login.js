@@ -172,6 +172,7 @@ class Login extends Component {
                             label="Login" 
                             onClick={this.handleLoginClick} 
                             disabled={refreshing}
+                            type='submit'
                         />
                     </div>
                     <div style={styles.center}>
