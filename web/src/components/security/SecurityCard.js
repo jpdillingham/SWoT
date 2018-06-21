@@ -39,23 +39,25 @@ const styles = {
 class SecurityCard extends Component {
     render() {
         return(
-            <Card 
-                zDepth={4} 
-                style={!this.props.refreshing ? styles.card : 
-                    { 
-                        ...styles.card, 
-                        backgroundColor: grey300 
+            <form onSubmit={(event) => event.preventDefault()}>
+                <Card 
+                    zDepth={4} 
+                    style={!this.props.refreshing ? styles.card : 
+                        { 
+                            ...styles.card, 
+                            backgroundColor: grey300 
+                        }
                     }
-                }
-            >
-                <CardMedia style={styles.media}>
-                    <div style={styles.iconGroup}>
-                        <img style={styles.iconForeground} src="/img/weightlifting.png" alt="" />
-                        <span style={styles.iconText}><strong>S</strong>imple <strong>Wo</strong>rkout <strong>T</strong>racker</span>
-                    </div>
-                </CardMedia>
-                {this.props.children}
-            </Card>
+                >
+                    <CardMedia style={styles.media}>
+                        <div style={styles.iconGroup}>
+                            <img style={styles.iconForeground} src="/img/weightlifting.png" alt="" />
+                            <span style={styles.iconText}><strong>S</strong>imple <strong>Wo</strong>rkout <strong>T</strong>racker</span>
+                        </div>
+                    </CardMedia>
+                    {this.props.children}
+                </Card>
+            </form>
         )
     }
 }
