@@ -41,14 +41,6 @@ class Workout extends Component {
         this.fetchWorkout();
     }
 
-    componentWillReceiveProps = (nextProps) => {
-        if (!this.getWorkout(nextProps) && this.state.retry) {
-            this.setState({ retry: false }, () => {
-                this.fetchWorkout();
-            })
-        }
-    }
-
     getWorkout = (props = this.props) => {
         let workout = props && props.workouts ? props.workouts.find(w => w.id === props.match.params.id) : undefined;
         workout = workout ? workout : props && props.workoutsHistory && props.workoutsHistory.workout ? props.workoutsHistory.workout : undefined;
@@ -61,7 +53,7 @@ class Workout extends Component {
             api: { ...this.state.api, isExecuting: true }}
         )
 
-        this.props.fetchWorkouts()
+        return this.props.fetchWorkouts()
         .then(response => {
             this.setState({ 
                 workout: response.data.find(w => w.id === this.props.match.params.id),
@@ -172,7 +164,9 @@ class Workout extends Component {
                 resolve(response);
             }, error => {
                 this.props.showSnackbar('Error completing Workout \'' + workout.routine.name + '\'.');
+                reject(error);
             })
+            .then(() => this.fetchWorkout());
         })
     }
 

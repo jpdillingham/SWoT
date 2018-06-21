@@ -58,7 +58,13 @@ const styles = {
     },
     notes: {
         width: '100%',
-    }
+    },
+    content: {
+        position: 'relative',
+    },
+    spinner: {
+        zIndex: 1000,
+    },
 }
 
 const initialState = {
@@ -192,23 +198,25 @@ class WorkoutCard extends Component {
                         <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                     </IconMenu>
                     <CardText>
-                        <WorkoutStepper
-                            enabled={this.props.workout.startTime !== undefined && !this.state.api.isExecuting}
-                            style={styles.stepper}
-                            workout={this.props.workout}
-                            onExerciseChange={this.props.onExerciseChange}
-                        />
-                        <Divider style={styles.divider}/>
-                        <TextField
-                            hintText={'Workout Notes'}
-                            floatingLabelText={'Workout Notes'}
-                            defaultValue={this.props.workout.notes}
-                            style={styles.notes}
-                            multiLine={true}
-                            onChange={this.handleNotesChange}
-                            disabled={this.props.workout.endTime !== undefined  || this.props.workout.startTime === undefined}
-                        />
-                        {this.state.api.isExecuting ? <Spinner/> : ''}
+                        <div style={styles.content}>
+                            <WorkoutStepper
+                                enabled={this.props.workout.startTime !== undefined && !this.state.api.isExecuting}
+                                style={styles.stepper}
+                                workout={this.props.workout}
+                                onExerciseChange={this.props.onExerciseChange}
+                            />
+                            <Divider style={styles.divider}/>
+                            <TextField
+                                hintText={'Workout Notes'}
+                                floatingLabelText={'Workout Notes'}
+                                defaultValue={this.props.workout.notes}
+                                style={styles.notes}
+                                multiLine={true}
+                                onChange={this.handleNotesChange}
+                                disabled={this.props.workout.endTime !== undefined  || this.props.workout.startTime === undefined}
+                            />
+                            {this.state.api.isExecuting ? <Spinner style={styles.spinner}/> : ''}
+                        </div>
                     </CardText>
                 </Card>
                 <ConfirmDialog 
