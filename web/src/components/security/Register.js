@@ -203,6 +203,7 @@ class Register extends Component {
                             label="Register" 
                             onClick={this.handleRegisterClick} 
                             disabled={refreshing}
+                            type='submit'
                         />
                     </div>
                     <div style={styles.center}>

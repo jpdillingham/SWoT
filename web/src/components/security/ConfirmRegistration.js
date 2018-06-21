@@ -206,6 +206,7 @@ class ConfirmRegistration extends Component {
                             label="Confirm Registration" 
                             onClick={this.handleConfirmClick} 
                             disabled={refreshing}
+                            type='submit'
                         />
                     </div>
                     <div style={styles.center}>
