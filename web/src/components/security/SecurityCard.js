@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import { Card, CardMedia } from 'material-ui/Card';
 import ActionDone from 'material-ui/svg-icons/action/done';
-import { grey300, green300 } from 'material-ui/styles/colors';
+import { grey300, green400 } from 'material-ui/styles/colors';
 
 const styles = {
     card: {
@@ -35,6 +35,23 @@ const styles = {
         textAlign: 'center',
         textShadow: '2px 2px 10px #000000',
     },
+    container: {
+        position: 'relative',
+    },
+    done: {
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        margin: 'auto',
+        position: 'absolute',
+        backgroundColor: green400,
+        zIndex: 1000,
+    },
+    doneIcon:{
+        width: 72,
+        height: 72,
+    }
 }
 
 class SecurityCard extends Component {
@@ -43,7 +60,7 @@ class SecurityCard extends Component {
             <form onSubmit={(event) => event.preventDefault()}>
                 <Card 
                     zDepth={4} 
-                    style={this.props.api.isExecuting ? { ...styles.card, backgroundColor: grey300 } : this.props.api.isSuccess ? { ...styles.card, backgroundColor: green300 } : styles.card }
+                    style={this.props.api.isExecuting ? { ...styles.card, backgroundColor: grey300 } : styles.card }
                 >
                     <CardMedia style={styles.media}>
                         <div style={styles.iconGroup}>
@@ -51,9 +68,14 @@ class SecurityCard extends Component {
                             <span style={styles.iconText}><strong>S</strong>imple <strong>Wo</strong>rkout <strong>T</strong>racker</span>
                         </div>
                     </CardMedia>
-                    {!this.props.api.isSuccess ? this.props.children : 
-                        <ActionDone/>
-                    }
+                    <div style={styles.container}>
+                        {this.props.children}
+                        {!this.props.api.isSuccess ? '' :
+                            <div style={styles.done}>
+                                <ActionDone style={{ ...styles.done, ...styles.doneIcon }}/>
+                            </div>
+                        }
+                    </div>
                 </Card>
             </form>
         )
