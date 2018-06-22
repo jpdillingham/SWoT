@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 import { Card, CardMedia } from 'material-ui/Card';
-import { grey300 } from 'material-ui/styles/colors';
+import { grey300, green300 } from 'material-ui/styles/colors';
 
 const styles = {
     card: {
@@ -43,9 +43,14 @@ class SecurityCard extends Component {
                 <Card 
                     zDepth={4} 
                     style={!this.props.api.isExecuting ? styles.card : 
+                        !this.props.api.isSuccess ?
                         { 
                             ...styles.card, 
                             backgroundColor: grey300 
+                        } :
+                        { 
+                            ...styles.card,
+                            backgroundColor: green300
                         }
                     }
                 >
