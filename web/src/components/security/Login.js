@@ -137,7 +137,7 @@ class Login extends Component {
         let refreshing = this.state.api.isExecuting;
 
         return(
-            <SecurityCard refreshing={refreshing}>
+            <SecurityCard api={this.state.api}>
                 <CardText>
                     <div style={styles.group}>
                         <CommunicationEmail style={styles.icon}/>
