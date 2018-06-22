@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 
 import { Card, CardMedia } from 'material-ui/Card';
+import ActionDone from 'material-ui/svg-icons/action/done';
 import { grey300, green300 } from 'material-ui/styles/colors';
 
 const styles = {
@@ -42,17 +43,7 @@ class SecurityCard extends Component {
             <form onSubmit={(event) => event.preventDefault()}>
                 <Card 
                     zDepth={4} 
-                    style={!this.props.api.isExecuting ? styles.card : 
-                        !this.props.api.isSuccess ?
-                        { 
-                            ...styles.card, 
-                            backgroundColor: grey300 
-                        } :
-                        { 
-                            ...styles.card,
-                            backgroundColor: green300
-                        }
-                    }
+                    style={this.props.api.isExecuting ? { ...styles.card, backgroundColor: grey300 } : this.props.api.isSuccess ? { ...styles.card, backgroundColor: green300 } : styles.card }
                 >
                     <CardMedia style={styles.media}>
                         <div style={styles.iconGroup}>
@@ -60,7 +51,9 @@ class SecurityCard extends Component {
                             <span style={styles.iconText}><strong>S</strong>imple <strong>Wo</strong>rkout <strong>T</strong>racker</span>
                         </div>
                     </CardMedia>
-                    {this.props.children}
+                    {!this.props.api.isSuccess ? this.props.children : 
+                        <ActionDone/>
+                    }
                 </Card>
             </form>
         )
