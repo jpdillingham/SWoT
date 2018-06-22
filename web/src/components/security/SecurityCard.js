@@ -42,7 +42,7 @@ class SecurityCard extends Component {
             <form onSubmit={(event) => event.preventDefault()}>
                 <Card 
                     zDepth={4} 
-                    style={!this.props.refreshing ? styles.card : 
+                    style={!this.props.api.isExecuting ? styles.card : 
                         { 
                             ...styles.card, 
                             backgroundColor: grey300 
