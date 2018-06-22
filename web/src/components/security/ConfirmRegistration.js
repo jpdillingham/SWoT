@@ -61,6 +61,7 @@ const initialState = {
     api: {
         isExecuting: false,
         isErrored: false,
+        isSuccess: false,
     },
 }
 
@@ -107,12 +108,12 @@ class ConfirmRegistration extends Component {
                     this.props.confirm(this.state.info.email, this.state.info.code)
                     .then((response) => {
                         this.setState({ confirmed: true }, () => {
-                            this.setState({ api: { isExecuting: false, isErrored: false }});
+                            this.setState({ api: { isExecuting: false, isErrored: false, isSuccess: true }});
                             this.props.showSnackbar("Account confirmed!");
                             setTimeout(() => this.navigate('/login'), 1000);
                         })
                     }, (error) => {
-                        this.setState({ api: { isExecuting: false, isErrored: true }});
+                        this.setState({ api: { isExecuting: false, isErrored: true, isSuccess: false }});
                         this.props.showSnackbar(error.message);
                     })
                 })
@@ -172,7 +173,7 @@ class ConfirmRegistration extends Component {
         let refreshing = this.state.api.isExecuting;
 
         return(
-            <SecurityCard refreshing={refreshing}>
+            <SecurityCard api={this.state.api}>
                 <CardText>
                     <div style={styles.group}>
                         <CommunicationEmail style={styles.icon}/>

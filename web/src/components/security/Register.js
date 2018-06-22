@@ -62,6 +62,7 @@ const initialState = {
     api: {
         isExecuting: false,
         isErrored: false,
+        isSuccess: false,
     },
 }
 
@@ -104,12 +105,12 @@ class Register extends Component {
                     this.props.register(this.state.info.email, this.state.info.password)
                     .then((response) => {
                         this.setState({ registered: true }, () => {
-                            this.setState({ api: { isExecuting: false, isErrored: false }})
+                            this.setState({ api: { isExecuting: false, isErrored: false, isSuccess: true }})
                             this.props.showSnackbar("Registration successful!");
                             setTimeout(() => this.navigate('/confirm?code=' + btoa(this.state.info.email)), 1000);
                         })
                     }, (error) => {
-                        this.setState({ api: { isExecuting: false, isErrored: true }});
+                        this.setState({ api: { isExecuting: false, isErrored: true, isSuccess: false }});
                         this.props.showSnackbar(error.message);
                     })
                 })
@@ -156,7 +157,7 @@ class Register extends Component {
         let refreshing = this.state.api.isExecuting;
 
         return(
-            <SecurityCard refreshing={refreshing}>
+            <SecurityCard api={this.state.api}>
                 <CardText>
                     <div style={styles.group}>
                         <CommunicationEmail style={styles.icon}/>
