@@ -62,7 +62,18 @@ const initialState = {
 }
 
 class Login extends Component {
-    state = initialState;
+    constructor(props) {
+        super(props);
+
+        this.state = initialState;
+
+        this.emailInput = React.createRef();
+        this.passwordInput = React.createRef();
+    }
+
+    componentDidMount = () => {
+        this.emailInput.current.focus();
+    }
 
     navigate = (url) => {
         this.props.history.push(url);
@@ -147,6 +158,7 @@ class Login extends Component {
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
                             disabled={refreshing}
+                            ref={this.emailInput}
                         />
                     </div>
                     <div style={styles.group}>
@@ -159,6 +171,7 @@ class Login extends Component {
                             onChange={this.handlePasswordChange}
                             type="password"
                             disabled={refreshing}
+                            ref={this.passwordInput}
                         />
                     </div>
                     {refreshing ? <Spinner style={styles.spinner}/> : ''}
