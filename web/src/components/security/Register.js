@@ -67,7 +67,17 @@ const initialState = {
 }
 
 class Register extends Component {
-    state = initialState;
+    constructor(props) {
+        super(props);
+
+        this.state = initialState;
+
+        this.emailInput = React.createRef();
+    }
+
+    componentDidMount = () => {
+        this.emailInput.current.focus();
+    }
 
     navigate = (url) => {
         this.props.history.push(url);
@@ -168,6 +178,7 @@ class Register extends Component {
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
                             disabled={refreshing}
+                            ref={this.emailInput}
                         />
                     </div>
                     <div style={styles.group}>
