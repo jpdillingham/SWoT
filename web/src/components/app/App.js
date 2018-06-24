@@ -50,6 +50,8 @@ class App extends Component {
     }
 
     componentWillMount = () => {
+        if ([ '/register', '/confirm' ].find(r => r === this.props.location.pathname)) return;
+
         this.props.ensureSession()
             .then((result) => { }, (err) => {
                 this.navigate('/login');
