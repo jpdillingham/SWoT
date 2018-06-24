@@ -125,8 +125,12 @@ class ConfirmRegistration extends Component {
                             setTimeout(() => this.navigate('/login'), 1000);
                         })
                     }, (error) => {
-                        this.setState({ api: { isExecuting: false, isErrored: true, isSuccess: false }});
+                        this.setState({ 
+                            api: { isExecuting: false, isErrored: true, isSuccess: false },
+                            info: { ...this.state.info, code: '' }
+                        });
                         this.props.showSnackbar(error.message);
+                        this.codeInput.current.focus();
                     })
                 })
             }
