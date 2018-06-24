@@ -122,6 +122,7 @@ class Register extends Component {
                     }, (error) => {
                         this.setState({ api: { isExecuting: false, isErrored: true, isSuccess: false }});
                         this.props.showSnackbar(error.message);
+                        this.emailInput.current.focus();
                     })
                 })
             }
