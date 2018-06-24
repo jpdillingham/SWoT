@@ -91,6 +91,18 @@ class ConfirmRegistration extends Component {
                 this.navigate('/confirm')
             }
         }
+
+        this.emailInput = React.createRef();
+        this.codeInput = React.createRef();
+    }
+
+    componentDidMount = () => {
+        if (!this.state.info.email) {
+            this.emailInput.current.focus();
+        }
+        else {
+            this.codeInput.current.focus();
+        }
     }
 
     navigate = (url) => {
@@ -184,6 +196,7 @@ class ConfirmRegistration extends Component {
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
                             disabled={refreshing}
+                            ref={this.emailInput}
                         />
                     </div>
                     <div style={styles.group}>
@@ -195,6 +208,7 @@ class ConfirmRegistration extends Component {
                             errorText={this.state.validationErrors.code}
                             onChange={this.handleCodeChange}
                             disabled={refreshing}
+                            ref={this.codeInput}
                         />
                     </div>
                     {refreshing ? <Spinner style={styles.spinner}/> : ''}
