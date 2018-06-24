@@ -96,7 +96,8 @@ class Login extends Component {
                             info: { ...this.state.info, password: '' },
                             api: { isExecuting: false, isErrored: true },
                         })
-                        this.props.showSnackbar(error.message);    
+                        this.props.showSnackbar(error.message);  
+                        this.passwordInput.current.focus();  
                     })
                 })
             }
