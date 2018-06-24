@@ -73,6 +73,8 @@ class Register extends Component {
         this.state = initialState;
 
         this.emailInput = React.createRef();
+        this.password1Input = React.createRef();
+        this.password2Input = React.createRef();
     }
 
     componentDidMount = () => {
@@ -131,12 +133,15 @@ class Register extends Component {
 
     validateState = () => {
         let validationErrors = this.state.validationErrors;
+        let focus = undefined;
 
         if (!validateEmail(this.state.info.email)) {
             validationErrors = {
                 ...validationErrors,
                 email: 'Invalid email.'
             }
+
+            focus = this.emailInput.current;
         }
 
         if (this.state.info.password === undefined || this.state.info.password === '') {
@@ -144,12 +149,16 @@ class Register extends Component {
                 ...validationErrors, 
                 password: 'The password can\'t be blank.' 
             }
+
+            focus = !focus ? this.password1Input.current : focus;
         }
         else if (this.state.info.password.length < 6) {
             validationErrors = { 
                 ...validationErrors, 
                 password: 'The password must be at least 6 characters.',
             }
+
+            focus = !focus ? this.password1Input.current : focus;
         }
         else if (this.state.info.password !== this.state.info.password2) {
             let text = 'The supplied passwords don\'t match.';
@@ -159,7 +168,11 @@ class Register extends Component {
                 password: text,
                 password2: text,
             }
+
+            focus = !focus ? this.password2Input.current : focus;
         }
+
+        if (focus) focus.focus();
 
         return validationErrors;
     }
@@ -192,6 +205,7 @@ class Register extends Component {
                             onChange={this.handlePasswordChange}
                             type="password"
                             disabled={refreshing}
+                            ref={this.password1Input}
                         />
                     </div>
                     <div style={styles.group}>
@@ -204,6 +218,7 @@ class Register extends Component {
                             onChange={this.handlePassword2Change}
                             type="password"
                             disabled={refreshing}
+                            ref={this.password2Input}
                         />
                     </div>
                     {refreshing ? <Spinner style={styles.spinner}/> : ''}
