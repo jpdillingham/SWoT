@@ -36,8 +36,6 @@ const styles = {
     },
 };
 
-const redirectSuppressedRoutes = [ '/register', '/confirm' ]
-
 class App extends Component {
     theme = getMuiTheme({
         palette: {
@@ -52,7 +50,7 @@ class App extends Component {
     }
 
     componentWillMount = () => {
-        if (redirectSuppressedRoutes.find(r => r === this.props.location.pathname)) return;
+        if ([ '/register', '/confirm' ].find(r => r === this.props.location.pathname)) return;
 
         this.props.ensureSession()
             .then((result) => { }, (err) => {
