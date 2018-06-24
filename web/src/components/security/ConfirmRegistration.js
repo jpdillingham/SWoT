@@ -135,12 +135,15 @@ class ConfirmRegistration extends Component {
 
     validateState = () => {
         let validationErrors = this.state.validationErrors;
+        let focus = undefined;
 
         if (!validateEmail(this.state.info.email)) {
             validationErrors = {
                 ...validationErrors,
                 email: 'Invalid email.'
             }
+
+            focus = this.emailInput.current;
         }
 
         if (this.state.info.code === undefined || this.state.info.code.length !== 6) {
@@ -148,13 +151,19 @@ class ConfirmRegistration extends Component {
                 ...validationErrors, 
                 code: 'The code must be 6 characters.',
             }
+
+            focus = !focus ? this.codeInput.current : focus;
         }
         else if (!/^\d+$/.test(this.state.info.code)) {
             validationErrors = {
                 ...validationErrors,
                 code: 'The code must only contain numbers.',
             }
+
+            focus = !focus ? this.codeInput.current : focus;
         }
+
+        if (focus) focus.focus();
 
         return validationErrors;
     }
