@@ -120,12 +120,15 @@ class Login extends Component {
 
     validateState = () => {
         let validationErrors = this.state.validationErrors;
+        let focus = undefined;
 
         if (!validateEmail(this.state.info.email)) {
             validationErrors = {
                 ...validationErrors,
                 email: 'Invalid email.'
             }
+
+            focus = this.emailInput.current;
         }
 
         if (this.state.info.password === undefined || this.state.info.password === '') {
@@ -133,13 +136,19 @@ class Login extends Component {
                 ...validationErrors, 
                 password: 'The password can\'t be blank.' 
             }
+
+            focus = !focus ? this.passwordInput.current : focus;
         }
         else if (this.state.info.password.length < 6) {
             validationErrors = { 
                 ...validationErrors, 
                 password: 'The password must be at least 6 characters.',
             }
+
+            focus = !focus ? this.passwordInput.current: focus;
         }
+
+        if (focus) focus.focus();
 
         return validationErrors;
     }
