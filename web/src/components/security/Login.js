@@ -58,7 +58,6 @@ const initialState = {
     api: {
         isExecuting: false,
         isErrored: false,
-        isSuccess: false,
     }
 }
 
@@ -79,13 +78,12 @@ class Login extends Component {
                 this.setState({ api: { isExecuting: true }}, () => {
                     this.props.authenticate(this.state.info.email, this.state.info.password)
                     .then((response) => {
-                        this.setState({ api: { isExecuting: false, isErrored: false, isSuccess: true }})
                         this.props.showSnackbar('Successfully logged in!');
                         setTimeout(() => this.navigate('/'), 0);
                     }, (error) => {
                         this.setState({ 
                             info: { ...this.state.info, password: '' },
-                            api: { isExecuting: false, isErrored: true, isSuccess: false },
+                            api: { isExecuting: false, isErrored: true },
                         })
                         this.props.showSnackbar(error.message);    
                     })
