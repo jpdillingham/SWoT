@@ -19,5 +19,5 @@ export const setTitle = (title) => ({
 export const setVariable = (name, value) => ({
     type: 'SET_VARIABLE',
     name: name,
-    value, value,
+    value: value,
 });
