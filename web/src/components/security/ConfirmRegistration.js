@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import queryString from 'query-string';
 
 import { confirm } from './SecurityActions'
-import { showSnackbar } from '../app/AppActions'
+import { showSnackbar, setVariable } from '../app/AppActions'
 
 import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import TextField from 'material-ui/TextField'
@@ -122,6 +122,7 @@ class ConfirmRegistration extends Component {
                         this.setState({ confirmed: true }, () => {
                             this.setState({ api: { isExecuting: false, isErrored: false, isSuccess: true }});
                             this.props.showSnackbar("Account confirmed!");
+                            this.props.setVariable('loginEmail', this.state.info.email);
                             setTimeout(() => this.navigate('/login'), 1000);
                         })
                     }, (error) => {
@@ -260,7 +261,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = {
     confirm,
-    showSnackbar
+    showSnackbar,
+    setVariable,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ConfirmRegistration)
