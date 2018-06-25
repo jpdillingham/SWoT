@@ -74,7 +74,12 @@ class Login extends Component {
     }
 
     componentDidMount = () => {
-        this.emailInput.current.focus();
+        if (!this.state.info.email) {
+            this.emailInput.current.focus();
+        }
+        else {
+            this.passwordInput.current.focus();
+        }
     }
 
     navigate = (url) => {
