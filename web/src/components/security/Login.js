@@ -67,6 +67,8 @@ class Login extends Component {
 
         this.state = initialState;
 
+        if (this.props.appVariables && this.props.appVariables.loginEmail) this.state.info.email = this.props.appVariables.loginEmail;
+
         this.emailInput = React.createRef();
         this.passwordInput = React.createRef();
     }
@@ -214,6 +216,7 @@ class Login extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return { 
+        appVariables: state.app.variables,
     }
 }
 
