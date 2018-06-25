@@ -4,6 +4,7 @@ const initialState = {
         message: '',
     },
     title: 'SWoT',
+    variables: { }
 };
 
 const AppReducer = (state = initialState, action) => { 
@@ -16,6 +17,8 @@ const AppReducer = (state = initialState, action) => {
             return { ...state };
         case 'SET_TITLE':
             return { ...state, title: action.title };
+        case 'SET_VARIABLE': 
+            return { ...state, variables: { ...state.variables, [action.name]: action.value } };
         default:
             return state;
     }
