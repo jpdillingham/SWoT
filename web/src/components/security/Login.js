@@ -62,7 +62,18 @@ const initialState = {
 }
 
 class Login extends Component {
-    state = initialState;
+    constructor(props) {
+        super(props);
+
+        this.state = initialState;
+
+        this.emailInput = React.createRef();
+        this.passwordInput = React.createRef();
+    }
+
+    componentDidMount = () => {
+        this.emailInput.current.focus();
+    }
 
     navigate = (url) => {
         this.props.history.push(url);
@@ -85,7 +96,8 @@ class Login extends Component {
                             info: { ...this.state.info, password: '' },
                             api: { isExecuting: false, isErrored: true },
                         })
-                        this.props.showSnackbar(error.message);    
+                        this.props.showSnackbar(error.message);  
+                        this.passwordInput.current.focus();  
                     })
                 })
             }
@@ -108,12 +120,15 @@ class Login extends Component {
 
     validateState = () => {
         let validationErrors = this.state.validationErrors;
+        let focus = undefined;
 
         if (!validateEmail(this.state.info.email)) {
             validationErrors = {
                 ...validationErrors,
                 email: 'Invalid email.'
             }
+
+            focus = this.emailInput.current;
         }
 
         if (this.state.info.password === undefined || this.state.info.password === '') {
@@ -121,13 +136,19 @@ class Login extends Component {
                 ...validationErrors, 
                 password: 'The password can\'t be blank.' 
             }
+
+            focus = !focus ? this.passwordInput.current : focus;
         }
         else if (this.state.info.password.length < 6) {
             validationErrors = { 
                 ...validationErrors, 
                 password: 'The password must be at least 6 characters.',
             }
+
+            focus = !focus ? this.passwordInput.current: focus;
         }
+
+        if (focus) focus.focus();
 
         return validationErrors;
     }
@@ -147,6 +168,7 @@ class Login extends Component {
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
                             disabled={refreshing}
+                            ref={this.emailInput}
                         />
                     </div>
                     <div style={styles.group}>
@@ -159,6 +181,7 @@ class Login extends Component {
                             onChange={this.handlePasswordChange}
                             type="password"
                             disabled={refreshing}
+                            ref={this.passwordInput}
                         />
                     </div>
                     {refreshing ? <Spinner style={styles.spinner}/> : ''}

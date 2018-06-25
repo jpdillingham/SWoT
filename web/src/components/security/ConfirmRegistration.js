@@ -91,6 +91,18 @@ class ConfirmRegistration extends Component {
                 this.navigate('/confirm')
             }
         }
+
+        this.emailInput = React.createRef();
+        this.codeInput = React.createRef();
+    }
+
+    componentDidMount = () => {
+        if (!this.state.info.email) {
+            this.emailInput.current.focus();
+        }
+        else {
+            this.codeInput.current.focus();
+        }
     }
 
     navigate = (url) => {
@@ -113,8 +125,12 @@ class ConfirmRegistration extends Component {
                             setTimeout(() => this.navigate('/login'), 1000);
                         })
                     }, (error) => {
-                        this.setState({ api: { isExecuting: false, isErrored: true, isSuccess: false }});
+                        this.setState({ 
+                            api: { isExecuting: false, isErrored: true, isSuccess: false },
+                            info: { ...this.state.info, code: '' }
+                        });
                         this.props.showSnackbar(error.message);
+                        this.codeInput.current.focus();
                     })
                 })
             }
@@ -123,12 +139,15 @@ class ConfirmRegistration extends Component {
 
     validateState = () => {
         let validationErrors = this.state.validationErrors;
+        let focus = undefined;
 
         if (!validateEmail(this.state.info.email)) {
             validationErrors = {
                 ...validationErrors,
                 email: 'Invalid email.'
             }
+
+            focus = this.emailInput.current;
         }
 
         if (this.state.info.code === undefined || this.state.info.code.length !== 6) {
@@ -136,13 +155,19 @@ class ConfirmRegistration extends Component {
                 ...validationErrors, 
                 code: 'The code must be 6 characters.',
             }
+
+            focus = !focus ? this.codeInput.current : focus;
         }
         else if (!/^\d+$/.test(this.state.info.code)) {
             validationErrors = {
                 ...validationErrors,
                 code: 'The code must only contain numbers.',
             }
+
+            focus = !focus ? this.codeInput.current : focus;
         }
+
+        if (focus) focus.focus();
 
         return validationErrors;
     }
@@ -184,6 +209,7 @@ class ConfirmRegistration extends Component {
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
                             disabled={refreshing}
+                            ref={this.emailInput}
                         />
                     </div>
                     <div style={styles.group}>
@@ -195,6 +221,7 @@ class ConfirmRegistration extends Component {
                             errorText={this.state.validationErrors.code}
                             onChange={this.handleCodeChange}
                             disabled={refreshing}
+                            ref={this.codeInput}
                         />
                     </div>
                     {refreshing ? <Spinner style={styles.spinner}/> : ''}
