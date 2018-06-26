@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Card, CardMedia } from 'material-ui/Card';
 import ActionDone from 'material-ui/svg-icons/action/done';
 import { grey300, green400 } from 'material-ui/styles/colors';
+import Spinner from '../shared/Spinner';
 
 const styles = {
     card: {
@@ -51,7 +52,12 @@ const styles = {
     doneIcon:{
         width: 72,
         height: 72,
-    }
+    },
+    spinner: {
+        top: 0,
+        bottom: 0,
+        zIndex: 1000,
+    },
 }
 
 class SecurityCard extends Component {
@@ -75,6 +81,7 @@ class SecurityCard extends Component {
                                 <ActionDone style={{ ...styles.done, ...styles.doneIcon }}/>
                             </div>
                         }
+                        {this.props.api.isExecuting ? <Spinner style={styles.spinner}/> : ''}
                     </div>
                 </Card>
             </form>
