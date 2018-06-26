@@ -12,7 +12,6 @@ import { CardText, CardActions } from 'material-ui/Card'
 
 import { validateEmail } from '../../util'
 import SecurityCard from './SecurityCard';
-import Spinner from '../shared/Spinner';
 
 const styles = {
     group: {
@@ -221,7 +220,6 @@ class Register extends Component {
                             ref={this.password2Input}
                         />
                     </div>
-                    {refreshing ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
