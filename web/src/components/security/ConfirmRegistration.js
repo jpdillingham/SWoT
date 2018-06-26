@@ -11,7 +11,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { CardText, CardActions } from 'material-ui/Card'
 import SecurityCard from './SecurityCard';
 import CommunicationEmail from 'material-ui/svg-icons/communication/email'
-import Spinner from '../shared/Spinner';
 
 import { validateEmail } from '../../util'
 
@@ -40,12 +39,7 @@ const styles = {
         fontSize: '9pt',
         textAlign: 'center',
         display: 'block'
-    },
-    spinner: {
-        top: 'initial',
-        bottom: 'initial',
-        zIndex: 1000,
-    },
+    }
 }
 
 const initialState = {
@@ -196,7 +190,7 @@ class ConfirmRegistration extends Component {
     }
 
     render() {
-        let refreshing = this.state.api.isExecuting;
+        let disabled = this.state.api.isExecuting || this.state.api.isSuccess;
 
         return(
             <SecurityCard api={this.state.api}>
@@ -209,7 +203,7 @@ class ConfirmRegistration extends Component {
                             value={this.state.info.email}
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
-                            disabled={refreshing}
+                            disabled={disabled}
                             ref={this.emailInput}
                         />
                     </div>
@@ -221,11 +215,10 @@ class ConfirmRegistration extends Component {
                             value={this.state.info.code}
                             errorText={this.state.validationErrors.code}
                             onChange={this.handleCodeChange}
-                            disabled={refreshing}
+                            disabled={disabled}
                             ref={this.codeInput}
                         />
                     </div>
-                    {refreshing ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
@@ -234,7 +227,7 @@ class ConfirmRegistration extends Component {
                             primary={!this.state.confirmed} 
                             label="Confirm Registration" 
                             onClick={this.handleConfirmClick} 
-                            disabled={refreshing}
+                            disabled={disabled}
                             type='submit'
                         />
                     </div>
@@ -245,7 +238,7 @@ class ConfirmRegistration extends Component {
                             primary={this.state.confirmed} 
                             label="Login" 
                             onClick={() => this.handleNavigateClick('/login')} 
-                            disabled={refreshing}
+                            disabled={disabled}
                         />
                     </div>
                 </CardActions>

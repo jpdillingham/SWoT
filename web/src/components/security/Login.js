@@ -11,7 +11,6 @@ import SecurityCard from './SecurityCard';
 import { authenticate } from './SecurityActions';
 import { showSnackbar } from '../app/AppActions';
 import { validateEmail } from '../../util';
-import Spinner from '../shared/Spinner';
 
 const styles = {
     group: {
@@ -38,11 +37,6 @@ const styles = {
         fontSize: '9pt',
         textAlign: 'center',
         display: 'block'
-    },
-    spinner: {
-        top: 'initial',
-        bottom: 'initial',
-        zIndex: 1000,
     }
 }
 
@@ -161,7 +155,7 @@ class Login extends Component {
     }
 
     render() {
-        let refreshing = this.state.api.isExecuting;
+        let disabled = this.state.api.isExecuting || this.state.api.isSuccess;
 
         return(
             <SecurityCard api={this.state.api}>
@@ -174,7 +168,7 @@ class Login extends Component {
                             value={this.state.info.email}
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
-                            disabled={refreshing}
+                            disabled={disabled}
                             ref={this.emailInput}
                         />
                     </div>
@@ -187,11 +181,10 @@ class Login extends Component {
                             errorText={this.state.validationErrors.password}
                             onChange={this.handlePasswordChange}
                             type="password"
-                            disabled={refreshing}
+                            disabled={disabled}
                             ref={this.passwordInput}
                         />
                     </div>
-                    {refreshing ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
@@ -200,7 +193,7 @@ class Login extends Component {
                             primary={true}
                             label="Login" 
                             onClick={this.handleLoginClick} 
-                            disabled={refreshing}
+                            disabled={disabled}
                             type='submit'
                         />
                     </div>
@@ -210,7 +203,7 @@ class Login extends Component {
                             style={styles.button} 
                             label="Register" 
                             onClick={() => this.handleNavigateClick('register')} 
-                            disabled={refreshing}
+                            disabled={disabled}
                         />
                     </div>
                 </CardActions>

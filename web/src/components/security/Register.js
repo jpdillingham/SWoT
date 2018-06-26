@@ -12,7 +12,6 @@ import { CardText, CardActions } from 'material-ui/Card'
 
 import { validateEmail } from '../../util'
 import SecurityCard from './SecurityCard';
-import Spinner from '../shared/Spinner';
 
 const styles = {
     group: {
@@ -39,12 +38,7 @@ const styles = {
         fontSize: '9pt',
         textAlign: 'center',
         display: 'block'
-    },
-    spinner: {
-        top: 'initial',
-        bottom: 'initial',
-        zIndex: 1000,
-    },
+    }
 }
 
 const initialState = {
@@ -178,7 +172,7 @@ class Register extends Component {
     }
 
     render() {
-        let refreshing = this.state.api.isExecuting;
+        let disabled = this.state.api.isExecuting || this.state.api.isSuccess;
 
         return(
             <SecurityCard api={this.state.api}>
@@ -191,7 +185,7 @@ class Register extends Component {
                             value={this.state.info.email}
                             errorText={this.state.validationErrors.email}
                             onChange={this.handleEmailChange}
-                            disabled={refreshing}
+                            disabled={disabled}
                             ref={this.emailInput}
                         />
                     </div>
@@ -204,7 +198,7 @@ class Register extends Component {
                             errorText={this.state.validationErrors.password}
                             onChange={this.handlePasswordChange}
                             type="password"
-                            disabled={refreshing}
+                            disabled={disabled}
                             ref={this.password1Input}
                         />
                     </div>
@@ -217,11 +211,10 @@ class Register extends Component {
                             errorText={this.state.validationErrors.password2}
                             onChange={this.handlePassword2Change}
                             type="password"
-                            disabled={refreshing}
+                            disabled={disabled}
                             ref={this.password2Input}
                         />
                     </div>
-                    {refreshing ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
@@ -230,7 +223,7 @@ class Register extends Component {
                             primary={!this.state.registered} 
                             label="Register" 
                             onClick={this.handleRegisterClick} 
-                            disabled={refreshing}
+                            disabled={disabled}
                             type='submit'
                         />
                     </div>
@@ -241,7 +234,7 @@ class Register extends Component {
                             primary={this.state.registered} 
                             label="Confirm Registration" 
                             onClick={() => this.handleNavigateClick('confirm')} 
-                            disabled={refreshing}
+                            disabled={disabled}
                         />
                     </div>
                     <div style={styles.center}>
@@ -250,7 +243,7 @@ class Register extends Component {
                             style={styles.button} 
                             label="Login" 
                             onClick={() => this.handleNavigateClick('login')} 
-                            disabled={refreshing}
+                            disabled={disabled}
                         />
                     </div>
                 </CardActions>
