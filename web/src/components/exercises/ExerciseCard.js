@@ -17,6 +17,7 @@ import MenuItem from 'material-ui/MenuItem';
 
 import ExerciseRoutineReferenceList from './ExerciseRoutineReferenceList'
 import ExerciseHistoryDialog from './history/ExerciseHistoryDialog'
+import ExerciseProgressDialog from './history/ExerciseProgressDialog'
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR, INTENTS } from '../../constants';
 import Divider from 'material-ui/Divider/Divider';
@@ -72,7 +73,10 @@ const initialState = {
     },
     historyDialog: {
         open: false,
-    } 
+    },
+    progressDialog: {
+        open: false,
+    },
 }
 
 class ExerciseCard extends Component {
@@ -105,7 +109,11 @@ class ExerciseCard extends Component {
     }
 
     handleProgressClick = () => {
-        this.navigate('exercises/progress/' + this.props.exercise.id)
+        this.setState({ progressDialog: { open: true }});
+    }
+
+    handleProgressDialogClose = () => {
+        this.setState({ progressDialog: { open: false }});
     }
 
     handleHistoryClick = () => {
@@ -217,6 +225,11 @@ class ExerciseCard extends Component {
                 <ExerciseHistoryDialog
                     open={this.state.historyDialog.open}
                     onClose={this.handleHistoryDialogClose}
+                    exercise={this.props.exercise}
+                />
+                <ExerciseProgressDialog
+                    open={this.state.progressDialog.open}
+                    onClose={this.handleProgressDialogClose}
                     exercise={this.props.exercise}
                 />
             </div>
