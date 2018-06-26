@@ -174,6 +174,7 @@ class ExerciseProgress extends Component {
     render() {
         let history = this.props.exercisesHistory;
         let exercises = history && history.exercises ? history.exercises : [];
+        exercises = exercises.filter(e => e.endTime);
 
         let chartData = {
             labels: exercises.map(e => moment(e.endTime).format('l')),

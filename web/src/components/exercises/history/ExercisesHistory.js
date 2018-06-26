@@ -133,6 +133,8 @@ class ExercisesHistory extends Component {
     render() {
         let history = this.props.exercisesHistory;
         let exercises = history && history.exercises ? history.exercises : undefined;
+        exercises = exercises ? exercises.filter(e => e.endTime) : undefined;
+        
         let metrics = !exercises ? undefined : exercises.map(e => e.metrics);
         metrics = !metrics || metrics.length === 0 ? [] : metrics
                                     .reduce((acc, e) => acc.concat(e))
