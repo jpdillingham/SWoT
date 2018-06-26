@@ -36,6 +36,8 @@ class ExerciseHistoryDialogContent extends Component {
         let history = this.props.history;
         let exercises = history ? history.exercises : [];
 
+        exercises = exercises.filter(e => e.endTime);
+
         return (
             <Table>
                 <TableHeader
