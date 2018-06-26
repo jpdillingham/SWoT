@@ -11,7 +11,6 @@ import SecurityCard from './SecurityCard';
 import { authenticate } from './SecurityActions';
 import { showSnackbar } from '../app/AppActions';
 import { validateEmail } from '../../util';
-import Spinner from '../shared/Spinner';
 
 const styles = {
     group: {
@@ -38,11 +37,6 @@ const styles = {
         fontSize: '9pt',
         textAlign: 'center',
         display: 'block'
-    },
-    spinner: {
-        top: 'initial',
-        bottom: 'initial',
-        zIndex: 1000,
     }
 }
 
@@ -191,7 +185,6 @@ class Login extends Component {
                             ref={this.passwordInput}
                         />
                     </div>
-                    {refreshing ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
