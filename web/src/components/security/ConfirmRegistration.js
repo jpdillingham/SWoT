@@ -11,7 +11,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { CardText, CardActions } from 'material-ui/Card'
 import SecurityCard from './SecurityCard';
 import CommunicationEmail from 'material-ui/svg-icons/communication/email'
-import Spinner from '../shared/Spinner';
 
 import { validateEmail } from '../../util'
 
@@ -40,12 +39,7 @@ const styles = {
         fontSize: '9pt',
         textAlign: 'center',
         display: 'block'
-    },
-    spinner: {
-        top: 'initial',
-        bottom: 'initial',
-        zIndex: 1000,
-    },
+    }
 }
 
 const initialState = {
@@ -225,7 +219,6 @@ class ConfirmRegistration extends Component {
                             ref={this.codeInput}
                         />
                     </div>
-                    {refreshing ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
                 <CardActions>
                     <div style={styles.center}>
