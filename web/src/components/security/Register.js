@@ -38,12 +38,7 @@ const styles = {
         fontSize: '9pt',
         textAlign: 'center',
         display: 'block'
-    },
-    spinner: {
-        top: 'initial',
-        bottom: 'initial',
-        zIndex: 1000,
-    },
+    }
 }
 
 const initialState = {
