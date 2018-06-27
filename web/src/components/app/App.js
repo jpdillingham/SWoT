@@ -4,12 +4,13 @@ import { withRouter } from 'react-router-dom'
 import { Route, Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-import { ActionDashboard, ActionEvent, ActionHistory } from 'material-ui/svg-icons';
+import { ActionDashboard, ActionEvent, ActionHistory, ActionHelp } from 'material-ui/svg-icons';
 import { getMuiTheme } from 'material-ui/styles';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Snackbar from 'material-ui/Snackbar';
 import Subheader from 'material-ui/Subheader/Subheader';
+import Divider from 'material-ui/Divider';
 
 import AppContainer from './AppContainer';
 
@@ -34,7 +35,11 @@ import { ActionBuild, ActionTrendingUp } from 'material-ui/svg-icons';
 
 const styles = {
     content: {
-        marginTop: 73.
+        marginTop: 73,
+    },
+    stickyBottomMenu: {
+        position: 'absolute',
+        bottom: 0,
     },
 };
 
@@ -88,6 +93,10 @@ class App extends Component {
                                     <MenuItem containerElement={<Link to='/exercises/progress'/>} leftIcon={<ActionTrendingUp/>}>Progress</MenuItem>
                                     <MenuItem containerElement={<Link to='/exercises/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
                                     <MenuItem containerElement={<Link to='/exercises'/>} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
+                                    <div style={styles.stickyBottomMenu}>
+                                        <Divider/>
+                                        <MenuItem containerElement={<Link to='/help'/>} leftIcon={<ActionHelp/>}>Help</MenuItem>
+                                    </div>
                                 </div>
                             }
                         >
