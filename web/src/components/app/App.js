@@ -26,6 +26,8 @@ import Login from '../security/Login';
 import Register from '../security/Register';
 import ConfirmRegistration from '../security/ConfirmRegistration';
 
+import Help from '../help/Help';
+
 import { ensureSession } from '../security/SecurityActions';
 import { hideSnackbar } from './AppActions';
 import { ActionBuild, ActionTrendingUp } from 'material-ui/svg-icons';
@@ -92,6 +94,7 @@ class App extends Component {
                         {this.props.user ?
                             <Switch>
                                 <Route exact path="/" component={Workouts}/>
+                                <Route exact path="/help" component={Help}/>
                                 <Route exact path="/history" component={WorkoutsHistory}/>
                                 <Route exact path="/workouts" component={Workouts}/>
                                 <Route exact path="/workouts/history" component={WorkoutsHistory}/>
