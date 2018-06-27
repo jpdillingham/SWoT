@@ -37,10 +37,10 @@ const styles = {
     content: {
         marginTop: 73,
     },
-    stickyBottomMenu: {
-        position: 'absolute',
-        bottom: 0,
+    topMenuItems:{
+        minHeight: 'calc(100vh - 112px)',
     },
+    bottomMenuItems:{},
 };
 
 class App extends Component {
@@ -83,17 +83,19 @@ class App extends Component {
                             title={this.props.title}
                             links={
                                 <div>
-                                    <Subheader>Workouts</Subheader>
-                                    <MenuItem containerElement={<Link to='/workouts'/>} leftIcon={<ActionDashboard/>}>Dashboard</MenuItem>
-                                    <MenuItem containerElement={<Link to="/workouts/calendar" />} leftIcon={<ActionEvent/>}>Calendar</MenuItem>
-                                    <MenuItem containerElement={<Link to='/workouts/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
-                                    <Subheader>Routines</Subheader>
-                                    <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
-                                    <Subheader>Exercises</Subheader>
-                                    <MenuItem containerElement={<Link to='/exercises/progress'/>} leftIcon={<ActionTrendingUp/>}>Progress</MenuItem>
-                                    <MenuItem containerElement={<Link to='/exercises/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
-                                    <MenuItem containerElement={<Link to='/exercises'/>} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
-                                    <div style={styles.stickyBottomMenu}>
+                                    <div style={styles.topMenuItems}>
+                                        <Subheader>Workouts</Subheader>
+                                        <MenuItem containerElement={<Link to='/workouts'/>} leftIcon={<ActionDashboard/>}>Dashboard</MenuItem>
+                                        <MenuItem containerElement={<Link to="/workouts/calendar" />} leftIcon={<ActionEvent/>}>Calendar</MenuItem>
+                                        <MenuItem containerElement={<Link to='/workouts/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
+                                        <Subheader>Routines</Subheader>
+                                        <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
+                                        <Subheader>Exercises</Subheader>
+                                        <MenuItem containerElement={<Link to='/exercises/progress'/>} leftIcon={<ActionTrendingUp/>}>Progress</MenuItem>
+                                        <MenuItem containerElement={<Link to='/exercises/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
+                                        <MenuItem containerElement={<Link to='/exercises'/>} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
+                                    </div>
+                                    <div style={styles.bottomMenuItems}>
                                         <Divider/>
                                         <MenuItem containerElement={<Link to='/help'/>} leftIcon={<ActionHelp/>}>Help</MenuItem>
                                     </div>
