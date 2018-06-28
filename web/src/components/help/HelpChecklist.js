@@ -12,7 +12,6 @@ import Spinner from '../shared/Spinner';
 import { fetchExercises } from '../exercises/ExercisesActions';
 import { fetchRoutines } from '../routines/RoutinesActions';
 import { fetchWorkouts } from '../workouts/WorkoutsActions';
-import { setTitle } from '../app/AppActions';
 
 const styles = {
     card: {
@@ -40,8 +39,6 @@ class HelpChecklist extends Component {
     state = initialState; 
 
     componentWillMount() {
-        this.props.setTitle('Help');
-        
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
             Promise.all([
                 this.props.fetchExercises(),
@@ -110,7 +107,6 @@ const mapDispatchToProps = {
     fetchExercises,
     fetchRoutines,
     fetchWorkouts,
-    setTitle,
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HelpChecklist))
