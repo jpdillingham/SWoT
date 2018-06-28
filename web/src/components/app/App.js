@@ -4,12 +4,13 @@ import { withRouter } from 'react-router-dom'
 import { Route, Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
-import { ActionDashboard, ActionEvent, ActionHistory } from 'material-ui/svg-icons';
+import { ActionDashboard, ActionEvent, ActionHistory, ActionHelp } from 'material-ui/svg-icons';
 import { getMuiTheme } from 'material-ui/styles';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Snackbar from 'material-ui/Snackbar';
 import Subheader from 'material-ui/Subheader/Subheader';
+import Divider from 'material-ui/Divider';
 
 import AppContainer from './AppContainer';
 
@@ -26,14 +27,20 @@ import Login from '../security/Login';
 import Register from '../security/Register';
 import ConfirmRegistration from '../security/ConfirmRegistration';
 
+import Help from '../help/Help';
+
 import { ensureSession } from '../security/SecurityActions';
 import { hideSnackbar } from './AppActions';
 import { ActionBuild, ActionTrendingUp } from 'material-ui/svg-icons';
 
 const styles = {
     content: {
-        marginTop: 73.
+        marginTop: 73,
     },
+    topMenuItems:{
+        minHeight: 'calc(100vh - 112px)',
+    },
+    bottomMenuItems:{},
 };
 
 class App extends Component {
@@ -76,22 +83,29 @@ class App extends Component {
                             title={this.props.title}
                             links={
                                 <div>
-                                    <Subheader>Workouts</Subheader>
-                                    <MenuItem containerElement={<Link to='/workouts'/>} leftIcon={<ActionDashboard/>}>Dashboard</MenuItem>
-                                    <MenuItem containerElement={<Link to="/workouts/calendar" />} leftIcon={<ActionEvent/>}>Calendar</MenuItem>
-                                    <MenuItem containerElement={<Link to='/workouts/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
-                                    <Subheader>Routines</Subheader>
-                                    <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
-                                    <Subheader>Exercises</Subheader>
-                                    <MenuItem containerElement={<Link to='/exercises/progress'/>} leftIcon={<ActionTrendingUp/>}>Progress</MenuItem>
-                                    <MenuItem containerElement={<Link to='/exercises/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
-                                    <MenuItem containerElement={<Link to='/exercises'/>} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
+                                    <div style={styles.topMenuItems}>
+                                        <Subheader>Workouts</Subheader>
+                                        <MenuItem containerElement={<Link to='/workouts'/>} leftIcon={<ActionDashboard/>}>Dashboard</MenuItem>
+                                        <MenuItem containerElement={<Link to="/workouts/calendar" />} leftIcon={<ActionEvent/>}>Calendar</MenuItem>
+                                        <MenuItem containerElement={<Link to='/workouts/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
+                                        <Subheader>Routines</Subheader>
+                                        <MenuItem containerElement={<Link to="/routines" />} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
+                                        <Subheader>Exercises</Subheader>
+                                        <MenuItem containerElement={<Link to='/exercises/progress'/>} leftIcon={<ActionTrendingUp/>}>Progress</MenuItem>
+                                        <MenuItem containerElement={<Link to='/exercises/history'/>} leftIcon={<ActionHistory/>}>History</MenuItem>
+                                        <MenuItem containerElement={<Link to='/exercises'/>} leftIcon={<ActionBuild/>}>Configuration</MenuItem>
+                                    </div>
+                                    <div style={styles.bottomMenuItems}>
+                                        <Divider/>
+                                        <MenuItem containerElement={<Link to='/help'/>} leftIcon={<ActionHelp/>}>Help</MenuItem>
+                                    </div>
                                 </div>
                             }
                         >
                         {this.props.user ?
                             <Switch>
                                 <Route exact path="/" component={Workouts}/>
+                                <Route exact path="/help" component={Help}/>
                                 <Route exact path="/history" component={WorkoutsHistory}/>
                                 <Route exact path="/workouts" component={Workouts}/>
                                 <Route exact path="/workouts/history" component={WorkoutsHistory}/>
