@@ -15,10 +15,18 @@ const styles = {
     },
 }
 
+const initialState = {
+    addDialog: {
+        open: false
+    },
+}
+
 class AddFloatingActionButton extends Component {
-    state = {
-        addDialog: {
-            open: false
+    state = initialState;
+
+    componentDidMount = () => {
+        if (this.props.startOpen) {
+            this.setState({ addDialog: { open: true }});
         }
     }
 
