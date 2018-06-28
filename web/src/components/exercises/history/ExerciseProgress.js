@@ -17,7 +17,7 @@ import { ContentClear } from 'material-ui/svg-icons';
 
 import { fetchExercises } from '../ExercisesActions';
 import { fetchExercisesHistory } from '../history/ExercisesHistoryActions';
-import { showSnackbar } from '../../app/AppActions';
+import { setTitle, showSnackbar } from '../../app/AppActions';
 
 import { sortByProp } from '../../../util';
 
@@ -95,6 +95,7 @@ class ExerciseProgress extends Component {
     };
 
     componentWillMount() {
+        this.props.setTitle('Exercises')
         this.updateDimensions();
 
         this.setState({ loadApi: { isExecuting: true }}, () => {
@@ -244,6 +245,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     fetchExercises,
     fetchExercisesHistory,
+    setTitle,
     showSnackbar,
 };
 
