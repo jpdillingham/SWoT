@@ -73,19 +73,19 @@ class HelpChecklist extends Component {
                 <CardText>
                     <List>
                         <ListItem
-                            leftIcon={<ToggleCheckBox color={green500}/>}
+                            leftIcon={this.props.exercises.length ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={black}/>}
                             insetChildren={true}
                             primaryText="Add Exercises"
                             onClick={() => this.navigate('/exercises')}
                         />
                         <ListItem
-                            leftIcon={<ToggleCheckBoxOutlineBlank/>}
+                            leftIcon={this.props.routines.length ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={black}/>}
                             insetChildren={true}
                             primaryText="Add Routines"
                             onClick={() => this.navigate('/routines')}
                         />
                         <ListItem
-                            leftIcon={<ToggleCheckBoxOutlineBlank/>}
+                            leftIcon={this.props.workouts.length ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={black}/>}
                             insetChildren={true}
                             primaryText="Schedule Workouts"
                             onClick={() => this.navigate('/workouts')}
