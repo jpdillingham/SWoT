@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { List, ListItem } from 'material-ui/List';
 import {Card, CardHeader, CardText } from 'material-ui/Card';
-import { ActionDone, ToggleCheckBoxOutlineBlank, ToggleCheckBox, ActionHelp } from 'material-ui/svg-icons';
+import { ToggleCheckBoxOutlineBlank, ToggleCheckBox, ActionHelp } from 'material-ui/svg-icons';
 import { black, green500, yellow500 } from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
 
