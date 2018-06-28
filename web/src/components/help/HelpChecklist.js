@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import { List, ListItem } from 'material-ui/List';
@@ -6,6 +7,11 @@ import {Card, CardHeader, CardText } from 'material-ui/Card';
 import { ToggleCheckBoxOutlineBlank, ToggleCheckBox, ActionHelp } from 'material-ui/svg-icons';
 import { black, green500, yellow500 } from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
+
+import { fetchExercises } from '../exercises/ExercisesActions';
+import { fetchRoutines } from '../routines/RoutinesActions';
+import { fetchWorkouts } from '../workouts/WorkoutsActions';
+import { setTitle } from '../app/AppActions';
 
 const styles = {
     card: {
@@ -21,7 +27,35 @@ const styles = {
         marginTop: 6,
     },
 }
+
+const initialState = {
+    api: {
+        isExecuting: false,
+        isErrored: false,
+    },
+}
+
 class HelpChecklist extends Component {
+    state = initialState; 
+
+    componentWillMount() {
+        this.props.setTitle('Help');
+        
+        this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
+            Promise.all([
+                this.props.fetchExercises(),
+                this.props.fetchRoutines(),
+                this.props.fetchWorkouts(),
+            ])
+            .then(response => {
+                this.setState({ api: { isExecuting: false, isErrored: false }})
+            }, error => {
+                this.props.showSnackbar('Error fetching configuration: ' + error);
+                this.setState({ api: { isExecuting: false, isErrored: true }})
+            })
+        })
+    }
+
     navigate = (url) => {
         this.props.history.push(url);
     }
@@ -63,4 +97,17 @@ class HelpChecklist extends Component {
     }
 }
 
-export default withRouter(HelpChecklist)
+const mapStateToProps = (state) => ({
+    exercises: state.exercises,
+    routines: state.routines,
+    workouts: state.workouts,
+})
+
+const mapDispatchToProps = {
+    fetchExercises,
+    fetchRoutines,
+    fetchWorkouts,
+    setTitle,
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HelpChecklist))
