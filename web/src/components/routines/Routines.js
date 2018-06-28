@@ -73,7 +73,7 @@ class Routines extends Component {
         return (
             this.state.api.isExecuting ? <Spinner size={48}/> : 
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    !this.props.exercises.length ? <HelpChecklist/> :
+                    !this.props.routines.length && !this.props.exercises.length ? <HelpChecklist/> :
                         <div>
                             <div style={styles.grid}>
                                 {this.props.routines.map(r =>  
