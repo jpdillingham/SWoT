@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
 import { List, ListItem } from 'material-ui/List';
 import {Card, CardHeader, CardText } from 'material-ui/Card';
@@ -21,6 +22,10 @@ const styles = {
     },
 }
 class HelpChecklist extends Component {
+    navigate = (url) => {
+        this.props.history.push(url);
+    }
+
     render() {
         return (
             <Card zDepth={2} style={styles.card}>
@@ -37,17 +42,19 @@ class HelpChecklist extends Component {
                             leftIcon={<ToggleCheckBox color={green500}/>}
                             insetChildren={true}
                             primaryText="Add Exercises"
-                            onClick={}
+                            onClick={() => this.navigate('/exercises')}
                         />
                         <ListItem
                             leftIcon={<ToggleCheckBoxOutlineBlank/>}
                             insetChildren={true}
                             primaryText="Add Routines"
+                            onClick={() => this.navigate('/routines')}
                         />
                         <ListItem
                             leftIcon={<ToggleCheckBoxOutlineBlank/>}
                             insetChildren={true}
                             primaryText="Schedule Workouts"
+                            onClick={() => this.navigate('/workouts')}
                         />
                     </List>
                 </CardText>
@@ -56,4 +63,4 @@ class HelpChecklist extends Component {
     }
 }
 
-export default HelpChecklist
+export default withRouter(HelpChecklist)
