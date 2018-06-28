@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 
-import Checkbox from 'material-ui/Checkbox';
 import { List, ListItem } from 'material-ui/List';
 import {Card, CardHeader, CardText } from 'material-ui/Card';
 import { ActionDone, ToggleCheckBoxOutlineBlank, ToggleCheckBox, ActionHelp } from 'material-ui/svg-icons';
 import { black, green500, yellow500 } from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
-import ActionAssignment from 'material-ui/svg-icons/action/assignment'
 
 const styles = {
     card: {
@@ -39,6 +37,7 @@ class HelpChecklist extends Component {
                             leftIcon={<ToggleCheckBox color={green500}/>}
                             insetChildren={true}
                             primaryText="Add Exercises"
+                            onClick={}
                         />
                         <ListItem
                             leftIcon={<ToggleCheckBoxOutlineBlank/>}
