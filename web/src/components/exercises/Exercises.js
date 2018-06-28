@@ -39,7 +39,7 @@ const initialState = {
 
 class Exercises extends Component {
     state = initialState;
-
+    
     componentWillMount() {
         this.props.setTitle('Exercises');
         
@@ -81,7 +81,10 @@ class Exercises extends Component {
                                 />
                             )}
                         </div>
-                        <AddFloatingActionButton dialog={<ExerciseDialog intent={INTENTS.ADD} />} />
+                        <AddFloatingActionButton 
+                            startOpen={!this.props.exercises.length}
+                            dialog={<ExerciseDialog intent={INTENTS.ADD} />} 
+                        />
                     </div>
         )
     }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { fetchRoutines, deleteRoutine } from './RoutinesActions'
+import { fetchExercises } from '../exercises/ExercisesActions'
 import { setTitle, showSnackbar } from '../app/AppActions'
 
 import { red500 } from 'material-ui/styles/colors'
@@ -13,6 +14,7 @@ import Spinner from '../shared/Spinner'
 import AddFloatingActionButton from '../shared/AddFloatingActionButton'
 import { CARD_WIDTH, INTENTS } from '../../constants'
 import RoutineDialog from './RoutineDialog';
+import HelpChecklist from '../help/HelpChecklist';
 
 const styles = {
     grid: {
@@ -42,13 +44,16 @@ class Routines extends Component {
         this.props.setTitle('Routines');
         this.setState({ api: { ...this.state.api, isExecuting: true }})
 
-        this.props.fetchRoutines()
-            .then(response => {
-                this.setState({ api: { isExecuting: false, isErrored: false }})
-            }, error => {
-                this.props.showSnackbar('Error fetching Routines: ' + error);
-                this.setState({ api: { isExecuting: false, isErrored: true }})
-            })
+        Promise.all([
+            this.props.fetchExercises(),
+            this.props.fetchRoutines(),
+        ])
+        .then(response => {
+            this.setState({ api: { isExecuting: false, isErrored: false }})
+        }, error => {
+            this.props.showSnackbar('Error fetching Routines: ' + error);
+            this.setState({ api: { isExecuting: false, isErrored: true }})
+        })
     }
 
     handleRoutineDelete = (routine) => {
@@ -68,27 +73,33 @@ class Routines extends Component {
         return (
             this.state.api.isExecuting ? <Spinner size={48}/> : 
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    <div>
-                        <div style={styles.grid}>
-                            {this.props.routines.map(r =>  
-                                <RoutineCard 
-                                    key={r.id} 
-                                    routine={r} 
-                                    onDelete={() => this.handleRoutineDelete(r)}
-                                />
-                            )}
+                    !this.props.routines.length && !this.props.exercises.length ? <HelpChecklist/> :
+                        <div>
+                            <div style={styles.grid}>
+                                {this.props.routines.map(r =>  
+                                    <RoutineCard 
+                                        key={r.id} 
+                                        routine={r} 
+                                        onDelete={() => this.handleRoutineDelete(r)}
+                                    />
+                                )}
+                            </div>
+                            <AddFloatingActionButton 
+                                startOpen={this.props.exercises.length && !this.props.routines.length}
+                                dialog={<RoutineDialog intent={INTENTS.ADD} />} 
+                            />
                         </div>
-                        <AddFloatingActionButton dialog={<RoutineDialog intent={INTENTS.ADD} />} />
-                    </div>
         )
     }
 } 
 
 const mapStateToProps = (state) => ({
+    exercises: state.exercises,
     routines: state.routines,
 })
 
 const mapDispatchToProps = {
+    fetchExercises,
     fetchRoutines,
     deleteRoutine,
     showSnackbar,
