@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { List, ListItem } from 'material-ui/List';
 import {Card, CardHeader, CardText } from 'material-ui/Card';
 import { ToggleCheckBoxOutlineBlank, ToggleCheckBox, ActionHelp, ActionHighlightOff } from 'material-ui/svg-icons';
-import { black, green500, yellow500, red500 } from 'material-ui/styles/colors';
+import { black, green500, yellow500, red500, grey500 } from 'material-ui/styles/colors';
 import Avatar from 'material-ui/Avatar';
 import Spinner from '../shared/Spinner';
 
@@ -26,6 +26,9 @@ const styles = {
         fontSize: '20px',
         marginTop: 6,
     },
+    disabled: {
+        color: grey500
+    }
 }
 
 const initialState = {
@@ -59,6 +62,10 @@ class HelpChecklist extends Component {
     }
 
     render() {
+        let noExercises = !this.props.exercises.length;
+        let noRoutines = !this.props.routines.length;
+        let noWorkouts = !this.props.workouts.length;
+        
         return (
             this.state.api.isExecuting ? <Spinner size={48}/> : 
                 this.state.api.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
@@ -73,22 +80,26 @@ class HelpChecklist extends Component {
                         <CardText>
                             <List>
                                 <ListItem
-                                    leftIcon={this.props.exercises.length ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={black}/>}
+                                    leftIcon={!noExercises ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={black}/>}
                                     insetChildren={true}
                                     primaryText="Add Exercises"
                                     onClick={() => this.navigate('/exercises')}
                                 />
                                 <ListItem
-                                    leftIcon={this.props.routines.length ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={black}/>}
+                                    leftIcon={!noRoutines ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={noExercises ? grey500 : black}/>}
                                     insetChildren={true}
                                     primaryText="Add Routines"
                                     onClick={() => this.navigate('/routines')}
+                                    disabled={noExercises}
+                                    style={noExercises ? styles.disabled : undefined}
                                 />
                                 <ListItem
-                                    leftIcon={this.props.workouts.length ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={black}/>}
+                                    leftIcon={!noWorkouts ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={noRoutines ? grey500 : black}/>}
                                     insetChildren={true}
                                     primaryText="Schedule Workouts"
                                     onClick={() => this.navigate('/workouts')}
+                                    disabled={noRoutines}
+                                    style={noRoutines ? styles.disabled : undefined}
                                 />
                             </List>
                         </CardText>
