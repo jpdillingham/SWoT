@@ -101,6 +101,14 @@ class HelpChecklist extends Component {
                                     disabled={noRoutines}
                                     style={noRoutines ? styles.disabled : undefined}
                                 />
+                                <ListItem
+                                    leftIcon={!noWorkoutsHistory ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={noRoutines ? grey500 : black}/>}
+                                    insetChildren={true}
+                                    primaryText="Complete a Workout"
+                                    onClick={() => this.navigate('/workouts')}
+                                    disabled={noWorkouts}
+                                    style={noWorkouts ? styles.disabled : undefined}
+                                />
                             </List>
                         </CardText>
                     </Card>
