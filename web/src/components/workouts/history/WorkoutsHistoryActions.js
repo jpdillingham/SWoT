@@ -28,6 +28,8 @@ const workoutHistoryDelete = (id) => ({
 })
 
 export const fetchWorkoutsHistory = (filters) => (dispatch, getState) => {
+    filters = filters || {};
+
     let queryParams = '?';
     queryParams += 'status=done';
 
