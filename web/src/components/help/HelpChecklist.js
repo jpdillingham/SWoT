@@ -66,8 +66,8 @@ class HelpChecklist extends Component {
     render() {
         let noExercises = !this.props.exercises.length;
         let noRoutines = !this.props.routines.length;
-        let noWorkouts = !this.props.workouts.length;
         let noWorkoutsHistory = !this.props.workoutsHistory.workouts || !this.props.workoutsHistory.workouts.length;
+        let noWorkouts = noWorkoutsHistory && !this.props.workouts.length;
         
         return (
             this.state.api.isExecuting ? <Spinner size={48}/> : 
