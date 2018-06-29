@@ -12,6 +12,7 @@ import Spinner from '../shared/Spinner';
 import { fetchExercises } from '../exercises/ExercisesActions';
 import { fetchRoutines } from '../routines/RoutinesActions';
 import { fetchWorkouts } from '../workouts/WorkoutsActions';
+import { fetchWorkoutsHistory } from '../workouts/history/WorkoutsHistoryActions';
 
 const styles = {
     card: {
@@ -47,6 +48,7 @@ class HelpChecklist extends Component {
                 this.props.fetchExercises(),
                 this.props.fetchRoutines(),
                 this.props.fetchWorkouts(),
+                this.props.fetchWorkoutsHistory(),
             ])
             .then(response => {
                 this.setState({ api: { isExecuting: false, isErrored: false }})
@@ -65,6 +67,7 @@ class HelpChecklist extends Component {
         let noExercises = !this.props.exercises.length;
         let noRoutines = !this.props.routines.length;
         let noWorkouts = !this.props.workouts.length;
+        let noWorkoutsHistory = !this.props.workoutsHistory.workouts || !this.props.workoutsHistory.workouts.length;
         
         return (
             this.state.api.isExecuting ? <Spinner size={48}/> : 
@@ -82,13 +85,13 @@ class HelpChecklist extends Component {
                                 <ListItem
                                     leftIcon={!noExercises ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={black}/>}
                                     insetChildren={true}
-                                    primaryText="Add Exercises"
+                                    primaryText="Add an Exercise"
                                     onClick={() => this.navigate('/exercises')}
                                 />
                                 <ListItem
                                     leftIcon={!noRoutines ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={noExercises ? grey500 : black}/>}
                                     insetChildren={true}
-                                    primaryText="Add Routines"
+                                    primaryText="Add a Routine"
                                     onClick={() => this.navigate('/routines')}
                                     disabled={noExercises}
                                     style={noExercises ? styles.disabled : undefined}
@@ -96,7 +99,7 @@ class HelpChecklist extends Component {
                                 <ListItem
                                     leftIcon={!noWorkouts ? <ToggleCheckBox color={green500}/> : <ToggleCheckBoxOutlineBlank color={noRoutines ? grey500 : black}/>}
                                     insetChildren={true}
-                                    primaryText="Schedule Workouts"
+                                    primaryText="Schedule a Workout"
                                     onClick={() => this.navigate('/workouts')}
                                     disabled={noRoutines}
                                     style={noRoutines ? styles.disabled : undefined}
@@ -120,12 +123,14 @@ const mapStateToProps = (state) => ({
     exercises: state.exercises,
     routines: state.routines,
     workouts: state.workouts,
+    workoutsHistory: state.workoutsHistory,
 })
 
 const mapDispatchToProps = {
     fetchExercises,
     fetchRoutines,
     fetchWorkouts,
+    fetchWorkoutsHistory,
 }
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HelpChecklist))
