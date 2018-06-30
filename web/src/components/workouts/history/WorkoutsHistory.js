@@ -20,6 +20,7 @@ import { List, ListItem } from 'material-ui/List';
 import MenuItem from 'material-ui/MenuItem';
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
 import SelectField from 'material-ui/SelectField';
+import HelpChecklist from '../../help/HelpChecklist';
 
 const initialState = {
     filters: {
@@ -129,57 +130,58 @@ class WorkoutsHistory extends Component {
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    <div style={styles.grid}>
-                        <History
-                            title={'History'}
-                            color={WORKOUT_AVATAR_COLOR}
-                            data={this.props.workoutsHistory.workouts}
-                            total={this.props.workoutsHistory.totalCount}
-                            refreshing={this.state.refreshApi.isExecuting}
-                            defaultFilters={this.state.filters}
-                            onFilterChange={this.handleFiltersChange}
-                            customFilters={
-                                <span>
-                                    <SelectField 
-                                        floatingLabelText={'Filter By'}
-                                        value={this.state.filters.routineId} 
-                                        onChange={(event, index, value) => this.handleCustomFilterChange('routineId', event, index, value)}
-                                        disabled={this.state.refreshApi.isExecuting}
-                                    >
-                                        {this.props.routines.map((r, index) => 
-                                            <MenuItem 
-                                                key={index} 
-                                                value={r.id} 
-                                                primaryText={r.name} 
-                                            />                    
-                                        )}
-                                        {!this.state.filters.routineId || this.props.routines.find(r => r.id === this.state.filters.routineId) ? '' :
-                                            <MenuItem key={-1} value={this.state.filters.routineId} primaryText={'Invalid Routine Id'}/>
-                                        }
-                                    </SelectField>
-                                    {this.state.filters.routineId ? 
-                                        <NavigationCancel style={styles.clearIcon} onClick={this.handleCustomFilterClearClick}/>
-                                    : '' }
-                                </span>
-                            }
-                        >
-                            <List>
-                                {this.props.workoutsHistory.workouts
-                                .sort(sortByProp('endTime', this.state.filters.order))
-                                .map((w, index) => 
-                                    <ListItem
-                                        key={index}
-                                        primaryText={w.routine.name}
-                                        secondaryText={'Completed ' + moment(w.endTime).calendar()}
-                                        leftIcon={<ActionAssignmentTurnedIn color={black}/>}
-                                        rightIcon={<ActionInfo color={black}/>}
-                                        onClick={() => this.handleItemClick(w.id)}
-                                        disabled={this.props.refreshing}
-                                    />
-                                )}
-                            </List>
-                        </History>
-                    </div>
+                    !this.props.workoutsHistory || !this.props.workoutsHistory.workouts || !this.props.workoutsHistory.workouts.length ? <HelpChecklist/> :
+                        <div style={styles.grid}>
+                            <History
+                                title={'History'}
+                                color={WORKOUT_AVATAR_COLOR}
+                                data={this.props.workoutsHistory.workouts}
+                                total={this.props.workoutsHistory.totalCount}
+                                refreshing={this.state.refreshApi.isExecuting}
+                                defaultFilters={this.state.filters}
+                                onFilterChange={this.handleFiltersChange}
+                                customFilters={
+                                    <span>
+                                        <SelectField 
+                                            floatingLabelText={'Filter By'}
+                                            value={this.state.filters.routineId} 
+                                            onChange={(event, index, value) => this.handleCustomFilterChange('routineId', event, index, value)}
+                                            disabled={this.state.refreshApi.isExecuting}
+                                        >
+                                            {this.props.routines.map((r, index) => 
+                                                <MenuItem 
+                                                    key={index} 
+                                                    value={r.id} 
+                                                    primaryText={r.name} 
+                                                />                    
+                                            )}
+                                            {!this.state.filters.routineId || this.props.routines.find(r => r.id === this.state.filters.routineId) ? '' :
+                                                <MenuItem key={-1} value={this.state.filters.routineId} primaryText={'Invalid Routine Id'}/>
+                                            }
+                                        </SelectField>
+                                        {this.state.filters.routineId ? 
+                                            <NavigationCancel style={styles.clearIcon} onClick={this.handleCustomFilterClearClick}/>
+                                        : '' }
+                                    </span>
+                                }
+                            >
+                                <List>
+                                    {this.props.workoutsHistory.workouts
+                                    .sort(sortByProp('endTime', this.state.filters.order))
+                                    .map((w, index) => 
+                                        <ListItem
+                                            key={index}
+                                            primaryText={w.routine.name}
+                                            secondaryText={'Completed ' + moment(w.endTime).calendar()}
+                                            leftIcon={<ActionAssignmentTurnedIn color={black}/>}
+                                            rightIcon={<ActionInfo color={black}/>}
+                                            onClick={() => this.handleItemClick(w.id)}
+                                            disabled={this.props.refreshing}
+                                        />
+                                    )}
+                                </List>
+                            </History>
+                        </div>
         )
     }
 }
