@@ -14,6 +14,7 @@ import ExerciseProgressOptions from './ExerciseProgressOptions';
 import Divider from 'material-ui/Divider/Divider';
 import { List, ListItem } from 'material-ui/List';
 import { ContentClear } from 'material-ui/svg-icons';
+import HelpChecklist from '../../help/HelpChecklist';
 
 import { fetchExercises } from '../ExercisesActions';
 import { fetchExercisesHistory } from '../history/ExercisesHistoryActions';
@@ -185,54 +186,55 @@ class ExerciseProgress extends Component {
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    <div>
-                        <Card 
-                            zDepth={2}                 
-                            style={!this.state.refreshApi.isExecuting ? styles.card : 
-                                { 
-                                    ...styles.card, 
-                                    backgroundColor: grey300 
-                                }
-                            }
-                        >
-                            <CardHeader
-                                title={'Progress'}
-                                titleStyle={styles.cardTitle}
-                                style={styles.cardHeader}
-                                avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionTrendingUp/>}></Avatar>}
-                            />
-                            <CardText>
-                                <div style={styles.container}>
-                                    <ExerciseProgressOptions
-                                        filters={this.state.filters} 
-                                        exercises={this.props.exercises}
-                                        onChange={this.handleFiltersChange}
-                                        disabled={this.state.loadApi.isExecuting || this.state.refreshApi.isExecuting}
-                                    />
-                                    <Divider style={styles.headerDivider}/>
-                                    {!this.state.filters.exerciseId ? 
-                                        <List><ListItem 
-                                            primaryText={'Select an Exercise to view progress'}
-                                            leftIcon={<ActionInfo color={black}/>}
-                                        /></List> :
-                                        this.state.refreshApi.isExecuting ? '' : 
-                                            exercises.length === 0 ? 
-                                                <List><ListItem 
-                                                    primaryText={'No records match the current filter criteria'}
-                                                    leftIcon={<ContentClear color={black}/>}
-                                                /></List> :
-                                                <div style={{marginTop: 15, height: this.state.window.height - 290}}>
-                                                    <Line 
-                                                        data={chartData}
-                                                        options={CHART_OPTIONS}
-                                                    />
-                                                </div>
+                    !exercises || !exercises.length ? <HelpChecklist/> :
+                        <div>
+                            <Card 
+                                zDepth={2}                 
+                                style={!this.state.refreshApi.isExecuting ? styles.card : 
+                                    { 
+                                        ...styles.card, 
+                                        backgroundColor: grey300 
                                     }
-                                    {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
-                                </div>
-                            </CardText>
-                        </Card>
-                    </div> 
+                                }
+                            >
+                                <CardHeader
+                                    title={'Progress'}
+                                    titleStyle={styles.cardTitle}
+                                    style={styles.cardHeader}
+                                    avatar={<Avatar backgroundColor={WORKOUT_AVATAR_COLOR} color={black} size={36} icon={<ActionTrendingUp/>}></Avatar>}
+                                />
+                                <CardText>
+                                    <div style={styles.container}>
+                                        <ExerciseProgressOptions
+                                            filters={this.state.filters} 
+                                            exercises={this.props.exercises}
+                                            onChange={this.handleFiltersChange}
+                                            disabled={this.state.loadApi.isExecuting || this.state.refreshApi.isExecuting}
+                                        />
+                                        <Divider style={styles.headerDivider}/>
+                                        {!this.state.filters.exerciseId ? 
+                                            <List><ListItem 
+                                                primaryText={'Select an Exercise to view progress'}
+                                                leftIcon={<ActionInfo color={black}/>}
+                                            /></List> :
+                                            this.state.refreshApi.isExecuting ? '' : 
+                                                exercises.length === 0 ? 
+                                                    <List><ListItem 
+                                                        primaryText={'No records match the current filter criteria'}
+                                                        leftIcon={<ContentClear color={black}/>}
+                                                    /></List> :
+                                                    <div style={{marginTop: 15, height: this.state.window.height - 290}}>
+                                                        <Line 
+                                                            data={chartData}
+                                                            options={CHART_OPTIONS}
+                                                        />
+                                                    </div>
+                                        }
+                                        {this.state.refreshApi.isExecuting ? <Spinner/> : ''}
+                                    </div>
+                                </CardText>
+                            </Card>
+                        </div> 
         )
     }
 }

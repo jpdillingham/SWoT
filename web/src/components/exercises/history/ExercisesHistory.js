@@ -18,6 +18,7 @@ import { setTitle, showSnackbar } from '../../app/AppActions'
 import History from '../../shared/history/History';
 import { EXERCISE_AVATAR_COLOR } from '../../../constants'
 import ExercisesHistoryContent from './ExercisesHistoryContent';
+import HelpChecklist from '../../help/HelpChecklist';
 
 const initialState = {
     filters: {
@@ -144,49 +145,50 @@ class ExercisesHistory extends Component {
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    <div style={styles.grid}>
-                        <History
-                            title={'History'}
-                            color={EXERCISE_AVATAR_COLOR}
-                            data={this.props.exercisesHistory.exercises}
-                            total={this.props.exercisesHistory.totalCount}
-                            refreshing={this.state.refreshApi.isExecuting}
-                            defaultFilters={this.state.filters}
-                            onFilterChange={this.handleFiltersChange}
-                            customFilters={
-                                <span>
-                                    <SelectField 
-                                        floatingLabelText={'Filter By'}
-                                        style={styles.exercise} 
-                                        value={this.state.filters.exerciseId} 
-                                        onChange={(event, index, value) => this.handleCustomFilterChange('exerciseId', event, index, value)}
-                                        disabled={this.state.refreshApi.isExecuting}
-                                    >
-                                        {this.props.exercises.map((e, index) => 
-                                            <MenuItem 
-                                                key={index} 
-                                                value={e.id} 
-                                                primaryText={e.name} 
-                                            />                    
-                                        )}
-                                        {!this.state.filters.exerciseId || this.props.exercises.find(e => e.id === this.state.filters.exerciseId) ? '' :
-                                            <MenuItem key={-1} value={this.state.filters.exerciseId} primaryText={'Invalid Exercise Id'}/>
-                                        }
-                                    </SelectField>
-                                    {this.state.filters.exerciseId ? 
-                                        <NavigationCancel style={styles.clearIcon} onClick={this.handleCustomFilterClearClick}/>
-                                    : '' }
-                                </span>
-                            }
-                        >
-                            <ExercisesHistoryContent
-                                metrics={metrics}
-                                exercisesHistory={this.props.exercisesHistory}
-                                filters={this.state.filters}
+                    !exercises || !exercises.length ? <HelpChecklist/> :
+                        <div style={styles.grid}>
+                            <History
+                                title={'History'}
+                                color={EXERCISE_AVATAR_COLOR}
+                                data={this.props.exercisesHistory.exercises}
+                                total={this.props.exercisesHistory.totalCount}
                                 refreshing={this.state.refreshApi.isExecuting}
-                            />
-                        </History>
-                    </div>
+                                defaultFilters={this.state.filters}
+                                onFilterChange={this.handleFiltersChange}
+                                customFilters={
+                                    <span>
+                                        <SelectField 
+                                            floatingLabelText={'Filter By'}
+                                            style={styles.exercise} 
+                                            value={this.state.filters.exerciseId} 
+                                            onChange={(event, index, value) => this.handleCustomFilterChange('exerciseId', event, index, value)}
+                                            disabled={this.state.refreshApi.isExecuting}
+                                        >
+                                            {this.props.exercises.map((e, index) => 
+                                                <MenuItem 
+                                                    key={index} 
+                                                    value={e.id} 
+                                                    primaryText={e.name} 
+                                                />                    
+                                            )}
+                                            {!this.state.filters.exerciseId || this.props.exercises.find(e => e.id === this.state.filters.exerciseId) ? '' :
+                                                <MenuItem key={-1} value={this.state.filters.exerciseId} primaryText={'Invalid Exercise Id'}/>
+                                            }
+                                        </SelectField>
+                                        {this.state.filters.exerciseId ? 
+                                            <NavigationCancel style={styles.clearIcon} onClick={this.handleCustomFilterClearClick}/>
+                                        : '' }
+                                    </span>
+                                }
+                            >
+                                <ExercisesHistoryContent
+                                    metrics={metrics}
+                                    exercisesHistory={this.props.exercisesHistory}
+                                    filters={this.state.filters}
+                                    refreshing={this.state.refreshApi.isExecuting}
+                                />
+                            </History>
+                        </div>
         )
     }
 }
