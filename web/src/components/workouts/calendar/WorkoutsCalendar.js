@@ -227,7 +227,6 @@ class WorkoutsCalendar extends Component {
                             />
                             <CardText>
                                 <div style={styles.container}>
-                                    <span style={styles.date}>{this.state.title}</span>
                                     <BigCalendar
                                         selectable
                                         events={workouts}
