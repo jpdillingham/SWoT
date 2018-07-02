@@ -7,6 +7,9 @@ import DatePicker from 'material-ui/DatePicker'
 import { FILTER_SORT_ORDER_OPTIONS, FILTER_LIMIT_OPTIONS } from '../../../constants'
 
 const styles = {
+    container: {
+        marginTop: -16,
+    },
     order: {
         width: 150,
         marginRight: 5,
@@ -40,7 +43,7 @@ class HistoryOptions extends Component {
 
     render() {
         return (
-            <div>
+            <div style={styles.container}>
                 <div style={styles.dateWrapper}>
                     <DatePicker 
                         floatingLabelText="From"
