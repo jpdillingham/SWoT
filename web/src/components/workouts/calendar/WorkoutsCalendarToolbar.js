@@ -14,6 +14,10 @@ const styles = {
         minWidth: 50,
         width: 50,
     },
+    date:{
+        color: black,
+        fontSize: 16,
+    }
 }
 
 class WorkoutsCalendarToolbar extends Component {
@@ -50,7 +54,8 @@ class WorkoutsCalendarToolbar extends Component {
                 />
                 <FlatButton 
                     disabled={true} 
-                    style={{color: black}}
+                    style={styles.date}
+                    labelStyle={styles.date}
                     label={moment(this.props.date).format('MMMM YYYY')}
                 />
             </div>
