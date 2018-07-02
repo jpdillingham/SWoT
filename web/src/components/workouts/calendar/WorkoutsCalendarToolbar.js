@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
-import FlatButton from 'material-ui/FlatButton'
-import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
-import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
+import { black } from 'material-ui/styles/colors';
+import FlatButton from 'material-ui/FlatButton';
+import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 
 const styles = {
     toolbar: {
-        marginTop: 15,
-        order: 2,
-        textAlign: 'center',
+        marginBottom: 16,
     },
     arrowButton: {
+        minWidth: 50,
+        width: 50,
     },
+    date:{
+        color: black,
+        fontSize: 16,
+    }
 }
 
 class WorkoutsCalendarToolbar extends Component {
@@ -45,6 +51,12 @@ class WorkoutsCalendarToolbar extends Component {
                     style={styles.arrowButton} 
                     icon={<HardwareKeyboardArrowRight/>} 
                     onClick={this.handleNextClick}
+                />
+                <FlatButton 
+                    disabled={true} 
+                    style={styles.date}
+                    labelStyle={styles.date}
+                    label={moment(this.props.date).format('MMMM YYYY')}
                 />
             </div>
         )
