@@ -8,9 +8,7 @@ import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-
 
 const styles = {
     toolbar: {
-        marginTop: 15,
-        //order: 1,
-        //textAlign: 'center',
+        marginBottom: 15,
     },
     arrowButton: {
         minWidth: 50,
