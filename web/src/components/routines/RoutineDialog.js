@@ -6,7 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RoutineExerciseList from './RoutineExerciseList';
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton'
 import TextField from 'material-ui/TextField';
-import { grey300 } from 'material-ui/styles/colors'
+import { grey300, red500, green500, blue500 } from 'material-ui/styles/colors'
 
 import Spinner from '../shared/Spinner'
 
@@ -18,6 +18,8 @@ import { getGuid, swapArrayElements } from '../../util';
 import { fetchExercises } from '../exercises/ExercisesActions'
 import { updateRoutine, addRoutine } from '../routines/RoutinesActions'
 import { showSnackbar } from '../app/AppActions'
+import SelectField from 'material-ui/SelectField/SelectField';
+import MenuItem from 'material-ui/MenuItem/MenuItem';
 
 const styles = {
     name: {
@@ -218,6 +220,11 @@ class RoutineDialog extends Component {
                         style={styles.name}
                         onChange={this.handleNameChange}
                     /><br />
+                    <SelectField>
+                        <MenuItem value={1} primaryText={'Red'} style={{ backgroundColor: red500}}/>
+                        <MenuItem value={1} primaryText={'Green'} style={{ backgroundColor: green500}}/>
+                        <MenuItem value={1} primaryText={'Blue'} style={{ backgroundColor: blue500}}/>
+                    </SelectField><br />
                     <RoutineExerciseList 
                         exercises={this.state.routine.exercises} 
                         onMoveUpClick={this.handleMoveUpExerciseMenuClick}
