@@ -6,14 +6,14 @@ import FlatButton from 'material-ui/FlatButton';
 import RoutineExerciseList from './RoutineExerciseList';
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton'
 import TextField from 'material-ui/TextField';
-import { grey300, red500, green500, blue500 } from 'material-ui/styles/colors'
+import { grey300, grey500, red500, green500, blue500, black } from 'material-ui/styles/colors'
 
 import Spinner from '../shared/Spinner'
 
 import RoutineExerciseDialog from './RoutineExerciseDialog';
 
 import { INTENTS } from '../../constants';
-import { getGuid, swapArrayElements } from '../../util';
+import { getGuid, swapArrayElements, fontContrastColor } from '../../util';
 
 import { fetchExercises } from '../exercises/ExercisesActions'
 import { updateRoutine, addRoutine } from '../routines/RoutinesActions'
@@ -221,9 +221,11 @@ class RoutineDialog extends Component {
                         onChange={this.handleNameChange}
                     /><br />
                     <SelectField>
-                        <MenuItem value={1} primaryText={'Red'} style={{ backgroundColor: red500}}/>
-                        <MenuItem value={1} primaryText={'Green'} style={{ backgroundColor: green500}}/>
-                        <MenuItem value={1} primaryText={'Blue'} style={{ backgroundColor: blue500}}/>
+                        <MenuItem value={1} primaryText={'Grey'} style={{ color: fontContrastColor(grey300), backgroundColor: grey300}}/>
+                        <MenuItem value={1} primaryText={'Red'} style={{ color: fontContrastColor(red500), backgroundColor: red500}}/>
+                        <MenuItem value={1} primaryText={'Green'} style={{ color: fontContrastColor(green500), backgroundColor: green500}}/>
+                        <MenuItem value={1} primaryText={'Blue'} style={{ color: fontContrastColor(blue500), backgroundColor: blue500}}/>
+                        <MenuItem value={1} primaryText={'Black'} style={{ color: fontContrastColor(black), backgroundColor: black}}/>
                     </SelectField><br />
                     <RoutineExerciseList 
                         exercises={this.state.routine.exercises} 
