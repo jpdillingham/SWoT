@@ -62,7 +62,7 @@ export const sortByProp = (prop, predicate = 'asc') => {
 
 // https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
 export const fontContrastColor = (hexColor) => {
-    let rgb = this.hexToRbg(hexColor);
+    let rgb = hexToRgb(hexColor);
 	let C, L;
 
 	C = [rgb.r/255, rgb.g/255, rgb.b/255];
@@ -87,7 +87,7 @@ export const fontContrastColor = (hexColor) => {
 }
 
 export const hexToRgb = (hexColor) => {
-    let bigint = parseInt(hexColor, 16);
+    let bigint = parseInt(hexColor.replace('#', ''), 16);
     let r = (bigint >> 16) & 255;
     let g = (bigint >> 8) & 255;
     let b = bigint & 255;
