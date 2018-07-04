@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 
-import { fontContrastColor } from '../../util';
 import SelectField from 'material-ui/SelectField';
+import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import MenuItem from 'material-ui/MenuItem';
+
 import {
     red500,
     pink500,
@@ -24,6 +25,7 @@ import {
     blueGrey500,
     grey500,
 } from 'material-ui/styles/colors';
+import Palette from 'material-ui/svg-icons/image/palette';
 
 class ColorSelectField extends Component {
     render() {
@@ -52,7 +54,12 @@ class ColorSelectField extends Component {
         return (
             <SelectField { ...this.props }>
                 {colors.map((color, index) => 
-                    <MenuItem key={index} value={color.color} primaryText={color.name} style={{ color: fontContrastColor(color.color), backgroundColor: color.color}}/>
+                    <MenuItem 
+                        key={index} 
+                        value={color.color} 
+                        primaryText={color.name}
+                        leftIcon={<Palette color={color.color}/>}
+                    />
                 )}
             </SelectField>
         );
