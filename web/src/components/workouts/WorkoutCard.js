@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import { grey300 } from 'material-ui/styles/colors'
+import { grey300, red500 } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
@@ -147,6 +147,7 @@ class WorkoutCard extends Component {
 
     render() {
         let color = this.props.workout.routine.color;
+        color = !color || color === 0 ? red500 : color;
         let fontColor = fontContrastColor(color);
 
         return (
