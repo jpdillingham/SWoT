@@ -5,19 +5,20 @@ import moment from 'moment';
 import { fetchRoutines } from '../routines/RoutinesActions'
 import { addWorkout } from '../workouts/WorkoutsActions'
 import Spinner from '../shared/Spinner'
-import { grey300 } from 'material-ui/styles/colors'
+import { grey300, red500 } from 'material-ui/styles/colors'
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
+import { ListItem } from 'material-ui/List'
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from 'material-ui/TimePicker'
+import Avatar from 'material-ui/Avatar';
 
 import { showSnackbar } from '../app/AppActions.js'
 
-import { getGuid } from '../../util';
+import { getGuid, fontContrastColor } from '../../util';
 
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 
@@ -189,13 +190,22 @@ class WorkoutDialog extends Component {
                     errorText={this.state.validationErrors.routine}
                     style={styles.routine}
                 >
-                    {this.props.routines.map(r => 
-                        <MenuItem 
-                            key={r.id} 
-                            value={r.id} 
-                            primaryText={r.name}
-                            leftIcon={<ActionAssignment />}
-                        />
+                    {this.props.routines.map(r => {
+                        let color = !r.color || r.color === 0 ? red500 : r.color;
+                        return (
+                            <ListItem 
+                                key={r.id} 
+                                value={r.id} 
+                                primaryText={r.name}
+                                leftAvatar={
+                                    <Avatar 
+                                        style={{ backgroundColor: color }} 
+                                        icon={<ActionAssignment style={{ fill: fontContrastColor(color) }}/>}
+                                    />
+                                }
+                            />
+                        )
+                    }
                     )}
                 </SelectField>
                 {this.state.api.isExecuting? <Spinner /> : ''}
