@@ -10,11 +10,10 @@ import { grey300, red500 } from 'material-ui/styles/colors'
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import SelectField from 'material-ui/SelectField'
-import { ListItem } from 'material-ui/List'
+import MenuItem from 'material-ui/MenuItem'
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import DatePicker from 'material-ui/DatePicker'
 import TimePicker from 'material-ui/TimePicker'
-import Avatar from 'material-ui/Avatar';
 
 import { showSnackbar } from '../app/AppActions.js'
 
@@ -193,20 +192,14 @@ class WorkoutDialog extends Component {
                     {this.props.routines.map(r => {
                         let color = !r.color || r.color === 0 ? red500 : r.color;
                         return (
-                            <ListItem 
+                            <MenuItem 
                                 key={r.id} 
                                 value={r.id} 
                                 primaryText={r.name}
-                                leftAvatar={
-                                    <Avatar 
-                                        style={{ backgroundColor: color }} 
-                                        icon={<ActionAssignment style={{ fill: fontContrastColor(color) }}/>}
-                                    />
-                                }
+                                leftIcon={<ActionAssignment style={{ fill: color }}/>}
                             />
                         )
-                    }
-                    )}
+                    })}
                 </SelectField>
                 {this.state.api.isExecuting? <Spinner /> : ''}
             </Dialog>
