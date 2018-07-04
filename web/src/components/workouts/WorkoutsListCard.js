@@ -10,6 +10,7 @@ import Divider from 'material-ui/Divider'
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
 import { List, ListItem } from 'material-ui/List';
 import Spinner from '../shared/Spinner';
+import { fontContrastColor } from '../../util';
 
 const styles = {
     cardHeader: {
@@ -78,6 +79,7 @@ class WorkoutsListCard extends Component {
                                         leftAvatar={
                                             <Avatar 
                                                 style={{backgroundColor: w.routine.color}} 
+                                                color={fontContrastColor(w.routine.color)}
                                                 icon={<ActionAssignmentTurnedIn color={w.routine.color}/>
                                             }/>
                                         }
