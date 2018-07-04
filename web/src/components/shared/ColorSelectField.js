@@ -51,8 +51,8 @@ class ColorSelectField extends Component {
 
         return (
             <SelectField { ...this.props }>
-                {colors.map(color => 
-                    <MenuItem value={color.color} primaryText={color.name} style={{ color: fontContrastColor(color.color), backgroundColor: color.color}}/>
+                {colors.map((color, index) => 
+                    <MenuItem key={index} value={color.color} primaryText={color.name} style={{ color: fontContrastColor(color.color), backgroundColor: color.color}}/>
                 )}
             </SelectField>
         );
