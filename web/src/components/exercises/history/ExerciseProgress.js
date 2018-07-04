@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 import { connect} from 'react-redux';
 import moment from 'moment';
+import api from '../../../api';
 
 import Spinner from '../../shared/Spinner';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { black, red500, grey300 } from 'material-ui/styles/colors';
-import { WORKOUT_AVATAR_COLOR, CHART_OPTIONS, CHART_SERIES_OPTIONS, CHART_SERIES_COLORS } from '../../../constants'
+import { 
+    API_ROOT,
+    WORKOUT_AVATAR_COLOR, 
+    CHART_OPTIONS, 
+    CHART_SERIES_OPTIONS, 
+    CHART_SERIES_COLORS 
+} from '../../../constants'
 import Avatar from 'material-ui/Avatar'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import { ActionTrendingUp, ActionInfo } from 'material-ui/svg-icons';
@@ -25,6 +32,7 @@ import { sortByProp } from '../../../util';
 import { Line } from 'react-chartjs-2';
 
 const initialState = {
+    historyExists: false,
     window: {
         width: 0,
         height: 0,
@@ -100,20 +108,33 @@ class ExerciseProgress extends Component {
         this.updateDimensions();
 
         this.setState({ loadApi: { isExecuting: true }}, () => {
-            let promises = [];
-            promises.push(this.props.fetchExercises());
-
-            if (this.state.filters.exerciseId) {
-                promises.push(this.props.fetchExercisesHistory(this.state.filters));
-            }
-
-            Promise.all(promises)
+            api.get(API_ROOT + '/workouts/history/count')
             .then(response => {
-                this.setState({ loadApi: { isExecuting: false, isErrored: false }});
-            }, error => {
-                this.props.showSnackbar('Error fetching Exercises: ' + error);
-                this.setState({ loadApi: { isExecuting: false, isErrored: true }});
+                this.setState({ historyExists: response.data > 0 }, () => {
+                    if (this.state.historyExists) {
+                        let promises = [];
+                        promises.push(this.props.fetchExercises());
+            
+                        if (this.state.filters.exerciseId) {
+                            promises.push(this.props.fetchExercisesHistory(this.state.filters));
+                        }
+            
+                        Promise.all(promises)
+                        .then(response => {
+                            this.setState({ loadApi: { isExecuting: false, isErrored: false }});
+                        }, error => {
+                            this.props.showSnackbar('Error fetching Exercises: ' + error);
+                            this.setState({ loadApi: { isExecuting: false, isErrored: true }});
+                        });
+                    }
+                    else {
+                        this.setState({ loadApi: { isExecuting: false, isErrored: false }})
+                    }
+                });
             })
+            .catch(error => {
+                this.setState({ loadApi: { isExecuting: false, isErroed: true }})
+            });
         })
     }
 
@@ -186,7 +207,7 @@ class ExerciseProgress extends Component {
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    !this.props.exercisesHistory.totalCount ? <HelpChecklist/> :
+                    !this.state.historyExists ? <HelpChecklist/> :
                         <div>
                             <Card 
                                 zDepth={2}                 

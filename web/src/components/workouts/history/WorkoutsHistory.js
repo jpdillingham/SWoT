@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import api from '../../../api'
 
 import { sortByProp, fontContrastColor } from '../../../util';
-import { WORKOUT_AVATAR_COLOR } from '../../../constants';
+import { WORKOUT_AVATAR_COLOR, API_ROOT } from '../../../constants';
 
 import { fetchWorkoutsHistory } from '../../workouts/history/WorkoutsHistoryActions';
 import { fetchRoutines } from '../../routines/RoutinesActions';
@@ -24,6 +25,7 @@ import HelpChecklist from '../../help/HelpChecklist';
 import Avatar from 'material-ui/Avatar'
 
 const initialState = {
+    historyExists: false,
     filters: {
         offset: 0,
         limit: 5,
@@ -88,8 +90,24 @@ class WorkoutsHistory extends Component {
 
     componentWillMount() {
         this.props.setTitle('Workouts');
-        this.fetchHistory(this.state.filters, 'loadApi');
-        this.props.fetchRoutines();
+
+        this.setState({ loadApi: { ...this.state.loadApi, isExecuting: true }}, () => {
+            api.get(API_ROOT + '/workouts/history/count')
+            .then(response => {
+                this.setState({ historyExists: response.data > 0}, () => {
+                    if (this.state.historyExists) {
+                        this.fetchHistory(this.state.filters, 'loadApi');
+                        this.props.fetchRoutines();
+                    }
+                    else {
+                        this.setState({ loadApi: { isExecuting: false, isErrored: false }})
+                    }
+                });
+            })
+            .catch(error => {
+                this.setState({ loadApi: { isExecuting: false, isErroed: true }})
+            });
+        });
     }
 
     navigate = (url) => {
@@ -131,7 +149,7 @@ class WorkoutsHistory extends Component {
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    !this.props.workoutsHistory || !this.props.workoutsHistory.workouts || !this.props.workoutsHistory.workouts.length ? <HelpChecklist/> :
+                    !this.state.historyExists ? <HelpChecklist/> :
                         <div style={styles.grid}>
                             <History
                                 title={'History'}

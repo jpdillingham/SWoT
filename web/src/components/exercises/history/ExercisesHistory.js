@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import api from '../../../api';
 
 import { black, red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
@@ -16,11 +17,12 @@ import { fetchExercises } from '../ExercisesActions'
 import { setTitle, showSnackbar } from '../../app/AppActions'
 
 import History from '../../shared/history/History';
-import { EXERCISE_AVATAR_COLOR } from '../../../constants'
+import { EXERCISE_AVATAR_COLOR, API_ROOT } from '../../../constants'
 import ExercisesHistoryContent from './ExercisesHistoryContent';
 import HelpChecklist from '../../help/HelpChecklist';
 
 const initialState = {
+    historyExists: false,
     filters: {
         offset: 0,
         limit: 5,
@@ -92,8 +94,24 @@ class ExercisesHistory extends Component {
 
     componentWillMount = () => {
         this.props.setTitle('Exercises');
-        this.fetchHistory(this.state.filters, 'loadApi');
-        this.props.fetchExercises();
+
+        this.setState({ loadApi: { ...this.state.loadApi, isExecuting: true }}, () => {
+            api.get(API_ROOT + '/workouts/history/count')
+            .then(response => {
+                this.setState({ historyExists: response.data > 0 }, () => {
+                    if (this.state.historyExists) {
+                        this.fetchHistory(this.state.filters, 'loadApi');
+                        this.props.fetchExercises();
+                    }
+                    else {
+                        this.setState({ loadApi: { isExecuting: false, isErrored: false }})
+                    }
+                });
+            })
+            .catch(error => {
+                this.setState({ loadApi: { isExecuting: false, isErroed: true }})
+            })
+        })
     }
 
     navigate = (url) => {
@@ -127,8 +145,8 @@ class ExercisesHistory extends Component {
             }, error => {
                 this.props.showSnackbar('Error fetching Exercise history: ' + error);
                 this.setState({ [api]: { isExecuting: false, isErrored: true }})
-            })
-        })
+            });
+        });
     }
 
     render() {
@@ -145,7 +163,7 @@ class ExercisesHistory extends Component {
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    !this.props.exercisesHistory.totalCount ? <HelpChecklist/> :
+                    !this.state.historyExists ? <HelpChecklist/> :
                         <div style={styles.grid}>
                             <History
                                 title={'History'}
