@@ -13,16 +13,18 @@ import Spinner from '../shared/Spinner'
 import RoutineExerciseDialog from './RoutineExerciseDialog';
 
 import { INTENTS } from '../../constants';
-import { getGuid, swapArrayElements, fontContrastColor } from '../../util';
+import { getGuid, swapArrayElements } from '../../util';
 
 import { fetchExercises } from '../exercises/ExercisesActions'
 import { updateRoutine, addRoutine } from '../routines/RoutinesActions'
 import { showSnackbar } from '../app/AppActions'
-import SelectField from 'material-ui/SelectField/SelectField';
-import MenuItem from 'material-ui/MenuItem/MenuItem';
+import ColorSelectField from '../shared/ColorSelectField';
 
 const styles = {
     name: {
+        width: '100%'
+    },
+    color: {
         width: '100%'
     },
     dialogContent: {
@@ -220,13 +222,12 @@ class RoutineDialog extends Component {
                         style={styles.name}
                         onChange={this.handleNameChange}
                     /><br />
-                    <SelectField>
-                        <MenuItem value={1} primaryText={'Grey'} style={{ color: fontContrastColor(grey300), backgroundColor: grey300}}/>
-                        <MenuItem value={1} primaryText={'Red'} style={{ color: fontContrastColor(red500), backgroundColor: red500}}/>
-                        <MenuItem value={1} primaryText={'Green'} style={{ color: fontContrastColor(green500), backgroundColor: green500}}/>
-                        <MenuItem value={1} primaryText={'Blue'} style={{ color: fontContrastColor(blue500), backgroundColor: blue500}}/>
-                        <MenuItem value={1} primaryText={'Black'} style={{ color: fontContrastColor(black), backgroundColor: black}}/>
-                    </SelectField><br />
+                    <ColorSelectField
+                        hintText="Color"
+                        floatingLabelText="Color"
+                        style={styles.color}
+                    />
+                    <br />
                     <RoutineExerciseList 
                         exercises={this.state.routine.exercises} 
                         onMoveUpClick={this.handleMoveUpExerciseMenuClick}
