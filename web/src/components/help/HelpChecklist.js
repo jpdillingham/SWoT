@@ -13,6 +13,8 @@ import { fetchExercises } from '../exercises/ExercisesActions';
 import { fetchRoutines } from '../routines/RoutinesActions';
 import { fetchWorkouts } from '../workouts/WorkoutsActions';
 import { fetchWorkoutsHistory } from '../workouts/history/WorkoutsHistoryActions';
+import { API_ROOT } from '../../constants';
+import api from '../../api';
 
 const styles = {
     card: {
@@ -33,6 +35,7 @@ const styles = {
 }
 
 const initialState = {
+    historyExists: false,
     api: {
         isExecuting: false,
         isErrored: false,
@@ -44,18 +47,22 @@ class HelpChecklist extends Component {
 
     componentWillMount() {
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
-            Promise.all([
-                this.props.fetchExercises(),
-                this.props.fetchRoutines(),
-                this.props.fetchWorkouts(),
-                this.props.fetchWorkoutsHistory(),
-            ])
+            api.get(API_ROOT + '/workouts/history/count')
             .then(response => {
-                this.setState({ api: { isExecuting: false, isErrored: false }})
-            }, error => {
-                this.props.showSnackbar('Error fetching configuration: ' + error);
-                this.setState({ api: { isExecuting: false, isErrored: true }})
-            })
+                this.setState({ historyExists: response.data > 0 }, () => {
+                    Promise.all([
+                        this.props.fetchExercises(),
+                        this.props.fetchRoutines(),
+                        this.props.fetchWorkouts(),
+                    ])
+                    .then(response => {
+                        this.setState({ api: { isExecuting: false, isErrored: false }})
+                    }, error => {
+                        this.props.showSnackbar('Error fetching configuration: ' + error);
+                        this.setState({ api: { isExecuting: false, isErrored: true }})
+                    });
+                });
+            });
         })
     }
 
@@ -66,7 +73,7 @@ class HelpChecklist extends Component {
     render() {
         let noExercises = !this.props.exercises.length;
         let noRoutines = !this.props.routines.length;
-        let noWorkoutsHistory = !this.props.workoutsHistory.workouts || !this.props.workoutsHistory.workouts.length;
+        let noWorkoutsHistory = !this.state.historyExists;
         let noWorkouts = noWorkoutsHistory && !this.props.workouts.length;
         
         return (
