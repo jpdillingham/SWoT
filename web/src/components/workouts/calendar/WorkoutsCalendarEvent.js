@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { black } from 'material-ui/styles/colors'
 import { AvPlayArrow, ActionSchedule, AvStop } from 'material-ui/svg-icons';
-import { WORKOUT_AVATAR_COLOR } from '../../../constants';
 
 const styles = {
     container: {

@@ -17,7 +17,7 @@ import TimePicker from 'material-ui/TimePicker'
 
 import { showSnackbar } from '../app/AppActions.js'
 
-import { getGuid, fontContrastColor } from '../../util';
+import { getGuid } from '../../util';
 
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 

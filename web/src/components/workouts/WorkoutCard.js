@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import { black, grey300 } from 'material-ui/styles/colors'
+import { grey300 } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
@@ -15,7 +15,6 @@ import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField/TextField';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 
-import { WORKOUT_AVATAR_COLOR } from '../../constants'
 import { fontContrastColor } from '../../util';
 
 import WorkoutStepper from './WorkoutStepper';

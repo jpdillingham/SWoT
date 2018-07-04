@@ -6,7 +6,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RoutineExerciseList from './RoutineExerciseList';
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton'
 import TextField from 'material-ui/TextField';
-import { grey300, grey500, red500, green500, blue500, black } from 'material-ui/styles/colors'
+import { grey300 } from 'material-ui/styles/colors'
 
 import Spinner from '../shared/Spinner'
 
