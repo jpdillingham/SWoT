@@ -7,11 +7,11 @@ import IconButton from 'material-ui/IconButton';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
 import Avatar from 'material-ui/Avatar';
 
-import { CARD_WIDTH, ROUTINE_AVATAR_COLOR } from '../../constants';
+import { CARD_WIDTH } from '../../constants';
 import ContentCreate from 'material-ui/svg-icons/content/create';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import RoutineExerciseListItem from './RoutineExerciseListItem'
-import { black } from 'material-ui/styles/colors';
+import { red500 } from 'material-ui/styles/colors';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
@@ -23,6 +23,7 @@ import ConfirmDialog from '../shared/ConfirmDialog'
 import RoutineDialog from './RoutineDialog'
 import RoutineHistoryDialog from './history/RoutineHistoryDialog';
 
+import { fontContrastColor } from '../../util';
 import { INTENTS } from '../../constants'
 
 const styles = {
@@ -41,7 +42,6 @@ const styles = {
         zIndex: 1000,
     },
     cardHeader: {
-        backgroundColor: ROUTINE_AVATAR_COLOR,
         marginBottom: 0,
     },
     cardTitle: {
@@ -126,14 +126,24 @@ class RoutineCard extends Component {
     }
 
     render() {
+        let color = this.props.routine.color;
+        color = !color || color === 0 ? red500 : color;
+
         return (
             <div style={styles.container}>
                 <Card zDepth={2} style={styles.card}>
                     <CardHeader
                         title={this.props.routine.name}
-                        titleStyle={styles.cardTitle}
-                        style={styles.cardHeader}
-                        avatar={<Avatar backgroundColor={ROUTINE_AVATAR_COLOR} color={black} size={36} icon={<ActionAssignment/>}></Avatar>}
+                        titleStyle={{ ...styles.cardTitle, color: fontContrastColor(color) }}
+                        style={{ ...styles.cardHeader, backgroundColor: color }}
+                        avatar={
+                            <Avatar 
+                                backgroundColor={color} 
+                                color={fontContrastColor(color)} 
+                                size={36} 
+                                icon={<ActionAssignment/>}>
+                            </Avatar>
+                        }
                     >
                         <FloatingActionButton 
                             secondary={false} 
