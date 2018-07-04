@@ -186,7 +186,7 @@ class ExerciseProgress extends Component {
         return (
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
-                    !exercises || !exercises.length ? <HelpChecklist/> :
+                    !this.props.exercisesHistory.totalCount ? <HelpChecklist/> :
                         <div>
                             <Card 
                                 zDepth={2}                 
