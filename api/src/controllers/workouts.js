@@ -4,6 +4,18 @@ const util = require('../util')
 
 const router = express.Router();
 
+router.get('/history/count', (req, res) => {
+    let userId = util.getUserId(req);
+    let fromTime = req.query && req.query.fromTime ? req.query.fromTime : 0;
+    let toTime = req.query && req.query.toTime ? req.query.toTime : new Date().getTime();
+
+    database.queryAll(userId, fromTime, toTime)
+    .then(workouts => {
+        res.status(200);
+        res.json(!workouts ? 0 : workouts.length);
+    })
+})
+
 router.get('/history/:id', (req, res) => {
     let userId = util.getUserId(req);
     let id = req.params.id;
