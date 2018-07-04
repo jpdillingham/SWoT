@@ -87,10 +87,14 @@ export const fontContrastColor = (hexColor) => {
 }
 
 export const hexToRgb = (hexColor) => {
-    let bigint = parseInt(hexColor.replace('#', ''), 16);
-    let r = (bigint >> 16) & 255;
-    let g = (bigint >> 8) & 255;
-    let b = bigint & 255;
+    if (typeof hexColor === 'string') {
+        let bigint = parseInt(hexColor.replace('#', ''), 16);
+        let r = (bigint >> 16) & 255;
+        let g = (bigint >> 8) & 255;
+        let b = bigint & 255;
+        
+        return { r: r, g: g, b: b };
+    }
 
-    return { r: r, g: g, b: b };
+    return { r: 255, g: 255, b: 255 }
 }
