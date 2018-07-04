@@ -4,7 +4,7 @@ import moment from 'moment';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar'
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
-import { black, grey300 } from 'material-ui/styles/colors'
+import { black, grey300, red500 } from 'material-ui/styles/colors'
 import Divider from 'material-ui/Divider'
 
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
@@ -71,23 +71,26 @@ class WorkoutsListCard extends Component {
                         <List>
                             {this.props.workouts && this.props.workouts.length > 0 ? this.props.workouts
                                 .sort(this.sort)
-                                .map((w, index) => 
-                                    <ListItem
-                                        key={index}
-                                        primaryText={w.routine.name}
-                                        secondaryText={this.props.timePrefix + ' ' + moment(w[this.props.timeField]).calendar()}
-                                        leftAvatar={
-                                            <Avatar 
-                                                style={{backgroundColor: w.routine.color}} 
-                                                color={fontContrastColor(w.routine.color)}
-                                                icon={<ActionAssignmentTurnedIn color={w.routine.color}/>
-                                            }/>
-                                        }
-                                        rightIcon={this.props.itemRightIcon}
-                                        onClick={() => this.props.onClick(w.id)}
-                                        disabled={this.props.refreshing}
-                                    />
-                                ) : this.props.emptyContent
+                                .map((w, index) => {
+                                    let color = !w.routine.color || w.routine.color === 0 ? red500 : w.routine.color;
+                                    return (
+                                        <ListItem
+                                            key={index}
+                                            primaryText={w.routine.name}
+                                            secondaryText={this.props.timePrefix + ' ' + moment(w[this.props.timeField]).calendar()}
+                                            leftAvatar={
+                                                <Avatar 
+                                                    style={{backgroundColor: color}} 
+                                                    color={fontContrastColor(color)}
+                                                    icon={<ActionAssignmentTurnedIn color={color}/>
+                                                }/>
+                                            }
+                                            rightIcon={this.props.itemRightIcon}
+                                            onClick={() => this.props.onClick(w.id)}
+                                            disabled={this.props.refreshing}
+                                        />
+                                    )
+                                }) : this.props.emptyContent
                             }
                         </List>
                         {this.props.children ? <Divider style={styles.footerDivider}/> : ''}
