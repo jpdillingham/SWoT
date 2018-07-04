@@ -18,9 +18,13 @@ import { getGuid, swapArrayElements } from '../../util';
 import { fetchExercises } from '../exercises/ExercisesActions'
 import { updateRoutine, addRoutine } from '../routines/RoutinesActions'
 import { showSnackbar } from '../app/AppActions'
+import ColorSelectField from '../shared/ColorSelectField';
 
 const styles = {
     name: {
+        width: '100%'
+    },
+    color: {
         width: '100%'
     },
     dialogContent: {
@@ -35,13 +39,15 @@ const initialState = {
     routine: {
         id: getGuid(),
         name: '',
-        exercises: []
+        exercises: [],
+        color: undefined,
     },
     exerciseDialog: {
         open: false
     },
     validationErrors: {
         name: '',
+        color: '',
     },
     api: {
         isExecuting: false,
@@ -72,6 +78,13 @@ class RoutineDialog extends Component {
         }
     }
 
+    handleColorChange = (event, index, value) => {
+        this.setState(prevState => ({
+            routine: { ...prevState.routine, color: value },
+            validationErrors: { ...prevState.validationErrors, color: '' }
+        }))
+    }
+
     handleAddExerciseClick = () => {
         this.props.fetchExercises().then(
             this.setState({ exerciseDialog: { open: true }})
@@ -82,6 +95,7 @@ class RoutineDialog extends Component {
         this.setState({
             validationErrors: { 
                 name: this.state.routine.name === '' ? 'The Routine must have a name.' : '',
+                color: this.state.routine.color === undefined ? 'The Routine must be assigned a color.' : '',
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
@@ -218,6 +232,15 @@ class RoutineDialog extends Component {
                         style={styles.name}
                         onChange={this.handleNameChange}
                     /><br />
+                    <ColorSelectField
+                        hintText="Color"
+                        floatingLabelText="Color"
+                        onChange={this.handleColorChange}
+                        value={this.state.routine.color}
+                        errorText={this.state.validationErrors.color}
+                        style={styles.color}
+                    />
+                    <br />
                     <RoutineExerciseList 
                         exercises={this.state.routine.exercises} 
                         onMoveUpClick={this.handleMoveUpExerciseMenuClick}

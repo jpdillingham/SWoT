@@ -5,7 +5,7 @@ import moment from 'moment';
 import { fetchRoutines } from '../routines/RoutinesActions'
 import { addWorkout } from '../workouts/WorkoutsActions'
 import Spinner from '../shared/Spinner'
-import { grey300 } from 'material-ui/styles/colors'
+import { grey300, red500 } from 'material-ui/styles/colors'
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
@@ -189,14 +189,17 @@ class WorkoutDialog extends Component {
                     errorText={this.state.validationErrors.routine}
                     style={styles.routine}
                 >
-                    {this.props.routines.map(r => 
-                        <MenuItem 
-                            key={r.id} 
-                            value={r.id} 
-                            primaryText={r.name}
-                            leftIcon={<ActionAssignment />}
-                        />
-                    )}
+                    {this.props.routines.map(r => {
+                        let color = !r.color || r.color === 0 ? red500 : r.color;
+                        return (
+                            <MenuItem 
+                                key={r.id} 
+                                value={r.id} 
+                                primaryText={r.name}
+                                leftIcon={<ActionAssignment style={{ fill: color }}/>}
+                            />
+                        )
+                    })}
                 </SelectField>
                 {this.state.api.isExecuting? <Spinner /> : ''}
             </Dialog>

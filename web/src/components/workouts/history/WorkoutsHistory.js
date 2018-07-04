@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { sortByProp } from '../../../util';
+import { sortByProp, fontContrastColor } from '../../../util';
 import { WORKOUT_AVATAR_COLOR } from '../../../constants';
 
 import { fetchWorkoutsHistory } from '../../workouts/history/WorkoutsHistoryActions';
@@ -21,6 +21,7 @@ import MenuItem from 'material-ui/MenuItem';
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
 import SelectField from 'material-ui/SelectField';
 import HelpChecklist from '../../help/HelpChecklist';
+import Avatar from 'material-ui/Avatar'
 
 const initialState = {
     filters: {
@@ -168,17 +169,26 @@ class WorkoutsHistory extends Component {
                                 <List>
                                     {this.props.workoutsHistory.workouts
                                     .sort(sortByProp('endTime', this.state.filters.order))
-                                    .map((w, index) => 
-                                        <ListItem
-                                            key={index}
-                                            primaryText={w.routine.name}
-                                            secondaryText={'Completed ' + moment(w.endTime).calendar()}
-                                            leftIcon={<ActionAssignmentTurnedIn color={black}/>}
-                                            rightIcon={<ActionInfo color={black}/>}
-                                            onClick={() => this.handleItemClick(w.id)}
-                                            disabled={this.props.refreshing}
-                                        />
-                                    )}
+                                    .map((w, index) => {
+                                        let color = !w.routine.color || w.routine.color === 0 ? red500 : w.routine.color;
+                                        return (
+                                            <ListItem
+                                                key={index}
+                                                primaryText={w.routine.name}
+                                                secondaryText={'Completed ' + moment(w.endTime).calendar()}
+                                                leftAvatar={
+                                                    <Avatar 
+                                                        style={{backgroundColor: color}} 
+                                                        color={fontContrastColor(color)}
+                                                        icon={<ActionAssignmentTurnedIn/>}
+                                                    />
+                                                }
+                                                rightIcon={<ActionInfo color={black}/>}
+                                                onClick={() => this.handleItemClick(w.id)}
+                                                disabled={this.props.refreshing}
+                                            />
+                                        )
+                                    })}
                                 </List>
                             </History>
                         </div>

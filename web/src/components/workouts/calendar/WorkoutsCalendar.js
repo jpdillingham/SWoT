@@ -21,6 +21,7 @@ import WorkoutsCalendarDateCell from './WorkoutsCalendarDateCell';
 import WorkoutsCalendarToolbar from './WorkoutsCalendarToolbar';
 import AddFloatingAddButton from '../../shared/AddFloatingActionButton';
 import WorkoutDialog from '../WorkoutDialog';
+import { fontContrastColor } from '../../../util';
 
 const initialState = {
     title: 'Calendar',
@@ -195,18 +196,21 @@ class WorkoutsCalendar extends Component {
         workouts = workouts.concat(workoutsHistory);
         
         workouts = workouts.map(w => { 
+            let color = !w.routine.color || w.routine.color === 0 ? red500 : w.routine.color;
             return { 
-            id: w.id, 
-            title: w.routine.name, 
-            start: moment(w.startTime || w.scheduledTime).toDate(), 
-            end: moment(w.endTime || w.startTime || w.scheduledTime).toDate(),
-            status: w.startTime === undefined ? 'scheduled' : w.endTime === undefined ? 'started' : 'completed'
-        }});
+                id: w.id, 
+                title: w.routine.name, 
+                start: moment(w.startTime || w.scheduledTime).toDate(), 
+                end: moment(w.endTime || w.startTime || w.scheduledTime).toDate(),
+                status: w.startTime === undefined ? 'scheduled' : w.endTime === undefined ? 'started' : 'completed',
+                color: color,
+                fontColor: fontContrastColor(color)
+            }
+        });
 
         let views = [ 'month' ];
 
         return (
-            
             this.state.loadApi.isExecuting ? <Spinner size={48}/> : 
                 this.state.loadApi.isErrored ? <ActionHighlightOff style={{ ...styles.icon, color: red500 }} /> :
                     <div>

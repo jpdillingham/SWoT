@@ -59,3 +59,42 @@ export const sortByProp = (prop, predicate = 'asc') => {
         }
     }
 }
+
+// https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
+export const fontContrastColor = (hexColor) => {
+    let rgb = hexToRgb(hexColor);
+	let C, L;
+
+	C = [rgb.r/255, rgb.g/255, rgb.b/255];
+
+    for (var i = 0; i < C.length; ++i) {
+        if (C[i] <= 0.03928) {
+            C[i] = C[i] / 12.92
+        } 
+        else {
+            C[i] = Math.pow((C[i] + 0.055) / 1.055, 2.4);
+        }
+    }
+
+    L = 0.2126 * C[0] + 0.7152 * C[1] + 0.0722 * C[2];
+
+    if (L > 0.179) {
+        return '#000';
+    } 
+    else {
+        return '#FFF';
+    }
+}
+
+export const hexToRgb = (hexColor) => {
+    if (typeof hexColor === 'string') {
+        let bigint = parseInt(hexColor.replace('#', ''), 16);
+        let r = (bigint >> 16) & 255;
+        let g = (bigint >> 8) & 255;
+        let b = bigint & 255;
+        
+        return { r: r, g: g, b: b };
+    }
+
+    return { r: 255, g: 255, b: 255 }
+}

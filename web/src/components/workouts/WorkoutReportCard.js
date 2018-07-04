@@ -15,6 +15,7 @@ import ConfirmDialog from '../shared/ConfirmDialog'
 
 import { getElapsedTime } from '../../util'
 import { WORKOUT_AVATAR_COLOR } from '../../constants'
+import { fontContrastColor } from '../../util'
 
 import ExerciseReportCard from '../exercises/ExerciseReportCard'
 import LeftRightListItem from '../shared/LeftRightListItem';
@@ -63,21 +64,25 @@ class WorkoutReportCard extends Component {
     }
 
     render() {
+        let color = this.props.workout.routine.color;
+        let fontColor = fontContrastColor(color);
+
         return (
             <div>
             <Card zDepth={2} style={ styles.card }>
                 <CardHeader                        
-                    titleStyle={styles.cardTitle}
-                    style={styles.cardHeader}
+                    titleStyle={{ ...styles.cardTitle, color: fontColor }}
+                    style={{ ...styles.cardHeader, backgroundColor: color }}
                     title={this.props.workout.routine.name}
                     subtitle={
                         'Completed ' + moment(this.props.workout.endTime).calendar()
                     }
+                    subtitleStyle={{ color: fontColor }}
                     avatar={
                         <Avatar 
-                            backgroundColor={WORKOUT_AVATAR_COLOR} 
+                            backgroundColor={color} 
                             size={40} 
-                            color={black}
+                            color={fontColor}
                             icon={<ActionAssignmentTurnedIn/>} 
                         />
                     }

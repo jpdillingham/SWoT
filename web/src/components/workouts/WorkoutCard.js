@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import { black, grey300 } from 'material-ui/styles/colors'
-import {Card, CardHeader, CardText } from 'material-ui/Card';
+import { grey300 } from 'material-ui/styles/colors'
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
 import IconMenu from 'material-ui/IconMenu'
@@ -15,7 +15,7 @@ import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField/TextField';
 import ActionDelete from 'material-ui/svg-icons/action/delete';
 
-import { WORKOUT_AVATAR_COLOR } from '../../constants'
+import { fontContrastColor } from '../../util';
 
 import WorkoutStepper from './WorkoutStepper';
 import ConfirmDialog from '../shared/ConfirmDialog';
@@ -24,7 +24,6 @@ import WorkoutRescheduleDialog from './WorkoutRescheduleDialog';
 
 const styles = {
     cardHeader: {
-        backgroundColor: WORKOUT_AVATAR_COLOR,
         marginBottom: 0,
     },
     cardTitle: {
@@ -147,22 +146,26 @@ class WorkoutCard extends Component {
     }
 
     render() {
+        let color = this.props.workout.routine.color;
+        let fontColor = fontContrastColor(color);
+
         return (
             <div>
                 <Card zDepth={2} style={!this.state.api.isExecuting ? styles.card : { ...styles.card, backgroundColor: grey300 }}>
                     <CardHeader                        
-                        titleStyle={styles.cardTitle}
-                        style={styles.cardHeader}
+                        titleStyle={{ ...styles.cardTitle, color: fontColor }}
+                        style={{ ...styles.cardHeader, backgroundColor: color }}
                         title={this.props.workout.routine.name}
                         subtitle={
                             this.props.workout.startTime === undefined ? 'Scheduled for ' + moment(this.props.workout.scheduledTime).calendar() :
                             'Started ' + moment(this.props.workout.startTime).calendar()
                         }
+                        subtitleStyle={{ color: fontColor }}
                         avatar={
                             <Avatar 
-                                backgroundColor={WORKOUT_AVATAR_COLOR} 
+                                backgroundColor={color} 
                                 size={40} 
-                                color={black}
+                                color={fontColor}
                                 icon={<ActionAssignmentTurnedIn/>} 
                             />
                         }
