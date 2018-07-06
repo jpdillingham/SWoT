@@ -47,7 +47,7 @@ class WorkoutStepper extends Component {
                 orientation={'vertical'}
             >
                 {this.props.workout.routine.exercises.map((exercise, index) =>
-                    <Step key={index} linear={false}>
+                    <Step key={index}>
                         <StepButton 
                             completed={exercise.endTime !== undefined}
                             onClick={() => this.handleStepClick(index)}
