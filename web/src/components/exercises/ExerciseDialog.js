@@ -12,7 +12,7 @@ import { grey300 } from 'material-ui/styles/colors'
 
 import Spinner from '../shared/Spinner'
 
-import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
+import { EXERCISE_TYPES, INTENTS } from '../../constants';
 import { getGuid, swapArrayElements, validateUrl } from '../../util';
 
 import ExerciseMetricDialog from './ExerciseMetricDialog';
