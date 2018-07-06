@@ -297,8 +297,8 @@ class ExerciseDialog extends Component {
                         {EXERCISE_TYPES.map(e => <MenuItem key={e} value={e} primaryText={e}/>)}
                     </SelectField><br/>
                     <TextField
-                        hintText="e.g. '/barbell-bench-press-medium-grip'"
-                        floatingLabelText="Bodybuilding.com Url"
+                        hintText="e.g. 'https://www.bodybuilding.com/exercises/snatch"
+                        floatingLabelText="(Optional) Url"
                         defaultValue={this.state.exercise.url}
                         style={styles.url}
                         errorText={this.state.validationErrors.url}
