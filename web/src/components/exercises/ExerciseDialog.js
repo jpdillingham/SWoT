@@ -158,7 +158,7 @@ class ExerciseDialog extends Component {
             validationErrors: { 
                 name: this.state.exercise.name === '' ? 'The Exercise must have a name.' : '',
                 type: this.state.exercise.type === '' ? 'A type must be selected.' : '',
-                url: this.state.exercise.url === '' ? 'A url must be provided.' : ''
+                url: this.state.exercise.url && !validateUrl(this.state.exercise.url) ? 'The url must be valid if provided.' : '',
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
