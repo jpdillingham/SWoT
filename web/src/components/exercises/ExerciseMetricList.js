@@ -9,6 +9,9 @@ import MenuItem from 'material-ui/MenuItem';
 import ActionAssessment from 'material-ui/svg-icons/action/assessment';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Divider from 'material-ui/Divider'
+import ArrowUpward from 'material-ui/svg-icons/navigation/arrow-upward';
+import ArrowDownward from 'material-ui/svg-icons/navigation/arrow-downward';
+import { ContentCreate, ActionDelete } from 'material-ui/svg-icons';
 
 
 class ExerciseMetricList extends Component {
@@ -26,11 +29,11 @@ class ExerciseMetricList extends Component {
                                         <MoreVertIcon color={grey400} />
                                     </IconButton>
                                 }>
-                                    <MenuItem onClick={() => this.props.onMoveUpClick(index)}>Move Up</MenuItem>
-                                    <MenuItem onClick={() => this.props.onMoveDownClick(index)}>Move Down</MenuItem>
+                                    <MenuItem leftIcon={<ArrowUpward/>} onClick={() => this.props.onMoveUpClick(index)}>Move Up</MenuItem>
+                                    <MenuItem leftIcon={<ArrowDownward/>} onClick={() => this.props.onMoveDownClick(index)}>Move Down</MenuItem>
                                     <Divider />
-                                    <MenuItem onClick={() => this.props.onEditClick(m)}>Edit</MenuItem>
-                                    <MenuItem onClick={() => this.props.onDeleteClick(m)}>Delete</MenuItem>
+                                    <MenuItem leftIcon={<ContentCreate/>} onClick={() => this.props.onEditClick(m)}>Edit</MenuItem>
+                                    <MenuItem leftIcon={<ActionDelete/>} onClick={() => this.props.onDeleteClick(m)}>Delete</MenuItem>
                                 </IconMenu>
                             }
                             primaryText={m.name}
