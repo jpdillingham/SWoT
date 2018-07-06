@@ -12,8 +12,8 @@ import { grey300 } from 'material-ui/styles/colors'
 
 import Spinner from '../shared/Spinner'
 
-import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
-import { getGuid, swapArrayElements } from '../../util';
+import { EXERCISE_TYPES, INTENTS } from '../../constants';
+import { getGuid, swapArrayElements, validateUrl } from '../../util';
 
 import ExerciseMetricDialog from './ExerciseMetricDialog';
 import ExerciseMetricList from './ExerciseMetricList';
@@ -93,7 +93,7 @@ class ExerciseDialog extends Component {
 
     handleUrlChange = (event, value) => {
         this.setState(prevState => ({
-            exercise: { ...prevState.exercise, url: EXERCISE_URL_BASE + value },
+            exercise: { ...prevState.exercise, url: value },
             validationErrors: { ...prevState.validationErrors, url: '' }
         }))
     }
@@ -158,7 +158,7 @@ class ExerciseDialog extends Component {
             validationErrors: { 
                 name: this.state.exercise.name === '' ? 'The Exercise must have a name.' : '',
                 type: this.state.exercise.type === '' ? 'A type must be selected.' : '',
-                url: this.state.exercise.url === '' ? 'A url must be provided.' : ''
+                url: this.state.exercise.url && !validateUrl(this.state.exercise.url) ? 'The url must be valid if provided.' : '',
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
@@ -297,8 +297,8 @@ class ExerciseDialog extends Component {
                         {EXERCISE_TYPES.map(e => <MenuItem key={e} value={e} primaryText={e}/>)}
                     </SelectField><br/>
                     <TextField
-                        hintText="e.g. '/barbell-bench-press-medium-grip'"
-                        floatingLabelText="Bodybuilding.com Url"
+                        hintText="e.g. 'http://site.com/bench_press'"
+                        floatingLabelText="(Optional) Url"
                         defaultValue={this.state.exercise.url}
                         style={styles.url}
                         errorText={this.state.validationErrors.url}

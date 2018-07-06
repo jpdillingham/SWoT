@@ -9,10 +9,7 @@ export const API_ROOT = "https://u8sie6ns6c.execute-api.us-east-1.amazonaws.com/
 
 export const EXERCISE_TYPES = [ 'Weightlifting', 'Bodyweight', 'Cardio', 'Stretching', 'Balance' ]
 
-export const EXERCISE_URL_BASE = 'https://www.bodybuilding.com/exercises/'
-
 export const WORKOUT_AVATAR_COLOR = '#f44336'
-
 export const EXERCISE_AVATAR_COLOR = '#00c853'
 
 export const ROUTINE_AVATAR_COLOR = '#ffab00'
