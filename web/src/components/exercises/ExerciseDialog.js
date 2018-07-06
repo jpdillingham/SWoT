@@ -13,7 +13,7 @@ import { grey300 } from 'material-ui/styles/colors'
 import Spinner from '../shared/Spinner'
 
 import { EXERCISE_TYPES, EXERCISE_URL_BASE, INTENTS } from '../../constants';
-import { getGuid, swapArrayElements } from '../../util';
+import { getGuid, swapArrayElements, validateUrl } from '../../util';
 
 import ExerciseMetricDialog from './ExerciseMetricDialog';
 import ExerciseMetricList from './ExerciseMetricList';
@@ -93,7 +93,7 @@ class ExerciseDialog extends Component {
 
     handleUrlChange = (event, value) => {
         this.setState(prevState => ({
-            exercise: { ...prevState.exercise, url: EXERCISE_URL_BASE + value },
+            exercise: { ...prevState.exercise, url: value },
             validationErrors: { ...prevState.validationErrors, url: '' }
         }))
     }
@@ -297,7 +297,7 @@ class ExerciseDialog extends Component {
                         {EXERCISE_TYPES.map(e => <MenuItem key={e} value={e} primaryText={e}/>)}
                     </SelectField><br/>
                     <TextField
-                        hintText="e.g. 'https://www.bodybuilding.com/exercises/snatch"
+                        hintText="e.g. 'http://site.com/bench_press'"
                         floatingLabelText="(Optional) Url"
                         defaultValue={this.state.exercise.url}
                         style={styles.url}
