@@ -12,6 +12,7 @@ import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import ActionTrendingUp from 'material-ui/svg-icons/action/trending-up';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import Divider from 'material-ui/Divider';
 
 import Spinner from '../shared/Spinner';
 
@@ -237,11 +238,14 @@ class ExerciseForm extends Component {
                         </FloatingActionButton>
                     </CardHeader>
                     <IconMenu
-                            style={styles.iconMenu}
-                            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                            anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                            targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                        style={styles.iconMenu}
+                        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                        targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
+                        <MenuItem onClick={() => console.log(this.props.exercise.sequence)}>Move Up</MenuItem>
+                        <MenuItem onClick={() => console.log(this.props.exercise)}>Move Down</MenuItem>
+                        <Divider />
                         <MenuItem primaryText="Progress" onClick={this.handleProgressClick} leftIcon={<ActionTrendingUp/>}/>
                         <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
                     </IconMenu>
