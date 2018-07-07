@@ -10,6 +10,7 @@ import ExerciseForm from '../exercises/ExerciseForm'
 
 const initialState = {
     stepIndex: -1,
+    hoverIndex: -1,
 }
 
 class WorkoutStepper extends Component {
@@ -21,6 +22,14 @@ class WorkoutStepper extends Component {
 
     handleExerciseComplete = () => {
         this.setState({ stepIndex: this.getNextExerciseIndex() })
+    }
+
+    handleStepMouseEnter = (exercise) => {
+        console.log(exercise)
+    }
+
+    handleStepMouseLeave = (exercise) => {
+        console.log(exercise)
     }
 
     componentDidMount = () => {
@@ -52,6 +61,8 @@ class WorkoutStepper extends Component {
                         <StepButton 
                             completed={exercise.endTime !== undefined}
                             onClick={() => this.handleStepClick(index)}
+                            onMouseEnter={() => this.handleStepMouseEnter(exercise)}
+                            onMouseLeave={() => this.handleStepMouseLeave(exercise)}
                             icon={exercise.endTime !== undefined ? 
                                 <ActionCheckCircle/> :
                                 exercise.startTime !== undefined ?
