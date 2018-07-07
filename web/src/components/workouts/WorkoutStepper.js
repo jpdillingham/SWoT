@@ -72,7 +72,7 @@ class WorkoutStepper extends Component {
                         >
                             <div style={{width: '100%'}}>
                                 <span style={{float: 'left', marginTop: 4}}>{exercise.name}</span>
-                                {this.state.hoverId !== exercise.sequence ? '' : <div style={{float: 'right'}}>
+                                {this.state.hoverId !== exercise.sequence && this.state.stepIndex !== exercise.sequence ? '' : <div style={{float: 'right'}}>
                                     <NavigationArrowUpward/>
                                     <NavigationArrowDownward/>
                                 </div>}
