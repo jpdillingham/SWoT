@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Step, Stepper, StepButton, StepContent } from 'material-ui/Stepper';
 import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import AVPlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled'
+import { NavigationArrowUpward, NavigationArrowDownward } from 'material-ui/svg-icons';
 import ImageLens from 'material-ui/svg-icons/image/lens'
 
 import ExerciseForm from '../exercises/ExerciseForm'
@@ -58,7 +59,13 @@ class WorkoutStepper extends Component {
                                     <ImageLens/>
                             }
                         >
-                            {exercise.name}
+                            <div style={{width: '100%'}}>
+                                <span style={{float: 'left', marginTop: 4}}>{exercise.name}</span>
+                                <div style={{float: 'right'}}>
+                                    <NavigationArrowUpward/>
+                                    <NavigationArrowDownward/>
+                                </div>
+                            </div>
                         </StepButton>
                         <StepContent>
                             <ExerciseForm 
