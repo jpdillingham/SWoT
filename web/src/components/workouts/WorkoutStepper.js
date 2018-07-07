@@ -10,7 +10,7 @@ import ExerciseForm from '../exercises/ExerciseForm'
 
 const initialState = {
     stepIndex: -1,
-    hoverIndex: -1,
+    hoverId: undefined,
 }
 
 class WorkoutStepper extends Component {
@@ -25,11 +25,11 @@ class WorkoutStepper extends Component {
     }
 
     handleStepMouseEnter = (exercise) => {
-        console.log(exercise)
+        this.setState({ hoverId: exercise.sequence })
     }
 
     handleStepMouseLeave = (exercise) => {
-        console.log(exercise)
+        this.setState({ hoverId: undefined })
     }
 
     componentDidMount = () => {
@@ -72,10 +72,10 @@ class WorkoutStepper extends Component {
                         >
                             <div style={{width: '100%'}}>
                                 <span style={{float: 'left', marginTop: 4}}>{exercise.name}</span>
-                                <div style={{float: 'right'}}>
+                                {this.state.hoverId !== exercise.sequence ? '' : <div style={{float: 'right'}}>
                                     <NavigationArrowUpward/>
                                     <NavigationArrowDownward/>
-                                </div>
+                                </div>}
                             </div>
                         </StepButton>
                         <StepContent>
