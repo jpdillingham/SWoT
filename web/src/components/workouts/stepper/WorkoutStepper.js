@@ -6,7 +6,7 @@ import AVPlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled'
 import { NavigationArrowUpward, NavigationArrowDownward } from 'material-ui/svg-icons';
 import ImageLens from 'material-ui/svg-icons/image/lens'
 
-import ExerciseForm from '../exercises/ExerciseForm'
+import ExerciseForm from '../../exercises/ExerciseForm'
 
 const initialState = {
     stepIndex: -1,
