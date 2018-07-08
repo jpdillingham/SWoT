@@ -61,6 +61,9 @@ class WorkoutStepper extends Component {
     }
 
     render() {
+        let exercises = this.props.workout.routine.exercises;
+        let lastExercise = exercises[exercises.length - 1];
+
         return (
             <Stepper
                 activeStep={!this.props.enabled ? -1 : this.state.stepIndex}
@@ -86,8 +89,9 @@ class WorkoutStepper extends Component {
                                     <span style={{float: 'left', marginTop: 0}}>{exercise.name}</span> : 
                                     <div><span style={{float: 'left', marginTop: 5, zIndex: 10000}}>{exercise.name}</span>
                                     <div style={{float: 'right'}}>
-                                        <NavigationArrowUpward onClick={(event) => this.handleMoveUpClick(event, exercise)}/>
-                                        <NavigationArrowDownward onClick={(event) => this.handleMoveDownClick(event, exercise)}/>
+                                        {exercise.sequence > 0 ? <NavigationArrowUpward onClick={(event) => this.handleMoveUpClick(event, exercise)}/> : ''}
+                                        {exercise.sequence !== lastExercise.sequence ?
+                                             <NavigationArrowDownward onClick={(event) => this.handleMoveDownClick(event, exercise)}/> : ''}
                                     </div></div>
                                 }
                             </div>
