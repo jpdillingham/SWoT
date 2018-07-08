@@ -12,7 +12,6 @@ import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import ActionTrendingUp from 'material-ui/svg-icons/action/trending-up';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import Divider from 'material-ui/Divider';
 
 import Spinner from '../shared/Spinner';
 
@@ -21,7 +20,7 @@ import { getElapsedTime } from '../../util';
 
 import ExerciseHistoryDialog from './history/ExerciseHistoryDialog';
 import ExerciseProgressDialog from './history/ExerciseProgressDialog';
-import { AvPlayArrow, AvStop, AvFastRewind, NavigationArrowUpward, NavigationArrowDownward } from 'material-ui/svg-icons';
+import { AvPlayArrow, AvStop, AvFastRewind } from 'material-ui/svg-icons';
 
 const styles = {
     cardHeader: {
@@ -243,9 +242,6 @@ class ExerciseForm extends Component {
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem onClick={() => console.log(this.props.exercise.sequence)} leftIcon={<NavigationArrowUpward/>}>Move Up</MenuItem>
-                        <MenuItem onClick={() => console.log(this.props.exercise)} leftIcon={<NavigationArrowDownward/>}>Move Down</MenuItem>
-                        <Divider />
                         <MenuItem primaryText="Progress" onClick={this.handleProgressClick} leftIcon={<ActionTrendingUp/>}/>
                         <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
                     </IconMenu>
