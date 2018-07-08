@@ -5,21 +5,40 @@ import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
 import AVPlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled'
 import ImageLens from 'material-ui/svg-icons/image/lens'
 
-import ExerciseForm from '../exercises/ExerciseForm'
+import ExerciseForm from '../../exercises/ExerciseForm'
+import WorkoutStepTitle from './WorkoutStepTitle';
 
 const initialState = {
     stepIndex: -1,
+    hoverId: undefined,
 }
 
 class WorkoutStepper extends Component {
     state = initialState;
 
     handleStepClick = (index) => {
+        console.log('step')
         this.setState({ stepIndex: index })
     }
 
     handleExerciseComplete = () => {
         this.setState({ stepIndex: this.getNextExerciseIndex() })
+    }
+
+    handleStepMouseEnter = (exercise) => {
+        this.setState({ hoverId: exercise.sequence })
+    }
+
+    handleStepMouseLeave = (exercise) => {
+        this.setState({ hoverId: undefined })
+    }
+
+    handleMoveUpClick = (exercise) => {
+        console.log(exercise);
+    }
+
+    handleMoveDownClick = (exercise) => {
+        console.log(exercise);
     }
 
     componentDidMount = () => {
@@ -40,6 +59,9 @@ class WorkoutStepper extends Component {
     }
 
     render() {
+        let exercises = this.props.workout.routine.exercises;
+        let lastExercise = exercises[exercises.length - 1];
+
         return (
             <Stepper
                 activeStep={!this.props.enabled ? -1 : this.state.stepIndex}
@@ -51,6 +73,8 @@ class WorkoutStepper extends Component {
                         <StepButton 
                             completed={exercise.endTime !== undefined}
                             onClick={() => this.handleStepClick(index)}
+                            onMouseEnter={() => this.handleStepMouseEnter(exercise)}
+                            onMouseLeave={() => this.handleStepMouseLeave(exercise)}
                             icon={exercise.endTime !== undefined ? 
                                 <ActionCheckCircle/> :
                                 exercise.startTime !== undefined ?
@@ -58,7 +82,15 @@ class WorkoutStepper extends Component {
                                     <ImageLens/>
                             }
                         >
-                            {exercise.name}
+                            <WorkoutStepTitle
+                                exercise={exercise}
+                                isActive={this.state.stepIndex === exercise.sequence}
+                                isHovered={this.state.hoverId === exercise.sequence}
+                                isFirstExercise={exercise.sequence === 0}
+                                isLastExercise={exercise.sequence === lastExercise.sequence}
+                                onMoveUpClick={this.handleMoveUpClick}
+                                onMoveDownClick={this.handleMoveDownClick}
+                            />
                         </StepButton>
                         <StepContent>
                             <ExerciseForm 
