@@ -22,13 +22,11 @@ const styles = {
 
 class WorkoutStepUpDownButtons extends Component {
     handleMoveUpClick = (event, exercise) => {
-        console.log(exercise);
         this.props.onMoveUpClick(exercise);
         event.stopPropagation();
     }
 
     handleMoveDownClick = (event, exercise) => {
-        console.log(exercise);
         this.props.onMoveDownClick(exercise);
         event.stopPropagation();
     }

@@ -34,14 +34,12 @@ class WorkoutStepper extends Component {
         this.setState({ hoverId: undefined })
     }
 
-    handleMoveUpClick = (event, exercise) => {
+    handleMoveUpClick = (exercise) => {
         console.log(exercise);
-        event.stopPropagation();
     }
 
-    handleMoveDownClick = (event, exercise) => {
+    handleMoveDownClick = (exercise) => {
         console.log(exercise);
-        event.stopPropagation();
     }
 
     componentDidMount = () => {
