@@ -7,7 +7,7 @@ import { NavigationArrowUpward, NavigationArrowDownward } from 'material-ui/svg-
 import ImageLens from 'material-ui/svg-icons/image/lens'
 
 import ExerciseForm from '../../exercises/ExerciseForm'
-import WorkoutStepUpDownButtons from './WorkoutStepUpDownButtons';
+import WorkoutStepTitle from './WorkoutStepTitle';
 
 const initialState = {
     stepIndex: -1,
@@ -83,7 +83,7 @@ class WorkoutStepper extends Component {
                                     <ImageLens/>
                             }
                         >
-                            <WorkoutStepUpDownButtons
+                            <WorkoutStepTitle
                                 exercise={exercise}
                                 isActive={this.state.stepIndex === exercise.sequence}
                                 isHovered={this.state.hoverId === exercise.sequence}

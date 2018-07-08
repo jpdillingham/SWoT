@@ -20,7 +20,7 @@ const styles = {
     },
 }
 
-class WorkoutStepUpDownButtons extends Component {
+class WorkoutStepTitle extends Component {
     handleMoveUpClick = (event, exercise) => {
         this.props.onMoveUpClick(exercise);
         event.stopPropagation();
@@ -50,4 +50,4 @@ class WorkoutStepUpDownButtons extends Component {
     }
 }
 
-export default WorkoutStepUpDownButtons
+export default WorkoutStepTitle
