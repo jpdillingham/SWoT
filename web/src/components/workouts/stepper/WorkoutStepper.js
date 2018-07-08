@@ -7,6 +7,7 @@ import { NavigationArrowUpward, NavigationArrowDownward } from 'material-ui/svg-
 import ImageLens from 'material-ui/svg-icons/image/lens'
 
 import ExerciseForm from '../../exercises/ExerciseForm'
+import WorkoutStepUpDownButtons from './WorkoutStepUpDownButtons';
 
 const initialState = {
     stepIndex: -1,
@@ -84,17 +85,15 @@ class WorkoutStepper extends Component {
                                     <ImageLens/>
                             }
                         >
-                            <div style={{width: '100%'}}>
-                                {this.state.hoverId !== exercise.sequence && this.state.stepIndex !== exercise.sequence ? 
-                                    <span style={{float: 'left', marginTop: 0}}>{exercise.name}</span> : 
-                                    <div><span style={{float: 'left', marginTop: 5, zIndex: 10000}}>{exercise.name}</span>
-                                    <div style={{float: 'right'}}>
-                                        {exercise.sequence > 0 ? <NavigationArrowUpward onClick={(event) => this.handleMoveUpClick(event, exercise)}/> : ''}
-                                        {exercise.sequence !== lastExercise.sequence ?
-                                             <NavigationArrowDownward onClick={(event) => this.handleMoveDownClick(event, exercise)}/> : ''}
-                                    </div></div>
-                                }
-                            </div>
+                            <WorkoutStepUpDownButtons
+                                exercise={exercise}
+                                isActive={this.state.stepIndex === exercise.sequence}
+                                isHovered={this.state.hoverId === exercise.sequence}
+                                isFirstExercise={exercise.sequence === 0}
+                                isLastExercise={exercise.sequence === lastExercise.sequence}
+                                onMoveUpClick={this.handleMoveUpClick}
+                                onMoveDownClick={this.handleMoveDownClick}
+                            />
                         </StepButton>
                         <StepContent>
                             <ExerciseForm 
