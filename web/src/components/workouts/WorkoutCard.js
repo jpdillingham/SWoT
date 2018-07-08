@@ -17,7 +17,7 @@ import ActionDelete from 'material-ui/svg-icons/action/delete';
 
 import { fontContrastColor } from '../../util';
 
-import WorkoutStepper from './WorkoutStepper';
+import WorkoutStepper from './stepper/WorkoutStepper';
 import ConfirmDialog from '../shared/ConfirmDialog';
 import Spinner from '../shared/Spinner';
 import WorkoutRescheduleDialog from './WorkoutRescheduleDialog';
