@@ -44,10 +44,14 @@ class WorkoutStepper extends Component {
         this.setState({ stepIndex: this.getNextExerciseIndex() });
     }
 
+    getSequencedExercises = () => {
+        return this.props.workout.routine.exercises
+                .sort((a, b) => a.sequence === b.sequence ? 0 : a.sequence > b.sequence ? 1 : -1);
+    }
+
     getNextExerciseIndex = () => {
-        let incomplete = this.props.workout.routine.exercises
-                            .filter(e => e.endTime === undefined)
-                            .sort((a, b) => a.sequence === b.sequence ? 0 : a.sequence > b.sequence ? 1 : -1);
+        let incomplete = this.getSequencedExercises()
+                            .filter(e => e.endTime === undefined);
         
         if (!incomplete || incomplete.length === 0) return -1;
 
