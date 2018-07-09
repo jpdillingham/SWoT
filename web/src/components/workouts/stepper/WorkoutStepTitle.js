@@ -8,7 +8,7 @@ const styles = {
     },
     notHovered: {
         float: 'left',
-        marginTop: 0,
+        marginTop: -1,
     },
     hovered: {
         float: 'left',
@@ -40,7 +40,7 @@ class WorkoutStepTitle extends Component {
                         <div style={styles.buttons}>
                             {!this.props.isFirstExercise ? <NavigationArrowUpward onClick={(event) => this.handleMoveUpClick(event, this.props.exercise)}/> : ''}
                             {!this.props.isLastExercise ?
-                                    <NavigationArrowDownward onClick={(event) => this.handleMoveDownClick(event, this.props.exercise)}/> : ''}
+                                <NavigationArrowDownward onClick={(event) => this.handleMoveDownClick(event, this.props.exercise)}/> : ''}
                         </div>
                     </div> :
                     <span style={styles.notHovered}>{this.props.exercise.name}</span> 
