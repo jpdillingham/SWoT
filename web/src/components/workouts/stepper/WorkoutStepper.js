@@ -33,11 +33,27 @@ class WorkoutStepper extends Component {
     }
 
     handleMoveUpClick = (exercise) => {
-        console.log(exercise);
+        let e = this.getSequencedExercises();
+        let i = e.findIndex(e => e === exercise);
+
+        if (i !== -1 && i > 0) {
+            console.log(exercise);
+        }
+        else {
+            console.log(i, 'already top')
+        }
     }
 
     handleMoveDownClick = (exercise) => {
-        console.log(exercise);
+        let e = this.getSequencedExercises();
+        let i = e.findIndex(e => e === exercise);
+
+        if (i !== -1 && i < e.length - 1) {
+            console.log(exercise);
+        }
+        else {
+            console.log(i, 'already bottom')
+        }
     }
 
     componentDidMount = () => {
