@@ -17,7 +17,6 @@ class WorkoutStepper extends Component {
     state = initialState;
 
     handleStepClick = (index) => {
-        console.log('step')
         this.setState({ stepIndex: index })
     }
 
