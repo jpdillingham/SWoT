@@ -33,26 +33,24 @@ class WorkoutStepper extends Component {
     }
 
     handleMoveUpClick = (exercise) => {
-        let e = this.getSequencedExercises();
-        let i = e.findIndex(e => e === exercise);
+        let exercises = this.getSequencedExercises();
+        let foundIndex = exercises.findIndex(e => e === exercise);
 
-        if (i !== -1 && i > 0) {
-            console.log(exercise);
-        }
-        else {
-            console.log(i, 'already top')
+        if (foundIndex !== -1 && foundIndex > 0) {
+            exercises[foundIndex - 1].sequence += 1;
+            exercises[foundIndex].sequence -= 1
+            this.props.onWorkoutChange(this.props.workout);
         }
     }
 
     handleMoveDownClick = (exercise) => {
-        let e = this.getSequencedExercises();
-        let i = e.findIndex(e => e === exercise);
+        let exercises = this.getSequencedExercises();
+        let foundIndex = exercises.findIndex(e => e === exercise);
 
-        if (i !== -1 && i < e.length - 1) {
-            console.log(exercise);
-        }
-        else {
-            console.log(i, 'already bottom')
+        if (foundIndex !== -1 && foundIndex < exercises.length - 1) {
+            exercises[foundIndex + 1].sequence -= 1;
+            exercises[foundIndex].sequence += 1;
+            this.props.onWorkoutChange(this.props.workout);
         }
     }
 
@@ -78,7 +76,7 @@ class WorkoutStepper extends Component {
     }
 
     render() {
-        let exercises = this.props.workout.routine.exercises;
+        let exercises = this.getSequencedExercises();
         let lastExercise = exercises[exercises.length - 1];
 
         return (
