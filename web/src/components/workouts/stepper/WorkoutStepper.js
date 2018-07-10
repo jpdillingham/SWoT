@@ -114,6 +114,7 @@ class WorkoutStepper extends Component {
                         >
                             <WorkoutStepTitle
                                 exercise={exercise}
+                                workoutIsStarted={this.props.workout.startTime}
                                 isActive={this.state.stepIndex === exercise.sequence}
                                 isHovered={this.state.hoverId === exercise.sequence}
                                 isFirstExercise={exercise.sequence === 0}
