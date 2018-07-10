@@ -60,10 +60,14 @@ class WorkoutStepper extends Component {
 
     updateWorkout = () => {
         this.setState({ 
-            stepIndex: this.getNextExerciseIndex(),
+            stepIndex: -1,
             hoverIndex: undefined,
         }, () => {
             this.props.onWorkoutChange(this.props.workout);
+
+            this.setState({
+                stepIndex: this.getNextExerciseIndex(),
+            });
         });
     }
 
