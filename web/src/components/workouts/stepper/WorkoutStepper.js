@@ -39,7 +39,7 @@ class WorkoutStepper extends Component {
         if (foundIndex !== -1 && foundIndex > 0) {
             exercises[foundIndex - 1].sequence += 1;
             exercises[foundIndex].sequence -= 1
-            this.props.onWorkoutChange(this.props.workout);
+            this.updateWorkout();
         }
     }
 
@@ -50,12 +50,21 @@ class WorkoutStepper extends Component {
         if (foundIndex !== -1 && foundIndex < exercises.length - 1) {
             exercises[foundIndex + 1].sequence -= 1;
             exercises[foundIndex].sequence += 1;
-            this.props.onWorkoutChange(this.props.workout);
+            this.updateWorkout();
         }
     }
 
     componentDidMount = () => {
         this.setState({ stepIndex: this.getNextExerciseIndex() });
+    }
+
+    updateWorkout = () => {
+        this.setState({ 
+            stepIndex: this.getNextExerciseIndex(),
+            hoverIndex: undefined,
+        }, () => {
+            this.props.onWorkoutChange(this.props.workout);
+        });
     }
 
     getSequencedExercises = () => {
