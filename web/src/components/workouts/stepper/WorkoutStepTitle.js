@@ -34,7 +34,7 @@ class WorkoutStepTitle extends Component {
     render() {
         return (
             <div style={styles.container}>
-                {this.props.isHovered || this.props.isActive ? 
+                {this.props.workoutIsActive && (this.props.isHovered || this.props.isActive) ? 
                     <div>
                         <span style={styles.hovered}>{this.props.exercise.name}</span>
                         <div style={styles.buttons}>
