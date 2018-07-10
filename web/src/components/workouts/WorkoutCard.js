@@ -208,6 +208,7 @@ class WorkoutCard extends Component {
                                 style={styles.stepper}
                                 workout={this.props.workout}
                                 onExerciseChange={this.props.onExerciseChange}
+                                onWorkoutChange={this.props.onWorkoutChange}
                             />
                             <Divider style={styles.divider}/>
                             <TextField
