@@ -33,7 +33,7 @@ class WorkoutStepper extends Component {
         let foundIndex = exercises.findIndex(e => e === exercise);
         exercises = JSON.parse(JSON.stringify(exercises));
 
-        if (direction === 'up' && foundIndex !== -1 && foundIndex > 0) {
+        if (direction === 'up' && foundIndex > 0) {
             exercises[foundIndex - 1].sequence += 1;
             exercises[foundIndex].sequence -= 1;
             this.updateWorkout({ ...this.props.workout, routine: { ...this.props.workout.routine, exercises: exercises }});
