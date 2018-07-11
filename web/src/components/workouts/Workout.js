@@ -111,6 +111,11 @@ class Workout extends Component {
             delete e.endTime;
             delete e.notes;
 
+            if (e.originalSequence !== undefined) {
+                e.sequence = e.originalSequence;
+                delete e.originalSequence;
+            }
+
             e.metrics.forEach(m => {
                 delete m.value;
             });
