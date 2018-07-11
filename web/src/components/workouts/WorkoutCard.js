@@ -109,6 +109,17 @@ class WorkoutCard extends Component {
         }
     }
 
+    handleWorkoutChange = (workout) => {
+        this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
+            this.props.onWorkoutChange(workout)
+            .then(response => {
+                this.setState({ api: { isExecuting: false, isErrored: false }});
+            }, error => {
+                this.setState({ api: { isExecuting: false, isErrored: true }});
+            });
+        });
+    }
+
     handleCompleteDialogClose = (result) => {
         if (result.cancelled) {
             this.setState({ completeDialog: { open: false }});
@@ -208,7 +219,7 @@ class WorkoutCard extends Component {
                                 style={styles.stepper}
                                 workout={this.props.workout}
                                 onExerciseChange={this.props.onExerciseChange}
-                                onWorkoutChange={this.props.onWorkoutChange}
+                                onWorkoutChange={this.handleWorkoutChange}
                             />
                             <Divider style={styles.divider}/>
                             <TextField
