@@ -34,13 +34,39 @@ class WorkoutStepper extends Component {
         exercises = JSON.parse(JSON.stringify(exercises));
 
         if (direction === 'up' && foundIndex > 0) {
-            exercises[foundIndex - 1].sequence += 1;
-            exercises[foundIndex].sequence -= 1;
+            let ex = exercises[foundIndex];
+            let prevEx = exercises[foundIndex - 1];
+
+            if (prevEx.originalSequence === undefined) {
+                prevEx.originalSequence = prevEx.sequence;
+            }
+
+            prevEx.sequence += 1;
+
+            if (ex.originalSequence === undefined) {
+                ex.originalSequence = ex.sequence;
+            }
+
+            ex.sequence -= 1;
+
             this.updateWorkout({ ...this.props.workout, routine: { ...this.props.workout.routine, exercises: exercises }});
         }
         else if (direction === 'down' && foundIndex !== -1 && foundIndex < exercises.length - 1) {
-            exercises[foundIndex + 1].sequence -= 1;
-            exercises[foundIndex].sequence += 1;
+            let ex = exercises[foundIndex];
+            let nextEx = exercises[foundIndex + 1];
+
+            if (nextEx.originalSequence === undefined) {
+                nextEx.originalSequence = nextEx.sequence;
+            }
+
+            nextEx.sequence -= 1;
+
+            if (ex.originalSequence === undefined) {
+                ex.originalSequence = ex.sequence;
+            }
+
+            ex.sequence += 1;
+
             this.updateWorkout({ ...this.props.workout, routine: { ...this.props.workout.routine, exercises: exercises }});
         }
     }
