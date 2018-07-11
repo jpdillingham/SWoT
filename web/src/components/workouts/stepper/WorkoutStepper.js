@@ -20,10 +20,6 @@ class WorkoutStepper extends Component {
         this.setState({ stepIndex: index })
     }
 
-    handleExerciseComplete = () => {
-        this.setState({ stepIndex: this.getNextExerciseIndex() })
-    }
-
     handleStepMouseEnter = (exercise) => {
         this.setState({ hoverId: exercise.sequence })
     }
@@ -53,16 +49,16 @@ class WorkoutStepper extends Component {
         this.setState({ stepIndex: this.getNextExerciseIndex() });
     }
 
+    componentWillReceiveProps = (nextProps) => {
+        this.setState({ stepIndex: this.getNextExerciseIndex() })
+    }
+
     updateWorkout = (workout) => {
         this.setState({ 
             stepIndex: -1,
             hoverIndex: undefined,
         }, () => {
-            this.props.onWorkoutChange(workout);
-
-            this.setState({
-                stepIndex: this.getNextExerciseIndex(),
-            });
+            this.props.onWorkoutChange(workout)
         });
     }
 
@@ -121,7 +117,6 @@ class WorkoutStepper extends Component {
                             <ExerciseForm 
                                 exercise={exercise}
                                 onChange={this.props.onExerciseChange}
-                                onComplete={this.handleExerciseComplete}
                             />
                         </StepContent>
                     </Step>
