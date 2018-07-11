@@ -54,7 +54,6 @@ class WorkoutStepper extends Component {
     }
 
     updateWorkout = (workout) => {
-        console.log(workout);
         this.setState({ 
             stepIndex: -1,
             hoverIndex: undefined,
