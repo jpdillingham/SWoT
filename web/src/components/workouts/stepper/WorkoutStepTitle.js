@@ -8,7 +8,7 @@ const styles = {
     },
     notHovered: {
         float: 'left',
-        marginTop: 0,
+        marginTop: -1,
     },
     hovered: {
         float: 'left',
@@ -21,26 +21,21 @@ const styles = {
 }
 
 class WorkoutStepTitle extends Component {
-    handleMoveUpClick = (event, exercise) => {
-        this.props.onMoveUpClick(exercise);
-        event.stopPropagation();
-    }
-
-    handleMoveDownClick = (event, exercise) => {
-        this.props.onMoveDownClick(exercise);
+    handleMoveUpDownClick = (event, exercise, direction) => {
+        this.props.onMoveUpDownClick(exercise, direction);
         event.stopPropagation();
     }
 
     render() {
         return (
             <div style={styles.container}>
-                {this.props.isHovered || this.props.isActive ? 
+                {this.props.workoutIsStarted && (this.props.isHovered || this.props.isActive) ? 
                     <div>
                         <span style={styles.hovered}>{this.props.exercise.name}</span>
                         <div style={styles.buttons}>
-                            {!this.props.isFirstExercise ? <NavigationArrowUpward onClick={(event) => this.handleMoveUpClick(event, this.props.exercise)}/> : ''}
+                            {!this.props.isFirstExercise ? <NavigationArrowUpward onClick={(event) => this.handleMoveUpDownClick(event, this.props.exercise, 'up')}/> : ''}
                             {!this.props.isLastExercise ?
-                                    <NavigationArrowDownward onClick={(event) => this.handleMoveDownClick(event, this.props.exercise)}/> : ''}
+                                <NavigationArrowDownward onClick={(event) => this.handleMoveUpDownClick(event, this.props.exercise, 'down')}/> : ''}
                         </div>
                     </div> :
                     <span style={styles.notHovered}>{this.props.exercise.name}</span> 

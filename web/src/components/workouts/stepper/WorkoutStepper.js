@@ -17,12 +17,7 @@ class WorkoutStepper extends Component {
     state = initialState;
 
     handleStepClick = (index) => {
-        console.log('step')
         this.setState({ stepIndex: index })
-    }
-
-    handleExerciseComplete = () => {
-        this.setState({ stepIndex: this.getNextExerciseIndex() })
     }
 
     handleStepMouseEnter = (exercise) => {
@@ -33,22 +28,74 @@ class WorkoutStepper extends Component {
         this.setState({ hoverId: undefined })
     }
 
-    handleMoveUpClick = (exercise) => {
-        console.log(exercise);
-    }
+    handleMoveUpDownClick = (exercise, direction) => {
+        let exercises = this.getSequencedExercises();
+        let foundIndex = exercises.findIndex(e => e === exercise);
+        exercises = JSON.parse(JSON.stringify(exercises));
 
-    handleMoveDownClick = (exercise) => {
-        console.log(exercise);
+        if (direction === 'up' && foundIndex > 0) {
+            let ex = exercises[foundIndex];
+            let prevEx = exercises[foundIndex - 1];
+
+            if (prevEx.originalSequence === undefined) {
+                prevEx.originalSequence = prevEx.sequence;
+            }
+
+            prevEx.sequence += 1;
+
+            if (ex.originalSequence === undefined) {
+                ex.originalSequence = ex.sequence;
+            }
+
+            ex.sequence -= 1;
+
+            this.updateWorkout({ ...this.props.workout, routine: { ...this.props.workout.routine, exercises: exercises }});
+        }
+        else if (direction === 'down' && foundIndex !== -1 && foundIndex < exercises.length - 1) {
+            let ex = exercises[foundIndex];
+            let nextEx = exercises[foundIndex + 1];
+
+            if (nextEx.originalSequence === undefined) {
+                nextEx.originalSequence = nextEx.sequence;
+            }
+
+            nextEx.sequence -= 1;
+
+            if (ex.originalSequence === undefined) {
+                ex.originalSequence = ex.sequence;
+            }
+
+            ex.sequence += 1;
+
+            this.updateWorkout({ ...this.props.workout, routine: { ...this.props.workout.routine, exercises: exercises }});
+        }
     }
 
     componentDidMount = () => {
         this.setState({ stepIndex: this.getNextExerciseIndex() });
     }
 
+    componentWillReceiveProps = (nextProps) => {
+        this.setState({ stepIndex: this.getNextExerciseIndex() })
+    }
+
+    updateWorkout = (workout) => {
+        this.setState({ 
+            stepIndex: -1,
+            hoverIndex: undefined,
+        }, () => {
+            this.props.onWorkoutChange(workout)
+        });
+    }
+
+    getSequencedExercises = () => {
+        return this.props.workout.routine.exercises
+                .sort((a, b) => a.sequence === b.sequence ? 0 : a.sequence > b.sequence ? 1 : -1);
+    }
+
     getNextExerciseIndex = () => {
-        let incomplete = this.props.workout.routine.exercises
-                            .filter(e => e.endTime === undefined)
-                            .sort((a, b) => a.sequence === b.sequence ? 0 : a.sequence > b.sequence ? 1 : -1);
+        let incomplete = this.getSequencedExercises()
+                            .filter(e => e.endTime === undefined);
         
         if (!incomplete || incomplete.length === 0) return -1;
 
@@ -59,7 +106,7 @@ class WorkoutStepper extends Component {
     }
 
     render() {
-        let exercises = this.props.workout.routine.exercises;
+        let exercises = this.getSequencedExercises();
         let lastExercise = exercises[exercises.length - 1];
 
         return (
@@ -84,19 +131,18 @@ class WorkoutStepper extends Component {
                         >
                             <WorkoutStepTitle
                                 exercise={exercise}
+                                workoutIsStarted={this.props.workout.startTime !== undefined}
                                 isActive={this.state.stepIndex === exercise.sequence}
                                 isHovered={this.state.hoverId === exercise.sequence}
                                 isFirstExercise={exercise.sequence === 0}
                                 isLastExercise={exercise.sequence === lastExercise.sequence}
-                                onMoveUpClick={this.handleMoveUpClick}
-                                onMoveDownClick={this.handleMoveDownClick}
+                                onMoveUpDownClick={this.handleMoveUpDownClick}
                             />
                         </StepButton>
                         <StepContent>
                             <ExerciseForm 
                                 exercise={exercise}
                                 onChange={this.props.onExerciseChange}
-                                onComplete={this.handleExerciseComplete}
                             />
                         </StepContent>
                     </Step>
