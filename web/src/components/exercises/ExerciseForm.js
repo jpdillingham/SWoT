@@ -20,7 +20,8 @@ import { getElapsedTime } from '../../util';
 
 import ExerciseHistoryDialog from './history/ExerciseHistoryDialog';
 import ExerciseProgressDialog from './history/ExerciseProgressDialog';
-import { AvPlayArrow, AvStop, AvFastRewind } from 'material-ui/svg-icons';
+import { AvPlayArrow, AvStop, AvFastRewind, AvReplay } from 'material-ui/svg-icons';
+import Divider from 'material-ui/Divider/Divider';
 
 const styles = {
     cardHeader: {
@@ -242,6 +243,8 @@ class ExerciseForm extends Component {
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
+                        <MenuItem primaryText="Reset" onClick={this.handleReset} leftIcon={<AvReplay/>}/>
+                        <Divider/>
                         <MenuItem primaryText="Progress" onClick={this.handleProgressClick} leftIcon={<ActionTrendingUp/>}/>
                         <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
                     </IconMenu>
