@@ -126,7 +126,19 @@ class ExerciseForm extends Component {
     }
 
     handleResetConfirm = () => {
-        return this.updateExercise(this.props.exercise, true);
+        let e = { ...this.state.exercise };
+
+        delete e.startTime;
+        delete e.endTime;
+        delete e.notes;
+
+        e.metrics.forEach(m => {
+            delete m.value;
+        });
+
+        this.setState({ exercise: e })
+
+        return this.updateExercise(e, true);
     }
 
     handleResetClose = (result) => {
