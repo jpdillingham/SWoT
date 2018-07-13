@@ -22,6 +22,7 @@ import ExerciseHistoryDialog from './history/ExerciseHistoryDialog';
 import ExerciseProgressDialog from './history/ExerciseProgressDialog';
 import { AvPlayArrow, AvStop, AvFastRewind, AvReplay } from 'material-ui/svg-icons';
 import Divider from 'material-ui/Divider/Divider';
+import ConfirmDialog from '../shared/ConfirmDialog';
 
 const styles = {
     cardHeader: {
@@ -77,6 +78,9 @@ const initialState = {
     progressDialog: {
         open: false,
     },
+    resetDialog: {
+        open: false,
+    },
     validationErrors: {}
 }
 
@@ -118,7 +122,15 @@ class ExerciseForm extends Component {
     }
 
     handleResetClick = () => {
+        this.setState({ resetDialog: { open: true }});
+    }
 
+    handleResetConfirm = () => {
+        return this.updateExercise(this.props.exercise);
+    }
+
+    handleResetClose = (result) => {
+        this.setState({ resetDialog: { open: false }});
     }
 
     getValidationErrors = (state) => {
@@ -155,16 +167,19 @@ class ExerciseForm extends Component {
     }
 
     updateExercise = (exercise) => {
-        this.setState({ 
-            api: { ...this.state.api, isExecuting: true }
-        }, () =>
-            this.props.onChange(exercise)
-            .then(() => {
-                this.setState({ api: { ...this.state.api, isExecuting: false }})
-            }, error => {
-                this.setState({ api: { isExecuting: false, isErrored: true }})
-            })
-        )
+        return new Promise((resolve, reject) => {
+            this.setState({ 
+                api: { ...this.state.api, isExecuting: true }
+            }, () =>
+                this.props.onChange(exercise)
+                .then(() => {
+                    this.setState({ api: { ...this.state.api, isExecuting: false }})
+                }, error => {
+                    this.setState({ api: { isExecuting: false, isErrored: true }})
+                })
+                .then(() => resolve())
+            )
+        })
     }
 
     getMetricDisplayName = (metric) => {
@@ -287,6 +302,15 @@ class ExerciseForm extends Component {
                     onClose={this.handleProgressClose}
                     exercise={this.props.exercise}
                 />
+                <ConfirmDialog 
+                    title={'Reset Exercise'}
+                    buttonCaption={'Reset'}
+                    onConfirm={this.handleResetConfirm}
+                    onClose={this.handleResetClose}
+                    open={this.state.resetDialog.open} 
+                >
+                    Are you sure you want to reset Exercise '{this.state.exercise.name}'?
+                </ConfirmDialog>
             </div>
         )
     }
