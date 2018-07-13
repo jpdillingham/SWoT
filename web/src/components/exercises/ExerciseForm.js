@@ -118,7 +118,7 @@ class ExerciseForm extends Component {
     }
 
     handleResetClick = () => {
-        
+
     }
 
     getValidationErrors = (state) => {
@@ -137,7 +137,7 @@ class ExerciseForm extends Component {
 
     handleActionClick = () => {
         if (!this.props.exercise.startTime) {
-            this.invokeOnChange({ ...this.state.exercise, startTime: new Date().getTime() });
+            this.updateExercise({ ...this.state.exercise, startTime: new Date().getTime() });
         }
         else if (!this.props.exercise.endTime) {
             this.setState({
@@ -145,16 +145,16 @@ class ExerciseForm extends Component {
                 validationErrors: this.getValidationErrors(this.state)
             }, () => {
                 if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                    this.invokeOnChange({ ...this.state.exercise, endTime: Date.now() })
+                    this.updateExercise({ ...this.state.exercise, endTime: Date.now() })
                 }
             })
         }
         else {
-            this.invokeOnChange({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined })
+            this.updateExercise({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined })
         }
     }
 
-    invokeOnChange = (exercise) => {
+    updateExercise = (exercise) => {
         this.setState({ 
             api: { ...this.state.api, isExecuting: true }
         }, () =>
