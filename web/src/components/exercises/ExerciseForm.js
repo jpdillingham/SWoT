@@ -117,6 +117,10 @@ class ExerciseForm extends Component {
         });
     }
 
+    handleResetClick = () => {
+        
+    }
+
     getValidationErrors = (state) => {
         let errors = {};
 
@@ -243,7 +247,7 @@ class ExerciseForm extends Component {
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
-                        <MenuItem primaryText="Reset" onClick={this.handleReset} leftIcon={<AvReplay/>}/>
+                        <MenuItem primaryText="Reset" onClick={this.handleResetClick} leftIcon={<AvReplay/>}/>
                         <Divider/>
                         <MenuItem primaryText="Progress" onClick={this.handleProgressClick} leftIcon={<ActionTrendingUp/>}/>
                         <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
