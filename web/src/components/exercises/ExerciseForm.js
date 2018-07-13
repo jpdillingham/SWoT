@@ -126,7 +126,7 @@ class ExerciseForm extends Component {
     }
 
     handleResetConfirm = () => {
-        return this.updateExercise(this.props.exercise);
+        return this.updateExercise(this.props.exercise, true);
     }
 
     handleResetClose = (result) => {
@@ -166,10 +166,10 @@ class ExerciseForm extends Component {
         }
     }
 
-    updateExercise = (exercise) => {
+    updateExercise = (exercise, suppressApi = false) => {
         return new Promise((resolve, reject) => {
             this.setState({ 
-                api: { ...this.state.api, isExecuting: true }
+                api: !suppressApi ? { ...this.state.api, isExecuting: true } : this.state.api
             }, () =>
                 this.props.onChange(exercise)
                 .then(() => {
