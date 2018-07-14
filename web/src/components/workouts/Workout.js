@@ -11,7 +11,7 @@ import { setTitle, showSnackbar } from '../app/AppActions';
 
 import Spinner from '../shared/Spinner'
 import WorkoutCard from './WorkoutCard'
-import WorkoutReportCard from './WorkoutReportCard'
+import WorkoutReportCard from './report/WorkoutReportCard'
 
 const initialState = {
     stepIndex: 0,
