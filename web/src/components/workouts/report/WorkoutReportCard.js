@@ -11,15 +11,15 @@ import List from 'material-ui/List'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
-import ConfirmDialog from '../shared/ConfirmDialog'
+import ConfirmDialog from '../../shared/ConfirmDialog'
 
-import { getElapsedTime } from '../../util'
-import { WORKOUT_AVATAR_COLOR } from '../../constants'
-import { fontContrastColor } from '../../util'
+import { getElapsedTime } from '../../../util'
+import { WORKOUT_AVATAR_COLOR } from '../../../constants'
+import { fontContrastColor } from '../../../util'
 
-import ExerciseReportCard from '../exercises/ExerciseReportCard'
-import LeftRightListItem from '../shared/LeftRightListItem';
-import ToggledLeftRightListItem from '../shared/ToggledLeftRightListItem';
+import ExerciseReportCard from '../../exercises/ExerciseReportCard'
+import LeftRightListItem from '../../shared/LeftRightListItem';
+import ToggledLeftRightListItem from '../../shared/ToggledLeftRightListItem';
 
 const styles = {
     cardHeader: {
