@@ -6,7 +6,7 @@ import { red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { fetchWorkouts, updateWorkout, deleteWorkout } from './WorkoutsActions'
-import { fetchWorkoutHistory, deleteWorkoutHistory } from './history/WorkoutsHistoryActions'
+import { fetchWorkoutHistory, deleteWorkoutHistory, updateWorkoutHistory } from './history/WorkoutsHistoryActions'
 import { setTitle, showSnackbar } from '../app/AppActions';
 
 import Spinner from '../shared/Spinner'
@@ -89,8 +89,20 @@ class Workout extends Component {
                 this.navigate('../');
                 resolve(response);
             }, error => {
-                this.props.showSnackbar('Error deleting Workout: ' + error);
+                this.props.showSnackbar('Error deleting Workout history: ' + error);
                 reject(error);
+            })
+        })
+    }
+
+    handleWorkoutHistoryChange= (workout) => {
+        return new Promise((resolve, reject) => {
+            this.props.updateWorkoutHistory(workout)
+            .then(response => {
+                this.props.showSnackbar('Updated Workout history for \'' + workout.routine.name + '\'.');
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error updating Workout history: ' + error);
             })
         })
     }
@@ -223,6 +235,7 @@ class Workout extends Component {
                         <WorkoutReportCard 
                             workout={workout} 
                             onDelete={this.handleWorkoutHistoryDelete}
+                            onChange={this.handleWorkoutHistoryChange}
                         />
         )
     }
@@ -239,6 +252,7 @@ const mapDispatchToProps = {
     deleteWorkout,
     fetchWorkoutHistory,
     deleteWorkoutHistory,
+    updateWorkoutHistory,
     showSnackbar,
     setTitle,
 }
