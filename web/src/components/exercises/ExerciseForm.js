@@ -85,7 +85,7 @@ const initialState = {
 }
 
 class ExerciseForm extends Component {
-    state = { ...initialState, exercise: { ...this.props.exercise }};
+    state = { ...initialState, exercise: this.props.exercise };
 
     timer;
 
@@ -107,7 +107,6 @@ class ExerciseForm extends Component {
 
     handleMetricChange = (event, value, metric) => {
         this.setState({ 
-            ...this.state, 
             exercise: { 
                 ...this.state.exercise,
                 metrics: this.state.exercise.metrics.map(m => {
@@ -135,8 +134,6 @@ class ExerciseForm extends Component {
         e.metrics.forEach(m => {
             delete m.value;
         });
-
-        this.setState({ exercise: e })
 
         return this.updateExercise(e, true);
     }
@@ -208,7 +205,7 @@ class ExerciseForm extends Component {
     componentWillReceiveProps = (newProps) => {
         let complete = this.state.exercise.startTime !== undefined && this.state.exercise.endTime !== undefined;
 
-        this.setState({ ...this.state, exercise: newProps.exercise }, () => {
+        this.setState({ exercise: newProps.exercise }, () => {
             if (!complete && this.state.exercise.startTime !== undefined && this.state.exercise.endTime !== undefined) {
                 this.props.onComplete();
             }
@@ -279,26 +276,26 @@ class ExerciseForm extends Component {
                         <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
                     </IconMenu>
                     <CardText style={styles.text}>
-                        {this.props.exercise.metrics ? 
-                            this.props.exercise.metrics.map((m, index) =>    
+                        {this.state.exercise.metrics ? 
+                            this.state.exercise.metrics.map((m, index) =>    
                                 <TextField
                                     key={index}
                                     hintText={this.getMetricDisplayName(m)}
-                                    defaultValue={m.value}
                                     errorText={this.state.validationErrors[m.name]}
                                     floatingLabelText={this.getMetricDisplayName(m)}
                                     onChange={(e,v) => this.handleMetricChange(e,v,m)}
-                                    disabled={this.props.exercise.endTime !== undefined || this.props.exercise.startTime === undefined}
+                                    value={m.value ? m.value : ''}
+                                    disabled={this.state.exercise.endTime !== undefined || this.state.exercise.startTime === undefined}
                                 />
                             ) : ''
                         }
                         <TextField
                             hintText={'Notes'}
                             floatingLabelText={'Notes'}
-                            defaultValue={this.props.exercise.notes}
                             multiLine={true}
                             onChange={this.handleNotesChange}
-                            disabled={this.props.exercise.endTime !== undefined  || this.props.exercise.startTime === undefined}
+                            value={this.state.exercise.notes ? this.state.exercise.notes : ''}
+                            disabled={this.state.exercise.endTime !== undefined || this.state.exercise.startTime === undefined}
                         />
                     </CardText>
                     {this.state.api.isExecuting ? <Spinner/> : ''}
@@ -306,12 +303,12 @@ class ExerciseForm extends Component {
                 <ExerciseHistoryDialog
                     open={this.state.historyDialog.open}
                     onClose={this.handleHistoryClose}
-                    exercise={this.props.exercise}
+                    exercise={this.state.exercise}
                 />
                 <ExerciseProgressDialog
                     open={this.state.progressDialog.open}
                     onClose={this.handleProgressClose}
-                    exercise={this.props.exercise}
+                    exercise={this.state.exercise}
                 />
                 <ConfirmDialog 
                     title={'Reset Exercise'}
