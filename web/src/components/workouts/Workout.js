@@ -95,7 +95,7 @@ class Workout extends Component {
         })
     }
 
-    handleWorkoutHistoryChange= (workout) => {
+    handleWorkoutHistoryChange = (workout) => {
         return new Promise((resolve, reject) => {
             this.props.updateWorkoutHistory(workout)
             .then(response => {
