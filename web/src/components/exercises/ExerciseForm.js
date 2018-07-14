@@ -20,7 +20,9 @@ import { getElapsedTime } from '../../util';
 
 import ExerciseHistoryDialog from './history/ExerciseHistoryDialog';
 import ExerciseProgressDialog from './history/ExerciseProgressDialog';
-import { AvPlayArrow, AvStop, AvFastRewind } from 'material-ui/svg-icons';
+import { AvPlayArrow, AvStop, AvFastRewind, AvReplay } from 'material-ui/svg-icons';
+import Divider from 'material-ui/Divider/Divider';
+import ConfirmDialog from '../shared/ConfirmDialog';
 
 const styles = {
     cardHeader: {
@@ -76,11 +78,14 @@ const initialState = {
     progressDialog: {
         open: false,
     },
+    resetDialog: {
+        open: false,
+    },
     validationErrors: {}
 }
 
 class ExerciseForm extends Component {
-    state = { ...initialState, exercise: { ...this.props.exercise }};
+    state = { ...initialState, exercise: this.props.exercise };
 
     timer;
 
@@ -102,7 +107,6 @@ class ExerciseForm extends Component {
 
     handleMetricChange = (event, value, metric) => {
         this.setState({ 
-            ...this.state, 
             exercise: { 
                 ...this.state.exercise,
                 metrics: this.state.exercise.metrics.map(m => {
@@ -114,6 +118,28 @@ class ExerciseForm extends Component {
                 [metric.name]: ''
             }
         });
+    }
+
+    handleResetClick = () => {
+        this.setState({ resetDialog: { open: true }});
+    }
+
+    handleResetConfirm = () => {
+        let e = { ...this.state.exercise };
+
+        delete e.startTime;
+        delete e.endTime;
+        delete e.notes;
+
+        e.metrics.forEach(m => {
+            delete m.value;
+        });
+
+        return this.updateExercise(e, true);
+    }
+
+    handleResetClose = (result) => {
+        this.setState({ resetDialog: { open: false }});
     }
 
     getValidationErrors = (state) => {
@@ -132,7 +158,7 @@ class ExerciseForm extends Component {
 
     handleActionClick = () => {
         if (!this.props.exercise.startTime) {
-            this.invokeOnChange({ ...this.state.exercise, startTime: new Date().getTime() });
+            this.updateExercise({ ...this.state.exercise, startTime: new Date().getTime() });
         }
         else if (!this.props.exercise.endTime) {
             this.setState({
@@ -140,26 +166,28 @@ class ExerciseForm extends Component {
                 validationErrors: this.getValidationErrors(this.state)
             }, () => {
                 if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                    this.invokeOnChange({ ...this.state.exercise, endTime: Date.now() })
+                    this.updateExercise({ ...this.state.exercise, endTime: Date.now() })
                 }
             })
         }
         else {
-            this.invokeOnChange({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined })
+            this.updateExercise({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined })
         }
     }
 
-    invokeOnChange = (exercise) => {
-        this.setState({ 
-            api: { ...this.state.api, isExecuting: true }
-        }, () =>
-            this.props.onChange(exercise)
-            .then(() => {
-                this.setState({ api: { ...this.state.api, isExecuting: false }})
-            }, error => {
-                this.setState({ api: { isExecuting: false, isErrored: true }})
-            })
-        )
+    updateExercise = (exercise, suppressApi = false) => {
+        return new Promise((resolve, reject) => {
+            this.setState({ 
+                api: !suppressApi ? { ...this.state.api, isExecuting: true } : this.state.api
+            }, () =>
+                this.props.onChange(exercise)
+                .then(() => {
+                    this.setState({ api: { ...this.state.api, isExecuting: false }}, () => resolve())
+                }, error => {
+                    this.setState({ api: { isExecuting: false, isErrored: true }}, () => reject())
+                })
+            )
+        })
     }
 
     getMetricDisplayName = (metric) => {
@@ -177,7 +205,7 @@ class ExerciseForm extends Component {
     componentWillReceiveProps = (newProps) => {
         let complete = this.state.exercise.startTime !== undefined && this.state.exercise.endTime !== undefined;
 
-        this.setState({ ...this.state, exercise: newProps.exercise }, () => {
+        this.setState({ exercise: newProps.exercise }, () => {
             if (!complete && this.state.exercise.startTime !== undefined && this.state.exercise.endTime !== undefined) {
                 this.props.onComplete();
             }
@@ -242,30 +270,32 @@ class ExerciseForm extends Component {
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
+                        <MenuItem primaryText="Reset" onClick={this.handleResetClick} leftIcon={<AvReplay/>}/>
+                        <Divider/>
                         <MenuItem primaryText="Progress" onClick={this.handleProgressClick} leftIcon={<ActionTrendingUp/>}/>
                         <MenuItem primaryText="History" onClick={this.handleHistoryClick} leftIcon={<ActionHistory/>}/>
                     </IconMenu>
                     <CardText style={styles.text}>
-                        {this.props.exercise.metrics ? 
-                            this.props.exercise.metrics.map((m, index) =>    
+                        {this.state.exercise.metrics ? 
+                            this.state.exercise.metrics.map((m, index) =>    
                                 <TextField
                                     key={index}
                                     hintText={this.getMetricDisplayName(m)}
-                                    defaultValue={m.value}
                                     errorText={this.state.validationErrors[m.name]}
                                     floatingLabelText={this.getMetricDisplayName(m)}
                                     onChange={(e,v) => this.handleMetricChange(e,v,m)}
-                                    disabled={this.props.exercise.endTime !== undefined || this.props.exercise.startTime === undefined}
+                                    value={m.value ? m.value : ''}
+                                    disabled={this.state.exercise.endTime !== undefined || this.state.exercise.startTime === undefined}
                                 />
                             ) : ''
                         }
                         <TextField
                             hintText={'Notes'}
                             floatingLabelText={'Notes'}
-                            defaultValue={this.props.exercise.notes}
                             multiLine={true}
                             onChange={this.handleNotesChange}
-                            disabled={this.props.exercise.endTime !== undefined  || this.props.exercise.startTime === undefined}
+                            value={this.state.exercise.notes ? this.state.exercise.notes : ''}
+                            disabled={this.state.exercise.endTime !== undefined || this.state.exercise.startTime === undefined}
                         />
                     </CardText>
                     {this.state.api.isExecuting ? <Spinner/> : ''}
@@ -273,13 +303,22 @@ class ExerciseForm extends Component {
                 <ExerciseHistoryDialog
                     open={this.state.historyDialog.open}
                     onClose={this.handleHistoryClose}
-                    exercise={this.props.exercise}
+                    exercise={this.state.exercise}
                 />
                 <ExerciseProgressDialog
                     open={this.state.progressDialog.open}
                     onClose={this.handleProgressClose}
-                    exercise={this.props.exercise}
+                    exercise={this.state.exercise}
                 />
+                <ConfirmDialog 
+                    title={'Reset Exercise'}
+                    buttonCaption={'Reset'}
+                    onConfirm={this.handleResetConfirm}
+                    onClose={this.handleResetClose}
+                    open={this.state.resetDialog.open} 
+                >
+                    Are you sure you want to reset Exercise '{this.state.exercise.name}'?
+                </ConfirmDialog>
             </div>
         )
     }
