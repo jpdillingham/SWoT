@@ -63,6 +63,10 @@ class WorkoutReportCard extends Component {
         }
     }
 
+    handleEditClick = () => {
+        
+    }
+
     render() {
         let color = this.props.workout.routine.color;
         color = !color || color === 0 ? red500 : color;
@@ -95,6 +99,7 @@ class WorkoutReportCard extends Component {
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
+                    <MenuItem primaryText="Edit" onClick={this.handleEditClick}/>
                     <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                 </IconMenu>
                 <CardText>
