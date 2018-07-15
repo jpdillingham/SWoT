@@ -12,6 +12,7 @@ import { setTitle, showSnackbar } from '../app/AppActions';
 import Spinner from '../shared/Spinner'
 import WorkoutCard from './WorkoutCard'
 import WorkoutReportCard from './report/WorkoutReportCard'
+import WorkoutEditorCard from './editor/WorkoutEditorCard';
 
 const initialState = {
     stepIndex: 0,
@@ -217,6 +218,9 @@ class Workout extends Component {
 
     render() {
         let workout = this.getWorkout(this.props);
+        let editMode = this.props.location.pathname.split('/')
+                        .map(s => s.toLowerCase())
+                        .indexOf('edit');
 
         return (
             this.state.api.isExecuting ? <Spinner size={48}/> : 
@@ -232,11 +236,17 @@ class Workout extends Component {
                             onComplete={this.handleWorkoutComplete}
                             onStart={this.handleWorkoutStart}
                         /> :
-                        <WorkoutReportCard 
-                            workout={workout} 
-                            onDelete={this.handleWorkoutHistoryDelete}
-                            onChange={this.handleWorkoutHistoryChange}
-                        />
+                        editMode ? 
+                            <WorkoutEditorCard
+                                workout={workout} 
+                                onDelete={this.handleWorkoutHistoryDelete}
+                                onChange={this.handleWorkoutHistoryChange}
+                            /> :
+                            <WorkoutReportCard 
+                                workout={workout} 
+                                onDelete={this.handleWorkoutHistoryDelete}
+                                onChange={this.handleWorkoutHistoryChange}
+                            />
         )
     }
 }
