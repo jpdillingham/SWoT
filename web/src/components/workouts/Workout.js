@@ -217,7 +217,12 @@ class Workout extends Component {
     }
 
     handleNavigateToWorkoutEdit = () => {
-        this.navigate(this.props.location.pathname + '/edit')
+        this.setState({ api: { isExecuting: true }}, () => {
+            this.navigate(this.props.location.pathname + '/edit')
+            window.setTimeout(() => {
+                this.setState({ api: { isExecuting: false }}) 
+            }, 250)
+        })
     }
 
     render() {
