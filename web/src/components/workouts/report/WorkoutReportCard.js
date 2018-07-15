@@ -64,7 +64,7 @@ class WorkoutReportCard extends Component {
     }
 
     handleEditClick = () => {
-        this.props.onChange({ ...this.props.workout, notes: 'aaaaaa'})
+        this.props.onChange({ ...this.props.workout, notes: this.props.workout.notes + 'aaaa'})
     }
 
     render() {
