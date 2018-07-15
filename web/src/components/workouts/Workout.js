@@ -221,7 +221,7 @@ class Workout extends Component {
             this.navigate(this.props.location.pathname + '/edit')
             window.setTimeout(() => {
                 this.setState({ api: { isExecuting: false }}) 
-            }, 250)
+            }, 500)
         })
     }
 
