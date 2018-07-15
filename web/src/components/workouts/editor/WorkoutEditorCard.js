@@ -68,7 +68,6 @@ class WorkoutEditorCard extends Component {
     }
 
     render() {
-        console.log(this.props); 
         let color = this.props.workout.routine.color;
         color = !color || color === 0 ? red500 : color;
         let fontColor = fontContrastColor(color);
@@ -79,7 +78,7 @@ class WorkoutEditorCard extends Component {
                 <CardHeader                        
                     titleStyle={{ ...styles.cardTitle, color: fontColor }}
                     style={{ ...styles.cardHeader, backgroundColor: color }}
-                    title={this.props.workout.routine.name}
+                    title={'Editing ' + this.props.workout.routine.name}
                     subtitle={
                         'Completed ' + moment(this.props.workout.endTime).calendar()
                     }
