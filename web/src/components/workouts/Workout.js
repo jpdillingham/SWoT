@@ -216,6 +216,10 @@ class Workout extends Component {
         })
     }
 
+    handleNavigateToWorkoutEdit = () => {
+        this.navigate(this.props.location.pathname + '/edit')
+    }
+
     render() {
         let workout = this.getWorkout(this.props);
         let editMode = this.props.location.pathname.split('/')
@@ -245,6 +249,7 @@ class Workout extends Component {
                             <WorkoutReportCard 
                                 workout={workout} 
                                 onDelete={this.handleWorkoutHistoryDelete}
+                                onEditClick={this.handleNavigateToWorkoutEdit}
                             />
         )
     }

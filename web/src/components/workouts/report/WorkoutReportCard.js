@@ -65,11 +65,7 @@ class WorkoutReportCard extends Component {
     }
 
     handleEditClick = () => {
-        this.navigate(this.props.location.pathname + '/edit');
-    }
-
-    navigate = (url) => {
-        this.props.history.push(url);
+        this.props.onEditClick();
     }
 
     render() {
