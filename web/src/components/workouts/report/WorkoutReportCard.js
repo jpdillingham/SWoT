@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
-import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ActionSpeakerNotes } from 'material-ui/svg-icons';
+import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ActionSpeakerNotes, ContentCreate } from 'material-ui/svg-icons';
 import { black, red500 } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
@@ -79,65 +79,63 @@ class WorkoutReportCard extends Component {
 
         return (
             <div>
-            <Card zDepth={2} style={ styles.card }>
-                <CardHeader                        
-                    titleStyle={{ ...styles.cardTitle, color: fontColor }}
-                    style={{ ...styles.cardHeader, backgroundColor: color }}
-                    title={this.props.workout.routine.name}
-                    subtitle={
-                        'Completed ' + moment(this.props.workout.endTime).calendar()
-                    }
-                    subtitleStyle={{ color: fontColor }}
-                    avatar={
-                        <Avatar 
-                            backgroundColor={color} 
-                            size={40} 
-                            color={fontColor}
-                            icon={<ActionAssignmentTurnedIn/>} 
-                        />
-                    }
+                <Card zDepth={2} style={ styles.card }>
+                    <CardHeader                        
+                        titleStyle={{ ...styles.cardTitle, color: fontColor }}
+                        style={{ ...styles.cardHeader, backgroundColor: color }}
+                        title={this.props.workout.routine.name}
+                        subtitle={
+                            'Completed ' + moment(this.props.workout.endTime).calendar()
+                        }
+                        subtitleStyle={{ color: fontColor }}
+                        avatar={
+                            <Avatar 
+                                backgroundColor={color} 
+                                size={40} 
+                                color={fontColor}
+                                icon={<ActionAssignmentTurnedIn/>} 
+                            />
+                        }
+                    />
+                    <IconMenu
+                        style={styles.iconMenu}
+                        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                    >
+                        <MenuItem primaryText="Edit" onClick={this.handleEditClick} leftIcon={<ContentCreate/>}/>
+                        <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
+                    </IconMenu>
+                    <CardText>
+                        {this.props.workout.routine.exercises.map((e, index) => 
+                            <ExerciseReportCard key={index} exercise={e}/>
+                        )}
+                        <List>
+                            <LeftRightListItem
+                                leftIcon={<ActionWatchLater color={black}/>}
+                                leftText={'Duration'}
+                                rightText={getElapsedTime(this.props.workout.startTime, this.props.workout.endTime)}
+                            />
+                            <ToggledLeftRightListItem
+                                leftIcon={<ActionSpeakerNotes color={black}/>}
+                                leftText={'Notes'}
+                                defaultToggleOpen={true}
+                            >
+                                {!this.props.workout.notes ? '' : <p>{this.props.workout.notes}</p>}
+                            </ToggledLeftRightListItem>
+                        </List>
+                    </CardText>
+                </Card>
+                <ConfirmDialog 
+                    title={'Delete Workout History'}
+                    buttonCaption={'Delete'}
+                    onConfirm={this.props.onDelete}
+                    onClose={this.handleDeleteDialogClose}
+                    open={this.state.deleteDialog.open} 
                 >
-                </CardHeader>
-                <IconMenu
-                    style={styles.iconMenu}
-                    iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
-                    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                >
-                    <MenuItem primaryText="Edit" onClick={this.handleEditClick}/>
-                    <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
-                </IconMenu>
-                <CardText>
-                    {this.props.workout.routine.exercises.map((e, index) => 
-                        <ExerciseReportCard key={index} exercise={e}/>
-                    )}
-                    <List>
-                        <LeftRightListItem
-                            leftIcon={<ActionWatchLater color={black}/>}
-                            leftText={'Duration'}
-                            rightText={getElapsedTime(this.props.workout.startTime, this.props.workout.endTime)}
-                        />
-                        <ToggledLeftRightListItem
-                            leftIcon={<ActionSpeakerNotes color={black}/>}
-                            leftText={'Notes'}
-                            defaultToggleOpen={true}
-                        >
-                            {!this.props.workout.notes ? '' : <p>{this.props.workout.notes}</p>}
-                        </ToggledLeftRightListItem>
-                    </List>
-                </CardText>
-            </Card>
-            <ConfirmDialog 
-                title={'Delete Workout History'}
-                buttonCaption={'Delete'}
-                onConfirm={this.props.onDelete}
-                onClose={this.handleDeleteDialogClose}
-                open={this.state.deleteDialog.open} 
-            >
-                Are you sure you want to delete the history for Workout '{this.props.workout.routine.name}'?
-            </ConfirmDialog>
-        </div>
-
+                    Are you sure you want to delete the history for Workout '{this.props.workout.routine.name}'?
+                </ConfirmDialog>
+            </div>
         )
     }
 }
