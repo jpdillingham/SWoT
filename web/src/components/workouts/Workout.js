@@ -245,7 +245,6 @@ class Workout extends Component {
                             <WorkoutReportCard 
                                 workout={workout} 
                                 onDelete={this.handleWorkoutHistoryDelete}
-                                onChange={this.handleWorkoutHistoryChange}
                             />
         )
     }
