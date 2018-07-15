@@ -112,6 +112,7 @@ class App extends Component {
                                 <Route path='/workouts/calendar' component={WorkoutsCalendar}/>
                                 <Route path="/workouts/history/:id" component={WorkoutsHistory}/>
                                 <Route path="/workouts/:id" component={Workout}/>
+                                <Route path="/workouts/:id/edit" component={Workout}/>
                                 <Route exact path="/exercises" component={Exercises}/>
                                 <Route exact path="/exercises/progress" component={ExerciseProgress}/>
                                 <Route path='/exercises/progress/:id' component={ExerciseProgress}/>
