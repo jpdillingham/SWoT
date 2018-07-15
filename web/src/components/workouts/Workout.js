@@ -220,7 +220,7 @@ class Workout extends Component {
         let workout = this.getWorkout(this.props);
         let editMode = this.props.location.pathname.split('/')
                         .map(s => s.toLowerCase())
-                        .indexOf('edit');
+                        .indexOf('edit') > 0;
 
         return (
             this.state.api.isExecuting ? <Spinner size={48}/> : 
