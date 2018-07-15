@@ -53,7 +53,7 @@ router.put('/history/:id', (req, res) => {
             database.put(userId, workout)
             .then(response => {
                 res.status(200);
-                res.json();
+                res.json(workout);
             }, error => {
                 res.status(500);
                 res.json(error);
