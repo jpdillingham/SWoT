@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
@@ -64,7 +65,11 @@ class WorkoutReportCard extends Component {
     }
 
     handleEditClick = () => {
-        this.props.onChange({ ...this.props.workout, notes: this.props.workout.notes + 'aaaa'})
+        this.navigate(this.props.location.pathname + '/edit');
+    }
+
+    navigate = (url) => {
+        this.props.history.push(url);
     }
 
     render() {
@@ -137,4 +142,4 @@ class WorkoutReportCard extends Component {
     }
 }
 
-export default WorkoutReportCard
+export default withRouter(WorkoutReportCard)
