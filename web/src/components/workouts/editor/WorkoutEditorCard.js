@@ -20,6 +20,9 @@ import { fontContrastColor } from '../../../util'
 import ExerciseReportCard from '../../exercises/ExerciseReportCard'
 import LeftRightListItem from '../../shared/LeftRightListItem';
 import ToggledLeftRightListItem from '../../shared/ToggledLeftRightListItem';
+import CardActions from 'material-ui/Card/CardActions';
+import FlatButton from 'material-ui/FlatButton';
+import Divider from 'material-ui/Divider';
 
 const styles = {
     cardHeader: {
@@ -41,7 +44,7 @@ const styles = {
     },
     notes: {
         marginLeft: 20
-    },
+    }
 }
 
 const initialState = {
@@ -61,10 +64,6 @@ class WorkoutEditorCard extends Component {
         if (result.cancelled) { 
             this.setState({ deleteDialog: { open: false }})
         }
-    }
-
-    handleEditClick = () => {
-        this.props.onChange({ ...this.props.workout, notes: this.props.workout.notes + 'aaaa'})
     }
 
     render() {
@@ -99,7 +98,6 @@ class WorkoutEditorCard extends Component {
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                    <MenuItem primaryText="Edit" onClick={this.handleEditClick}/>
                     <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                 </IconMenu>
                 <CardText>
@@ -121,6 +119,11 @@ class WorkoutEditorCard extends Component {
                         </ToggledLeftRightListItem>
                     </List>
                 </CardText>
+                <Divider/>
+                <CardActions>
+                    <FlatButton label="Cancel"/>
+                    <FlatButton label="Save"/>
+                </CardActions>
             </Card>
             <ConfirmDialog 
                 title={'Delete Workout History'}
