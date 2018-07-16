@@ -6,12 +6,13 @@ import { red500 } from 'material-ui/styles/colors'
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
 
 import { fetchWorkouts, updateWorkout, deleteWorkout } from './WorkoutsActions'
-import { fetchWorkoutHistory, deleteWorkoutHistory } from './history/WorkoutsHistoryActions'
+import { fetchWorkoutHistory, deleteWorkoutHistory, updateWorkoutHistory } from './history/WorkoutsHistoryActions'
 import { setTitle, showSnackbar } from '../app/AppActions';
 
 import Spinner from '../shared/Spinner'
 import WorkoutCard from './WorkoutCard'
-import WorkoutReportCard from './WorkoutReportCard'
+import WorkoutReportCard from './report/WorkoutReportCard'
+import WorkoutEditorCard from './editor/WorkoutEditorCard';
 
 const initialState = {
     stepIndex: 0,
@@ -89,8 +90,20 @@ class Workout extends Component {
                 this.navigate('../');
                 resolve(response);
             }, error => {
-                this.props.showSnackbar('Error deleting Workout: ' + error);
+                this.props.showSnackbar('Error deleting Workout history: ' + error);
                 reject(error);
+            })
+        })
+    }
+
+    handleWorkoutHistoryChange = (workout) => {
+        return new Promise((resolve, reject) => {
+            this.props.updateWorkoutHistory(workout)
+            .then(response => {
+                this.props.showSnackbar('Updated Workout history for \'' + workout.routine.name + '\'.');
+                resolve(response);
+            }, error => {
+                this.props.showSnackbar('Error updating Workout history: ' + error);
             })
         })
     }
@@ -203,8 +216,20 @@ class Workout extends Component {
         })
     }
 
+    handleNavigateToWorkoutEdit = () => {
+        this.setState({ api: { isExecuting: true }}, () => {
+            this.navigate(this.props.location.pathname + '/edit')
+            window.setTimeout(() => {
+                this.setState({ api: { isExecuting: false }}) 
+            }, 500)
+        })
+    }
+
     render() {
         let workout = this.getWorkout(this.props);
+        let editMode = this.props.location.pathname.split('/')
+                        .map(s => s.toLowerCase())
+                        .indexOf('edit') > 0;
 
         return (
             this.state.api.isExecuting ? <Spinner size={48}/> : 
@@ -220,10 +245,17 @@ class Workout extends Component {
                             onComplete={this.handleWorkoutComplete}
                             onStart={this.handleWorkoutStart}
                         /> :
-                        <WorkoutReportCard 
-                            workout={workout} 
-                            onDelete={this.handleWorkoutHistoryDelete}
-                        />
+                        editMode ? 
+                            <WorkoutEditorCard
+                                workout={workout} 
+                                onDelete={this.handleWorkoutHistoryDelete}
+                                onChange={this.handleWorkoutHistoryChange}
+                            /> :
+                            <WorkoutReportCard 
+                                workout={workout} 
+                                onDelete={this.handleWorkoutHistoryDelete}
+                                onEditClick={this.handleNavigateToWorkoutEdit}
+                            />
         )
     }
 }
@@ -239,6 +271,7 @@ const mapDispatchToProps = {
     deleteWorkout,
     fetchWorkoutHistory,
     deleteWorkoutHistory,
+    updateWorkoutHistory,
     showSnackbar,
     setTitle,
 }

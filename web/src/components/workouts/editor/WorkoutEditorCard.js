@@ -11,15 +11,18 @@ import List from 'material-ui/List'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
-import ConfirmDialog from '../shared/ConfirmDialog'
+import ConfirmDialog from '../../shared/ConfirmDialog'
 
-import { getElapsedTime } from '../../util'
-import { WORKOUT_AVATAR_COLOR } from '../../constants'
-import { fontContrastColor } from '../../util'
+import { getElapsedTime } from '../../../util'
+import { WORKOUT_AVATAR_COLOR } from '../../../constants'
+import { fontContrastColor } from '../../../util'
 
-import ExerciseReportCard from '../exercises/ExerciseReportCard'
-import LeftRightListItem from '../shared/LeftRightListItem';
-import ToggledLeftRightListItem from '../shared/ToggledLeftRightListItem';
+import ExerciseReportCard from '../../exercises/ExerciseReportCard'
+import LeftRightListItem from '../../shared/LeftRightListItem';
+import ToggledLeftRightListItem from '../../shared/ToggledLeftRightListItem';
+import CardActions from 'material-ui/Card/CardActions';
+import FlatButton from 'material-ui/FlatButton';
+import Divider from 'material-ui/Divider';
 
 const styles = {
     cardHeader: {
@@ -41,7 +44,7 @@ const styles = {
     },
     notes: {
         marginLeft: 20
-    },
+    }
 }
 
 const initialState = {
@@ -50,7 +53,7 @@ const initialState = {
     },
 }
 
-class WorkoutReportCard extends Component {
+class WorkoutEditorCard extends Component {
     state = initialState;
 
     handleDeleteClick = () => {
@@ -74,7 +77,7 @@ class WorkoutReportCard extends Component {
                 <CardHeader                        
                     titleStyle={{ ...styles.cardTitle, color: fontColor }}
                     style={{ ...styles.cardHeader, backgroundColor: color }}
-                    title={this.props.workout.routine.name}
+                    title={'Editing ' + this.props.workout.routine.name}
                     subtitle={
                         'Completed ' + moment(this.props.workout.endTime).calendar()
                     }
@@ -116,6 +119,11 @@ class WorkoutReportCard extends Component {
                         </ToggledLeftRightListItem>
                     </List>
                 </CardText>
+                <Divider/>
+                <CardActions>
+                    <FlatButton label="Cancel"/>
+                    <FlatButton label="Save"/>
+                </CardActions>
             </Card>
             <ConfirmDialog 
                 title={'Delete Workout History'}
@@ -132,4 +140,4 @@ class WorkoutReportCard extends Component {
     }
 }
 
-export default WorkoutReportCard
+export default WorkoutEditorCard
