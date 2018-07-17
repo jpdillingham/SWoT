@@ -55,6 +55,9 @@ const styles = {
         position: 'absolute',
         zIndex: 1000,
     },
+    actions: {
+        textAlign: 'right',
+    },
 }
 
 const initialState = {
@@ -143,7 +146,7 @@ class WorkoutEditorCard extends Component {
                     </List>
                 </CardText>
                 <Divider/>
-                <CardActions>
+                <CardActions style={styles.actions}>
                     <FlatButton label="Cancel"/>
                     <FlatButton label="Save"/>
                 </CardActions>
