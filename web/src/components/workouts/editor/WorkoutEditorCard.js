@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
-import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ActionSpeakerNotes } from 'material-ui/svg-icons';
+import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ActionSpeakerNotes, ContentSave } from 'material-ui/svg-icons';
 import { black, red500 } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
@@ -23,6 +23,7 @@ import ToggledLeftRightListItem from '../../shared/ToggledLeftRightListItem';
 import CardActions from 'material-ui/Card/CardActions';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 
 const styles = {
     cardHeader: {
@@ -44,7 +45,16 @@ const styles = {
     },
     notes: {
         marginLeft: 20
-    }
+    },
+    fab: {
+        margin: 0,
+        top: 47,
+        right: 40,
+        bottom: 'auto',
+        left: 'auto',
+        position: 'absolute',
+        zIndex: 1000,
+    },
 }
 
 const initialState = {
@@ -64,6 +74,10 @@ class WorkoutEditorCard extends Component {
         if (result.cancelled) { 
             this.setState({ deleteDialog: { open: false }})
         }
+    }
+
+    handleSaveClick = () => {
+
     }
 
     render() {
@@ -91,6 +105,15 @@ class WorkoutEditorCard extends Component {
                         />
                     }
                 >
+                    <FloatingActionButton 
+                        secondary={false} 
+                        zDepth={2} 
+                        style={styles.fab}
+                        mini={true}
+                        onClick={this.handleSaveClick}
+                    >
+                        <ContentSave />
+                    </FloatingActionButton>
                 </CardHeader>
                 <IconMenu
                     style={styles.iconMenu}
