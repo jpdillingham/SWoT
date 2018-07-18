@@ -89,6 +89,10 @@ class WorkoutEditorCard extends Component {
         }
     }
 
+    handlePropertyChange = (property, value) => {
+        this.setState({ workout: { ...this.state.workout, [property]: value }}, () => console.log('Update state:', this.state.workout));
+    }
+
     handleSaveClick = () => {
 
     }
