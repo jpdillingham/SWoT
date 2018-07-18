@@ -17,7 +17,7 @@ import { getElapsedTime } from '../../../util'
 import { WORKOUT_AVATAR_COLOR } from '../../../constants'
 import { fontContrastColor } from '../../../util'
 
-import ExerciseReportCard from '../../exercises/ExerciseReportCard'
+import ExerciseEditorCard from '../../exercises/editor/ExerciseEditorCard'
 import LeftRightListItem from '../../shared/LeftRightListItem';
 import ToggledLeftRightListItem from '../../shared/ToggledLeftRightListItem';
 import CardActions from 'material-ui/Card/CardActions';
@@ -128,7 +128,7 @@ class WorkoutEditorCard extends Component {
                 </IconMenu>
                 <CardText>
                     {this.props.workout.routine.exercises.map((e, index) => 
-                        <ExerciseReportCard key={index} exercise={e}/>
+                        <ExerciseEditorCard key={index} exercise={e}/>
                     )}
                     <List>
                         <LeftRightListItem
