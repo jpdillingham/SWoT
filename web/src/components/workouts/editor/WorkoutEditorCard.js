@@ -94,7 +94,7 @@ class WorkoutEditorCard extends Component {
     }
 
     handleSaveClick = () => {
-
+        this.props.onChange(this.state.workout);
     }
 
     render() {
