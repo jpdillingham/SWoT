@@ -71,6 +71,14 @@ const initialState = {
 class WorkoutEditorCard extends Component {
     state = initialState;
 
+    componentWillMount = () => {
+        this.setState({ workout: this.props.workout });
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        this.setState({ workout: nextProps.workout });
+    }
+
     handleDeleteClick = () => {
         this.setState({ deleteDialog: { open: true }})
     }
@@ -89,6 +97,8 @@ class WorkoutEditorCard extends Component {
         let color = this.props.workout.routine.color;
         color = !color || color === 0 ? red500 : color;
         let fontColor = fontContrastColor(color);
+
+        let workout = this.state.workout;
 
         return (
             <div>
@@ -151,7 +161,7 @@ class WorkoutEditorCard extends Component {
                         floatingLabelText={'Notes'}
                         multiLine={true}
                         onChange={this.handleNotesChange}
-                        value={this.state.notes ? this.state.notes : ''}
+                        value={workout.notes ? workout.notes : ''}
                     />
                 </CardText>
                 <Divider/>
