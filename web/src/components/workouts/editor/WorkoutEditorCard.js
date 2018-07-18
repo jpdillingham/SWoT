@@ -24,6 +24,7 @@ import CardActions from 'material-ui/Card/CardActions';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
+import TextField from 'material-ui/TextField';
 
 const styles = {
     cardHeader: {
@@ -64,6 +65,7 @@ const initialState = {
     deleteDialog: {
         open: false,
     },
+    workout: undefined,
 }
 
 class WorkoutEditorCard extends Component {
@@ -144,6 +146,13 @@ class WorkoutEditorCard extends Component {
                             {!this.props.workout.notes ? '' : <p>{this.props.workout.notes}</p>}
                         </ToggledLeftRightListItem>
                     </List>
+                    <TextField
+                        hintText={'Notes'}
+                        floatingLabelText={'Notes'}
+                        multiLine={true}
+                        onChange={this.handleNotesChange}
+                        value={this.state.notes ? this.state.notes : ''}
+                    />
                 </CardText>
                 <Divider/>
                 <CardActions style={styles.actions}>
