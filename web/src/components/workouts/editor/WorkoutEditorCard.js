@@ -157,14 +157,14 @@ class WorkoutEditorCard extends Component {
                             leftText={'Notes'}
                             defaultToggleOpen={true}
                         >
-                            {!this.props.workout.notes ? '' : <p>{this.props.workout.notes}</p>}
+                            {!workout.notes ? '' : <p>{workout.notes}</p>}
                         </ToggledLeftRightListItem>
                     </List>
                     <TextField
                         hintText={'Notes'}
                         floatingLabelText={'Notes'}
                         multiLine={true}
-                        onChange={this.handleNotesChange}
+                        onChange={(event, newValue) => this.handlePropertyChange('notes', newValue)}
                         value={workout.notes ? workout.notes : ''}
                     />
                 </CardText>
