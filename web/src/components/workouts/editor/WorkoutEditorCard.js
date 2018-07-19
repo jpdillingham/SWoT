@@ -25,6 +25,8 @@ import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
+import DatePicker from 'material-ui/DatePicker';
+import TimePicker from 'material-ui/TimePicker';
 
 const styles = {
     cardHeader: {
@@ -150,9 +152,21 @@ class WorkoutEditorCard extends Component {
                         <LeftRightListItem
                             leftIcon={<ActionWatchLater color={black}/>}
                             leftText={'Duration'}
-                            rightText={getElapsedTime(this.props.workout.startTime, this.props.workout.endTime)}
+                            rightText={getElapsedTime(workout.startTime, workout.endTime)}
                         />
                     </List>
+                    <TextField
+                        hintText={'Start Time'}
+                        floatingLabelText={'Start Time'}
+                        onChange={(event, newValue) => this.handlePropertyChange('startTime', parseInt(newValue))}
+                        value={workout.startTime ? workout.startTime : ''}
+                    /><br/>
+                    <TextField
+                        hintText={'End Time'}
+                        floatingLabelText={'End Time'}
+                        onChange={(event, newValue) => this.handlePropertyChange('endTime', parseInt(newValue))}
+                        value={workout.endTime ? workout.endTime : ''}
+                    /><br/>
                     <TextField
                         hintText={'Notes'}
                         floatingLabelText={'Notes'}
