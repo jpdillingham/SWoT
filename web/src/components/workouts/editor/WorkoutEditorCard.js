@@ -152,13 +152,6 @@ class WorkoutEditorCard extends Component {
                             leftText={'Duration'}
                             rightText={getElapsedTime(this.props.workout.startTime, this.props.workout.endTime)}
                         />
-                        <ToggledLeftRightListItem
-                            leftIcon={<ActionSpeakerNotes color={black}/>}
-                            leftText={'Notes'}
-                            defaultToggleOpen={true}
-                        >
-                            {!workout.notes ? '' : <p>{workout.notes}</p>}
-                        </ToggledLeftRightListItem>
                     </List>
                     <TextField
                         hintText={'Notes'}
