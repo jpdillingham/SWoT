@@ -168,7 +168,6 @@ class WorkoutEditorCard extends Component {
                         value={workout.notes ? workout.notes : ''}
                     />
                 </CardText>
-                <Divider/>
                 <CardActions style={styles.actions}>
                     <FlatButton label="Cancel"/>
                     <FlatButton label="Save"/>
