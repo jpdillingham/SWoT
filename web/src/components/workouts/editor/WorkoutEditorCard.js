@@ -19,14 +19,10 @@ import { fontContrastColor } from '../../../util'
 
 import ExerciseEditorCard from '../../exercises/editor/ExerciseEditorCard'
 import LeftRightListItem from '../../shared/LeftRightListItem';
-import ToggledLeftRightListItem from '../../shared/ToggledLeftRightListItem';
 import CardActions from 'material-ui/Card/CardActions';
 import FlatButton from 'material-ui/FlatButton';
-import Divider from 'material-ui/Divider';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker';
-import TimePicker from 'material-ui/TimePicker';
 
 const styles = {
     cardHeader: {
