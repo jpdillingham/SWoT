@@ -93,10 +93,9 @@ class WorkoutEditorCard extends Component {
     }
 
     handleTimePropertyChange = (property, stringValue) => {
-        console.log(stringValue);
         let value = parseInt((new Date(stringValue).getTime()).toFixed(0), 10);
-        this.setState({ workout: { ...this.state.workout, [property]: value }}, () => console.log('Update state:', this.state.workout));
-        
+
+        this.setState({ workout: { ...this.state.workout, [property]: value }}, () => console.log('Update state:', this.state.workout));       
     }
 
     handleSaveClick = () => {
@@ -153,18 +152,21 @@ class WorkoutEditorCard extends Component {
                         <ExerciseEditorCard key={index} exercise={e}/>
                     )}
                     <TextField
+                        style={styles.field}
                         hintText={'Start Time'}
                         floatingLabelText={'Start Time'}
                         onChange={(event, newValue) => this.handleTimePropertyChange('startTime', newValue)}
-                        value={workout.startTime ? new Date(workout.startTime) : ''}
+                        value={workout.startTime ? new Date(workout.startTime).toString().split(' ').slice(0, 6).join(' ') : ''}
                     /><br/>
                     <TextField
+                        style={styles.field}
                         hintText={'End Time'}
                         floatingLabelText={'End Time'}
                         onChange={(event, newValue) => this.handleTimePropertyChange('endTime', newValue)}
                         value={workout.endTime ? new Date(workout.endTime).toString().split(' ').slice(0, 6).join(' ') : ''}
                     /><br/>
                     <TextField
+                        style={styles.field}
                         hintText={'Duration'}
                         floatingLabelText={'Duration'}
                         value={getElapsedTime(workout.startTime, workout.endTime)}
