@@ -144,13 +144,6 @@ class WorkoutEditorCard extends Component {
                     {this.props.workout.routine.exercises.map((e, index) => 
                         <ExerciseEditorCard key={index} exercise={e}/>
                     )}
-                    <List>
-                        <LeftRightListItem
-                            leftIcon={<ActionWatchLater color={black}/>}
-                            leftText={'Duration'}
-                            rightText={getElapsedTime(workout.startTime, workout.endTime)}
-                        />
-                    </List>
                     <TextField
                         hintText={'Start Time'}
                         floatingLabelText={'Start Time'}
@@ -162,6 +155,12 @@ class WorkoutEditorCard extends Component {
                         floatingLabelText={'End Time'}
                         onChange={(event, newValue) => this.handlePropertyChange('endTime', parseInt(newValue, 10))}
                         value={workout.endTime ? workout.endTime : ''}
+                    /><br/>
+                    <TextField
+                        hintText={'Duration'}
+                        floatingLabelText={'Duration'}
+                        value={getElapsedTime(workout.startTime, workout.endTime)}
+                        disabled={true}
                     /><br/>
                     <TextField
                         hintText={'Notes'}
