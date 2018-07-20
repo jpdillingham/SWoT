@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
-import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ContentSave } from 'material-ui/svg-icons';
-import { black, red500 } from 'material-ui/styles/colors'
+import { ActionAssignmentTurnedIn, ActionDelete, ContentSave } from 'material-ui/svg-icons';
+import { red500 } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
-import List from 'material-ui/List'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
@@ -18,7 +17,6 @@ import { WORKOUT_AVATAR_COLOR } from '../../../constants'
 import { fontContrastColor } from '../../../util'
 
 import ExerciseEditorCard from '../../exercises/editor/ExerciseEditorCard'
-import LeftRightListItem from '../../shared/LeftRightListItem';
 import CardActions from 'material-ui/Card/CardActions';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
