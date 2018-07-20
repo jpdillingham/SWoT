@@ -89,6 +89,10 @@ class WorkoutEditorCard extends Component {
         this.setState({ workout: { ...this.state.workout, [property]: value }}, () => console.log('Update state:', this.state.workout));
     }
 
+    handleTimePropertyChange = (property, stringValue) => {
+
+    }
+
     handleSaveClick = () => {
         this.props.onChange(this.state.workout);
     }
@@ -146,13 +150,13 @@ class WorkoutEditorCard extends Component {
                         hintText={'Start Time'}
                         floatingLabelText={'Start Time'}
                         onChange={(event, newValue) => this.handlePropertyChange('startTime', parseInt(newValue, 10))}
-                        value={workout.startTime ? workout.startTime : ''}
+                        value={workout.startTime ? new Date(workout.startTime) : ''}
                     /><br/>
                     <TextField
                         hintText={'End Time'}
                         floatingLabelText={'End Time'}
                         onChange={(event, newValue) => this.handlePropertyChange('endTime', parseInt(newValue, 10))}
-                        value={workout.endTime ? workout.endTime : ''}
+                        value={workout.endTime ? new Date(workout.endTime) : ''}
                     /><br/>
                     <TextField
                         hintText={'Duration'}
