@@ -154,13 +154,13 @@ class WorkoutEditorCard extends Component {
                     <TextField
                         hintText={'Start Time'}
                         floatingLabelText={'Start Time'}
-                        onChange={(event, newValue) => this.handlePropertyChange('startTime', parseInt(newValue))}
+                        onChange={(event, newValue) => this.handlePropertyChange('startTime', parseInt(newValue, 10))}
                         value={workout.startTime ? workout.startTime : ''}
                     /><br/>
                     <TextField
                         hintText={'End Time'}
                         floatingLabelText={'End Time'}
-                        onChange={(event, newValue) => this.handlePropertyChange('endTime', parseInt(newValue))}
+                        onChange={(event, newValue) => this.handlePropertyChange('endTime', parseInt(newValue, 10))}
                         value={workout.endTime ? workout.endTime : ''}
                     /><br/>
                     <TextField
