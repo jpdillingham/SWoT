@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
-import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ActionSpeakerNotes, ContentSave } from 'material-ui/svg-icons';
+import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ContentSave } from 'material-ui/svg-icons';
 import { black, red500 } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
