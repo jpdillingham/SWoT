@@ -46,7 +46,10 @@ class ExerciseEditorCard extends Component {
     }
 
     handleMetricChange = (metric, value) => {
-        console.log(metric, value);
+        let m = this.props.exercise.metrics
+            .map(m => m.name === metric.name ? { ...m, value: value } : m);
+
+        this.handlePropertyChange('metrics', m);
     }
 
     handlePropertyChange = (property, value) => {
