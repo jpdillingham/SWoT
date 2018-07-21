@@ -45,6 +45,12 @@ class ExerciseEditorCard extends Component {
         return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
     }
 
+    handleTimePropertyChange = (property, stringValue) => {
+        let value = parseInt((new Date(stringValue).getTime()).toFixed(0), 10);
+        let e = { ...this.props.exercise, [property]: value };
+        this.props.onChange(e);
+    }
+
     render() {
         let exerciseImage = this.props.exercise.type;
         if (EXERCISE_TYPES.indexOf(exerciseImage) === -1) { 
