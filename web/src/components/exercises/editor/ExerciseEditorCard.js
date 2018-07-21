@@ -34,7 +34,10 @@ const styles = {
     },
     notes: {
         marginLeft: 20
-    }
+    },
+    field: {
+        width: '100%',
+    },
 }
 
 class ExerciseEditorCard extends Component {
@@ -79,6 +82,7 @@ class ExerciseEditorCard extends Component {
                             {this.props.exercise.metrics ? 
                                 this.props.exercise.metrics.map((m, index) =>    
                                     <TextField
+                                        style={styles.field}
                                         key={index}
                                         hintText={this.getMetricDisplayName(m)}
                                         floatingLabelText={this.getMetricDisplayName(m)}
@@ -102,6 +106,7 @@ class ExerciseEditorCard extends Component {
                                 value={this.props.exercise.endTime ? new Date(this.props.exercise.endTime).toString().split(' ').slice(0, 6).join(' ') : ''}
                             /><br/>
                             <TextField
+                                style={styles.field}
                                 hintText={'Duration'}
                                 floatingLabelText={'Duration'}
                                 value={getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime)}
@@ -109,6 +114,7 @@ class ExerciseEditorCard extends Component {
                             />
                             {!this.props.exercise.notes ? '' :
                                 <TextField
+                                    style={styles.field}
                                     hintText={'Notes'}
                                     floatingLabelText={'Notes'}
                                     multiLine={true}
