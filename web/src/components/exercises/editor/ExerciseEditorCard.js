@@ -45,6 +45,15 @@ class ExerciseEditorCard extends Component {
         return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
     }
 
+    handleMetricChange = (metric, value) => {
+        console.log(metric, value);
+    }
+
+    handlePropertyChange = (property, value) => {
+        let e = { ...this.props.exercise, [property]: value };
+        this.props.onChange(e);
+    }
+
     handleTimePropertyChange = (property, stringValue) => {
         let value = parseInt((new Date(stringValue).getTime()).toFixed(0), 10);
         let e = { ...this.props.exercise, [property]: value };
@@ -92,7 +101,7 @@ class ExerciseEditorCard extends Component {
                                         key={index}
                                         hintText={this.getMetricDisplayName(m)}
                                         floatingLabelText={this.getMetricDisplayName(m)}
-                                        onChange={(e,v) => this.handleMetricChange(e,v,m)}
+                                        onChange={(event, value) => this.handleMetricChange(m, value)}
                                         value={m.value ? m.value : ''}
                                     />
                                 ) : ''
