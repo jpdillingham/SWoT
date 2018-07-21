@@ -59,8 +59,7 @@ class ExerciseEditorCard extends Component {
 
     handleTimePropertyChange = (property, stringValue) => {
         let value = parseInt((new Date(stringValue).getTime()).toFixed(0), 10);
-        let e = { ...this.props.exercise, [property]: value };
-        this.props.onChange(e);
+        this.handlePropertyChange(property, value);
     }
 
     render() {
