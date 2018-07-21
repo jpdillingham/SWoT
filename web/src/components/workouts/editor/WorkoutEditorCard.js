@@ -98,6 +98,18 @@ class WorkoutEditorCard extends Component {
         this.setState({ workout: { ...this.state.workout, [property]: value }}, () => console.log('Update state:', this.state.workout));       
     }
 
+    handleExerciseChange = (exercise) => {
+        this.setState({ 
+            workout: {
+                ...this.state.workout,
+                routine: {
+                    ...this.state.workout.routine,
+                    exercises: this.state.workout.routine.exercises.map(e => e.id === exercise.id && e.sequence === exercise.sequence ? exercise : e),                    
+                },
+            },
+        });
+    }
+
     handleSaveClick = () => {
         this.props.onChange(this.state.workout);
     }
@@ -148,8 +160,12 @@ class WorkoutEditorCard extends Component {
                     <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                 </IconMenu>
                 <CardText>
-                    {this.props.workout.routine.exercises.map((e, index) => 
-                        <ExerciseEditorCard key={index} exercise={e}/>
+                    {this.state.workout.routine.exercises.map((e, index) => 
+                        <ExerciseEditorCard 
+                            key={index} 
+                            exercise={e}
+                            onChange={this.handleExerciseChange}
+                        />
                     )}
                     <TextField
                         style={styles.field}
