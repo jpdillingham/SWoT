@@ -6,6 +6,7 @@ import { black } from 'material-ui/styles/colors';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import LeftRightListItem from '../../shared/LeftRightListItem'
 import ToggledLeftRightListItem from '../../shared/ToggledLeftRightListItem'
+import TextField from 'material-ui/TextField'
 import { List } from 'material-ui/List';
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../../constants';
@@ -75,29 +76,45 @@ class ExerciseEditorCard extends Component {
                     </CardHeader>
                     <CardText style={styles.text}>
                         <List>
-                            {!this.props.exercise.metrics ? '' :
+                            {this.props.exercise.metrics ? 
                                 this.props.exercise.metrics.map((m, index) =>    
-                                    <LeftRightListItem
+                                    <TextField
                                         key={index}
-                                        leftIcon={<ActionAssessment color={ black }/>} 
-                                        leftText={this.getMetricDisplayName(m)}
-                                        rightText={m.value ? m.value : '-'}
+                                        hintText={this.getMetricDisplayName(m)}
+                                        floatingLabelText={this.getMetricDisplayName(m)}
+                                        onChange={(e,v) => this.handleMetricChange(e,v,m)}
+                                        value={m.value ? m.value : ''}
                                     />
-                                )
+                                ) : ''
                             }
-                            <LeftRightListItem
-                                leftIcon={<ActionWatchLater color={ black }/>} 
-                                leftText={'Duration'}
-                                rightText={this.props.exercise.startTime ? getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime) : ' '} 
+                            <TextField
+                                style={styles.field}
+                                hintText={'Start Time'}
+                                floatingLabelText={'Start Time'}
+                                onChange={(event, newValue) => this.handleTimePropertyChange('startTime', newValue)}
+                                value={this.props.exercise.startTime ? new Date(this.props.exercise.startTime).toString().split(' ').slice(0, 6).join(' ') : ''}
+                            /><br/>
+                            <TextField
+                                style={styles.field}
+                                hintText={'End Time'}
+                                floatingLabelText={'End Time'}
+                                onChange={(event, newValue) => this.handleTimePropertyChange('endTime', newValue)}
+                                value={this.props.exercise.endTime ? new Date(this.props.exercise.endTime).toString().split(' ').slice(0, 6).join(' ') : ''}
+                            /><br/>
+                            <TextField
+                                hintText={'Duration'}
+                                floatingLabelText={'Duration'}
+                                value={getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime)}
+                                disabled={true}
                             />
                             {!this.props.exercise.notes ? '' :
-                                <ToggledLeftRightListItem
-                                    leftIcon={<ActionSpeakerNotes color={black}/>}
-                                    leftText={'Notes'}
-                                    defaultToggleOpen={false}
-                                >
-                                    <p>{this.props.exercise.notes}</p>
-                                </ToggledLeftRightListItem>
+                                <TextField
+                                    hintText={'Notes'}
+                                    floatingLabelText={'Notes'}
+                                    multiLine={true}
+                                    onChange={(event, newValue) => this.handlePropertyChange('notes', newValue)}
+                                    value={this.props.exercise.notes ? this.props.exercise.notes : ''}
+                                />
                             }
                         </List>
                     </CardText>
