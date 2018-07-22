@@ -71,10 +71,24 @@ class WorkoutEditorCard extends Component {
     state = initialState;
 
     componentWillMount = () => {
+        let e = this.props.workout.routine.exercises;
+        e = e.map(e => { 
+            return { 
+                ...e, 
+                startTime: new Date(e.startTime).toString().split(' ').slice(0, 6).join(' '),
+                endTime: new Date(e.endTime).toString().split(' ').slice(0, 6).join(' '),
+            } 
+        });
+
+
         let w = { 
             ...this.props.workout,
             startTime: new Date(this.props.workout.startTime).toString().split(' ').slice(0, 6).join(' '),
             endTime: new Date(this.props.workout.endTime).toString().split(' ').slice(0, 6).join(' '),
+            routine: {
+                ...this.props.workout.routine,
+                exercises: e,
+            },
         };
 
         this.setState({ workout: w });
