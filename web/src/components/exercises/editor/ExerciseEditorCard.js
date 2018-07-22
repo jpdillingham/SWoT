@@ -6,7 +6,7 @@ import TextField from 'material-ui/TextField'
 import { List } from 'material-ui/List';
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../../constants';
-import { getElapsedTime } from '../../../util';
+import { getElapsedTime, getUnixTimestamp } from '../../../util';
 
 const styles = {
     cardHeader: {
@@ -51,10 +51,6 @@ class ExerciseEditorCard extends Component {
     handlePropertyChange = (property, value) => {
         let e = { ...this.props.exercise, [property]: value };
         this.props.onChange(e);
-    }
-
-    getUnixTimestamp = (dateString) => {
-        return parseInt((new Date(dateString).getTime()).toFixed(0), 10);
     }
 
     render() {
@@ -107,7 +103,7 @@ class ExerciseEditorCard extends Component {
                                 style={styles.field}
                                 hintText={'Start Time'}
                                 floatingLabelText={'Start Time'}
-                                errorText={!Number.isFinite(this.getUnixTimestamp(this.props.exercise.startTime)) ? "This isn't a valid ISO date string." : ''}
+                                errorText={!Number.isFinite(getUnixTimestamp(this.props.exercise.startTime)) ? "This isn't a valid ISO date string." : ''}
                                 onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
                                 value={this.props.exercise.startTime}
                             /><br/>
@@ -115,7 +111,7 @@ class ExerciseEditorCard extends Component {
                                 style={styles.field}
                                 hintText={'End Time'}
                                 floatingLabelText={'End Time'}
-                                errorText={!Number.isFinite(this.getUnixTimestamp(this.props.exercise.endTime)) ? "This isn't a valid ISO date string." : ''}
+                                errorText={!Number.isFinite(getUnixTimestamp(this.props.exercise.endTime)) ? "This isn't a valid ISO date string." : ''}
                                 onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
                                 value={this.props.exercise.endTime}
                             /><br/>
