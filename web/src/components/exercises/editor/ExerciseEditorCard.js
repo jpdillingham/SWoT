@@ -108,6 +108,7 @@ class ExerciseEditorCard extends Component {
                                 style={styles.field}
                                 hintText={'Start Time'}
                                 floatingLabelText={'Start Time'}
+                                errorText={''}
                                 onChange={(event, newValue) => this.handleTimePropertyChange('startTime', newValue)}
                                 value={this.props.exercise.startTime ? new Date(this.props.exercise.startTime).toString().split(' ').slice(0, 6).join(' ') : ''}
                             /><br/>
@@ -115,6 +116,7 @@ class ExerciseEditorCard extends Component {
                                 style={styles.field}
                                 hintText={'End Time'}
                                 floatingLabelText={'End Time'}
+                                errorText={''}
                                 onChange={(event, newValue) => this.handleTimePropertyChange('endTime', newValue)}
                                 value={this.props.exercise.endTime ? new Date(this.props.exercise.endTime).toString().split(' ').slice(0, 6).join(' ') : ''}
                             /><br/>
