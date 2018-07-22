@@ -65,7 +65,6 @@ const initialState = {
         open: false,
     },
     workout: undefined,
-    validationErrors: {},
 }
 
 class WorkoutEditorCard extends Component {
@@ -98,8 +97,7 @@ class WorkoutEditorCard extends Component {
     handlePropertyChange = (property, value) => {
         this.setState({ 
             workout: { ...this.state.workout, [property]: value },
-            validationErrors: { ...this.state.validationErrors, [property]: '' },
-        }, () => console.log('Update state:', this.state.workout));
+        });
     }
 
     handleExerciseChange = (exercise) => {
@@ -108,7 +106,8 @@ class WorkoutEditorCard extends Component {
                 ...this.state.workout,
                 routine: {
                     ...this.state.workout.routine,
-                    exercises: this.state.workout.routine.exercises.map(e => e.id === exercise.id && e.sequence === exercise.sequence ? exercise : e),                    
+                    exercises: this.state.workout.routine.exercises
+                        .map(e => e.id === exercise.id && e.sequence === exercise.sequence ? exercise : e),                    
                 },
             },
         });
@@ -119,37 +118,21 @@ class WorkoutEditorCard extends Component {
     }
 
     handleSaveClick = () => {
-        let startTime = this.getUnixTimestamp(this.state.workout.startTime);
-        let endTime = this.getUnixTimestamp(this.state.workout.endTime);
-        let startTimeMsg = '';
-        let endTimeMsg = '';
-
-        if (!Number.isFinite(startTime)) {
-            startTimeMsg = "The start time isn't a valid ISO time string.";
+        if (this.areTimesValid()) {
+            this.props.onChange({ 
+                ...this.state.workout, 
+                startTime: this.getUnixTimestamp(this.state.workout.startTime), 
+                endTime: this.getUnixTimestamp(this.state.workout.endTime),
+            });
         }
-        
-        if (!Number.isFinite(endTime)) {
-            endTimeMsg = "The end time isn't a valid ISO time string.";
-        }
+    }
 
-        if (!startTimeMsg && !endTimeMsg) {
-            if (startTime > endTime) {
-                startTimeMsg = 'The start time must be before the end time.';
-                endTimeMsg = startTimeMsg;
-            }
-        }
+    areTimesValid = () => {
+        let workoutValid = Number.isFinite(this.getUnixTimestamp(this.state.workout.startTime)) && Number.isFinite(this.getUnixTimestamp(this.state.workout.endTime));
+        let exercisesValid = this.state.workout.routine.exercises.find(e => 
+            !Number.isFinite(this.getUnixTimestamp(e.startTime)) || !Number.isFinite(this.getUnixTimestamp(e.endTime))) === undefined;
 
-        this.setState({
-            validationErrors: {
-                ...this.state.validationErrors,
-                startTime: startTimeMsg,
-                endTime: endTimeMsg,
-            }
-        }, () => {
-            if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.props.onChange({ ...this.state.workout, startTime: startTime, endTime: endTime });
-            }
-        })
+        return workoutValid && exercisesValid;
     }
 
     render() {
@@ -158,11 +141,8 @@ class WorkoutEditorCard extends Component {
         let fontColor = fontContrastColor(color);
 
         let workout = this.state.workout;
-
-        let startTime = this.getUnixTimestamp(this.state.workout.startTime);
-        let endTime = this.getUnixTimestamp(this.state.workout.endTime);
-
-        let duration = Number.isFinite(startTime) && Number.isFinite(endTime) ? getElapsedTime(startTime, endTime) : 'N/A'
+        let duration = this.areTimesValid() ? getElapsedTime(this.state.workout.startTime, this.state.workout.endTime) : 'N/A';
+        duration = this.areTimesValid(); // remove when done testing time validation
 
         return (
             <div>
@@ -170,7 +150,7 @@ class WorkoutEditorCard extends Component {
                 <CardHeader                        
                     titleStyle={{ ...styles.cardTitle, color: fontColor }}
                     style={{ ...styles.cardHeader, backgroundColor: color }}
-                    title={'Editing ' + this.props.workout.routine.name}
+                    title={'Editing: ' + this.props.workout.routine.name}
                     subtitle={
                         'Completed ' + moment(this.props.workout.endTime).calendar()
                     }
@@ -207,6 +187,7 @@ class WorkoutEditorCard extends Component {
                         <ExerciseEditorCard 
                             key={index} 
                             exercise={e}
+                            validationErrors={this.state.validationErrors}
                             onChange={this.handleExerciseChange}
                         />
                     )}
@@ -214,17 +195,17 @@ class WorkoutEditorCard extends Component {
                         style={styles.field}
                         hintText={'Start Time'}
                         floatingLabelText={'Start Time'}
-                        errorText={this.state.validationErrors.startTime}
+                        errorText={!Number.isFinite(this.getUnixTimestamp(workout.startTime)) ? "This isn't a valid ISO date string." : ''}
                         onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
-                        value={workout.startTime && Number.isFinite(workout.startTime) ? new Date(workout.startTime).toString().split(' ').slice(0, 6).join(' ') : workout.startTime}
+                        value={workout.startTime}
                     /><br/>
                     <TextField
                         style={styles.field}
                         hintText={'End Time'}
                         floatingLabelText={'End Time'}
-                        errorText={this.state.validationErrors.endTime}
+                        errorText={!Number.isFinite(this.getUnixTimestamp(workout.endTime)) ? "This isn't a valid ISO date string." : ''}
                         onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
-                        value={workout.endTime && Number.isFinite(workout.endTime) ? new Date(workout.endTime).toString().split(' ').slice(0, 6).join(' ') : workout.endTime}
+                        value={workout.endTime}
                     /><br/>
                     <TextField
                         style={styles.field}
