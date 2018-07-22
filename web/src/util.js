@@ -36,6 +36,10 @@ export const swapArrayElements = (array, index1, index2) => {
     return copy;
 }
 
+export const getUnixTimestamp = (dateString) => {
+    return parseInt((new Date(dateString).getTime()).toFixed(0), 10);
+}
+
 export const validateEmail = (email) => {
     // eslint-disable-next-line
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

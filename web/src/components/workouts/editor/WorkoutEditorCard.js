@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
-import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ActionSpeakerNotes } from 'material-ui/svg-icons';
-import { black, red500 } from 'material-ui/styles/colors'
+import { ActionAssignmentTurnedIn, ActionDelete, ContentSave } from 'material-ui/svg-icons';
+import { red500 } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
-import List from 'material-ui/List'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
@@ -15,14 +14,13 @@ import ConfirmDialog from '../../shared/ConfirmDialog'
 
 import { getElapsedTime } from '../../../util'
 import { WORKOUT_AVATAR_COLOR } from '../../../constants'
-import { fontContrastColor } from '../../../util'
+import { fontContrastColor, getUnixTimestamp } from '../../../util'
 
-import ExerciseReportCard from '../../exercises/ExerciseReportCard'
-import LeftRightListItem from '../../shared/LeftRightListItem';
-import ToggledLeftRightListItem from '../../shared/ToggledLeftRightListItem';
+import ExerciseEditorCard from '../../exercises/editor/ExerciseEditorCard'
 import CardActions from 'material-ui/Card/CardActions';
 import FlatButton from 'material-ui/FlatButton';
-import Divider from 'material-ui/Divider';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import TextField from 'material-ui/TextField';
 
 const styles = {
     cardHeader: {
@@ -44,17 +42,61 @@ const styles = {
     },
     notes: {
         marginLeft: 20
-    }
+    },
+    fab: {
+        margin: 0,
+        top: 47,
+        right: 40,
+        bottom: 'auto',
+        left: 'auto',
+        position: 'absolute',
+        zIndex: 1000,
+    },
+    actions: {
+        textAlign: 'right',
+    },
+    field: {
+        width: '100%',
+    },
 }
 
 const initialState = {
     deleteDialog: {
         open: false,
     },
+    workout: undefined,
 }
 
 class WorkoutEditorCard extends Component {
     state = initialState;
+
+    componentWillMount = () => {
+        let e = this.props.workout.routine.exercises;
+        e = e.map(e => { 
+            return { 
+                ...e, 
+                startTime: new Date(e.startTime).toString().split(' ').slice(0, 6).join(' '),
+                endTime: new Date(e.endTime).toString().split(' ').slice(0, 6).join(' '),
+            } 
+        });
+
+
+        let w = { 
+            ...this.props.workout,
+            startTime: new Date(this.props.workout.startTime).toString().split(' ').slice(0, 6).join(' '),
+            endTime: new Date(this.props.workout.endTime).toString().split(' ').slice(0, 6).join(' '),
+            routine: {
+                ...this.props.workout.routine,
+                exercises: e,
+            },
+        };
+
+        this.setState({ workout: w });
+    }
+
+    componentWillReceiveProps = (nextProps) => {
+        this.setState({ workout: nextProps.workout });
+    }
 
     handleDeleteClick = () => {
         this.setState({ deleteDialog: { open: true }})
@@ -66,10 +108,51 @@ class WorkoutEditorCard extends Component {
         }
     }
 
+    handlePropertyChange = (property, value) => {
+        this.setState({ 
+            workout: { ...this.state.workout, [property]: value },
+        });
+    }
+
+    handleExerciseChange = (exercise) => {
+        this.setState({ 
+            workout: {
+                ...this.state.workout,
+                routine: {
+                    ...this.state.workout.routine,
+                    exercises: this.state.workout.routine.exercises
+                        .map(e => e.id === exercise.id && e.sequence === exercise.sequence ? exercise : e),                    
+                },
+            },
+        });
+    }
+
+    handleSaveClick = () => {
+        if (this.areTimesValid()) {
+            this.props.onChange({ 
+                ...this.state.workout, 
+                startTime: getUnixTimestamp(this.state.workout.startTime), 
+                endTime: getUnixTimestamp(this.state.workout.endTime),
+            });
+        }
+    }
+
+    areTimesValid = () => {
+        let workoutValid = Number.isFinite(getUnixTimestamp(this.state.workout.startTime)) && Number.isFinite(getUnixTimestamp(this.state.workout.endTime));
+        let exercisesValid = this.state.workout.routine.exercises.find(e => 
+            !Number.isFinite(getUnixTimestamp(e.startTime)) || !Number.isFinite(getUnixTimestamp(e.endTime))) === undefined;
+
+        return workoutValid && exercisesValid;
+    }
+
     render() {
         let color = this.props.workout.routine.color;
         color = !color || color === 0 ? red500 : color;
         let fontColor = fontContrastColor(color);
+
+        let workout = this.state.workout;
+        let duration = this.areTimesValid() ? getElapsedTime(this.state.workout.startTime, this.state.workout.endTime) : 'N/A';
+        duration = this.areTimesValid(); // remove when done testing time validation
 
         return (
             <div>
@@ -77,7 +160,7 @@ class WorkoutEditorCard extends Component {
                 <CardHeader                        
                     titleStyle={{ ...styles.cardTitle, color: fontColor }}
                     style={{ ...styles.cardHeader, backgroundColor: color }}
-                    title={'Editing ' + this.props.workout.routine.name}
+                    title={'Editing: ' + this.props.workout.routine.name}
                     subtitle={
                         'Completed ' + moment(this.props.workout.endTime).calendar()
                     }
@@ -91,6 +174,15 @@ class WorkoutEditorCard extends Component {
                         />
                     }
                 >
+                    <FloatingActionButton 
+                        secondary={false} 
+                        zDepth={2} 
+                        style={styles.fab}
+                        mini={true}
+                        onClick={this.handleSaveClick}
+                    >
+                        <ContentSave />
+                    </FloatingActionButton>
                 </CardHeader>
                 <IconMenu
                     style={styles.iconMenu}
@@ -101,26 +193,47 @@ class WorkoutEditorCard extends Component {
                     <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                 </IconMenu>
                 <CardText>
-                    {this.props.workout.routine.exercises.map((e, index) => 
-                        <ExerciseReportCard key={index} exercise={e}/>
-                    )}
-                    <List>
-                        <LeftRightListItem
-                            leftIcon={<ActionWatchLater color={black}/>}
-                            leftText={'Duration'}
-                            rightText={getElapsedTime(this.props.workout.startTime, this.props.workout.endTime)}
+                    {this.state.workout.routine.exercises.map((e, index) => 
+                        <ExerciseEditorCard 
+                            key={index} 
+                            exercise={e}
+                            validationErrors={this.state.validationErrors}
+                            onChange={this.handleExerciseChange}
                         />
-                        <ToggledLeftRightListItem
-                            leftIcon={<ActionSpeakerNotes color={black}/>}
-                            leftText={'Notes'}
-                            defaultToggleOpen={true}
-                        >
-                            {!this.props.workout.notes ? '' : <p>{this.props.workout.notes}</p>}
-                        </ToggledLeftRightListItem>
-                    </List>
+                    )}
+                    <TextField
+                        style={styles.field}
+                        hintText={'Start Time'}
+                        floatingLabelText={'Start Time'}
+                        errorText={!Number.isFinite(getUnixTimestamp(workout.startTime)) ? "This isn't a valid ISO date string." : ''}
+                        onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
+                        value={workout.startTime}
+                    /><br/>
+                    <TextField
+                        style={styles.field}
+                        hintText={'End Time'}
+                        floatingLabelText={'End Time'}
+                        errorText={!Number.isFinite(getUnixTimestamp(workout.endTime)) ? "This isn't a valid ISO date string." : ''}
+                        onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
+                        value={workout.endTime}
+                    /><br/>
+                    <TextField
+                        style={styles.field}
+                        hintText={'Duration'}
+                        floatingLabelText={'Duration'}
+                        value={duration}
+                        disabled={true}
+                    /><br/>
+                    <TextField
+                        style={styles.field}
+                        hintText={'Notes'}
+                        floatingLabelText={'Notes'}
+                        multiLine={true}
+                        onChange={(event, newValue) => this.handlePropertyChange('notes', newValue)}
+                        value={workout.notes ? workout.notes : ''}
+                    />
                 </CardText>
-                <Divider/>
-                <CardActions>
+                <CardActions style={styles.actions}>
                     <FlatButton label="Cancel"/>
                     <FlatButton label="Save"/>
                 </CardActions>
