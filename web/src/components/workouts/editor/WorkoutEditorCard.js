@@ -205,7 +205,7 @@ class WorkoutEditorCard extends Component {
                         style={styles.field}
                         hintText={'Start Time'}
                         floatingLabelText={'Start Time'}
-                        errorText={!Number.isFinite(getUnixTimestamp(workout.startTime)) ? "This isn't a valid ISO date string." : ''}
+                        errorText={!Number.isFinite(getUnixTimestamp(workout.startTime)) ? "This isn't a valid date string." : ''}
                         onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
                         value={workout.startTime}
                     /><br/>
@@ -213,7 +213,7 @@ class WorkoutEditorCard extends Component {
                         style={styles.field}
                         hintText={'End Time'}
                         floatingLabelText={'End Time'}
-                        errorText={!Number.isFinite(getUnixTimestamp(workout.endTime)) ? "This isn't a valid ISO date string." : ''}
+                        errorText={!Number.isFinite(getUnixTimestamp(workout.endTime)) ? "This isn't a valid date string." : ''}
                         onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
                         value={workout.endTime}
                     /><br/>
