@@ -14,7 +14,7 @@ import ConfirmDialog from '../../shared/ConfirmDialog'
 
 import { getElapsedTime } from '../../../util'
 import { WORKOUT_AVATAR_COLOR } from '../../../constants'
-import { fontContrastColor } from '../../../util'
+import { fontContrastColor, getUnixTimestamp } from '../../../util'
 
 import ExerciseEditorCard from '../../exercises/editor/ExerciseEditorCard'
 import CardActions from 'material-ui/Card/CardActions';
@@ -127,24 +127,20 @@ class WorkoutEditorCard extends Component {
         });
     }
 
-    getUnixTimestamp = (dateString) => {
-        return parseInt((new Date(dateString).getTime()).toFixed(0), 10);
-    }
-
     handleSaveClick = () => {
         if (this.areTimesValid()) {
             this.props.onChange({ 
                 ...this.state.workout, 
-                startTime: this.getUnixTimestamp(this.state.workout.startTime), 
-                endTime: this.getUnixTimestamp(this.state.workout.endTime),
+                startTime: getUnixTimestamp(this.state.workout.startTime), 
+                endTime: getUnixTimestamp(this.state.workout.endTime),
             });
         }
     }
 
     areTimesValid = () => {
-        let workoutValid = Number.isFinite(this.getUnixTimestamp(this.state.workout.startTime)) && Number.isFinite(this.getUnixTimestamp(this.state.workout.endTime));
+        let workoutValid = Number.isFinite(getUnixTimestamp(this.state.workout.startTime)) && Number.isFinite(getUnixTimestamp(this.state.workout.endTime));
         let exercisesValid = this.state.workout.routine.exercises.find(e => 
-            !Number.isFinite(this.getUnixTimestamp(e.startTime)) || !Number.isFinite(this.getUnixTimestamp(e.endTime))) === undefined;
+            !Number.isFinite(getUnixTimestamp(e.startTime)) || !Number.isFinite(getUnixTimestamp(e.endTime))) === undefined;
 
         return workoutValid && exercisesValid;
     }
@@ -209,7 +205,7 @@ class WorkoutEditorCard extends Component {
                         style={styles.field}
                         hintText={'Start Time'}
                         floatingLabelText={'Start Time'}
-                        errorText={!Number.isFinite(this.getUnixTimestamp(workout.startTime)) ? "This isn't a valid ISO date string." : ''}
+                        errorText={!Number.isFinite(getUnixTimestamp(workout.startTime)) ? "This isn't a valid ISO date string." : ''}
                         onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
                         value={workout.startTime}
                     /><br/>
@@ -217,7 +213,7 @@ class WorkoutEditorCard extends Component {
                         style={styles.field}
                         hintText={'End Time'}
                         floatingLabelText={'End Time'}
-                        errorText={!Number.isFinite(this.getUnixTimestamp(workout.endTime)) ? "This isn't a valid ISO date string." : ''}
+                        errorText={!Number.isFinite(getUnixTimestamp(workout.endTime)) ? "This isn't a valid ISO date string." : ''}
                         onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
                         value={workout.endTime}
                     /><br/>
