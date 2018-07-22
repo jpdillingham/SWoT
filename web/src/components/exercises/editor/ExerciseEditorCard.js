@@ -53,9 +53,8 @@ class ExerciseEditorCard extends Component {
         this.props.onChange(e);
     }
 
-    handleTimePropertyChange = (property, stringValue) => {
-        let value = parseInt((new Date(stringValue).getTime()).toFixed(0), 10);
-        this.handlePropertyChange(property, value);
+    getUnixTimestamp = (dateString) => {
+        return parseInt((new Date(dateString).getTime()).toFixed(0), 10);
     }
 
     render() {
@@ -108,17 +107,17 @@ class ExerciseEditorCard extends Component {
                                 style={styles.field}
                                 hintText={'Start Time'}
                                 floatingLabelText={'Start Time'}
-                                errorText={''}
-                                onChange={(event, newValue) => this.handleTimePropertyChange('startTime', newValue)}
-                                value={this.props.exercise.startTime ? new Date(this.props.exercise.startTime).toString().split(' ').slice(0, 6).join(' ') : ''}
+                                errorText={!Number.isFinite(this.getUnixTimestamp(this.props.exercise.startTime)) ? "This isn't a valid ISO date string." : ''}
+                                onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
+                                value={this.props.exercise.startTime}
                             /><br/>
                             <TextField
                                 style={styles.field}
                                 hintText={'End Time'}
                                 floatingLabelText={'End Time'}
-                                errorText={''}
-                                onChange={(event, newValue) => this.handleTimePropertyChange('endTime', newValue)}
-                                value={this.props.exercise.endTime ? new Date(this.props.exercise.endTime).toString().split(' ').slice(0, 6).join(' ') : ''}
+                                errorText={!Number.isFinite(this.getUnixTimestamp(this.props.exercise.endTime)) ? "This isn't a valid ISO date string." : ''}
+                                onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
+                                value={this.props.exercise.endTime}
                             /><br/>
                             <TextField
                                 style={styles.field}
