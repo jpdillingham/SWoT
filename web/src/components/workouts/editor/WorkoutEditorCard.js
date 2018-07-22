@@ -233,10 +233,6 @@ class WorkoutEditorCard extends Component {
                         value={workout.notes ? workout.notes : ''}
                     />
                 </CardText>
-                <CardActions style={styles.actions}>
-                    <FlatButton label="Cancel"/>
-                    <FlatButton label="Save"/>
-                </CardActions>
             </Card>
             <ConfirmDialog 
                 title={'Delete Workout History'}
