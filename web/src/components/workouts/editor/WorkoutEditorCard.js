@@ -72,7 +72,13 @@ class WorkoutEditorCard extends Component {
     state = initialState;
 
     componentWillMount = () => {
-        this.setState({ workout: this.props.workout });
+        let w = { 
+            ...this.props.workout,
+            startTime: new Date(this.props.workout.startTime).toString().split(' ').slice(0, 6).join(' '),
+            endTime: new Date(this.props.workout.endTime).toString().split(' ').slice(0, 6).join(' '),
+        };
+
+        this.setState({ workout: w });
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -90,15 +96,10 @@ class WorkoutEditorCard extends Component {
     }
 
     handlePropertyChange = (property, value) => {
-        this.setState({ workout: { ...this.state.workout, [property]: value }}, () => console.log('Update state:', this.state.workout));
-    }
-
-    handleTimePropertyChange = (property, stringValue) => {
-        let value = parseInt((new Date(stringValue).getTime()).toFixed(0), 10);
-
         this.setState({ 
-            workout: { ...this.state.workout, [property]: Number.isInteger(value) ? value : stringValue },
-        }, () => console.log('Update state:', this.state.workout));       
+            workout: { ...this.state.workout, [property]: value },
+            validationErrors: { ...this.state.validationErrors, [property]: '' },
+        }, () => console.log('Update state:', this.state.workout));
     }
 
     handleExerciseChange = (exercise) => {
@@ -113,20 +114,26 @@ class WorkoutEditorCard extends Component {
         });
     }
 
+    getUnixTimestamp = (dateString) => {
+        return parseInt((new Date(dateString).getTime()).toFixed(0), 10);
+    }
+
     handleSaveClick = () => {
+        let startTime = this.getUnixTimestamp(this.state.workout.startTime);
+        let endTime = this.getUnixTimestamp(this.state.workout.endTime);
         let startTimeMsg = '';
         let endTimeMsg = '';
 
-        if (!Number.isFinite(this.state.workout.startTime)) {
+        if (!Number.isFinite(startTime)) {
             startTimeMsg = "The start time isn't a valid ISO time string.";
         }
         
-        if (!Number.isFinite(this.state.workout.endTime)) {
+        if (!Number.isFinite(endTime)) {
             endTimeMsg = "The end time isn't a valid ISO time string.";
         }
 
         if (!startTimeMsg && !endTimeMsg) {
-            if (this.state.workout.startTime > this.state.workout.endTime) {
+            if (startTime > endTime) {
                 startTimeMsg = 'The start time must be before the end time.';
                 endTimeMsg = startTimeMsg;
             }
@@ -140,7 +147,7 @@ class WorkoutEditorCard extends Component {
             }
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.props.onChange(this.state.workout);
+                this.props.onChange({ ...this.state.workout, startTime: startTime, endTime: endTime });
             }
         })
     }
@@ -151,6 +158,11 @@ class WorkoutEditorCard extends Component {
         let fontColor = fontContrastColor(color);
 
         let workout = this.state.workout;
+
+        let startTime = this.getUnixTimestamp(this.state.workout.startTime);
+        let endTime = this.getUnixTimestamp(this.state.workout.endTime);
+
+        let duration = Number.isFinite(startTime) && Number.isFinite(endTime) ? getElapsedTime(startTime, endTime) : 'N/A'
 
         return (
             <div>
@@ -203,7 +215,7 @@ class WorkoutEditorCard extends Component {
                         hintText={'Start Time'}
                         floatingLabelText={'Start Time'}
                         errorText={this.state.validationErrors.startTime}
-                        onChange={(event, newValue) => this.handleTimePropertyChange('startTime', newValue)}
+                        onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
                         value={workout.startTime && Number.isFinite(workout.startTime) ? new Date(workout.startTime).toString().split(' ').slice(0, 6).join(' ') : workout.startTime}
                     /><br/>
                     <TextField
@@ -211,14 +223,14 @@ class WorkoutEditorCard extends Component {
                         hintText={'End Time'}
                         floatingLabelText={'End Time'}
                         errorText={this.state.validationErrors.endTime}
-                        onChange={(event, newValue) => this.handleTimePropertyChange('endTime', newValue)}
+                        onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
                         value={workout.endTime && Number.isFinite(workout.endTime) ? new Date(workout.endTime).toString().split(' ').slice(0, 6).join(' ') : workout.endTime}
                     /><br/>
                     <TextField
                         style={styles.field}
                         hintText={'Duration'}
                         floatingLabelText={'Duration'}
-                        value={getElapsedTime(workout.startTime, workout.endTime)}
+                        value={duration}
                         disabled={true}
                     /><br/>
                     <TextField
