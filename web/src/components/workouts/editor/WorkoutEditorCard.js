@@ -18,8 +18,6 @@ import { WORKOUT_AVATAR_COLOR } from '../../../constants'
 import { fontContrastColor, getUnixTimestamp } from '../../../util'
 
 import ExerciseEditorCard from '../../exercises/editor/ExerciseEditorCard'
-import CardActions from 'material-ui/Card/CardActions';
-import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
 import Spinner from '../../shared/Spinner';
