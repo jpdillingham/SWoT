@@ -181,7 +181,9 @@ class WorkoutEditorCard extends Component {
     areTimesValid = () => {
         let workoutValid = Number.isFinite(getUnixTimestamp(this.state.workout.startTime)) && Number.isFinite(getUnixTimestamp(this.state.workout.endTime));
         let exercisesValid = this.state.workout.routine.exercises.find(e => 
-            !Number.isFinite(getUnixTimestamp(e.startTime)) || !Number.isFinite(getUnixTimestamp(e.endTime))) === undefined;
+            (e.startTime === undefined && e.endTime === undefined) ||
+            !Number.isFinite(getUnixTimestamp(e.startTime)) || 
+            !Number.isFinite(getUnixTimestamp(e.endTime))) === undefined;
 
         return workoutValid && exercisesValid;
     }
@@ -192,7 +194,10 @@ class WorkoutEditorCard extends Component {
         let fontColor = fontContrastColor(color);
 
         let workout = this.state.workout;
-        let duration = this.areTimesValid() ? getElapsedTime(getUnixTimestamp(this.state.workout.startTime), getUnixTimestamp(this.state.workout.endTime)) : 'N/A';
+
+        let start = getUnixTimestamp(this.state.workout.startTime);
+        let end =  getUnixTimestamp(this.state.workout.endTime);
+        let duration = Number.isFinite(start) && Number.isFinite(end) ? getElapsedTime(start, end) : 'N/A';
         
         let refreshing = this.state.api.isExecuting;
 
