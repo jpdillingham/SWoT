@@ -171,7 +171,7 @@ class WorkoutEditorCard extends Component {
         let workout = this.state.workout;
         let duration = this.areTimesValid() ? getElapsedTime(this.state.workout.startTime, this.state.workout.endTime) : 'N/A';
         
-        
+        let refreshing = this.state.api.isExecuting;
 
         return (
             <div>
@@ -227,7 +227,8 @@ class WorkoutEditorCard extends Component {
                         errorText={!Number.isFinite(getUnixTimestamp(workout.startTime)) ? "This isn't a valid date string." : ''}
                         onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
                         value={workout.startTime}
-                    /><br/>
+                        disabled={refreshing}
+                    />
                     <TextField
                         style={styles.field}
                         hintText={'End Time'}
@@ -235,14 +236,15 @@ class WorkoutEditorCard extends Component {
                         errorText={!Number.isFinite(getUnixTimestamp(workout.endTime)) ? "This isn't a valid date string." : ''}
                         onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
                         value={workout.endTime}
-                    /><br/>
+                        disabled={refreshing}
+                    />
                     <TextField
                         style={styles.field}
                         hintText={'Duration'}
                         floatingLabelText={'Duration'}
                         value={duration}
                         disabled={true}
-                    /><br/>
+                    />
                     <TextField
                         style={styles.field}
                         hintText={'Notes'}
@@ -250,6 +252,7 @@ class WorkoutEditorCard extends Component {
                         multiLine={true}
                         onChange={(event, newValue) => this.handlePropertyChange('notes', newValue)}
                         value={workout.notes ? workout.notes : ''}
+                        disabled={refreshing}
                     />
                     {this.state.api.isExecuting ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
