@@ -21,6 +21,7 @@ import CardActions from 'material-ui/Card/CardActions';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
+import Spinner from '../../shared/Spinner';
 
 const styles = {
     cardHeader: {
@@ -57,6 +58,9 @@ const styles = {
     },
     field: {
         width: '100%',
+    },
+    spinner: {
+        zIndex: 1000,
     },
 }
 
@@ -243,6 +247,7 @@ class WorkoutEditorCard extends Component {
                         onChange={(event, newValue) => this.handlePropertyChange('notes', newValue)}
                         value={workout.notes ? workout.notes : ''}
                     />
+                    {this.state.api.isExecuting ? <Spinner style={styles.spinner}/> : ''}
                 </CardText>
             </Card>
             <ConfirmDialog 
