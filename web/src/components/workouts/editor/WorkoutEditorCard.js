@@ -79,7 +79,11 @@ class WorkoutEditorCard extends Component {
     state = initialState;
 
     componentWillMount = () => {
-        let e = this.props.workout.routine.exercises;
+        this.convertToFriendlyTimes(this.props.workout.routine.exercises);
+    }
+
+    convertToFriendlyTimes = (exercises) => {
+        let e = exercises;
         e = e.map(e => { 
             return { 
                 ...e, 
@@ -87,7 +91,6 @@ class WorkoutEditorCard extends Component {
                 endTime: new Date(e.endTime).toString().split(' ').slice(0, 6).join(' '),
             } 
         });
-
 
         let w = { 
             ...this.props.workout,
@@ -103,7 +106,7 @@ class WorkoutEditorCard extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        this.setState({ workout: nextProps.workout });
+        this.convertToFriendlyTimes(nextProps.workout.routine.exercises);
     }
 
     handleDeleteClick = () => {
