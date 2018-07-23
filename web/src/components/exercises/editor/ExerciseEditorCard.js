@@ -111,7 +111,7 @@ class ExerciseEditorCard extends Component {
                                 style={styles.field}
                                 hintText={'Start Time'}
                                 floatingLabelText={'Start Time'}
-                                errorText={!Number.isFinite(getUnixTimestamp(this.props.exercise.startTime)) ? "This isn't a valid date string." : ''}
+                                errorText={this.props.exercise.startTime && !Number.isFinite(getUnixTimestamp(this.props.exercise.startTime)) ? "This isn't a valid date string." : ''}
                                 onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
                                 value={this.props.exercise.startTime}
                                 disabled={this.props.disabled}
@@ -120,7 +120,7 @@ class ExerciseEditorCard extends Component {
                                 style={styles.field}
                                 hintText={'End Time'}
                                 floatingLabelText={'End Time'}
-                                errorText={!Number.isFinite(getUnixTimestamp(this.props.exercise.endTime)) ? "This isn't a valid date string." : ''}
+                                errorText={this.props.exercise.endTime && !Number.isFinite(getUnixTimestamp(this.props.exercise.endTime)) ? "This isn't a valid date string." : ''}
                                 onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
                                 value={this.props.exercise.endTime}
                                 disabled={this.props.disabled}
