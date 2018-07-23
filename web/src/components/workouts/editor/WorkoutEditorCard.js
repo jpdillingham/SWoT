@@ -141,11 +141,24 @@ class WorkoutEditorCard extends Component {
 
     handleSaveClick = () => {
         if (this.areTimesValid()) {
+            let e = this.state.workout.routine.exercises;
+            e = e.map(e => { 
+                return { 
+                    ...e, 
+                    startTime: getUnixTimestamp(e.startTime),
+                    endTime: getUnixTimestamp(e.endTime),
+                } 
+            });
+
             this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
                 this.props.onChange({ 
                     ...this.state.workout, 
                     startTime: getUnixTimestamp(this.state.workout.startTime), 
                     endTime: getUnixTimestamp(this.state.workout.endTime),
+                    routine: {
+                        ...this.state.workout.routine,
+                        exercises: e,
+                    },
                 })
                 .then(() => {
                     this.setState({ api: { isExecuting: false, isErrored: false }});
