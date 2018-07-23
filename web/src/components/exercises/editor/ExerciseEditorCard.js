@@ -53,11 +53,17 @@ class ExerciseEditorCard extends Component {
         this.props.onChange(e);
     }
 
+    areTimesValid = () => {
+        return Number.isFinite(getUnixTimestamp(this.props.exercise.startTime)) && Number.isFinite(getUnixTimestamp(this.props.exercise.endTime));
+    }
+
     render() {
         let exerciseImage = this.props.exercise.type;
         if (EXERCISE_TYPES.indexOf(exerciseImage) === -1) { 
             exerciseImage = 'unknown'
         }
+
+        let duration = this.areTimesValid() ? getElapsedTime(getUnixTimestamp(this.props.exercise.startTime), getUnixTimestamp(this.props.exercise.endTime)) : 'N/A';
 
         return (
             <div>
@@ -119,7 +125,7 @@ class ExerciseEditorCard extends Component {
                                 style={styles.field}
                                 hintText={'Duration'}
                                 floatingLabelText={'Duration'}
-                                value={getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime)}
+                                value={duration}
                                 disabled={true}
                             />
                             {!this.props.exercise.notes ? '' :
