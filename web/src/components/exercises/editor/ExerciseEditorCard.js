@@ -7,6 +7,7 @@ import { List } from 'material-ui/List';
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../../constants';
 import { getElapsedTime, getUnixTimestamp } from '../../../util';
+import { grey300 } from 'material-ui/styles/colors';
 
 const styles = {
     cardHeader: {
@@ -69,7 +70,7 @@ class ExerciseEditorCard extends Component {
             <div>
                 <Card 
                     zDepth={2} 
-                    style={styles.card}
+                    style={!this.props.disabled ? styles.card : { ...styles.card, backgroundColor: grey300 }}
                 >
                     <CardHeader                        
                         titleStyle={styles.cardTitle}
@@ -102,6 +103,7 @@ class ExerciseEditorCard extends Component {
                                         floatingLabelText={this.getMetricDisplayName(m)}
                                         onChange={(event, value) => this.handleMetricChange(m, value)}
                                         value={m.value ? m.value : ''}
+                                        disabled={this.props.disabled}
                                     />
                                 ) : ''
                             }
@@ -112,6 +114,7 @@ class ExerciseEditorCard extends Component {
                                 errorText={!Number.isFinite(getUnixTimestamp(this.props.exercise.startTime)) ? "This isn't a valid date string." : ''}
                                 onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
                                 value={this.props.exercise.startTime}
+                                disabled={this.props.disabled}
                             /><br/>
                             <TextField
                                 style={styles.field}
@@ -120,6 +123,7 @@ class ExerciseEditorCard extends Component {
                                 errorText={!Number.isFinite(getUnixTimestamp(this.props.exercise.endTime)) ? "This isn't a valid date string." : ''}
                                 onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
                                 value={this.props.exercise.endTime}
+                                disabled={this.props.disabled}
                             /><br/>
                             <TextField
                                 style={styles.field}
@@ -128,16 +132,15 @@ class ExerciseEditorCard extends Component {
                                 value={duration}
                                 disabled={true}
                             />
-                            {!this.props.exercise.notes ? '' :
-                                <TextField
-                                    style={styles.field}
-                                    hintText={'Notes'}
-                                    floatingLabelText={'Notes'}
-                                    multiLine={true}
-                                    onChange={(event, newValue) => this.handlePropertyChange('notes', newValue)}
-                                    value={this.props.exercise.notes ? this.props.exercise.notes : ''}
-                                />
-                            }
+                            <TextField
+                                style={styles.field}
+                                hintText={'Notes'}
+                                floatingLabelText={'Notes'}
+                                multiLine={true}
+                                onChange={(event, newValue) => this.handlePropertyChange('notes', newValue)}
+                                value={this.props.exercise.notes ? this.props.exercise.notes : ''}
+                                disabled={this.props.disabled}
+                            />
                         </List>
                     </CardText>
                 </Card>
