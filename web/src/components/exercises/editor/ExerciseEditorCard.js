@@ -64,6 +64,8 @@ class ExerciseEditorCard extends Component {
             exerciseImage = 'unknown'
         }
 
+        let exercise = this.props.exercise;
+
         let duration = this.areTimesValid() ? getElapsedTime(getUnixTimestamp(this.props.exercise.startTime), getUnixTimestamp(this.props.exercise.endTime)) : 'N/A';
 
         return (
@@ -80,7 +82,7 @@ class ExerciseEditorCard extends Component {
                                 style={styles.link}
                                 onClick={() => window.open(this.props.exercise.url)}
                             >
-                                {this.props.exercise.name}
+                                {exercise.name}
                             </span>
                         }
                         avatar={
@@ -94,8 +96,8 @@ class ExerciseEditorCard extends Component {
                     </CardHeader>
                     <CardText style={styles.text}>
                         <List>
-                            {this.props.exercise.metrics ? 
-                                this.props.exercise.metrics.map((m, index) =>    
+                            {exercise.metrics ? 
+                                exercise.metrics.map((m, index) =>    
                                     <TextField
                                         style={styles.field}
                                         key={index}
@@ -111,18 +113,18 @@ class ExerciseEditorCard extends Component {
                                 style={styles.field}
                                 hintText={'Start Time'}
                                 floatingLabelText={'Start Time'}
-                                errorText={this.props.exercise.startTime && !Number.isFinite(getUnixTimestamp(this.props.exercise.startTime)) ? "This isn't a valid date string." : ''}
+                                errorText={exercise.startTime && !Number.isFinite(getUnixTimestamp(exercise.startTime)) ? "This isn't a valid date string." : ''}
                                 onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
-                                value={this.props.exercise.startTime}
+                                value={exercise.startTime ? exercise.startTime : ''}
                                 disabled={this.props.disabled}
                             /><br/>
                             <TextField
                                 style={styles.field}
                                 hintText={'End Time'}
                                 floatingLabelText={'End Time'}
-                                errorText={this.props.exercise.endTime && !Number.isFinite(getUnixTimestamp(this.props.exercise.endTime)) ? "This isn't a valid date string." : ''}
+                                errorText={exercise.endTime && !Number.isFinite(getUnixTimestamp(exercise.endTime)) ? "This isn't a valid date string." : ''}
                                 onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
-                                value={this.props.exercise.endTime}
+                                value={exercise.endTime ? exercise.endTime : ''}
                                 disabled={this.props.disabled}
                             /><br/>
                             <TextField
@@ -138,7 +140,7 @@ class ExerciseEditorCard extends Component {
                                 floatingLabelText={'Notes'}
                                 multiLine={true}
                                 onChange={(event, newValue) => this.handlePropertyChange('notes', newValue)}
-                                value={this.props.exercise.notes ? this.props.exercise.notes : ''}
+                                value={exercise.notes ? exercise.notes : ''}
                                 disabled={this.props.disabled}
                             />
                         </List>
