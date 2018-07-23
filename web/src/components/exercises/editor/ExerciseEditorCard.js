@@ -7,6 +7,7 @@ import { List } from 'material-ui/List';
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../../constants';
 import { getElapsedTime, getUnixTimestamp } from '../../../util';
+import { grey300 } from 'material-ui/styles/colors';
 
 const styles = {
     cardHeader: {
@@ -53,17 +54,25 @@ class ExerciseEditorCard extends Component {
         this.props.onChange(e);
     }
 
+    areTimesValid = () => {
+        return Number.isFinite(getUnixTimestamp(this.props.exercise.startTime)) && Number.isFinite(getUnixTimestamp(this.props.exercise.endTime));
+    }
+
     render() {
         let exerciseImage = this.props.exercise.type;
         if (EXERCISE_TYPES.indexOf(exerciseImage) === -1) { 
             exerciseImage = 'unknown'
         }
 
+        let exercise = this.props.exercise;
+
+        let duration = this.areTimesValid() ? getElapsedTime(getUnixTimestamp(this.props.exercise.startTime), getUnixTimestamp(this.props.exercise.endTime)) : 'N/A';
+
         return (
             <div>
                 <Card 
                     zDepth={2} 
-                    style={styles.card}
+                    style={!this.props.disabled ? styles.card : { ...styles.card, backgroundColor: grey300 }}
                 >
                     <CardHeader                        
                         titleStyle={styles.cardTitle}
@@ -73,7 +82,7 @@ class ExerciseEditorCard extends Component {
                                 style={styles.link}
                                 onClick={() => window.open(this.props.exercise.url)}
                             >
-                                {this.props.exercise.name}
+                                {exercise.name}
                             </span>
                         }
                         avatar={
@@ -87,8 +96,8 @@ class ExerciseEditorCard extends Component {
                     </CardHeader>
                     <CardText style={styles.text}>
                         <List>
-                            {this.props.exercise.metrics ? 
-                                this.props.exercise.metrics.map((m, index) =>    
+                            {exercise.metrics ? 
+                                exercise.metrics.map((m, index) =>    
                                     <TextField
                                         style={styles.field}
                                         key={index}
@@ -96,6 +105,7 @@ class ExerciseEditorCard extends Component {
                                         floatingLabelText={this.getMetricDisplayName(m)}
                                         onChange={(event, value) => this.handleMetricChange(m, value)}
                                         value={m.value ? m.value : ''}
+                                        disabled={this.props.disabled}
                                     />
                                 ) : ''
                             }
@@ -103,35 +113,36 @@ class ExerciseEditorCard extends Component {
                                 style={styles.field}
                                 hintText={'Start Time'}
                                 floatingLabelText={'Start Time'}
-                                errorText={!Number.isFinite(getUnixTimestamp(this.props.exercise.startTime)) ? "This isn't a valid ISO date string." : ''}
+                                errorText={exercise.startTime && !Number.isFinite(getUnixTimestamp(exercise.startTime)) ? "This isn't a valid date string." : ''}
                                 onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
-                                value={this.props.exercise.startTime}
+                                value={exercise.startTime ? exercise.startTime : ''}
+                                disabled={this.props.disabled}
                             /><br/>
                             <TextField
                                 style={styles.field}
                                 hintText={'End Time'}
                                 floatingLabelText={'End Time'}
-                                errorText={!Number.isFinite(getUnixTimestamp(this.props.exercise.endTime)) ? "This isn't a valid ISO date string." : ''}
+                                errorText={exercise.endTime && !Number.isFinite(getUnixTimestamp(exercise.endTime)) ? "This isn't a valid date string." : ''}
                                 onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
-                                value={this.props.exercise.endTime}
+                                value={exercise.endTime ? exercise.endTime : ''}
+                                disabled={this.props.disabled}
                             /><br/>
                             <TextField
                                 style={styles.field}
                                 hintText={'Duration'}
                                 floatingLabelText={'Duration'}
-                                value={getElapsedTime(this.props.exercise.startTime, this.props.exercise.endTime)}
+                                value={duration}
                                 disabled={true}
                             />
-                            {!this.props.exercise.notes ? '' :
-                                <TextField
-                                    style={styles.field}
-                                    hintText={'Notes'}
-                                    floatingLabelText={'Notes'}
-                                    multiLine={true}
-                                    onChange={(event, newValue) => this.handlePropertyChange('notes', newValue)}
-                                    value={this.props.exercise.notes ? this.props.exercise.notes : ''}
-                                />
-                            }
+                            <TextField
+                                style={styles.field}
+                                hintText={'Notes'}
+                                floatingLabelText={'Notes'}
+                                multiLine={true}
+                                onChange={(event, newValue) => this.handlePropertyChange('notes', newValue)}
+                                value={exercise.notes ? exercise.notes : ''}
+                                disabled={this.props.disabled}
+                            />
                         </List>
                     </CardText>
                 </Card>
