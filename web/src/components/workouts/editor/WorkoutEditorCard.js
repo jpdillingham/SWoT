@@ -169,7 +169,7 @@ class WorkoutEditorCard extends Component {
         let fontColor = fontContrastColor(color);
 
         let workout = this.state.workout;
-        let duration = this.areTimesValid() ? getElapsedTime(this.state.workout.startTime, this.state.workout.endTime) : 'N/A';
+        let duration = this.areTimesValid() ? getElapsedTime(getUnixTimestamp(this.state.workout.startTime), getUnixTimestamp(this.state.workout.endTime)) : 'N/A';
         
         let refreshing = this.state.api.isExecuting;
 
