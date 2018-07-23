@@ -181,8 +181,8 @@ class WorkoutEditorCard extends Component {
     areTimesValid = () => {
         let workoutValid = Number.isFinite(getUnixTimestamp(this.state.workout.startTime)) && Number.isFinite(getUnixTimestamp(this.state.workout.endTime));
         let exercisesValid = this.state.workout.routine.exercises.find(e => 
-            !Number.isFinite(getUnixTimestamp(e.startTime)) || 
-            !Number.isFinite(getUnixTimestamp(e.endTime))) === undefined;
+            (e.startTime && !Number.isFinite(getUnixTimestamp(e.startTime))) || 
+            (e.endTime && !Number.isFinite(getUnixTimestamp(e.endTime)))) === undefined;
 
         return workoutValid && exercisesValid;
     }
