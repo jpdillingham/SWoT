@@ -216,9 +216,9 @@ class Workout extends Component {
         })
     }
 
-    handleNavigateToWorkoutEdit = () => {
+    handleNavigate = (path) => {
         this.setState({ api: { isExecuting: true }}, () => {
-            this.navigate(this.props.location.pathname + '/edit')
+            this.navigate(path)
             window.setTimeout(() => {
                 this.setState({ api: { isExecuting: false }}) 
             }, 500)
@@ -250,11 +250,12 @@ class Workout extends Component {
                                 workout={workout} 
                                 onDelete={this.handleWorkoutHistoryDelete}
                                 onChange={this.handleWorkoutHistoryChange}
+                                onCancelClick={() => this.handleNavigate('.')}
                             /> :
                             <WorkoutReportCard 
                                 workout={workout} 
                                 onDelete={this.handleWorkoutHistoryDelete}
-                                onEditClick={this.handleNavigateToWorkoutEdit}
+                                onEditClick={() => this.handleNavigate((this.props.location.pathname + '/edit').replace('//', '/'))}
                             />
         )
     }
