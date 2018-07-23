@@ -3,7 +3,7 @@ import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
 import { ActionAssignmentTurnedIn, ActionDelete, ContentSave } from 'material-ui/svg-icons';
-import { red500 } from 'material-ui/styles/colors'
+import { red500, grey300 } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
 import IconMenu from 'material-ui/IconMenu'
@@ -61,6 +61,10 @@ const styles = {
 }
 
 const initialState = {
+    api: {
+        isExecuting: false,
+        isErrored: false,
+    },
     deleteDialog: {
         open: false,
     },
@@ -129,11 +133,18 @@ class WorkoutEditorCard extends Component {
 
     handleSaveClick = () => {
         if (this.areTimesValid()) {
-            this.props.onChange({ 
-                ...this.state.workout, 
-                startTime: getUnixTimestamp(this.state.workout.startTime), 
-                endTime: getUnixTimestamp(this.state.workout.endTime),
-            });
+            this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
+                this.props.onChange({ 
+                    ...this.state.workout, 
+                    startTime: getUnixTimestamp(this.state.workout.startTime), 
+                    endTime: getUnixTimestamp(this.state.workout.endTime),
+                })
+                .then(() => {
+                    this.setState({ api: { isExecuting: false, isErrored: false }});
+                }, error => {
+                    this.setState({ api: { isExecuting: false, isErrored: true }});
+                })
+            })
         }
     }
 
@@ -156,7 +167,7 @@ class WorkoutEditorCard extends Component {
 
         return (
             <div>
-            <Card zDepth={2} style={ styles.card }>
+            <Card zDepth={2} style={!this.state.api.isExecuting ? styles.card : { ...styles.card, backgroundColor: grey300 }}>
                 <CardHeader                        
                     titleStyle={{ ...styles.cardTitle, color: fontColor }}
                     style={{ ...styles.cardHeader, backgroundColor: color }}
