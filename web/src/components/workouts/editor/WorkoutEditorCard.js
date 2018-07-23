@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
-import { ActionAssignmentTurnedIn, ActionDelete, ContentSave, NavigationCancel } from 'material-ui/svg-icons';
+import { ActionAssignmentTurnedIn, ActionDelete, ContentSave, NavigationCancel, NavigationArrowBack } from 'material-ui/svg-icons';
 import { red500, grey300 } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
@@ -74,6 +74,7 @@ const initialState = {
         open: false,
     },
     workout: undefined,
+    editsMade: false,
 }
 
 class WorkoutEditorCard extends Component {
@@ -103,7 +104,7 @@ class WorkoutEditorCard extends Component {
             },
         };
 
-        this.setState({ workout: w });
+        this.setState({ workout: w, editsMade: false });
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -123,6 +124,7 @@ class WorkoutEditorCard extends Component {
     handlePropertyChange = (property, value) => {
         this.setState({ 
             workout: { ...this.state.workout, [property]: value },
+            editsMade: true,
         });
     }
 
@@ -136,6 +138,7 @@ class WorkoutEditorCard extends Component {
                         .map(e => e.id === exercise.id && e.sequence === exercise.sequence ? exercise : e),                    
                 },
             },
+            editsMade: true,
         });
     }
 
@@ -231,7 +234,8 @@ class WorkoutEditorCard extends Component {
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
-                    <MenuItem primaryText="Cancel Edit" onClick={this.handleCancelEditClick} leftIcon={<NavigationCancel/>}/>
+                    {this.state.editsMade ? <MenuItem primaryText="Cancel Edits" onClick={this.handleCancelEditClick} leftIcon={<NavigationCancel/>}/> :
+                        <MenuItem primaryText="Back to Report" onClick={this.handleCancelEditClick} leftIcon={<NavigationArrowBack/>}/>}
                     <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                 </IconMenu>
                 <CardText>
