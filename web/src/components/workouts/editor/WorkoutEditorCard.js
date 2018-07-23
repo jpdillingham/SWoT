@@ -87,8 +87,8 @@ class WorkoutEditorCard extends Component {
         e = e.map(e => { 
             return { 
                 ...e, 
-                startTime: new Date(e.startTime).toString().split(' ').slice(0, 6).join(' '),
-                endTime: new Date(e.endTime).toString().split(' ').slice(0, 6).join(' '),
+                startTime: e.startTime ? new Date(e.startTime).toString().split(' ').slice(0, 6).join(' ') : e.startTime,
+                endTime: e.endTime ? new Date(e.endTime).toString().split(' ').slice(0, 6).join(' ') : e.endTime,
             } 
         });
 
@@ -146,8 +146,8 @@ class WorkoutEditorCard extends Component {
             e = e.map(e => { 
                 return { 
                     ...e, 
-                    startTime: getUnixTimestamp(e.startTime),
-                    endTime: getUnixTimestamp(e.endTime),
+                    startTime: e.startTime ? getUnixTimestamp(e.startTime) : e.startTime,
+                    endTime: e.endTime ? getUnixTimestamp(e.endTime) : e.endTime,
                 } 
             });
 
