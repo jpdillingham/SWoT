@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
-import { ActionAssignmentTurnedIn, ActionDelete, ContentSave } from 'material-ui/svg-icons';
+import { ActionAssignmentTurnedIn, ActionDelete, ContentSave, NavigationCancel } from 'material-ui/svg-icons';
 import { red500, grey300 } from 'material-ui/styles/colors'
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import IconButton from 'material-ui/IconButton'
@@ -155,6 +156,14 @@ class WorkoutEditorCard extends Component {
         }
     }
 
+    navigate = (url) => {
+        this.props.history.push(url);
+    }
+
+    handleCancelEditClick = () => {
+        this.props.onCancelClick();
+    }
+
     areTimesValid = () => {
         let workoutValid = Number.isFinite(getUnixTimestamp(this.state.workout.startTime)) && Number.isFinite(getUnixTimestamp(this.state.workout.endTime));
         let exercisesValid = this.state.workout.routine.exercises.find(e => 
@@ -209,6 +218,7 @@ class WorkoutEditorCard extends Component {
                     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                     targetOrigin={{horizontal: 'right', vertical: 'top'}}
                 >
+                    <MenuItem primaryText="Cancel Edit" onClick={this.handleCancelEditClick} leftIcon={<NavigationCancel/>}/>
                     <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
                 </IconMenu>
                 <CardText>
@@ -273,4 +283,4 @@ class WorkoutEditorCard extends Component {
     }
 }
 
-export default WorkoutEditorCard
+export default withRouter(WorkoutEditorCard)
