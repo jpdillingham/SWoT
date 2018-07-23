@@ -181,7 +181,6 @@ class WorkoutEditorCard extends Component {
     areTimesValid = () => {
         let workoutValid = Number.isFinite(getUnixTimestamp(this.state.workout.startTime)) && Number.isFinite(getUnixTimestamp(this.state.workout.endTime));
         let exercisesValid = this.state.workout.routine.exercises.find(e => 
-            (e.startTime === undefined && e.endTime === undefined) ||
             !Number.isFinite(getUnixTimestamp(e.startTime)) || 
             !Number.isFinite(getUnixTimestamp(e.endTime))) === undefined;
 
@@ -227,6 +226,7 @@ class WorkoutEditorCard extends Component {
                         style={styles.fab}
                         mini={true}
                         onClick={this.handleSaveClick}
+                        disabled={!this.areTimesValid()}
                     >
                         <ContentSave />
                     </FloatingActionButton>
