@@ -218,6 +218,7 @@ class WorkoutEditorCard extends Component {
                             exercise={e}
                             validationErrors={this.state.validationErrors}
                             onChange={this.handleExerciseChange}
+                            disabled={refreshing}
                         />
                     )}
                     <TextField
