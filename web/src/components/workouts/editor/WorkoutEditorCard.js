@@ -170,7 +170,8 @@ class WorkoutEditorCard extends Component {
 
         let workout = this.state.workout;
         let duration = this.areTimesValid() ? getElapsedTime(this.state.workout.startTime, this.state.workout.endTime) : 'N/A';
-        duration = this.areTimesValid(); // remove when done testing time validation
+        
+        
 
         return (
             <div>
