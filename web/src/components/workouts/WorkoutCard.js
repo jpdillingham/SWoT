@@ -194,7 +194,7 @@ class WorkoutCard extends Component {
                     </CardHeader>
                     <IconMenu
                         style={styles.iconMenu}
-                        iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                        iconButtonElement={<IconButton><MoreVertIcon color={fontColor}/></IconButton>}
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >

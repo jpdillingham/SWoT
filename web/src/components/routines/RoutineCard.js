@@ -129,12 +129,14 @@ class RoutineCard extends Component {
         let color = this.props.routine.color;
         color = !color || color === 0 ? red500 : color;
 
+        let fontColor = fontContrastColor(color);
+
         return (
             <div style={styles.container}>
                 <Card zDepth={2} style={styles.card}>
                     <CardHeader
                         title={this.props.routine.name}
-                        titleStyle={{ ...styles.cardTitle, color: fontContrastColor(color) }}
+                        titleStyle={{ ...styles.cardTitle, color: fontColor }}
                         style={{ ...styles.cardHeader, backgroundColor: color }}
                         avatar={
                             <Avatar 
@@ -157,7 +159,7 @@ class RoutineCard extends Component {
                     </CardHeader>
                     <IconMenu
                             style={styles.iconMenu}
-                            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+                            iconButtonElement={<IconButton><MoreVertIcon color={fontColor}/></IconButton>}
                             anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                             targetOrigin={{horizontal: 'right', vertical: 'top'}}
                     >
