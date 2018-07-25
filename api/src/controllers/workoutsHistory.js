@@ -4,7 +4,7 @@ const util = require('../util')
 
 const router = express.Router();
 
-router.get('/history/count', (req, res) => {
+router.get('/count', (req, res) => {
     let userId = util.getUserId(req);
     let fromTime = req.query && req.query.fromTime ? req.query.fromTime : 0;
     let toTime = req.query && req.query.toTime ? req.query.toTime : new Date().getTime();
@@ -16,7 +16,7 @@ router.get('/history/count', (req, res) => {
     })
 })
 
-router.get('/history/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     let userId = util.getUserId(req);
     let id = req.params.id;
 
@@ -39,7 +39,7 @@ router.get('/history/:id', (req, res) => {
     })
 })
 
-router.put('/history/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     let userId = util.getUserId(req);
     let id = req.params.id;
     let workout = req.body;
@@ -62,7 +62,7 @@ router.put('/history/:id', (req, res) => {
     });
 });
 
-router.delete('/history/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     let userId = util.getUserId(req);
     let id = req.params.id;
 
@@ -85,7 +85,7 @@ router.delete('/history/:id', (req, res) => {
 // sort - /workouts?order=<ASC|DESC>
 // filter by routine - /workouts?routineId=guid
 // filter by date range = /workouts?fromDate=<unix timestamp>&toDate=<unix timestamp>
-router.get('/history', (req, res) => {
+router.get('/', (req, res) => {
     let userId = util.getUserId(req);
     let order = req.query && req.query.order ? req.query.order.toLowerCase() : undefined;
     let routineId = req.query && req.query.routineId ? req.query.routineId.toLowerCase() : undefined;
