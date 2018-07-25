@@ -4,10 +4,13 @@ const util = require('../util')
 
 const router = express.Router();
 
+const minDate = 0;
+const maxDate = new Date('285428751-11-12T07:36:32+00:00').getTime();
+
 router.get('/count', (req, res) => {
     let userId = util.getUserId(req);
-    let fromTime = req.query && req.query.fromTime ? req.query.fromTime : 0;
-    let toTime = req.query && req.query.toTime ? req.query.toTime : new Date().getTime();
+    let fromTime = req.query && req.query.fromTime ? req.query.fromTime : minDate;
+    let toTime = req.query && req.query.toTime ? req.query.toTime : maxDate;
 
     database.queryAll(userId, fromTime, toTime)
     .then(workouts => {
@@ -20,7 +23,7 @@ router.get('/:id', (req, res) => {
     let userId = util.getUserId(req);
     let id = req.params.id;
 
-    database.queryAll(userId, 0, new Date().getTime())
+    database.queryAll(userId, minDate, maxDate)
     .then(workouts => {
         let workout = workouts.find(w => w.id === id);
 
@@ -44,7 +47,7 @@ router.put('/:id', (req, res) => {
     let id = req.params.id;
     let workout = req.body;
 
-    database.queryAll(userId, 0, new Date().getTime())
+    database.queryAll(userId, minDate, maxDate)
     .then(workouts => {
         let foundWorkout = workouts.find(w => w.id == id);
 
@@ -66,7 +69,7 @@ router.delete('/:id', (req, res) => {
     let userId = util.getUserId(req);
     let id = req.params.id;
 
-    database.queryAll(userId, 0, new Date().getTime())
+    database.queryAll(userId, minDate, maxDate)
     .then(workouts => {
         let workout = workouts.find(w => w.id === id);
 
@@ -91,8 +94,8 @@ router.get('/', (req, res) => {
     let routineId = req.query && req.query.routineId ? req.query.routineId.toLowerCase() : undefined;
     let limit = req.query && req.query.limit ? req.query.limit : undefined;
     let offset = req.query && req.query.offset ? req.query.offset : undefined;
-    let fromTime = req.query && req.query.fromTime ? req.query.fromTime : 0;
-    let toTime = req.query && req.query.toTime ? req.query.toTime : new Date().getTime();
+    let fromTime = req.query && req.query.fromTime ? req.query.fromTime : minDate;
+    let toTime = req.query && req.query.toTime ? req.query.toTime : maxDate;
 
     database.queryAll(userId, fromTime, toTime)
     .then(workouts => {
