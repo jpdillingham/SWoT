@@ -11,6 +11,7 @@ const util = require('./util')
 const exercises = require('./controllers/exercises')
 const routines = require('./controllers/routines')
 const workouts = require('./controllers/workouts')
+const workoutsHistory = require('./controllers/workoutsHistory')
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/exercises', exercises);
 app.use('/routines', routines);
+app.use('/workouts/history', workoutsHistory);
 app.use('/workouts', workouts);
 
 app.listen(3000, () => console.log('Listening on port 3000.')); // ignored by lambda
