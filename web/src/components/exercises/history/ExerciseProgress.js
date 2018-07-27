@@ -250,9 +250,9 @@ class ExerciseProgress extends Component {
                                                             options={{ 
                                                                 ...CHART_OPTIONS, 
                                                                 tooltips: {
-                                                                    mode: 'index',
+                                                                    ...CHART_OPTIONS.tooltips,
                                                                     callbacks: {
-                                                                        footer: (tooltipItems, data) => exercises[tooltipItems[0].index] && exercises[tooltipItems[0].index].notes? 'Notes: ' + exercises[tooltipItems[0].index].notes : undefined
+                                                                        footer: (tooltipItems, data) => exercises[tooltipItems[0].index] && exercises[tooltipItems[0].index].notes ? 'Notes: ' + exercises[tooltipItems[0].index].notes : undefined
                                                                     },
                                                                 } 
                                                             }}
