@@ -247,7 +247,24 @@ class ExerciseProgress extends Component {
                                                     <div style={{marginTop: 15, height: this.state.window.height - 290}}>
                                                         <Line 
                                                             data={chartData}
-                                                            options={CHART_OPTIONS}
+                                                            options={{ 
+                                                                ...CHART_OPTIONS, 
+                                                                tooltips: {
+                                                                    mode: 'index',
+                                                                    callbacks: {
+                                                                        // Use the footer callback to display the sum of the items showing in the tooltip
+                                                                        footer: function(tooltipItems, data) {
+                                                                            console.log(tooltipItems[0].index
+                                                                                , data);
+                                                                            // var sum = 0;
+                                                                            // tooltipItems.forEach(function(tooltipItem) {
+                                                                            //     sum += data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                                                            // });
+                                                                            return 'Sum: ';
+                                                                        },
+                                                                    },
+                                                                } 
+                                                            }}
                                                         />
                                                     </div>
                                         }
