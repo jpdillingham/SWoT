@@ -252,7 +252,7 @@ class ExerciseProgress extends Component {
                                                                 tooltips: {
                                                                     mode: 'index',
                                                                     callbacks: {
-                                                                        footer: (tooltipItems, data) => exercises[tooltipItems[0].index] ? 'Notes: ' + exercises[tooltipItems[0].index].notes : undefined
+                                                                        footer: (tooltipItems, data) => exercises[tooltipItems[0].index] && exercises[tooltipItems[0].index].notes? 'Notes: ' + exercises[tooltipItems[0].index].notes : undefined
                                                                     },
                                                                 } 
                                                             }}
