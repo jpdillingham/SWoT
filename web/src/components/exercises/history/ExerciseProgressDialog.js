@@ -30,7 +30,7 @@ const initialState = {
     },
     filters: {
         offset: 0,
-        limit: 10,
+        limit: 5,
         order: 'desc',
         exerciseId: undefined,
     }
