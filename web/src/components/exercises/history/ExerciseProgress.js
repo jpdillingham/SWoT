@@ -252,16 +252,7 @@ class ExerciseProgress extends Component {
                                                                 tooltips: {
                                                                     mode: 'index',
                                                                     callbacks: {
-                                                                        // Use the footer callback to display the sum of the items showing in the tooltip
-                                                                        footer: function(tooltipItems, data) {
-                                                                            console.log(tooltipItems[0].index
-                                                                                , data);
-                                                                            // var sum = 0;
-                                                                            // tooltipItems.forEach(function(tooltipItem) {
-                                                                            //     sum += data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                                                                            // });
-                                                                            return 'Sum: ';
-                                                                        },
+                                                                        footer: (tooltipItems, data) => exercises[tooltipItems[0].index] ? 'Notes: ' + exercises[tooltipItems[0].index].notes : undefined
                                                                     },
                                                                 } 
                                                             }}
