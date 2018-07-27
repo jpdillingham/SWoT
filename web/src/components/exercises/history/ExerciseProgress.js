@@ -247,7 +247,15 @@ class ExerciseProgress extends Component {
                                                     <div style={{marginTop: 15, height: this.state.window.height - 290}}>
                                                         <Line 
                                                             data={chartData}
-                                                            options={CHART_OPTIONS}
+                                                            options={{ 
+                                                                ...CHART_OPTIONS, 
+                                                                tooltips: {
+                                                                    ...CHART_OPTIONS.tooltips,
+                                                                    callbacks: {
+                                                                        footer: (tooltipItems, data) => exercises[tooltipItems[0].index] && exercises[tooltipItems[0].index].notes ? 'Notes: ' + exercises[tooltipItems[0].index].notes : undefined
+                                                                    },
+                                                                } 
+                                                            }}
                                                         />
                                                     </div>
                                         }
