@@ -145,7 +145,15 @@ class ExerciseProgressDialog extends Component {
                         <Line 
                             height={window.innerHeight - 410}
                             data={chartData}
-                            options={CHART_OPTIONS}
+                            options={{ 
+                                ...CHART_OPTIONS, 
+                                tooltips: {
+                                    ...CHART_OPTIONS.tooltips,
+                                    callbacks: {
+                                        footer: (tooltipItems, data) => exercises[tooltipItems[0].index] && exercises[tooltipItems[0].index].notes ? 'Notes: ' + exercises[tooltipItems[0].index].notes : undefined
+                                    },
+                                } 
+                            }}
                         />
                     }
                     {this.state.api.isExecuting ? <Spinner/> : ''}
