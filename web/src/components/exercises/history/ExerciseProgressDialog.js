@@ -30,8 +30,8 @@ const initialState = {
     },
     filters: {
         offset: 0,
-        limit: 10,
-        order: 'asc',
+        limit: 5,
+        order: 'desc',
         exerciseId: undefined,
     }
 }
@@ -109,6 +109,7 @@ class ExerciseProgressDialog extends Component {
 
         let history = this.props.exercisesHistory;
         let exercises = history && history.exercises ? history.exercises : [];
+        exercises = exercises.sort(sortByProp('endTime'));
 
         let chartData = {
             labels: exercises.map(e => moment(e.endTime).format('l')),
