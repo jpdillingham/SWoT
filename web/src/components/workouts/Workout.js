@@ -184,8 +184,15 @@ class Workout extends Component {
                 this.props.showSnackbar('Error completing Workout \'' + workout.routine.name + '\'.');
                 reject(error);
             })
-            .then(() => this.fetchWorkout());
-        })
+            .then(() => {
+                // wait a little bit before trying to fetch the completed workout record from the backend.
+                // the api operation that moves the completed workout is async but there's still lag somewhere
+                // in a spot i can't control
+                this.setState({ api: { ...this.state.api, isExecuting: true}}, () => {
+                    setTimeout(() => this.fetchWorkout(), 1000);
+                })
+            });
+        });
     }
 
     handleWorkoutStart = (workout) => {
