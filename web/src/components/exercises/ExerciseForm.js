@@ -81,7 +81,6 @@ const initialState = {
     resetDialog: {
         open: false,
     },
-    validationErrors: {}
 }
 
 class ExerciseForm extends Component {
@@ -113,10 +112,6 @@ class ExerciseForm extends Component {
                     return m.name === metric.name ? { ...metric, value: value } : m;
                 })
             },
-            validationErrors: {
-                ...this.state.validationErrors,
-                [metric.name]: ''
-            }
         });
     }
 
@@ -142,16 +137,6 @@ class ExerciseForm extends Component {
         this.setState({ resetDialog: { open: false }});
     }
 
-    getValidationErrors = (state) => {
-        let errors = {};
-
-        state.exercise.metrics.forEach(m => {
-            errors[m.name] = !m.value || m.value === '' ? 'A value for ' + m.name + ' must be provided.' : '';
-        })
-
-        return errors;
-    }
-
     handleNotesChange = (event, value) => {
         this.setState({ exercise: { ...this.state.exercise, notes: value }});
     }
@@ -161,14 +146,7 @@ class ExerciseForm extends Component {
             this.updateExercise({ ...this.state.exercise, startTime: new Date().getTime() });
         }
         else if (!this.props.exercise.endTime) {
-            this.setState({
-                ...this.state,
-                validationErrors: this.getValidationErrors(this.state)
-            }, () => {
-                if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                    this.updateExercise({ ...this.state.exercise, endTime: Date.now() })
-                }
-            })
+            this.updateExercise({ ...this.state.exercise, endTime: Date.now() })
         }
         else {
             this.updateExercise({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined })
@@ -281,7 +259,6 @@ class ExerciseForm extends Component {
                                 <TextField
                                     key={index}
                                     hintText={this.getMetricDisplayName(m)}
-                                    errorText={this.state.validationErrors[m.name]}
                                     floatingLabelText={this.getMetricDisplayName(m)}
                                     onChange={(e,v) => this.handleMetricChange(e,v,m)}
                                     value={m.value ? m.value : ''}
