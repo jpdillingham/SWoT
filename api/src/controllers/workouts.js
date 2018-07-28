@@ -97,8 +97,8 @@ router.put('/:id', (req, res) => {
         }
         else {
             return Promise.all([
-                database.set(userId, 'workouts', workouts),
-                database.put(userId, workout)
+                database.set(userId, 'workouts', workouts), // update the primary table to remove the workout
+                database.put(userId, workout) // insert the workout into history
             ]).then(() => { return workouts });
         }
     })
