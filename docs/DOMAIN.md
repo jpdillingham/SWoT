@@ -1,3 +1,7 @@
+# Domain
+
+The following describes the data objects used within the application.
+
 # Exercise
 
 The Exercise object contains a name, a url pointing to a description of the exercise, and an array containing the metrics associated with the exercise.
