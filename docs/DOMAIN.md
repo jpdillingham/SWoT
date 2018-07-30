@@ -56,6 +56,7 @@ The Routine object contains a name and an ordered array of Exercise ids.
 routine: {
     id: 'guid',
     name: 'string',
+    color: 'hex string', 
     exercises: [
         { 
             sequence: int,
@@ -79,7 +80,8 @@ routine: {
 ```javascript
 {
     "id": "fae96198-80a7-da98-0602-d807669692f7",
-    "name": "Just Bench"
+    "name": "Just Bench",
+    "color": "#000000",
     "exercises": [
         {
             "sequence": 1,
@@ -110,6 +112,8 @@ routine: {
 
 The Workout object represents a single instance of a Routine and mirrors the Routine structure but adds a few additional fields to contain results.
 
+Note that the application treats completed Workouts separately, but the schema is the same.
+
 ## Model
 
 ```javascript
@@ -120,7 +124,8 @@ The Workout object represents a single instance of a Routine and mirrors the Rou
     endTime: long, 
     routine: {
         id: 'guid',
-        name: 'string'
+        name: 'string',
+        color: 'hex string',
         exercises: [
             {
                 sequence: int,
@@ -155,7 +160,8 @@ The Workout object represents a single instance of a Routine and mirrors the Rou
     "endTime": 1524963566741, //result
     "routine": {
         "id": "b2a2b789-b4f0-f154-9da3-de27112b5585",
-        "name": "Running"
+        "name": "Running",
+        "color": "#FFFFFF",
         "exercises": [
             {
                 "id": "0f2f3a76-c1a2-4a53-bec9-0f124a1f3b16",
