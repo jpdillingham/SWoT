@@ -10,7 +10,10 @@ Application security is handled through [AWS Cognito](https://docs.aws.amazon.co
 
 # Exercises
 
-
+|Verb|Route|Body|Response|
+|----|-----|Body|--------|
+|GET |/exercises|N/A|[Exercise[]](https://github.com/jpdillingham/SWoT/blob/master/docs/DOMAIN.md)|
+|
 
 # Routines
 
