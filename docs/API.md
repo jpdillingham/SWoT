@@ -10,10 +10,24 @@ Application security is handled through [AWS Cognito](https://docs.aws.amazon.co
 
 # Exercises
 
-|Verb|Route|Body|Response|
-|----|-----|Body|--------|
-|GET |/exercises|N/A|[Exercise[]](https://github.com/jpdillingham/SWoT/blob/master/docs/DOMAIN.md)|
-|
+|Verb|Route|Body|Response|Status|
+|----|-----|----|--------|------|
+|GET|/exercises|N/A|[Exercise[]](https://github.com/jpdillingham/SWoT/blob/master/docs/DOMAIN.md)|200|
+|POST|/exercises|Exercise|Exercise|201|
+|PUT|/exercises/{id}|Exercise|Exercise|200|
+|DELETE|/exercises{id}|N/A|N/A|204|
+|GET|/exercises/history|N/A|Exercise[]|200|
+|GET|/exercises/history/{id}|N/A|Exercise[]|200|
+
+Exercise history is available via the `/exercises/history` route.  This route accepts the following query parameters.
+
+|Parameter|Value(s)|Effect|
+|---------|--------|------|
+|?order=|asc\|desc|Sorts the resulting array by end time|
+|?limit=|int|Limits the number of returned array elements|
+|?offset=|int|Used with limit, defines the starting element of the return array|
+|?fromTime=|unix timestamp|Filters results ending earlier than the given time|
+|?toTime=|unix timestamp|Filters results ending later than the given time|
 
 # Routines
 
