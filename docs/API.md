@@ -16,10 +16,11 @@ Application security is handled through [AWS Cognito](https://docs.aws.amazon.co
 |POST|/exercises|Exercise|Exercise|201|
 |PUT|/exercises/{id}|Exercise|Exercise|200|
 |DELETE|/exercises{id}|N/A|N/A|204|
-|GET|/exercises/history|N/A|Exercise[]|200|
-|GET|/exercises/history/{id}|N/A|Exercise[]|200|
+|GET|/exercises/history/{id?}|N/A|Exercise[]|200|
 
-Exercise history is available via the `/exercises/history` route.  This route accepts the following query parameters.
+Exercise history is available via the `/exercises/history` route and accepts an optional `id` parameter.  If specified, only records for the matching Exercise are returned.  
+
+The history route accepts the following query parameters.
 
 |Parameter|Value(s)|Effect|
 |---------|--------|------|
