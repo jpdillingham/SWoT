@@ -15,7 +15,7 @@ Application security is handled through [AWS Cognito](https://docs.aws.amazon.co
 |GET|/exercises|N/A|[Exercise[]](https://github.com/jpdillingham/SWoT/blob/master/docs/DOMAIN.md)|200|
 |POST|/exercises|Exercise|Exercise|201|
 |PUT|/exercises/{id}|Exercise|Exercise|200|
-|DELETE|/exercises{id}|N/A|N/A|204|
+|DELETE|/exercises/{id}|N/A|N/A|204|
 |GET|/exercises/history/{id?}|N/A|Exercise[]|200|
 
 Exercise history is available via the `/exercises/history` route and accepts an optional `id` parameter.  If specified, only records for the matching Exercise are returned.  
