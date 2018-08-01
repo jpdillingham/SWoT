@@ -42,4 +42,14 @@ The history route accepts the following query parameters.
 
 # Workouts
 
+|Verb|Route|Body|Response|Status|
+|----|-----|----|--------|------|
+|GET|/workouts|N/A|[Workout[]](https://github.com/jpdillingham/SWoT/blob/master/docs/DOMAIN.md)|200|
+|GET|/workouts/{id}|N/A|Workout|200|
+|POST|/workouts|Workout|Workout|201|
+|PUT|/workouts/{id}|Workout|Workout[]|200|
+|DELETE|/workouts/{id}|N/A|N/A|204|
+
+A PUT request with a body containing a Workout with a non-null `endTime` will result in that Workout being removed from the collection of Workouts and moved to WorkoutsHistory.
+
 # Workout History
