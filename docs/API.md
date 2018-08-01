@@ -53,3 +53,21 @@ The history route accepts the following query parameters.
 A PUT request with a body containing a Workout with a non-null `endTime` will result in that Workout being removed from the collection of Workouts and moved to WorkoutsHistory.
 
 # Workout History
+
+|Verb|Route|Body|Response|Status|
+|----|-----|----|--------|------|
+|GET|/workouts/history|N/A|[Workout[]](https://github.com/jpdillingham/SWoT/blob/master/docs/DOMAIN.md)|200|
+|GET|/workouts/history/{id}|N/A|Workout|200|
+|PUT|/workouts/history/{id}|Workout|Workout|200|
+|DELETE|/workouts/history/{id}|N/A|N/A|204|
+
+The GET request on the `/workouts/history` route accepts the following query parameters.
+
+|Parameter|Value(s)|Effect|
+|---------|--------|------|
+|?routineId=|guid|Filters results by Routine|
+|?order=|asc\|desc|Sorts the resulting array by end time|
+|?limit=|int|Limits the number of returned array elements|
+|?offset=|int|Used with limit, defines the starting element of the return array|
+|?fromTime=|unix timestamp|Filters results ending earlier than the given time|
+|?toTime=|unix timestamp|Filters results ending later than the given time|
