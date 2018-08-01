@@ -32,6 +32,14 @@ The history route accepts the following query parameters.
 
 # Routines
 
+|Verb|Route|Body|Response|Status|
+|----|-----|----|--------|------|
+|GET|/routines|N/A|[Routine[]](https://github.com/jpdillingham/SWoT/blob/master/docs/DOMAIN.md)|200|
+|POST|/routines|Routine|Routine|201|
+|PUT|/routines/{id}|Routine|Routine|200|
+|DELETE|/routines/{id}|N/A|N/A|204|
+|GET|/routines/history|N/A|Redirect to /workouts/history|307|
+
 # Workouts
 
 # Workout History
