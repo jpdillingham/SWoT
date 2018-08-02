@@ -81,3 +81,23 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/exercise'
+  workout:
+    type: object
+    properties:
+      id: 
+        description: Unique identifier for the Workout
+        type: string
+      scheduledTime:
+        description: The unix timestamp of the time for which the Workout was scheduled
+        type: integer
+      startTime:
+        description: The unix timestamp of the time at which the Workout was started
+        type: integer
+      endTime:
+        description: The unix timestamp of the time at which the Workout ended
+        type: integer
+      routine:
+        $ref: '#/definitions/routine'
+      notes:
+        description: Notes entered during the Workout
+        type: string
