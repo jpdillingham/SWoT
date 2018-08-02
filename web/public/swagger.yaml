@@ -7,22 +7,18 @@ produces:
   - application/json
 swagger: '2.0'
 
-security: []
-
 paths:
   /exercises/:
     get:
-      operationId: GetExercises
-      summary: Get list of configured Exercises
+      operationId: get-exercises
+      summary: Gets a list of configured Exercises
       responses:
         200:
           description: OK
           schema:
             type: array
             items:
-              $ref: '#/definitions/Cluster'
-      security:
-        - keystone: []
+              $ref: '#/definitions/exercise'
     post:
       operationId: CreateCluster
       summary: Create a cluster
@@ -30,20 +26,42 @@ paths:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/Cluster'
+            $ref: '#/definitions/exercise'
       parameters:
         - name: body
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Cluster'
-      security:
-        - keystone: []
+            $ref: '#/definitions/exercise'
 
 definitions:
-  Cluster:
+  exercise:
     type: object
     properties:
+      id:
+        description: Unique identifier for the Exercise
+        type: string
       name:
-        description: name of the cluster
+        description: The display name of the Exercise
+        type: string
+      type:
+        description: The Exercise type (weightlifting, cardio, stretching, balance)
+        type: string
+      url:
+        description: A url to a description of the Exercise
+        type: string
+      metrics:
+        $ref: '#/definitions/metric'
+  metric:
+    type: object
+    required: [ name ]
+    properties:
+      name:
+        description: The name of the Metric
+        type: string
+      uom:
+        description: The unit of measure
+        type: string
+      value:
+        description: The result value
         type: string
