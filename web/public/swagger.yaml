@@ -65,3 +65,19 @@ definitions:
       value:
         description: The result value
         type: string
+  routine:
+    type: object
+    properties:
+      id:
+        description: Unique identifier for the Routine
+        type: string
+      name:
+        description: The display name of the Routine
+        type: string
+      color:
+        description: The hexadecimal color code for the Routine
+        type: string
+      exercises:
+        type: array
+        items:
+          $ref: '#/definitions/exercise'
