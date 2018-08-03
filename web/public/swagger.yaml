@@ -36,6 +36,7 @@ paths:
             $ref: '#/definitions/exercise'
       parameters:
         - name: Exercise
+          description: The Exercise to add
           in: body
           required: true
           schema:
@@ -53,10 +54,12 @@ paths:
           description: Error
       parameters:
         - name: exerciseId
+          description: The id of the Exercise to update
           in: path
           required: true
           type: string
         - name: exercise
+          description: The Exercise with which to update the specified Exercise
           in: body
           required: true
           schema:
@@ -72,6 +75,7 @@ paths:
           description: Error
       parameters:
         - name: exerciseId
+          description: The id of the Exercise to delete
           in: path
           required: true
           type: string
@@ -79,7 +83,7 @@ paths:
     get:
       tags: 
         - Exercises
-      summary: Gets a list of configured Exercises
+      summary: Gets Exercise history for a specified Exercise
       responses:
         200:
           description: Ok
@@ -89,6 +93,79 @@ paths:
               $ref: '#/definitions/exercise'
         500:
           description: Error
+      parameters:
+        - name: order
+          description: The sort order of records returned, by endTime
+          in: query
+          required: false
+          type: string
+          enum: [asc, desc]
+        - name: limit
+          description: The number of records to return
+          in: query
+          required: false
+          type: integer
+        - name: offset
+          description: The offset from which the limit applies
+          in: query
+          required: false
+          type: integer
+        - name: fromTime
+          description: The unix timestamp for the lower bound of history, by endTime
+          in: query
+          required: false
+          type: integer
+        - name: toTime
+          description: The unix timestamp for the upper bound of history, by endTime
+          in: query
+          required: false
+          type: integer
+  /exercises/history/{exerciseId}:
+    get:
+      tags: 
+        - Exercises
+      summary: Gets Exercise history for a specified Exercise
+      responses:
+        200:
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/exercise'
+        500:
+          description: Error
+      parameters:
+        - name: exerciseId
+          description: The id of the Exercise for which to retreive history
+          in: path
+          required: true
+          type: string
+        - name: order
+          description: The sort order of records returned, by endTime
+          in: query
+          required: false
+          type: string
+          enum: [asc, desc]
+        - name: limit
+          description: The number of records to return
+          in: query
+          required: false
+          type: integer
+        - name: offset
+          description: The offset from which the limit applies
+          in: query
+          required: false
+          type: integer
+        - name: fromTime
+          description: The unix timestamp for the lower bound of history, by endTime
+          in: query
+          required: false
+          type: integer
+        - name: toTime
+          description: The unix timestamp for the upper bound of history, by endTime
+          in: query
+          required: false
+          type: integer
 
 definitions:
   exercise:
