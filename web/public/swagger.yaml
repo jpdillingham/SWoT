@@ -52,6 +52,18 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/exercise'
+    delete:
+      summary: Deletes an Exercise
+      responses:
+        204:
+          description: Deleted
+        500:
+          description: Error
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          type: string
 
 definitions:
   exercise:
