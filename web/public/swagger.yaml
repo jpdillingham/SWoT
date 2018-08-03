@@ -7,9 +7,14 @@ produces:
   - application/json
 swagger: '2.0'
 
+tags:
+  - name: Exercises
+
 paths:
   /exercises/:
     get:
+      tags: 
+        - Exercises
       summary: Gets a list of configured Exercises
       responses:
         200:
@@ -21,6 +26,8 @@ paths:
         500:
           description: Error
     post:
+      tags: 
+        - Exercises
       summary: Adds an Exercise
       responses:
         201:
@@ -34,6 +41,8 @@ paths:
           schema:
             $ref: '#/definitions/exercise'
     put:
+      tags: 
+        - Exercises
       summary: Updates an Exercise
       responses:
         200:
@@ -53,6 +62,8 @@ paths:
           schema:
             $ref: '#/definitions/exercise'
     delete:
+      tags: 
+        - Exercises
       summary: Deletes an Exercise
       responses:
         204:
@@ -64,6 +75,20 @@ paths:
           in: path
           required: true
           type: string
+  /exercises/history/:
+    get:
+      tags: 
+        - Exercises
+      summary: Gets a list of configured Exercises
+      responses:
+        200:
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/exercise'
+        500:
+          description: Error
 
 definitions:
   exercise:
