@@ -10,25 +10,44 @@ swagger: '2.0'
 paths:
   /exercises/:
     get:
-      operationId: get-exercises
       summary: Gets a list of configured Exercises
       responses:
         200:
-          description: OK
+          description: Ok
           schema:
             type: array
             items:
               $ref: '#/definitions/exercise'
+        500:
+          description: Error
     post:
-      operationId: CreateCluster
-      summary: Create a cluster
+      summary: Adds an Exercise
       responses:
-        200:
-          description: OK
+        201:
+          description: Created
           schema:
             $ref: '#/definitions/exercise'
       parameters:
-        - name: body
+        - name: Exercise
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/exercise'
+    put:
+      summary: Updates an Exercuse
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/exercise'
+        500:
+          description: Error
+      parameters:
+        - name: exerciseId
+          in: path
+          required: true
+          type: string
+        - name: exercise
           in: body
           required: true
           schema:
