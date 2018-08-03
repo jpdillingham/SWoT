@@ -34,7 +34,7 @@ paths:
           schema:
             $ref: '#/definitions/exercise'
     put:
-      summary: Updates an Exercuse
+      summary: Updates an Exercise
       responses:
         200:
           description: Ok
