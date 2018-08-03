@@ -9,6 +9,7 @@ swagger: '2.0'
 
 tags:
   - name: Exercises
+  - name: Routines
 
 paths:
   /exercises/:
@@ -79,6 +80,7 @@ paths:
           in: path
           required: true
           type: string
+          
   /exercises/history/:
     get:
       tags: 
@@ -120,6 +122,7 @@ paths:
           in: query
           required: false
           type: integer
+          
   /exercises/history/{exerciseId}:
     get:
       tags: 
@@ -166,6 +169,75 @@ paths:
           in: query
           required: false
           type: integer
+
+  /routines/:
+    get:
+      tags: 
+        - Routines
+      summary: Gets a list of configured Routines
+      responses:
+        200:
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/routine'
+        500:
+          description: Error
+    post:
+      tags: 
+        - Routines
+      summary: Adds a Routine
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/routine'
+      parameters:
+        - name: Routine
+          description: The Routine to add
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/routine'
+    put:
+      tags: 
+        - Routines
+      summary: Updates a Routine
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/routine'
+        500:
+          description: Error
+      parameters:
+        - name: routineId
+          description: The id of the Routine to update
+          in: path
+          required: true
+          type: string
+        - name: routine
+          description: The Routine with which to update the specified Routine
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/routine'
+    delete:
+      tags: 
+        - Routines
+      summary: Deletes a Routine
+      responses:
+        204:
+          description: Deleted
+        500:
+          description: Error
+      parameters:
+        - name: routineId
+          description: The id of the Routine to delete
+          in: path
+          required: true
+          type: string
 
 definitions:
   exercise:
