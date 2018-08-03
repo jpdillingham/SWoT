@@ -51,7 +51,9 @@ definitions:
         description: A url to a description of the Exercise
         type: string
       metrics:
-        $ref: '#/definitions/metric'
+        type: array
+        items:
+          $ref: '#/definitions/metric'
   metric:
     type: object
     required: [ name ]
