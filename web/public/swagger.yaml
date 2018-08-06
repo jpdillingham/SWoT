@@ -238,6 +238,21 @@ paths:
           in: path
           required: true
           type: string
+
+  /workouts/:
+    get:
+      tags: 
+        - Workouts
+      summary: Gets a list of active and scheduled Workouts
+      responses:
+        200:
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/workout'
+        500:
+          description: Error
     post:
       tags: 
         - Workouts
@@ -311,21 +326,6 @@ paths:
           in: path
           required: true
           type: string
-
-  /workouts/:
-    get:
-      tags: 
-        - Workouts
-      summary: Gets a list of active and scheduled Workouts
-      responses:
-        200:
-          description: Ok
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/workout'
-        500:
-          description: Error
 
 definitions:
   exercise:
