@@ -238,7 +238,46 @@ paths:
           in: path
           required: true
           type: string
-
+    post:
+      tags: 
+        - Workouts
+      summary: Schedules a Workout
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/workout'
+      parameters:
+        - name: Workout
+          description: The Workout to schedule
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/workout'
+    put:
+      tags: 
+        - Workouts
+      summary: Updates a Workout
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/workout'
+        500:
+          description: Error
+      parameters:
+        - name: workoutId
+          description: The id of the Workout to update
+          in: path
+          required: true
+          type: string
+        - name: workout
+          description: The Workout with which to update the specified Workout
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/workout'
+            
   /workouts/:
     get:
       tags: 
