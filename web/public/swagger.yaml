@@ -42,6 +42,7 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/exercise'
+  /exercises/{exerciseId}:
     put:
       tags: 
         - Exercises
@@ -139,7 +140,7 @@ paths:
           description: Error
       parameters:
         - name: exerciseId
-          description: The id of the Exercise for which to retrieve history
+          description: The id of the Exercise for which to retreive history
           in: path
           required: true
           type: string
@@ -200,6 +201,7 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/routine'
+  /routines/{routineId}:
     put:
       tags: 
         - Routines
@@ -269,6 +271,24 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/workout'
+  /workouts/{workoutId}:
+    get:
+      tags: 
+        - Workouts
+      summary: Gets a Workout
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/workout'
+        500:
+          description: Error
+      parameters:
+        - name: workoutId
+          description: The id of the Workout retrieve
+          in: path
+          required: true
+          type: string
     put:
       tags: 
         - Workouts
@@ -304,25 +324,6 @@ paths:
       parameters:
         - name: workoutId
           description: The id of the Workout to delete
-          in: path
-          required: true
-          type: string
-          
-  /workouts/{workoutId}:
-    get:
-      tags: 
-        - Workouts
-      summary: Gets a Workout
-      responses:
-        200:
-          description: Ok
-          schema:
-            $ref: '#/definitions/workout'
-        500:
-          description: Error
-      parameters:
-        - name: workoutId
-          description: The id of the Workout retrieve
           in: path
           required: true
           type: string
