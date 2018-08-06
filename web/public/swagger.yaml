@@ -277,7 +277,22 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/workout'
-            
+    delete:
+      tags: 
+        - Workouts
+      summary: Deletes a Workout
+      responses:
+        204:
+          description: Deleted
+        500:
+          description: Error
+      parameters:
+        - name: workoutId
+          description: The id of the Workout to delete
+          in: path
+          required: true
+          type: string
+          
   /workouts/:
     get:
       tags: 
