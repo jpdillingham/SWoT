@@ -7,43 +7,524 @@ produces:
   - application/json
 swagger: '2.0'
 
-security: []
+tags:
+  - name: Exercises
+  - name: Routines
+  - name: Workouts
+  - name: Workout History
 
 paths:
   /exercises/:
     get:
-      operationId: GetExercises
-      summary: Get list of configured Exercises
+      tags: 
+        - Exercises
+      summary: Gets a list of configured Exercises
       responses:
         200:
-          description: OK
+          description: Ok
           schema:
             type: array
             items:
-              $ref: '#/definitions/Cluster'
-      security:
-        - keystone: []
+              $ref: '#/definitions/exercise'
+        500:
+          description: Error
     post:
-      operationId: CreateCluster
-      summary: Create a cluster
+      tags: 
+        - Exercises
+      summary: Adds an Exercise
       responses:
-        200:
-          description: OK
+        201:
+          description: Created
           schema:
-            $ref: '#/definitions/Cluster'
+            $ref: '#/definitions/exercise'
       parameters:
-        - name: body
+        - name: Exercise
+          description: The Exercise to add
           in: body
           required: true
           schema:
-            $ref: '#/definitions/Cluster'
-      security:
-        - keystone: []
+            $ref: '#/definitions/exercise'
+  /exercises/{exerciseId}:
+    put:
+      tags: 
+        - Exercises
+      summary: Updates an Exercise
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/exercise'
+        500:
+          description: Error
+      parameters:
+        - name: exerciseId
+          description: The id of the Exercise to update
+          in: path
+          required: true
+          type: string
+        - name: exercise
+          description: The Exercise with which to update the specified Exercise
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/exercise'
+    delete:
+      tags: 
+        - Exercises
+      summary: Deletes an Exercise
+      responses:
+        204:
+          description: Deleted
+        500:
+          description: Error
+      parameters:
+        - name: exerciseId
+          description: The id of the Exercise to delete
+          in: path
+          required: true
+          type: string
+          
+  /exercises/history/:
+    get:
+      tags: 
+        - Exercises
+      summary: Gets Exercise history
+      responses:
+        200:
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/exercise'
+        500:
+          description: Error
+      parameters:
+        - name: order
+          description: The sort order of records returned, by endTime
+          in: query
+          required: false
+          type: string
+          enum: [asc, desc]
+        - name: limit
+          description: The number of records to return
+          in: query
+          required: false
+          type: integer
+        - name: offset
+          description: The offset from which the limit applies
+          in: query
+          required: false
+          type: integer
+        - name: fromTime
+          description: The unix timestamp for the lower bound of history, by endTime
+          in: query
+          required: false
+          type: integer
+        - name: toTime
+          description: The unix timestamp for the upper bound of history, by endTime
+          in: query
+          required: false
+          type: integer
+          
+  /exercises/history/{exerciseId}:
+    get:
+      tags: 
+        - Exercises
+      summary: Gets Exercise history for a specified Exercise
+      responses:
+        200:
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/exercise'
+        500:
+          description: Error
+      parameters:
+        - name: exerciseId
+          description: The id of the Exercise for which to retreive history
+          in: path
+          required: true
+          type: string
+        - name: order
+          description: The sort order of records returned, by endTime
+          in: query
+          required: false
+          type: string
+          enum: [asc, desc]
+        - name: limit
+          description: The number of records to return
+          in: query
+          required: false
+          type: integer
+        - name: offset
+          description: The offset from which the limit applies
+          in: query
+          required: false
+          type: integer
+        - name: fromTime
+          description: The unix timestamp for the lower bound of history, by endTime
+          in: query
+          required: false
+          type: integer
+        - name: toTime
+          description: The unix timestamp for the upper bound of history, by endTime
+          in: query
+          required: false
+          type: integer
 
+  /routines/:
+    get:
+      tags: 
+        - Routines
+      summary: Gets a list of configured Routines
+      responses:
+        200:
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/routine'
+        500:
+          description: Error
+    post:
+      tags: 
+        - Routines
+      summary: Adds a Routine
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/routine'
+      parameters:
+        - name: Routine
+          description: The Routine to add
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/routine'
+            
+  /routines/{routineId}:
+    put:
+      tags: 
+        - Routines
+      summary: Updates a Routine
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/routine'
+        500:
+          description: Error
+      parameters:
+        - name: routineId
+          description: The id of the Routine to update
+          in: path
+          required: true
+          type: string
+        - name: routine
+          description: The Routine with which to update the specified Routine
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/routine'
+    delete:
+      tags: 
+        - Routines
+      summary: Deletes a Routine
+      responses:
+        204:
+          description: Deleted
+        500:
+          description: Error
+      parameters:
+        - name: routineId
+          description: The id of the Routine to delete
+          in: path
+          required: true
+          type: string
+
+  /workouts/:
+    get:
+      tags: 
+        - Workouts
+      summary: Gets a list of active and scheduled Workouts
+      responses:
+        200:
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/workout'
+        500:
+          description: Error
+    post:
+      tags: 
+        - Workouts
+      summary: Schedules a Workout
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/workout'
+      parameters:
+        - name: Workout
+          description: The Workout to schedule
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/workout'
+            
+  /workouts/{workoutId}:
+    get:
+      tags: 
+        - Workouts
+      summary: Gets a Workout
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/workout'
+        500:
+          description: Error
+      parameters:
+        - name: workoutId
+          description: The id of the Workout retrieve
+          in: path
+          required: true
+          type: string
+    put:
+      tags: 
+        - Workouts
+      summary: Updates a Workout
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/workout'
+        500:
+          description: Error
+      parameters:
+        - name: workoutId
+          description: The id of the Workout to update
+          in: path
+          required: true
+          type: string
+        - name: workout
+          description: The Workout with which to update the specified Workout
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/workout'
+    delete:
+      tags: 
+        - Workouts
+      summary: Deletes a Workout
+      responses:
+        204:
+          description: Deleted
+        500:
+          description: Error
+      parameters:
+        - name: workoutId
+          description: The id of the Workout to delete
+          in: path
+          required: true
+          type: string
+          
+  /workouts/history/:
+    get:
+      tags: 
+        - Workout History
+      summary: Gets Workout history
+      responses:
+        200:
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/workout'
+        500:
+          description: Error
+      parameters:
+        - name: order
+          description: The sort order of records returned, by endTime
+          in: query
+          required: false
+          type: string
+          enum: [asc, desc]
+        - name: limit
+          description: The number of records to return
+          in: query
+          required: false
+          type: integer
+        - name: offset
+          description: The offset from which the limit applies
+          in: query
+          required: false
+          type: integer
+        - name: fromTime
+          description: The unix timestamp for the lower bound of history, by endTime
+          in: query
+          required: false
+          type: integer
+        - name: toTime
+          description: The unix timestamp for the upper bound of history, by endTime
+          in: query
+          required: false
+          type: integer
+  
+  /workouts/history/{workoutId}:
+    get:
+      tags: 
+        - Workout History
+      summary: Gets Workout history for a specified Workout
+      responses:
+        200:
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/workout'
+        500:
+          description: Error
+      parameters:
+        - name: workoutId
+          description: The id of the Workout for which to retreive history
+          in: path
+          required: true
+          type: string
+        - name: order
+          description: The sort order of records returned, by endTime
+          in: query
+          required: false
+          type: string
+          enum: [asc, desc]
+        - name: limit
+          description: The number of records to return
+          in: query
+          required: false
+          type: integer
+        - name: offset
+          description: The offset from which the limit applies
+          in: query
+          required: false
+          type: integer
+        - name: fromTime
+          description: The unix timestamp for the lower bound of history, by endTime
+          in: query
+          required: false
+          type: integer
+        - name: toTime
+          description: The unix timestamp for the upper bound of history, by endTime
+          in: query
+          required: false
+          type: integer
+    put:
+      tags: 
+        - Workout History
+      summary: Updates a Workout history record
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/workout'
+        500:
+          description: Error
+      parameters:
+        - name: workoutId
+          description: The id of the Workout history record to update
+          in: path
+          required: true
+          type: string
+        - name: workout
+          description: The Workout with which to update the specified Workout history record
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/workout'
+    delete:
+      tags: 
+        - Workout History
+      summary: Deletes a Workout history record
+      responses:
+        204:
+          description: Deleted
+        500:
+          description: Error
+      parameters:
+        - name: workoutId
+          description: The id of the Workout history record to delete
+          in: path
+          required: true
+          type: string
+          
 definitions:
-  Cluster:
+  exercise:
     type: object
     properties:
+      id:
+        description: Unique identifier for the Exercise
+        type: string
       name:
-        description: name of the cluster
+        description: The display name of the Exercise
+        type: string
+      type:
+        description: The Exercise type (weightlifting, cardio, stretching, balance)
+        type: string
+      url:
+        description: A url to a description of the Exercise
+        type: string
+      metrics:
+        type: array
+        items:
+          $ref: '#/definitions/metric'
+  metric:
+    type: object
+    required: [ name ]
+    properties:
+      name:
+        description: The name of the Metric
+        type: string
+      uom:
+        description: The unit of measure
+        type: string
+      value:
+        description: The result value
+        type: string
+  routine:
+    type: object
+    properties:
+      id:
+        description: Unique identifier for the Routine
+        type: string
+      name:
+        description: The display name of the Routine
+        type: string
+      color:
+        description: The hexadecimal color code for the Routine
+        type: string
+      exercises:
+        type: array
+        items:
+          $ref: '#/definitions/exercise'
+  workout:
+    type: object
+    properties:
+      id: 
+        description: Unique identifier for the Workout
+        type: string
+      scheduledTime:
+        description: The unix timestamp of the time for which the Workout was scheduled
+        type: integer
+      startTime:
+        description: The unix timestamp of the time at which the Workout was started
+        type: integer
+      endTime:
+        description: The unix timestamp of the time at which the Workout ended
+        type: integer
+      routine:
+        $ref: '#/definitions/routine'
+      notes:
+        description: Notes entered during the Workout
         type: string
