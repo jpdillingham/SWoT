@@ -10,6 +10,8 @@ swagger: '2.0'
 tags:
   - name: Exercises
   - name: Routines
+  - name: Workouts
+  - name: Workout History
 
 paths:
   /exercises/:
@@ -86,7 +88,7 @@ paths:
     get:
       tags: 
         - Exercises
-      summary: Gets Exercise history for a specified Exercise
+      summary: Gets Exercise history
       responses:
         200:
           description: Ok
@@ -201,6 +203,7 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/routine'
+            
   /routines/{routineId}:
     put:
       tags: 
@@ -271,6 +274,7 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/workout'
+            
   /workouts/{workoutId}:
     get:
       tags: 
@@ -327,7 +331,7 @@ paths:
           in: path
           required: true
           type: string
-
+          
   /workouts/history/:
     get:
       tags: 
@@ -369,7 +373,7 @@ paths:
           in: query
           required: false
           type: integer
-
+  
   /workouts/history/{workoutId}:
     get:
       tags: 
@@ -416,7 +420,45 @@ paths:
           in: query
           required: false
           type: integer
-
+    put:
+      tags: 
+        - Workout History
+      summary: Updates a Workout history record
+      responses:
+        200:
+          description: Ok
+          schema:
+            $ref: '#/definitions/workout'
+        500:
+          description: Error
+      parameters:
+        - name: workoutId
+          description: The id of the Workout history record to update
+          in: path
+          required: true
+          type: string
+        - name: workout
+          description: The Workout with which to update the specified Workout history record
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/workout'
+    delete:
+      tags: 
+        - Workout History
+      summary: Deletes a Workout history record
+      responses:
+        204:
+          description: Deleted
+        500:
+          description: Error
+      parameters:
+        - name: workoutId
+          description: The id of the Workout history record to delete
+          in: path
+          required: true
+          type: string
+          
 definitions:
   exercise:
     type: object
