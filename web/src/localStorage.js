@@ -11,7 +11,7 @@ export const loadState = () => {
     catch (err) {
         return undefined;
     }
-}
+};
 
 export const saveState = (state) => {
     try {
@@ -20,4 +20,4 @@ export const saveState = (state) => {
     }
     catch (err) { 
     }
-}
+};

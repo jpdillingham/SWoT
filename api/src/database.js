@@ -14,21 +14,21 @@ exports.get = (userId, property) => {
     };
     
     return dynamoDB.get(params).promise();
-}
+};
 
 exports.set = (userId, property, value) => {
     let params = {
         TableName: constants.PRIMARY_TABLE,
         Key: { 
-            user: userId
+            user: userId,
         },
         UpdateExpression: 'SET #property = :value',
         ExpressionAttributeNames: { '#property' : property },
-        ExpressionAttributeValues: { ':value': value }        
-    } 
+        ExpressionAttributeValues: { ':value': value },      
+    };
     
     return dynamoDB.update(params).promise();  
-}
+};
 
 exports.put = (userId, workout) => {
     let params = {
@@ -37,23 +37,23 @@ exports.put = (userId, workout) => {
             user: userId,
             endTime: workout.endTime,
             workout: workout,
-        }
-    }
+        },
+    };
     
     return dynamoDB.put(params).promise();
-}
+};
 
 exports.delete = (userId, endTime) => {
     let params = {
         TableName: constants.HISTORY_TABLE,
         Key: {
             user: userId,
-            endTime: endTime
-        }
-    }
+            endTime: endTime,
+        },
+    };
 
     return dynamoDB.delete(params).promise();
-}
+};
 
 exports.query = (userId, fromTime, toTime, lastEvaluatedKey) => {
     fromTime = Number(fromTime);
@@ -61,16 +61,16 @@ exports.query = (userId, fromTime, toTime, lastEvaluatedKey) => {
     
     let params = {
         TableName: constants.HISTORY_TABLE,
-        KeyConditionExpression: "#user = :user AND endTime BETWEEN :fromTime and :toTime",
+        KeyConditionExpression: '#user = :user AND endTime BETWEEN :fromTime and :toTime',
         ExpressionAttributeNames:{
-            "#user": 'user',
+            '#user': 'user',
         },
         ExpressionAttributeValues: {
-            ":user": userId,
-            ":fromTime": fromTime,
-            ":toTime": toTime,
-        }
-    }
+            ':user': userId,
+            ':fromTime': fromTime,
+            ':toTime': toTime,
+        },
+    };
     
     // if lastEvaluatedKey is supplied, append it to the params to get
     // the next page of results
@@ -79,7 +79,7 @@ exports.query = (userId, fromTime, toTime, lastEvaluatedKey) => {
     }
 
     return dynamoDB.query(params).promise();
-}
+};
 
 exports.queryAll = (userId, fromTime, toTime, workouts, lastEvaluatedKey) => {
     fromTime = Number(fromTime || 0);
@@ -103,5 +103,5 @@ exports.queryAll = (userId, fromTime, toTime, workouts, lastEvaluatedKey) => {
         .catch((err) => {
             reject(err);
         });            
-    })
-}
+    });
+};

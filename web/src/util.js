@@ -11,10 +11,10 @@ export const getElapsedTime = (start, end) => {
           m > 9 ? m : (h ? '0' + m : m || '0'),
           s > 9 ? s : '0' + s,
         ].filter(a => a).join(':');
-    }
+    };
 
     return formatTime(duration);
-}
+};
 
 export const getGuid = () => {
     function s4() {
@@ -24,7 +24,7 @@ export const getGuid = () => {
     }
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
         s4() + '-' + s4() + s4() + s4();
-}
+};
 
 export const swapArrayElements = (array, index1, index2) => {
     let copy = array.slice();
@@ -34,17 +34,17 @@ export const swapArrayElements = (array, index1, index2) => {
     copy[index2] = temp;
 
     return copy;
-}
+};
 
 export const getUnixTimestamp = (dateString) => {
     return parseInt((new Date(dateString).getTime()).toFixed(0), 10);
-}
+};
 
 export const validateEmail = (email) => {
     // eslint-disable-next-line
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
-}
+};
 
 export const sortByProp = (prop, predicate = 'asc') => {
     return (a, b) => {
@@ -61,8 +61,8 @@ export const sortByProp = (prop, predicate = 'asc') => {
             if (a < b) return 1;
             return 0;
         }
-    }
-}
+    };
+};
 
 // https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
 export const fontContrastColor = (hexColor) => {
@@ -73,7 +73,7 @@ export const fontContrastColor = (hexColor) => {
 
     for (var i = 0; i < C.length; ++i) {
         if (C[i] <= 0.03928) {
-            C[i] = C[i] / 12.92
+            C[i] = C[i] / 12.92;
         } 
         else {
             C[i] = Math.pow((C[i] + 0.055) / 1.055, 2.4);
@@ -88,7 +88,7 @@ export const fontContrastColor = (hexColor) => {
     else {
         return '#FFF';
     }
-}
+};
 
 export const hexToRgb = (hexColor) => {
     if (typeof hexColor === 'string') {
@@ -100,11 +100,11 @@ export const hexToRgb = (hexColor) => {
         return { r: r, g: g, b: b };
     }
 
-    return { r: 255, g: 255, b: 255 }
-}
+    return { r: 255, g: 255, b: 255 };
+};
 
 export const validateUrl = (str) => {
     // eslint-disable-next-line
     var pattern = new RegExp('^(https?:\/\/)?((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\.)+[a-z]{2,}|((\\d{1,3}\.){3}\\d{1,3}))(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*(\\?[;&a-z\\d%_.~+=-]*)?(\\#[-a-z\d_]*)?$','i');
     return pattern.test(str);
-}
+};

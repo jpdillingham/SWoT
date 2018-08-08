@@ -1,0 +1,21 @@
+{
+    "extends": "eslint:recommended",
+    "rules": {
+        "semi": ["error", "always"],
+        "comma-dangle": ["error", "always-multiline"],
+        "no-const-assign": "error",
+        "no-console": "off",
+        "eqeqeq": "error",
+        "curly": "error",
+        "quotes": ["error", "single"]
+    },
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "script"
+    },
+    "env": {
+        "node": true,
+        "browser": false,
+        "es6": true
+    }
+  }

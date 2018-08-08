@@ -1,6 +1,6 @@
-import axios from 'axios'
-import { store } from './index'
-import { ensureSession } from './components/security/SecurityActions'
+import axios from 'axios';
+import { store } from './index';
+import { ensureSession } from './components/security/SecurityActions';
 
 const api = axios.create();
 
@@ -11,7 +11,7 @@ api.interceptors.request.use(config => {
             return Promise.resolve(config);
         }, err => {
             return Promise.reject('Invalid session: ' + err);
-        })
+        });
     }, err => {
         return Promise.reject('API subsystem error: ' + err);
     }

@@ -180,14 +180,10 @@ class ExerciseForm extends Component {
         clearInterval(this.timer);
     }
 
-    componentWillReceiveProps = (newProps) => {
-        let complete = this.state.exercise.startTime !== undefined && this.state.exercise.endTime !== undefined;
-
-        this.setState({ exercise: newProps.exercise }, () => {
-            if (!complete && this.state.exercise.startTime !== undefined && this.state.exercise.endTime !== undefined) {
-                this.props.onComplete();
-            }
-        });
+    componentWillReceiveProps = (nextProps) => {
+        if (this.state.exercise.startTime !== nextProps.exercise.startTime || this.state.exercise.endTime !== nextProps.exercise.endTime) {
+            this.setState({ exercise: nextProps.exercise });
+        }
     }
 
     render() {
