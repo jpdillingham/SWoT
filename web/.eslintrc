@@ -1,0 +1,16 @@
+{
+    "extends": "react-app",
+    "rules": {
+      "comma-dangle": [
+          "error",
+          "always",
+      ]
+    },
+    "parserOptions": {
+        "ecmaVersion": 7,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+        }
+    },
+  }
