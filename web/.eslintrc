@@ -1,10 +1,8 @@
 {
     "extends": "react-app",
     "rules": {
-      "comma-dangle": [
-          "error",
-          "always",
-      ]
+        "comma-dangle": ["error", "always-multiline"],
+        "no-const-assign": "error",
     },
     "parserOptions": {
         "ecmaVersion": 7,
