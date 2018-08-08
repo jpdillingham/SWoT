@@ -1,4 +1,3 @@
-const AWS = require('aws-sdk');
 const awsServerlessExpress = require('aws-serverless-express');  
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware');
 
@@ -6,12 +5,10 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser'); 
 
-const util = require('./util')
-
-const exercises = require('./controllers/exercises')
-const routines = require('./controllers/routines')
-const workouts = require('./controllers/workouts')
-const workoutsHistory = require('./controllers/workoutsHistory')
+const exercises = require('./controllers/exercises');
+const routines = require('./controllers/routines');
+const workouts = require('./controllers/workouts');
+const workoutsHistory = require('./controllers/workoutsHistory');
 
 const app = express();
 
