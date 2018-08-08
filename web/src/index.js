@@ -37,7 +37,7 @@ store.subscribe(() => {
             ...state.security, 
             user: state.security.user,
             session: state.security.session,
-        }
+        },
     });
 
     console.log('State Updated:', store.getState())

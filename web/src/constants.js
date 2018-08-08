@@ -28,12 +28,12 @@ export const FILTER_LIMIT_OPTIONS = [
     { caption: '5', value: 5 }, 
     { caption: '10', value: 10 }, 
     { caption: '25', value: 25 }, 
-    { caption: '50', value: 50 } 
+    { caption: '50', value: 50 }, 
 ];
 
 export const FILTER_SORT_ORDER_OPTIONS = [ 
     { caption: 'Oldest First', value: 'asc' }, 
-    { caption: 'Newest First', value: 'desc' } 
+    { caption: 'Newest First', value: 'desc' },
 ];
 
 export const CHART_SERIES_COLORS = [
@@ -52,7 +52,7 @@ export const CHART_OPTIONS = {
     },
     hover: {
         mode: 'nearest',
-        intersect: true
+        intersect: true,
     },
 };
 
