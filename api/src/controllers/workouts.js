@@ -1,6 +1,6 @@
-const database = require('../database')
+const database = require('../database');
 const express = require('express');
-const util = require('../util')
+const util = require('../util');
 
 const router = express.Router();
 
@@ -41,8 +41,8 @@ router.get('/:id', (req,res) => {
     .catch(err => {
         res.status(500);
         res.json(err);
-    })
-})
+    });
+});
 
 router.post('/', (req, res) => {
     // todo: validate input
@@ -69,7 +69,7 @@ router.post('/', (req, res) => {
         res.status(500);
         res.json(err);
     });
-})
+});
 
 router.put('/:id', (req, res) => {
     let userId = util.getUserId(req);
@@ -93,13 +93,13 @@ router.put('/:id', (req, res) => {
     })
     .then(([ workout, workouts ]) => {
         if (!workout.endTime) {
-            return database.set(userId, 'workouts', workouts).then(() => { return workouts });
+            return database.set(userId, 'workouts', workouts).then(() => { return workouts; });
         }
         else {
             return Promise.all([
                 database.set(userId, 'workouts', workouts), // update the primary table to remove the workout
-                database.put(userId, workout) // insert the workout into history
-            ]).then(() => { return workouts });
+                database.put(userId, workout), // insert the workout into history
+            ]).then(() => { return workouts; });
         }
     })
     .then((workouts) => {
@@ -110,7 +110,7 @@ router.put('/:id', (req, res) => {
         res.status(500);
         res.json(err);
     });
-})
+});
 
 router.delete('/:id', (req, res) => {
     let userId = util.getUserId(req);
@@ -135,6 +135,6 @@ router.delete('/:id', (req, res) => {
         res.status(500);
         res.json(err);
     });
-})
+});
 
 module.exports = router;
