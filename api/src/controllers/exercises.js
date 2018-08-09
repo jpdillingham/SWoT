@@ -1,6 +1,6 @@
-const database = require('../database')
+const database = require('../database');
 const express = require('express');
-const util = require('../util')
+const util = require('../util');
 
 const router = express.Router();
 
@@ -27,7 +27,7 @@ router.get('/history/:id?', (req, res) => {
         
         let exercises = workouts
                         .map(w => w.routine.exercises)
-                        .reduce((acc, e) => acc.concat(e))
+                        .reduce((acc, e) => acc.concat(e));
 
         if (exerciseId) {
             exercises = exercises.filter(e => e.id === exerciseId);
@@ -37,11 +37,11 @@ router.get('/history/:id?', (req, res) => {
 
         if (order) {
             if (order === 'asc' || order === 'desc') {
-                exercises = exercises.sort(util.sortByProp('endTime', order))
+                exercises = exercises.sort(util.sortByProp('endTime', order));
             }
             else {
                 res.status(400);
-                res.json('Invalid order predicate \'' + order + '\'; specify ASC or DESC')
+                res.json('Invalid order predicate \'' + order + '\'; specify ASC or DESC');
             }
         }
 
@@ -55,8 +55,8 @@ router.get('/history/:id?', (req, res) => {
     .catch(err => {
         res.status(500);
         res.json(err);
-    })
-})
+    });
+});
 
 router.get('/', (req, res) => {
     let userId = util.getUserId(req);
@@ -71,7 +71,7 @@ router.get('/', (req, res) => {
         res.status(500);
         res.json(err);
     });
-})
+});
 
 router.post('/', (req, res) => {
     // todo: validate input
@@ -96,7 +96,7 @@ router.post('/', (req, res) => {
         res.status(500);
         res.json(err);
     });
-})
+});
 
 router.put('/:id', (req, res) => {
     let userId = util.getUserId(req);
@@ -108,8 +108,8 @@ router.put('/:id', (req, res) => {
         let routines = data && data.Item && data.Item.routines ? data.Item.routines : [];
 
         routines.map((routine) => {
-            routine.exercises.map((e) => e.id === id && Object.assign(e, exercise))
-        })
+            routine.exercises.map((e) => e.id === id && Object.assign(e, exercise));
+        });
 
         return routines;
     })
@@ -140,7 +140,7 @@ router.put('/:id', (req, res) => {
         res.status(500);
         res.json(err);
     });
-})
+});
 
 router.delete('/:id', (req, res) => {
     let userId = util.getUserId(req);
@@ -171,7 +171,7 @@ router.delete('/:id', (req, res) => {
     .then((exercises) => {
         return database.set(userId, 'exercises', exercises);
     })
-    .then((data) => {
+    .then(() => {
         res.status(204);
         res.json();
     })
@@ -179,6 +179,6 @@ router.delete('/:id', (req, res) => {
         res.status(500);
         res.json(err);
     });
-})
+});
 
 module.exports = router;
