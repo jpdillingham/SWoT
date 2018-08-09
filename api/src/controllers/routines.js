@@ -1,10 +1,10 @@
-const database = require('../database')
+const database = require('../database');
 const express = require('express');
-const util = require('../util')
+const util = require('../util');
 
 const router = express.Router();
 
-router.get('/history', (req, res) => { res.redirect('../workouts/history') });
+router.get('/history', (req, res) => { res.redirect('../workouts/history'); });
 
 router.get('/', (req, res) => { 
     let userId = util.getUserId(req);
@@ -44,7 +44,7 @@ router.post('/', (req, res) => {
         res.status(500);
         res.json(err);
     });
-})
+});
 
 router.put('/:id', (req, res) => {
     let userId = util.getUserId(req);
@@ -73,7 +73,7 @@ router.put('/:id', (req, res) => {
         res.status(500);
         res.json(err);
     });
-})
+});
 
 router.delete('/:id', (req, res) => {
     let userId = util.getUserId(req);
@@ -96,6 +96,6 @@ router.delete('/:id', (req, res) => {
         res.status(500);
         res.json(err);
     });
-})
+});
 
 module.exports = router;
