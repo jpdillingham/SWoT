@@ -4,7 +4,7 @@ const initialState = {
         message: '',
     },
     title: 'SWoT',
-    variables: { }
+    variables: { },
 };
 
 const AppReducer = (state = initialState, action) => { 

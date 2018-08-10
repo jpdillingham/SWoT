@@ -10,7 +10,7 @@ class AppContainer extends Component {
     }
 
     toggleDrawer = () => {
-        this.setState({ drawerOpen: !this.state.drawerOpen })
+        this.setState({ drawerOpen: !this.state.drawerOpen });
     }
 
     render() {
@@ -46,7 +46,7 @@ const styles = {
         position: 'fixed',
         left: 0,
         top: 0,
-    }
-}
+    },
+};
 
 export default AppContainer;
