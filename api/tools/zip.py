@@ -9,7 +9,7 @@ if __name__ == '__main__':
     srcDir = os.path.abspath(sys.argv[1])
     outputFile = os.path.abspath(sys.argv[2])
 
-    tempDir = os.path.join(tempfile.gettempdir(), 'zippy-builds')
+    tempDir = os.path.join(tempfile.gettempdir(), 'zippy')
     tempFile = os.path.join(tempDir, str(uuid.uuid4()))
 
     print('creating deployable zip from ' + srcDir + '...')
