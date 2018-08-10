@@ -11,15 +11,15 @@ const styles = {
         bottom: 20,
         left: 'auto',
         position: 'fixed',
-        zIndex: 1000
+        zIndex: 1000,
     },
-}
+};
 
 const initialState = {
     addDialog: {
-        open: false
+        open: false,
     },
-}
+};
 
 class AddFloatingActionButton extends Component {
     state = initialState;
@@ -31,11 +31,11 @@ class AddFloatingActionButton extends Component {
     }
 
     handleAddClick = () => {
-        this.setState({ addDialog: { open: true }})
+        this.setState({ addDialog: { open: true }});
     }
 
     handleAddDialogClose = (result) => {
-        this.setState({ addDialog: { open: false }})
+        this.setState({ addDialog: { open: false }});
     }
 
     render() {
@@ -52,11 +52,11 @@ class AddFloatingActionButton extends Component {
                 
                 {React.cloneElement(this.props.dialog, { 
                     open: this.state.addDialog.open, 
-                    handleClose: this.handleAddDialogClose 
+                    handleClose: this.handleAddDialogClose, 
                 })}
             </div>
-        )
+        );
     }
 }
 
-export default AddFloatingActionButton
+export default AddFloatingActionButton;

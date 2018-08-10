@@ -26,6 +26,6 @@ const styles = {
         marginTop: 'auto',
         marginBottom: 'auto',
     },
-}
+};
 
 export default Spinner;
