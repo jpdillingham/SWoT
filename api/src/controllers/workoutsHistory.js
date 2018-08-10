@@ -1,6 +1,6 @@
-const database = require('../database')
+const database = require('../database');
 const express = require('express');
-const util = require('../util')
+const util = require('../util');
 
 const router = express.Router();
 
@@ -16,8 +16,8 @@ router.get('/count', (req, res) => {
     .then(workouts => {
         res.status(200);
         res.json(!workouts ? 0 : workouts.length);
-    })
-})
+    });
+});
 
 router.get('/:id', (req, res) => {
     let userId = util.getUserId(req);
@@ -39,8 +39,8 @@ router.get('/:id', (req, res) => {
     .catch(error => {
         res.status(500);
         res.json(error);
-    })
-})
+    });
+});
 
 router.put('/:id', (req, res) => {
     let userId = util.getUserId(req);
@@ -49,19 +49,19 @@ router.put('/:id', (req, res) => {
 
     database.queryAll(userId, minDate, maxDate)
     .then(workouts => {
-        let foundWorkout = workouts.find(w => w.id == id);
+        let foundWorkout = workouts.find(w => w.id === id);
 
         database.delete(userId, foundWorkout.endTime)
-        .then(response => {
+        .then(() => {
             database.put(userId, workout)
-            .then(response => {
+            .then(() => {
                 res.status(200);
                 res.json(workout);
             }, error => {
                 res.status(500);
                 res.json(error);
-            })
-        })
+            });
+        });
     });
 });
 
@@ -74,15 +74,15 @@ router.delete('/:id', (req, res) => {
         let workout = workouts.find(w => w.id === id);
 
         database.delete(userId, workout.endTime)
-        .then(response => {
+        .then(() => {
             res.status(204);
             res.json();
         }, error => {
             res.status(500);
             res.json(error);
-        })
-    })
-})
+        });
+    });
+});
 
 // pagination - /workouts?limit=N&offset=M
 // sort - /workouts?order=<ASC|DESC>
@@ -111,11 +111,11 @@ router.get('/', (req, res) => {
 
         if (order) {
             if (order === 'asc' || order === 'desc') {
-                workouts = workouts.sort(util.sortByProp('endTime', order))
+                workouts = workouts.sort(util.sortByProp('endTime', order));
             }
             else {
                 res.status(400);
-                res.json('Invalid order predicate \'' + order + '\'; specify ASC or DESC')
+                res.json('Invalid order predicate \'' + order + '\'; specify ASC or DESC');
             }
         }
 
@@ -129,7 +129,7 @@ router.get('/', (req, res) => {
     .catch(err => {
         res.status(500);
         res.json(err);
-    })
-})
+    });
+});
 
 module.exports = router;
