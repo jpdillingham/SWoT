@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 
-import { black } from 'material-ui/styles/colors'
-import FlatButton from 'material-ui/FlatButton'
-import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left'
-import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
+import { black } from 'material-ui/styles/colors';
+import FlatButton from 'material-ui/FlatButton';
+import HardwareKeyboardArrowLeft from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
+import HardwareKeyboardArrowRight from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
 
 const styles = {
     paginationButton: {
         color: black,
-        width: 150
+        width: 150,
     },
     buttonRow: {
-        textAlign: 'center'
-    }
-}
+        textAlign: 'center',
+    },
+};
 
 class HistoryPagination extends Component {
     render() {
@@ -37,8 +37,8 @@ class HistoryPagination extends Component {
                     disabled={this.props.refreshing || this.props.end === this.props.total}
                 />
             </div>
-        )
+        );
     }
 }
 
-export default HistoryPagination
+export default HistoryPagination;

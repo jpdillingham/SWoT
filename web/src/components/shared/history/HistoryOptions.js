@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import SelectField from 'material-ui/SelectField/SelectField';
-import MenuItem from 'material-ui/MenuItem'
-import DatePicker from 'material-ui/DatePicker'
+import MenuItem from 'material-ui/MenuItem';
+import DatePicker from 'material-ui/DatePicker';
 
-import { FILTER_SORT_ORDER_OPTIONS, FILTER_LIMIT_OPTIONS } from '../../../constants'
+import { FILTER_SORT_ORDER_OPTIONS, FILTER_LIMIT_OPTIONS } from '../../../constants';
 
 const styles = {
     container: {
@@ -32,7 +32,7 @@ const styles = {
         marginRight: 5,
         cursor: 'pointer',
     },
-}
+};
 
 class HistoryOptions extends Component {
     handleChange = (filter, event, index, value) => {
@@ -100,8 +100,8 @@ class HistoryOptions extends Component {
                 </SelectField>
                 {this.props.children}
             </div>
-        )
+        );
     }
 }
 
-export default HistoryOptions
+export default HistoryOptions;
