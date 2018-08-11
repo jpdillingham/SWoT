@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import { sortByProp } from '../../../util'
+import { sortByProp } from '../../../util';
 
-import { grey300 } from 'material-ui/styles/colors'
+import { grey300 } from 'material-ui/styles/colors';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 class ExercisesHistoryContent extends Component {
@@ -51,9 +51,9 @@ class ExercisesHistoryContent extends Component {
                         )}
                 </TableBody>
             </Table>
-        )
+        );
     }
 }
 
-export default ExercisesHistoryContent
+export default ExercisesHistoryContent;
 

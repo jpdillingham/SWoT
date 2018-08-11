@@ -8,13 +8,13 @@ const ExercisesReducer = (state = initialState, action) => {
             return state.concat(action.exercise);
         case 'EXERCISES_PUT':
             return state.map(e => { 
-                    return e.id === action.exercise.id ? action.exercise : e
+                    return e.id === action.exercise.id ? action.exercise : e;
                 });
         case 'EXERCISES_DELETE':
             return state.filter(e => e.id !== action.id);
         default:
             return state;
     }
-}
+};
 
 export default ExercisesReducer;

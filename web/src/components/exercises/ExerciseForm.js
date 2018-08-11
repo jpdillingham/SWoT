@@ -63,7 +63,7 @@ const styles = {
         right: 0,
         top: 10,
     },
-}
+};
 
 const initialState = {
     ticker: 0,
@@ -81,7 +81,7 @@ const initialState = {
     resetDialog: {
         open: false,
     },
-}
+};
 
 class ExerciseForm extends Component {
     state = { ...initialState, exercise: this.props.exercise };
@@ -110,7 +110,7 @@ class ExerciseForm extends Component {
                 ...this.state.exercise,
                 metrics: this.state.exercise.metrics.map(m => {
                     return m.name === metric.name ? { ...metric, value: value } : m;
-                })
+                }),
             },
         });
     }
@@ -146,30 +146,30 @@ class ExerciseForm extends Component {
             this.updateExercise({ ...this.state.exercise, startTime: new Date().getTime() });
         }
         else if (!this.props.exercise.endTime) {
-            this.updateExercise({ ...this.state.exercise, endTime: Date.now() })
+            this.updateExercise({ ...this.state.exercise, endTime: Date.now() });
         }
         else {
-            this.updateExercise({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined })
+            this.updateExercise({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined });
         }
     }
 
     updateExercise = (exercise, suppressApi = false) => {
         return new Promise((resolve, reject) => {
             this.setState({ 
-                api: !suppressApi ? { ...this.state.api, isExecuting: true } : this.state.api
+                api: !suppressApi ? { ...this.state.api, isExecuting: true } : this.state.api,
             }, () =>
                 this.props.onChange(exercise)
                 .then(() => {
-                    this.setState({ api: { ...this.state.api, isExecuting: false }}, () => resolve())
+                    this.setState({ api: { ...this.state.api, isExecuting: false }}, () => resolve());
                 }, error => {
-                    this.setState({ api: { isExecuting: false, isErrored: true }}, () => reject())
+                    this.setState({ api: { isExecuting: false, isErrored: true }}, () => reject());
                 })
-            )
-        })
+            );
+        });
     }
 
     getMetricDisplayName = (metric) => {
-        return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
+        return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '');
     }
 
     componentDidMount = () => {
@@ -189,7 +189,7 @@ class ExerciseForm extends Component {
     render() {
         let exerciseImage = this.props.exercise.type;
         if (EXERCISE_TYPES.indexOf(exerciseImage) === -1) { 
-            exerciseImage = 'unknown'
+            exerciseImage = 'unknown';
         }
 
         let started = this.props.exercise.startTime;
@@ -201,7 +201,7 @@ class ExerciseForm extends Component {
                     style={!this.state.api.isExecuting ? styles.card : 
                         { 
                             ...styles.card, 
-                            backgroundColor: grey300 
+                            backgroundColor: grey300, 
                         }
                     }
                 >
@@ -293,8 +293,8 @@ class ExerciseForm extends Component {
                     Are you sure you want to reset Exercise '{this.state.exercise.name}'?
                 </ConfirmDialog>
             </div>
-        )
+        );
     }
 }
 
-export default ExerciseForm
+export default ExerciseForm;

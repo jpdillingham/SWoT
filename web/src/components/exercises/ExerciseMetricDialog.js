@@ -14,8 +14,8 @@ const styles = {
     },
     dialog: {
         width: 400,
-    }
-}
+    },
+};
 
 const initialState = {
     metric: {
@@ -23,9 +23,9 @@ const initialState = {
         uom: '',
     },
     validationErrors: {
-        name: ''
-    }
-}
+        name: '',
+    },
+};
 
 class ExerciseMetricDialog extends Component {
     state = initialState;
@@ -34,42 +34,42 @@ class ExerciseMetricDialog extends Component {
         let nameList = this.props.existingNames;
 
         if (this.props.intent === INTENTS.EDIT) {
-            nameList = nameList.filter(n => n.toLowerCase() !== this.props.metric.name.toLowerCase())
+            nameList = nameList.filter(n => n.toLowerCase() !== this.props.metric.name.toLowerCase());
         }
 
         if (nameList.find(n => n.toLowerCase() === value.toLowerCase())) {
             this.setState({
-                validationErrors: { name: 'This name is already in use.' }
-            })
+                validationErrors: { name: 'This name is already in use.' },
+            });
         }
         else {
             this.setState(prevState => ({
                 metric: { ...prevState.metric, name: value },
-                validationErrors: { name: '' }
-            }))
+                validationErrors: { name: '' },
+            }));
         }
     }
 
     handleUomChange = (event, value) => {
         this.setState(prevState => ({
-            metric: { ...prevState.metric, uom: value }
-        }))
+            metric: { ...prevState.metric, uom: value },
+        }));
     }
 
     handleSaveClick = (result) => {
         if (this.state.metric.name === '') {
             this.setState({
-                validationErrors: { name: 'The Metric must have a name.' }
-            })
+                validationErrors: { name: 'The Metric must have a name.' },
+            });
         }
         else {
-            result = { metric: this.state.metric }
+            result = { metric: this.state.metric };
 
             if (this.props.intent === INTENTS.EDIT) {
-                result.edited = true
+                result.edited = true;
             }
             else {
-                result.added = true
+                result.added = true;
             }
 
             this.props.handleClose(result);
@@ -77,14 +77,14 @@ class ExerciseMetricDialog extends Component {
     }
 
     handleCancelClick = () => {
-        this.props.handleClose({ cancelled: true })
+        this.props.handleClose({ cancelled: true });
     }
 
     componentWillReceiveProps(nextProps) {
         this.setState(initialState);
 
         if (nextProps.intent === INTENTS.EDIT) {
-            this.setState({ metric: nextProps.metric })
+            this.setState({ metric: nextProps.metric });
         }
     }
 
@@ -126,8 +126,8 @@ class ExerciseMetricDialog extends Component {
                     onChange={this.handleUomChange}
                 />
             </Dialog>
-        )
+        );
     }
 }
 
-export default ExerciseMetricDialog
+export default ExerciseMetricDialog;

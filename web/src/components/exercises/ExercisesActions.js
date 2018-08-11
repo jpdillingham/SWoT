@@ -5,22 +5,22 @@ const endpoint = API_ROOT + '/exercises';
 
 const exercisesGet = (exercises) => ({
     type: 'EXERCISES_GET',
-    exercises: exercises
+    exercises: exercises,
 });
 
 const exercisesPost = (exercise) => ({
     type: 'EXERCISES_POST',
-    exercise: exercise
+    exercise: exercise,
 });
 
 const exercisesPut = (exercise) => ({
     type: 'EXERCISES_PUT',
-    exercise: exercise
+    exercise: exercise,
 });
 
 const exercisesDelete = (id) => ({
     type: 'EXERCISES_DELETE',
-    id: id
+    id: id,
 });
 
 export const fetchExercises = () => (dispatch, getState) => {
@@ -33,7 +33,7 @@ export const fetchExercises = () => (dispatch, getState) => {
             reject(error.response.message);
         });
     });
-}
+};
 
 export const addExercise = (exercise) => (dispatch, getState) => {
     if (!exercise.url.toLowerCase().startsWith('http')) {
@@ -54,7 +54,7 @@ export const addExercise = (exercise) => (dispatch, getState) => {
             reject(error.response.message);
         });
     });
-}
+};
 
 export const updateExercise = (exercise) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
@@ -71,7 +71,7 @@ export const updateExercise = (exercise) => (dispatch, getState) => {
             reject(error.response.message);
         });
     });
-}
+};
 
 export const deleteExercise = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
@@ -88,4 +88,4 @@ export const deleteExercise = (id) => (dispatch, getState) => {
             reject(error.response.message);
         });
     });
-}
+};

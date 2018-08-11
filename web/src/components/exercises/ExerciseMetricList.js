@@ -8,7 +8,7 @@ import {grey400, black} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
 import ActionAssessment from 'material-ui/svg-icons/action/assessment';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import Divider from 'material-ui/Divider'
+import Divider from 'material-ui/Divider';
 import ArrowUpward from 'material-ui/svg-icons/navigation/arrow-upward';
 import ArrowDownward from 'material-ui/svg-icons/navigation/arrow-downward';
 import { ContentCreate, ActionDelete } from 'material-ui/svg-icons';
@@ -41,8 +41,8 @@ class ExerciseMetricList extends Component {
                         />
                     ) : ''}
             </List>
-        )
+        );
     }
 }
 
-export default ExerciseMetricList
+export default ExerciseMetricList;

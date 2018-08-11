@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import Avatar from 'material-ui/Avatar';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import TextField from 'material-ui/TextField'
+import TextField from 'material-ui/TextField';
 import { List } from 'material-ui/List';
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../../constants';
@@ -30,16 +30,16 @@ const styles = {
         cursor: 'pointer',
     },
     notes: {
-        marginLeft: 20
+        marginLeft: 20,
     },
     field: {
         width: '100%',
     },
-}
+};
 
 class ExerciseEditorCard extends Component {
     getMetricDisplayName = (metric) => {
-        return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
+        return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '');
     }
 
     handleMetricChange = (metric, value) => {
@@ -61,7 +61,7 @@ class ExerciseEditorCard extends Component {
     render() {
         let exerciseImage = this.props.exercise.type;
         if (EXERCISE_TYPES.indexOf(exerciseImage) === -1) { 
-            exerciseImage = 'unknown'
+            exerciseImage = 'unknown';
         }
 
         let exercise = this.props.exercise;
@@ -147,8 +147,8 @@ class ExerciseEditorCard extends Component {
                     </CardText>
                 </Card>
             </div>
-        )
+        );
     }
 }
 
-export default ExerciseEditorCard
+export default ExerciseEditorCard;

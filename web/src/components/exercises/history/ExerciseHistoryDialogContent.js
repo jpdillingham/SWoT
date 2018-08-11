@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import { sortByProp } from '../../../util'
+import { sortByProp } from '../../../util';
 
-import { grey300 } from 'material-ui/styles/colors'
+import { grey300 } from 'material-ui/styles/colors';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 const styles = {
     date: {
-        width: 60
-    }
-}
+        width: 60,
+    },
+};
 
 class ExerciseHistoryDialogContent extends Component {
     getLabels = () => {
@@ -24,7 +24,7 @@ class ExerciseHistoryDialogContent extends Component {
         return !metrics || !metrics.length ? '' :
                 metrics
                 .map(m => this.getValue(exercise, m.name))
-                .reduce((acc, v) => acc.concat('/' + v)) 
+                .reduce((acc, v) => acc.concat('/' + v)); 
     }
 
     getValue = (exercise, metric) => {
@@ -65,9 +65,9 @@ class ExerciseHistoryDialogContent extends Component {
                         )}
                 </TableBody>
             </Table>
-        )
+        );
     }
 }
 
-export default ExerciseHistoryDialogContent
+export default ExerciseHistoryDialogContent;
 

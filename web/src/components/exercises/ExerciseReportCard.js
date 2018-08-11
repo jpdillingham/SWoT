@@ -4,8 +4,8 @@ import Avatar from 'material-ui/Avatar';
 import { ActionAssessment, ActionWatchLater, ActionSpeakerNotes } from 'material-ui/svg-icons';
 import { black } from 'material-ui/styles/colors';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import LeftRightListItem from '../shared/LeftRightListItem'
-import ToggledLeftRightListItem from '../shared/ToggledLeftRightListItem'
+import LeftRightListItem from '../shared/LeftRightListItem';
+import ToggledLeftRightListItem from '../shared/ToggledLeftRightListItem';
 import { List } from 'material-ui/List';
 
 import { CARD_WIDTH, EXERCISE_TYPES, EXERCISE_AVATAR_COLOR } from '../../constants';
@@ -32,19 +32,19 @@ const styles = {
         cursor: 'pointer',
     },
     notes: {
-        marginLeft: 20
-    }
-}
+        marginLeft: 20,
+    },
+};
 
 class ExerciseReportCard extends Component {
     getMetricDisplayName = (metric) => {
-        return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '')
+        return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '');
     }
 
     render() {
         let exerciseImage = this.props.exercise.type;
         if (EXERCISE_TYPES.indexOf(exerciseImage) === -1) { 
-            exerciseImage = 'unknown'
+            exerciseImage = 'unknown';
         }
 
         return (
@@ -103,8 +103,8 @@ class ExerciseReportCard extends Component {
                     </CardText>
                 </Card>
             </div>
-        )
+        );
     }
 }
 
-export default ExerciseReportCard
+export default ExerciseReportCard;

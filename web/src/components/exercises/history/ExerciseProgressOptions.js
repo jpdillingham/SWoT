@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import SelectField from 'material-ui/SelectField/SelectField';
-import MenuItem from 'material-ui/MenuItem'
-import DatePicker from 'material-ui/DatePicker'
+import MenuItem from 'material-ui/MenuItem';
+import DatePicker from 'material-ui/DatePicker';
 
 const styles = {
     dateWrapper: {
@@ -21,8 +21,8 @@ const styles = {
     },
     exercise: {
         marginRight: 5,
-    }
-}
+    },
+};
 
 class ExerciseProgressOptions extends Component {
     handleChange = (filter, event, index, value) => {
@@ -74,8 +74,8 @@ class ExerciseProgressOptions extends Component {
                     />
                 </div>
             </div>
-        )
+        );
     }
 }
 
-export default ExerciseProgressOptions
+export default ExerciseProgressOptions;
