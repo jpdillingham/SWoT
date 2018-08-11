@@ -30,9 +30,9 @@ const styles = {
         marginTop: 6,
     },
     disabled: {
-        color: grey500
-    }
-}
+        color: grey500,
+    },
+};
 
 const initialState = {
     historyExists: false,
@@ -40,7 +40,7 @@ const initialState = {
         isExecuting: false,
         isErrored: false,
     },
-}
+};
 
 class HelpChecklist extends Component {
     state = initialState; 
@@ -56,14 +56,14 @@ class HelpChecklist extends Component {
                         this.props.fetchWorkouts(),
                     ])
                     .then(response => {
-                        this.setState({ api: { isExecuting: false, isErrored: false }})
+                        this.setState({ api: { isExecuting: false, isErrored: false }});
                     }, error => {
                         this.props.showSnackbar('Error fetching configuration: ' + error);
-                        this.setState({ api: { isExecuting: false, isErrored: true }})
+                        this.setState({ api: { isExecuting: false, isErrored: true }});
                     });
                 });
             });
-        })
+        });
     }
 
     navigate = (url) => {
@@ -122,7 +122,7 @@ class HelpChecklist extends Component {
                             </List>
                         </CardText>
                     </Card>
-        )
+        );
     }
 }
 
@@ -131,13 +131,13 @@ const mapStateToProps = (state) => ({
     routines: state.routines,
     workouts: state.workouts,
     workoutsHistory: state.workoutsHistory,
-})
+});
 
 const mapDispatchToProps = {
     fetchExercises,
     fetchRoutines,
     fetchWorkouts,
     fetchWorkoutsHistory,
-}
+};
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HelpChecklist))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HelpChecklist));

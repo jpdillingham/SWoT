@@ -12,12 +12,12 @@ class Help extends Component {
     render() {
         return (
             <HelpChecklist/>
-        )
+        );
     }
 }
 
 const mapDispatchToProps = {
     setTitle,
-}
+};
 
-export default connect(undefined, mapDispatchToProps)(Help)
+export default connect(undefined, mapDispatchToProps)(Help);
