@@ -1,7 +1,7 @@
 const initialState = {
     user: undefined,
     session: undefined,
-}
+};
 
 const SecurityReducer = (state = initialState, action) => { 
     switch (action.type) {
@@ -14,6 +14,6 @@ const SecurityReducer = (state = initialState, action) => {
         default:
             return state;
     }
-}
+};
 
-export default SecurityReducer
+export default SecurityReducer;

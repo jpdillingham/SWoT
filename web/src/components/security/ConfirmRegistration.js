@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
 
-import { confirm } from './SecurityActions'
-import { showSnackbar, setVariable } from '../app/AppActions'
+import { confirm } from './SecurityActions';
+import { showSnackbar, setVariable } from '../app/AppActions';
 
-import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
-import { CardText, CardActions } from 'material-ui/Card'
+import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import { CardText, CardActions } from 'material-ui/Card';
 import SecurityCard from './SecurityCard';
-import CommunicationEmail from 'material-ui/svg-icons/communication/email'
+import CommunicationEmail from 'material-ui/svg-icons/communication/email';
 
-import { validateEmail } from '../../util'
+import { validateEmail } from '../../util';
 
 const styles = {
     group: {
@@ -32,15 +32,15 @@ const styles = {
         marginTop: '10px',
         marginBottom: '10px',
         marginLeft: '95px',
-        width: '200px'
+        width: '200px',
     },
     toggleText: {
         marginTop: '30pt',
         fontSize: '9pt',
         textAlign: 'center',
-        display: 'block'
-    }
-}
+        display: 'block',
+    },
+};
 
 const initialState = {
     info: {
@@ -57,11 +57,11 @@ const initialState = {
         isErrored: false,
         isSuccess: false,
     },
-}
+};
 
 class ConfirmRegistration extends Component {
     constructor(props) {
-        super(props)
+        super(props);
 
         this.state = initialState;
 
@@ -77,12 +77,12 @@ class ConfirmRegistration extends Component {
                 this.state.info.email = data[0];
 
                 if (data.length === 2) {
-                    let regex = new RegExp('^[0-9]{6}')
+                    let regex = new RegExp('^[0-9]{6}');
                     if (!regex.test(data[1])) throw new Error('invalid code (' + data[1] + ')');
                     this.state.info.code = data[1];
                 }
             } catch(err) { 
-                this.navigate('/confirm')
+                this.navigate('/confirm');
             }
         }
 
@@ -104,7 +104,7 @@ class ConfirmRegistration extends Component {
     }
 
     handleNavigateClick = (url) => {
-        this.navigate(url)
+        this.navigate(url);
     }
 
     handleConfirmClick = () => {
@@ -118,18 +118,18 @@ class ConfirmRegistration extends Component {
                             this.props.showSnackbar("Account confirmed!");
                             this.props.setVariable('loginEmail', this.state.info.email);
                             setTimeout(() => this.navigate('/login'), 1000);
-                        })
+                        });
                     }, (error) => {
                         this.setState({ 
                             api: { isExecuting: false, isErrored: true, isSuccess: false },
-                            info: { ...this.state.info, code: '' }
+                            info: { ...this.state.info, code: '' },
                         });
                         this.props.showSnackbar(error.message);
                         this.codeInput.current.focus();
-                    })
-                })
+                    });
+                });
             }
-        })
+        });
     }
 
     validateState = () => {
@@ -139,8 +139,8 @@ class ConfirmRegistration extends Component {
         if (!validateEmail(this.state.info.email)) {
             validationErrors = {
                 ...validationErrors,
-                email: 'Invalid email.'
-            }
+                email: 'Invalid email.',
+            };
 
             focus = this.emailInput.current;
         }
@@ -149,7 +149,7 @@ class ConfirmRegistration extends Component {
             validationErrors = { 
                 ...validationErrors, 
                 code: 'The code must be 6 characters.',
-            }
+            };
 
             focus = !focus ? this.codeInput.current : focus;
         }
@@ -157,7 +157,7 @@ class ConfirmRegistration extends Component {
             validationErrors = {
                 ...validationErrors,
                 code: 'The code must only contain numbers.',
-            }
+            };
 
             focus = !focus ? this.codeInput.current : focus;
         }
@@ -170,23 +170,23 @@ class ConfirmRegistration extends Component {
     handleEmailChange = (event, value) => {
         this.setState({ 
             validationErrors: {
-                ...this.state.validationErrors, email: undefined
+                ...this.state.validationErrors, email: undefined,
             },
             info: { 
-                ...this.state.info, email: value 
-            } 
-        })
+                ...this.state.info, email: value, 
+            }, 
+        });
     }
 
     handleCodeChange = (event, value) => {
         this.setState({ 
             validationErrors: {
-                ...this.state.validationErrors, code: undefined
+                ...this.state.validationErrors, code: undefined,
             },
             info: { 
-                ...this.state.info, code: value 
-            }
-        })
+                ...this.state.info, code: value, 
+            },
+        });
     }
 
     render() {
@@ -243,19 +243,19 @@ class ConfirmRegistration extends Component {
                     </div>
                 </CardActions>
             </SecurityCard>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
     return { 
-    }
-}
+    };
+};
 
 const mapDispatchToProps = {
     confirm,
     showSnackbar,
     setVariable,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ConfirmRegistration)
+export default connect(mapStateToProps, mapDispatchToProps)(ConfirmRegistration);

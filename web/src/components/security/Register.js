@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { register } from './SecurityActions'
-import { showSnackbar } from '../app/AppActions'
+import { register } from './SecurityActions';
+import { showSnackbar } from '../app/AppActions';
 
-import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
-import CommunicationEmail from 'material-ui/svg-icons/communication/email'
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
-import { CardText, CardActions } from 'material-ui/Card'
+import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key';
+import CommunicationEmail from 'material-ui/svg-icons/communication/email';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import { CardText, CardActions } from 'material-ui/Card';
 
-import { validateEmail } from '../../util'
+import { validateEmail } from '../../util';
 import SecurityCard from './SecurityCard';
 
 const styles = {
@@ -31,15 +31,15 @@ const styles = {
         marginTop: '10px',
         marginBottom: '10px',
         marginLeft: '95px',
-        width: '200px'
+        width: '200px',
     },
     toggleText: {
         marginTop: '30pt',
         fontSize: '9pt',
         textAlign: 'center',
-        display: 'block'
-    }
-}
+        display: 'block',
+    },
+};
 
 const initialState = {
     info: {
@@ -58,7 +58,7 @@ const initialState = {
         isErrored: false,
         isSuccess: false,
     },
-}
+};
 
 class Register extends Component {
     constructor(props) {
@@ -86,21 +86,21 @@ class Register extends Component {
     handleEmailChange = (event, value) => {
         this.setState({ 
             info: { ...this.state.info, email: value },
-            validationErrors: { ...this.state.validationErrors, email: undefined }
+            validationErrors: { ...this.state.validationErrors, email: undefined },
         });
     }
 
     handlePasswordChange = (event, value) => {
         this.setState({ 
             info: { ...this.state.info, password: value },
-            validationErrors: { ...this.state.validationErrors, password: undefined, password2: undefined }
+            validationErrors: { ...this.state.validationErrors, password: undefined, password2: undefined },
         });
     }
 
     handlePassword2Change = (event, value) => {
         this.setState({ 
             info: { ...this.state.info, password2: value },
-            validationErrors: { ...this.state.validationErrors, password: undefined, password2: undefined }
+            validationErrors: { ...this.state.validationErrors, password: undefined, password2: undefined },
         });
     }
 
@@ -111,18 +111,18 @@ class Register extends Component {
                     this.props.register(this.state.info.email, this.state.info.password)
                     .then((response) => {
                         this.setState({ registered: true }, () => {
-                            this.setState({ api: { isExecuting: false, isErrored: false, isSuccess: true }})
+                            this.setState({ api: { isExecuting: false, isErrored: false, isSuccess: true }});
                             this.props.showSnackbar("Registration successful!");
                             setTimeout(() => this.navigate('/confirm?code=' + btoa(this.state.info.email)), 1000);
-                        })
+                        });
                     }, (error) => {
                         this.setState({ api: { isExecuting: false, isErrored: true, isSuccess: false }});
                         this.props.showSnackbar(error.message);
                         this.emailInput.current.focus();
-                    })
-                })
+                    });
+                });
             }
-        })
+        });
     }
 
     validateState = () => {
@@ -132,8 +132,8 @@ class Register extends Component {
         if (!validateEmail(this.state.info.email)) {
             validationErrors = {
                 ...validationErrors,
-                email: 'Invalid email.'
-            }
+                email: 'Invalid email.',
+            };
 
             focus = this.emailInput.current;
         }
@@ -141,8 +141,8 @@ class Register extends Component {
         if (this.state.info.password === undefined || this.state.info.password === '') {
             validationErrors = { 
                 ...validationErrors, 
-                password: 'The password can\'t be blank.' 
-            }
+                password: 'The password can\'t be blank.', 
+            };
 
             focus = !focus ? this.password1Input.current : focus;
         }
@@ -150,7 +150,7 @@ class Register extends Component {
             validationErrors = { 
                 ...validationErrors, 
                 password: 'The password must be at least 6 characters.',
-            }
+            };
 
             focus = !focus ? this.password1Input.current : focus;
         }
@@ -161,7 +161,7 @@ class Register extends Component {
                 ...validationErrors, 
                 password: text,
                 password2: text,
-            }
+            };
 
             focus = !focus ? this.password2Input.current : focus;
         }
@@ -248,18 +248,18 @@ class Register extends Component {
                     </div>
                 </CardActions>
             </SecurityCard>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
     return { 
-    }
-}
+    };
+};
 
 const mapDispatchToProps = {
     register,
-    showSnackbar
-}
+    showSnackbar,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register)
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
