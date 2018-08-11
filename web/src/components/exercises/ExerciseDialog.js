@@ -6,11 +6,11 @@ import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import { addExercise, updateExercise } from './ExercisesActions'
-import { showSnackbar } from '../app/AppActions.js'
-import { grey300 } from 'material-ui/styles/colors'
+import { addExercise, updateExercise } from './ExercisesActions';
+import { showSnackbar } from '../app/AppActions.js';
+import { grey300 } from 'material-ui/styles/colors';
 
-import Spinner from '../shared/Spinner'
+import Spinner from '../shared/Spinner';
 
 import { EXERCISE_TYPES, INTENTS } from '../../constants';
 import { getGuid, swapArrayElements, validateUrl } from '../../util';
@@ -21,21 +21,21 @@ import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 
 const styles = {
     name: {
-        width: '100%'
+        width: '100%',
     },
     type: {
-        width: '100%'
+        width: '100%',
     },
     url: {
-        width: '100%'
+        width: '100%',
     },
     dialogContent: {
         width: 400,
     },
     addMetric: {
-        float: 'left'
+        float: 'left',
     },
-}
+};
 
 const initialState = {
     exercise: {
@@ -43,12 +43,12 @@ const initialState = {
         name: '',
         type: '',
         url: '',
-        metrics: []
+        metrics: [],
     },
     metricDialog: {
         open: false,
         intent: '',
-        metric: {}
+        metric: {},
     },
     validationErrors: {
         name: '',
@@ -58,8 +58,8 @@ const initialState = {
     api: {
         isExecuting: false,
         isErrored: false,
-    }
-}
+    },
+};
 
 class ExerciseDialog extends Component {
     state = initialState
@@ -68,45 +68,45 @@ class ExerciseDialog extends Component {
         let nameList = this.props.existingNames;
 
         if (this.props.intent === INTENTS.EDIT) {
-            nameList = nameList.filter(n => n.toLowerCase() !== this.props.exercise.name.toLowerCase())
+            nameList = nameList.filter(n => n.toLowerCase() !== this.props.exercise.name.toLowerCase());
         }
 
         if (nameList.find(n => n.toLowerCase() === value.toLowerCase())) {
             this.setState(prevState => ({
-                validationErrors: { ...prevState.validationErrors, name: 'This name is already in use.' } 
-            }))
+                validationErrors: { ...prevState.validationErrors, name: 'This name is already in use.' }, 
+            }));
         }
         else {
             this.setState(prevState => ({
                 exercise: { ...prevState.exercise, name: value },
-                validationErrors: {  ...prevState.validationErrors, name: '' }
-            }))
+                validationErrors: {  ...prevState.validationErrors, name: '' },
+            }));
         }
     }
 
     handleTypeChange = (event, index, value) => {
         this.setState(prevState => ({ 
             exercise: { ...prevState.exercise, type: value },
-            validationErrors: { ...prevState.validationErrors, type: '' }
-        }))
+            validationErrors: { ...prevState.validationErrors, type: '' },
+        }));
     }
 
     handleUrlChange = (event, value) => {
         this.setState(prevState => ({
             exercise: { ...prevState.exercise, url: value },
-            validationErrors: { ...prevState.validationErrors, url: '' }
-        }))
+            validationErrors: { ...prevState.validationErrors, url: '' },
+        }));
     }
 
     handleMetricDialogClose = (result) => {
         if (result.added) {
-            this.metricAdd(result.metric)
+            this.metricAdd(result.metric);
         }
         else if (result.edited) {
-            this.metricUpdate(result.metric)
+            this.metricUpdate(result.metric);
         }
 
-        this.setState({ metricDialog: { open: false, intent: '', metric: {} } })
+        this.setState({ metricDialog: { open: false, intent: '', metric: {} } });
     }
 
     handleMoveUpMetricMenuClick = (index) => {
@@ -116,7 +116,7 @@ class ExerciseDialog extends Component {
             arr = swapArrayElements(arr, index, index - 1);     
         }
 
-        this.setState({ exercise: { ...this.state.exercise, metrics: arr } }) 
+        this.setState({ exercise: { ...this.state.exercise, metrics: arr } }); 
     }
 
     handleMoveDownMetricMenuClick = (index) => {
@@ -126,7 +126,7 @@ class ExerciseDialog extends Component {
             arr = swapArrayElements(arr, index, index + 1);
         }
 
-        this.setState({ exercise: { ...this.state.exercise, metrics: arr } })
+        this.setState({ exercise: { ...this.state.exercise, metrics: arr } });
     }
 
     handleEditMetricMenuClick = (metric) => {
@@ -134,9 +134,9 @@ class ExerciseDialog extends Component {
             metricDialog: { 
                 open: true, 
                 intent: INTENTS.EDIT, 
-                metric: metric 
-            } 
-        })
+                metric: metric, 
+            }, 
+        });
     }
 
     handleDeleteMetricMenuClick = (metric) => {
@@ -148,9 +148,9 @@ class ExerciseDialog extends Component {
             metricDialog: { 
                 open: true, 
                 intent: INTENTS.ADD, 
-                metric: {}
-            } 
-        })
+                metric: {},
+            }, 
+        });
     }
 
     handleSaveClick = () => {
@@ -159,10 +159,10 @@ class ExerciseDialog extends Component {
                 name: this.state.exercise.name === '' ? 'The Exercise must have a name.' : '',
                 type: this.state.exercise.type === '' ? 'A type must be selected.' : '',
                 url: this.state.exercise.url && !validateUrl(this.state.exercise.url) ? 'The url must be valid if provided.' : '',
-            }
+            },
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
-                this.setState({ api: { ...this.state.api, isExecuting: true } })
+                this.setState({ api: { ...this.state.api, isExecuting: true } });
 
                 if (this.props.intent === INTENTS.EDIT) {
                     this.props.updateExercise(this.state.exercise)
@@ -170,7 +170,7 @@ class ExerciseDialog extends Component {
                         this.handleApiSuccess('Updated Exercise \'' + response.data.name + '\'.');
                     }, (error) => {
                         this.handleApiError('Error updating Exercise \'' + this.state.exercise.name + '\': ' + error);
-                    })
+                    });
                 }
                 else {
                     this.props.addExercise(this.state.exercise)
@@ -178,39 +178,39 @@ class ExerciseDialog extends Component {
                         this.handleApiSuccess('Added Exercise \'' + response.data.name + '\'.');
                     }, (error) => {
                         this.handleApiError('Error adding Exercise \'' + this.state.exercise.name + '\': ' + error);
-                    })
+                    });
                 }
             }
-        })
+        });
     }
 
     handleApiSuccess = (message) => {
-        this.setState({ ...this.state.api, isExecuting: false })
-        this.props.showSnackbar(message)
+        this.setState({ ...this.state.api, isExecuting: false });
+        this.props.showSnackbar(message);
         this.props.handleClose();
     }
 
     handleApiError = (message) => {
-        this.setState({ api: { isExecuting: false, isErrored: true }})
+        this.setState({ api: { isExecuting: false, isErrored: true }});
         this.props.showSnackbar(message);
     }
 
     handleCancelClick = () => {
-        this.setState({ api: { isExecuting: false, isErrored: false }})
-        this.props.handleClose()
+        this.setState({ api: { isExecuting: false, isErrored: false }});
+        this.props.handleClose();
     }
 
     componentWillReceiveProps(nextProps) {
         if (this.props.open && !nextProps.open) {
-            this.setState({ ...initialState, exercise: { ...initialState.exercise, id: getGuid() }})
+            this.setState({ ...initialState, exercise: { ...initialState.exercise, id: getGuid() }});
         }
   
         if (!this.props.open && nextProps.open) {
             if (nextProps.intent === INTENTS.EDIT) {
-                this.setState({ exercise: nextProps.exercise })
+                this.setState({ exercise: nextProps.exercise });
             }
             else if (nextProps.intent === INTENTS.COPY) {
-                this.setState({ exercise: { ...nextProps.exercise, id: getGuid() }})
+                this.setState({ exercise: { ...nextProps.exercise, id: getGuid() }});
             }
         }
     }
@@ -219,9 +219,9 @@ class ExerciseDialog extends Component {
         this.setState(prevState => ({
             exercise: {
                 ...prevState.exercise,
-                metrics: prevState.exercise.metrics.concat(metric)
-            }
-        }))
+                metrics: prevState.exercise.metrics.concat(metric),
+            },
+        }));
     }
 
     metricUpdate = (metric) => {
@@ -229,19 +229,19 @@ class ExerciseDialog extends Component {
             exercise: {
                 ...prevState.exercise,
                 metrics: prevState.exercise.metrics.map(m => { 
-                    return m.name === metric.name ? metric : m 
-                })
-            }
-        }))
+                    return m.name === metric.name ? metric : m; 
+                }),
+            },
+        }));
     }
 
     metricDelete = (metric) => {
         this.setState(prevState => ({
             exercise: {
                 ...prevState.exercise,
-                metrics: prevState.exercise.metrics.filter(m => m.name !== metric.name)
-            }
-        }))
+                metrics: prevState.exercise.metrics.filter(m => m.name !== metric.name),
+            },
+        }));
     }
 
     render() {
@@ -321,18 +321,18 @@ class ExerciseDialog extends Component {
                     handleClose={this.handleMetricDialogClose}
                 />
             </div>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
-    existingNames: state.exercises.map(e => e.name)
-})
+    existingNames: state.exercises.map(e => e.name),
+});
 
 const mapDispatchToProps = {
     addExercise,
     updateExercise,
-    showSnackbar
-}
+    showSnackbar,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExerciseDialog)
+export default connect(mapStateToProps, mapDispatchToProps)(ExerciseDialog);

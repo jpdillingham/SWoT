@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import moment from 'moment';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import Avatar from 'material-ui/Avatar'
+import Avatar from 'material-ui/Avatar';
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
-import { black, grey300, red500 } from 'material-ui/styles/colors'
-import Divider from 'material-ui/Divider'
+import { black, grey300, red500 } from 'material-ui/styles/colors';
+import Divider from 'material-ui/Divider';
 
-import { WORKOUT_AVATAR_COLOR } from '../../constants'
+import { WORKOUT_AVATAR_COLOR } from '../../constants';
 import { List, ListItem } from 'material-ui/List';
 import Spinner from '../shared/Spinner';
 import { fontContrastColor } from '../../util';
@@ -27,23 +27,23 @@ const styles = {
         position: 'relative',
     },
     headerDivider: {
-        marginTop: 10
+        marginTop: 10,
     },
     footerDivider: {
-        marginBottom: 10
-    }
-}
+        marginBottom: 10,
+    },
+};
 
 class WorkoutsListCard extends Component {
     sort = (a, b) => {
         let f = this.props.timeField;
         if (this.props.sort.toLowerCase() === 'desc') {
             return a[f] > b[f] ? -1 : 
-                a[f] === b[f] ? 0 : 1 
+                a[f] === b[f] ? 0 : 1; 
         }
         else {
             return a[f] < b[f] ? -1 : 
-                a[f] === b[f] ? 0 : 1 
+                a[f] === b[f] ? 0 : 1; 
         }        
     }
 
@@ -55,7 +55,7 @@ class WorkoutsListCard extends Component {
                     style={!this.props.refreshing ? styles.card : 
                         { 
                             ...styles.card, 
-                            backgroundColor: grey300 
+                            backgroundColor: grey300, 
                         }
                     }
                 >
@@ -89,7 +89,7 @@ class WorkoutsListCard extends Component {
                                             onClick={() => this.props.onClick(w.id)}
                                             disabled={this.props.refreshing}
                                         />
-                                    )
+                                    );
                                 }) : this.props.emptyContent
                             }
                         </List>
@@ -98,8 +98,8 @@ class WorkoutsListCard extends Component {
                         {this.props.refreshing ? <Spinner/> : ''}
                     </CardText>
                 </Card> 
-        )
+        );
     }
 }
 
-export default WorkoutsListCard
+export default WorkoutsListCard;

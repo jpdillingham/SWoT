@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -48,7 +48,7 @@ class App extends Component {
         palette: {
             primary1Color: "#2196f3",
             primary2Color: "#64b5f6",
-            pickerHeaderColor: "#29b6f6"
+            pickerHeaderColor: "#29b6f6",
         },
     });
 

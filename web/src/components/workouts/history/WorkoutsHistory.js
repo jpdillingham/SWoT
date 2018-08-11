@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import api from '../../../api'
+import api from '../../../api';
 
 import { sortByProp, fontContrastColor } from '../../../util';
 import { WORKOUT_AVATAR_COLOR, API_ROOT } from '../../../constants';
@@ -22,7 +22,7 @@ import MenuItem from 'material-ui/MenuItem';
 import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
 import SelectField from 'material-ui/SelectField';
 import HelpChecklist from '../../help/HelpChecklist';
-import Avatar from 'material-ui/Avatar'
+import Avatar from 'material-ui/Avatar';
 
 const initialState = {
     historyExists: false,
@@ -41,8 +41,8 @@ const initialState = {
     refreshApi: {
         isExecuting: false,
         isErrored: false,
-    }
-}
+    },
+};
 
 const styles = {
     grid: {
@@ -55,7 +55,7 @@ const styles = {
         position: 'fixed',
         top: '50%',
         left: '50%',
-        transform: 'translate(-50%, -50%)'
+        transform: 'translate(-50%, -50%)',
     },
     clearIcon: {
         width: 18,
@@ -65,7 +65,7 @@ const styles = {
         marginBottom: 15,
         marginRight: 10,
     },
-}
+};
 
 class WorkoutsHistory extends Component {
     constructor(props) {
@@ -84,7 +84,7 @@ class WorkoutsHistory extends Component {
                 toTime: defaulttoTime.getTime(), 
                 fromTime: defaultfromTime.getTime(),
                 routineId: this.props.match.params.id,
-            } 
+            }, 
         };        
     }
 
@@ -100,12 +100,12 @@ class WorkoutsHistory extends Component {
                         this.props.fetchRoutines();
                     }
                     else {
-                        this.setState({ loadApi: { isExecuting: false, isErrored: false }})
+                        this.setState({ loadApi: { isExecuting: false, isErrored: false }});
                     }
                 });
             })
             .catch(error => {
-                this.setState({ loadApi: { isExecuting: false, isErroed: true }})
+                this.setState({ loadApi: { isExecuting: false, isErroed: true }});
             });
         });
     }
@@ -115,7 +115,7 @@ class WorkoutsHistory extends Component {
     }
 
     handleItemClick = (workoutId) => {
-        this.navigate('/workouts/' + workoutId)
+        this.navigate('/workouts/' + workoutId);
     }
 
     handleFiltersChange = (filters) => {
@@ -123,26 +123,26 @@ class WorkoutsHistory extends Component {
     }
 
     handleCustomFilterChange = (filter, event, index, value) => {
-        this.fetchHistory({ ...this.state.filters, offset: 0, routineId: value })
+        this.fetchHistory({ ...this.state.filters, offset: 0, routineId: value });
     }
 
     handleCustomFilterClearClick = () => {
-        this.fetchHistory({ ...this.state.filters, routineId: undefined })
+        this.fetchHistory({ ...this.state.filters, routineId: undefined });
     }
 
     fetchHistory = (filters, api = 'refreshApi') => {
         this.setState({ 
             [api]: { ...this.state[api], isExecuting: true },
-            filters: filters
+            filters: filters,
         }, () => {
             this.props.fetchWorkoutsHistory(filters)
             .then(response => {
-                this.setState({ [api]: { isExecuting: false, isErrored: false }})
+                this.setState({ [api]: { isExecuting: false, isErrored: false }});
             }, error => {
                 this.props.showSnackbar('Error updating Workout history: ' + error);
                 this.setState({ [api]: { isExecuting: false, isErrored: true }});
-            })
-        })
+            });
+        });
     }
 
     render() {
@@ -205,25 +205,25 @@ class WorkoutsHistory extends Component {
                                                 onClick={() => this.handleItemClick(w.id)}
                                                 disabled={this.props.refreshing}
                                             />
-                                        )
+                                        );
                                     })}
                                 </List>
                             </History>
                         </div>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
     workoutsHistory: state.workoutsHistory,
     routines: state.routines,
-})
+});
 
 const mapDispatchToProps = {
     fetchWorkoutsHistory,
     fetchRoutines,
     showSnackbar,
     setTitle,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorkoutsHistory)
+export default connect(mapStateToProps, mapDispatchToProps)(WorkoutsHistory);

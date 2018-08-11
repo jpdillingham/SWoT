@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 
 import {List, ListItem} from 'material-ui/List';
 
-import { red500 } from 'material-ui/styles/colors'
-import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
-import Spinner from '../shared/Spinner'
+import { red500 } from 'material-ui/styles/colors';
+import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
+import Spinner from '../shared/Spinner';
 
-import { fetchRoutines } from '../routines/RoutinesActions'
-import { showSnackbar } from '../app/AppActions'
+import { fetchRoutines } from '../routines/RoutinesActions';
+import { showSnackbar } from '../app/AppActions';
 
 const styles = {
     icon: {
@@ -16,7 +16,7 @@ const styles = {
         width: 40,
         margin: 'auto',
         display: 'block',
-        top: '10px'
+        top: '10px',
     },
     container: {
         display: 'block',
@@ -24,27 +24,27 @@ const styles = {
     },
     spinner: {
         top: 60,
-    }
-}
+    },
+};
 
 class ExerciseRoutineReferenceList extends Component {
     state = {
         api: {
             isExecuting: false,
             isErrored: false,
-        }
+        },
     }
 
     componentWillMount = () => {
-        this.setState({ api: { ...this.state.api, isExecuting: true }})
+        this.setState({ api: { ...this.state.api, isExecuting: true }});
 
         this.props.fetchRoutines()
         .then(() => {
-            this.setState({ api: { ...this.state.api, isExecuting: false }})
+            this.setState({ api: { ...this.state.api, isExecuting: false }});
         }, error => {
             this.props.showSnackbar('Error fetching Routines: ' + error);
-            this.setState({ api: { isExecuting: false, isErrored: true }})
-        })
+            this.setState({ api: { isExecuting: false, isErrored: true }});
+        });
     }
 
     render() {
@@ -72,18 +72,18 @@ class ExerciseRoutineReferenceList extends Component {
                         </div>
                 } 
             </div>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
     routines: state.routines,
-})
+});
 
 const mapDispatchToProps = {
     fetchRoutines,
     showSnackbar,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExerciseRoutineReferenceList)
+export default connect(mapStateToProps, mapDispatchToProps)(ExerciseRoutineReferenceList);
 

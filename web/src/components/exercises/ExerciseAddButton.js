@@ -13,23 +13,23 @@ const styles = {
         bottom: 20,
         left: 'auto',
         position: 'fixed',
-        zIndex: 1000
+        zIndex: 1000,
     },
-}
+};
 
 class ExerciseAddButton extends Component {
     state = {
         addDialog: {
-            open: false
-        }
+            open: false,
+        },
     }
 
     handleAddClick = () => {
-        this.setState({ addDialog: { open: true }})
+        this.setState({ addDialog: { open: true }});
     }
 
     handleAddDialogClose = (result) => {
-        this.setState({ addDialog: { open: false }})
+        this.setState({ addDialog: { open: false }});
     }
 
     render() {
@@ -49,8 +49,8 @@ class ExerciseAddButton extends Component {
                     handleClose={this.handleAddDialogClose}
                 />
             </div>
-        )
+        );
     }
 }
 
-export default ExerciseAddButton
+export default ExerciseAddButton;

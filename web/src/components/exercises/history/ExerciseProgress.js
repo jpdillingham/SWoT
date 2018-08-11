@@ -12,9 +12,9 @@ import {
     WORKOUT_AVATAR_COLOR, 
     CHART_OPTIONS, 
     CHART_SERIES_OPTIONS, 
-    CHART_SERIES_COLORS 
-} from '../../../constants'
-import Avatar from 'material-ui/Avatar'
+    CHART_SERIES_COLORS, 
+} from '../../../constants';
+import Avatar from 'material-ui/Avatar';
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import { ActionTrendingUp, ActionInfo } from 'material-ui/svg-icons';
 import ExerciseProgressOptions from './ExerciseProgressOptions';
@@ -50,7 +50,7 @@ const initialState = {
         isExecuting: false,
         isErrored: false,
     },
-}
+};
 
 const styles = {
     cardHeader: {
@@ -72,7 +72,7 @@ const styles = {
         position: 'fixed',
         top: '50%',
         left: '50%',
-        transform: 'translate(-50%, -50%)'
+        transform: 'translate(-50%, -50%)',
     },
     headerDivider: {
         marginTop: 10,
@@ -80,7 +80,7 @@ const styles = {
     container: {
         position: 'relative',
     },
-}
+};
 
 class ExerciseProgress extends Component {
     constructor(props) {
@@ -104,7 +104,7 @@ class ExerciseProgress extends Component {
     };
 
     componentWillMount() {
-        this.props.setTitle('Exercises')
+        this.props.setTitle('Exercises');
         this.updateDimensions();
 
         this.setState({ loadApi: { isExecuting: true }}, () => {
@@ -128,14 +128,14 @@ class ExerciseProgress extends Component {
                         });
                     }
                     else {
-                        this.setState({ loadApi: { isExecuting: false, isErrored: false }})
+                        this.setState({ loadApi: { isExecuting: false, isErrored: false }});
                     }
                 });
             })
             .catch(error => {
-                this.setState({ loadApi: { isExecuting: false, isErroed: true }})
+                this.setState({ loadApi: { isExecuting: false, isErroed: true }});
             });
-        })
+        });
     }
 
     componentDidMount = () => {
@@ -157,7 +157,7 @@ class ExerciseProgress extends Component {
             }, error => {
                 this.props.showSnackbar('Error fetching Exercises: ' + error);
                 this.setState({ refreshApi: { isExecuting: false, isErrored: true }});
-            })
+            });
         });
     }
 
@@ -167,7 +167,7 @@ class ExerciseProgress extends Component {
             .reduce((acc, e) => acc.concat(e))
             .sort(sortByProp('name'))
             .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true)
-            .map(m => { return { name: m.name, uom: m.uom }});
+            .map(m => { return { name: m.name, uom: m.uom };});
     }
 
     getDatasets = (exercises) => {
@@ -184,8 +184,8 @@ class ExerciseProgress extends Component {
                 var set = acc.find(s => s.label === m.name);
                 set.data = set.data.concat(m.value);
                 acc[acc.indexOf(set)] = set;
-                return acc
-            }, datasets))
+                return acc;
+            }, datasets));
         
         return datasets;
     }
@@ -214,7 +214,7 @@ class ExerciseProgress extends Component {
                                 style={!this.state.refreshApi.isExecuting ? styles.card : 
                                     { 
                                         ...styles.card, 
-                                        backgroundColor: grey300 
+                                        backgroundColor: grey300, 
                                     }
                                 }
                             >
@@ -252,9 +252,9 @@ class ExerciseProgress extends Component {
                                                                 tooltips: {
                                                                     ...CHART_OPTIONS.tooltips,
                                                                     callbacks: {
-                                                                        footer: (tooltipItems, data) => exercises[tooltipItems[0].index] && exercises[tooltipItems[0].index].notes ? 'Notes: ' + exercises[tooltipItems[0].index].notes : undefined
+                                                                        footer: (tooltipItems, data) => exercises[tooltipItems[0].index] && exercises[tooltipItems[0].index].notes ? 'Notes: ' + exercises[tooltipItems[0].index].notes : undefined,
                                                                     },
-                                                                } 
+                                                                }, 
                                                             }}
                                                         />
                                                     </div>
@@ -264,7 +264,7 @@ class ExerciseProgress extends Component {
                                 </CardText>
                             </Card>
                         </div> 
-        )
+        );
     }
 }
 
@@ -280,4 +280,4 @@ const mapDispatchToProps = {
     showSnackbar,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExerciseProgress)
+export default connect(mapStateToProps, mapDispatchToProps)(ExerciseProgress);

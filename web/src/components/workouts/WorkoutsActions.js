@@ -5,22 +5,22 @@ const endpoint = API_ROOT + '/workouts';
 
 const workoutsPost = (workout) => ({
     type: 'WORKOUTS_POST',
-    workout: workout
+    workout: workout,
 });
 
 const workoutsPut = (workouts) => ({
     type: 'WORKOUTS_PUT',
-    workouts: workouts
+    workouts: workouts,
 });
 
 const workoutsGet = (workouts) => ({
     type: 'WORKOUTS_GET',
-    workouts: workouts
+    workouts: workouts,
 });
 
 const workoutsDelete = (id) => ({
     type: 'WORKOUTS_DELETE',
-    id: id
+    id: id,
 });
 
 export const fetchWorkouts = () => (dispatch, getState) => {
@@ -33,7 +33,7 @@ export const fetchWorkouts = () => (dispatch, getState) => {
             reject(error.response.message);
         });    
     });
-}
+};
 
 export const addWorkout = (workout) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
@@ -50,7 +50,7 @@ export const addWorkout = (workout) => (dispatch, getState) => {
             reject(error.response.message);
         });
     });
-}
+};
 
 export const updateWorkout = (workout) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
@@ -70,7 +70,7 @@ export const updateWorkout = (workout) => (dispatch, getState) => {
             reject(error.response.message);
         });
     });
-}
+};
 
 export const deleteWorkout = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
@@ -87,4 +87,4 @@ export const deleteWorkout = (id) => (dispatch, getState) => {
             reject(error.response.message);
         });
     });
-}
+};

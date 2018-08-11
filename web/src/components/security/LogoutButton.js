@@ -1,32 +1,32 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { logout } from './SecurityActions'
-import { showSnackbar } from '../app/AppActions'
+import { logout } from './SecurityActions';
+import { showSnackbar } from '../app/AppActions';
 
-import IconButton from 'material-ui/IconButton'
+import IconButton from 'material-ui/IconButton';
 import ActionExitToApp from 'material-ui/svg-icons/action/exit-to-app';
 import { white } from 'material-ui/styles/colors';
 import ConfirmDialog from '../shared/ConfirmDialog';
 
 const styles = {
     button: {
-        margin: 'auto'
+        margin: 'auto',
     },
     text: {
         margin: 'auto',
-        color: '#FFF'
+        color: '#FFF',
     },
     container: {
-        display: 'inherit'
-    }
-}
+        display: 'inherit',
+    },
+};
 
 const initialState = {
     dialog: {
         open: false,
     },
-}
+};
 
 class LogoutButton extends Component {
     state = initialState
@@ -66,19 +66,19 @@ class LogoutButton extends Component {
                     Are you sure you want to log out?
                 </ConfirmDialog>
             </div>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
     return { 
         user: state.security.user,
-    }
-}
+    };
+};
 
 const mapDispatchToProps = ({
     logout,
-    showSnackbar
-})
+    showSnackbar,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogoutButton);

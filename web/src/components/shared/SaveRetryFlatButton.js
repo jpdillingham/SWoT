@@ -14,8 +14,8 @@ class SaveRetryFlatButton extends Component {
                 }
                 style={this.props.style}
             />
-        )
+        );
     }
 }
 
-export default SaveRetryFlatButton
+export default SaveRetryFlatButton;

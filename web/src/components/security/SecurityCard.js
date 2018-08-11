@@ -10,21 +10,21 @@ const styles = {
     card: {
         width: '390px',
         margin: 'auto',
-        marginTop: '-63px'
+        marginTop: '-63px',
     },
     media: {
         height: '200px',
         backgroundColor: '#2196f3',
     },
     iconGroup: {
-        position: 'relative'
+        position: 'relative',
     },
     iconForeground: {
         position: 'relative',
         width: '128px',
         height: '128px',
         top: '20px',
-        left: '131px'
+        left: '131px',
     },
     iconText: {
         position: 'absolute',
@@ -58,7 +58,7 @@ const styles = {
         bottom: 0,
         zIndex: 1000,
     },
-}
+};
 
 class SecurityCard extends Component {
     render() {
@@ -85,8 +85,8 @@ class SecurityCard extends Component {
                     </div>
                 </Card>
             </form>
-        )
+        );
     }
 }
 
-export default SecurityCard
+export default SecurityCard;

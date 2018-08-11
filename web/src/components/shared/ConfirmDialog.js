@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 
-import Spinner from '../shared/Spinner'
+import Spinner from '../shared/Spinner';
 
-import FlatButton from 'material-ui/FlatButton'
-import Dialog from 'material-ui/Dialog'
-import { grey300 } from 'material-ui/styles/colors'
+import FlatButton from 'material-ui/FlatButton';
+import Dialog from 'material-ui/Dialog';
+import { grey300 } from 'material-ui/styles/colors';
 
 const initialState = {
     api: {
         isExecuting: false,
         isErrored: false,
-    }
-}
+    },
+};
 
 class ConfirmDialog extends Component {
     state = initialState;
@@ -26,14 +26,15 @@ class ConfirmDialog extends Component {
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
             this.props.onConfirm()
             .then(response => { 
-                this.props.onClose({ cancelled: false }) }, error => {
+                this.props.onClose({ cancelled: false });
+            }, error => {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
-            })
-        })
+            });
+        });
     }
 
     handleCancelClick = () => {
-        this.setState(initialState, () => this.props.onClose({ cancelled: true }))
+        this.setState(initialState, () => this.props.onClose({ cancelled: true }));
     }
 
     render() {
@@ -68,9 +69,9 @@ class ConfirmDialog extends Component {
                     {this.state.api.isExecuting? <Spinner /> : ''}
                 </Dialog>
             </div>
-        )
+        );
     }
 }
 
-export default ConfirmDialog
+export default ConfirmDialog;
 

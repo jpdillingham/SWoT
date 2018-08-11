@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 
 import { NavigationExpandLess, NavigationExpandMore } from 'material-ui/svg-icons';
-import { black } from 'material-ui/styles/colors'
-import LeftRightListItem from './LeftRightListItem'
+import { black } from 'material-ui/styles/colors';
+import LeftRightListItem from './LeftRightListItem';
 
 const styles = {
     right: {
         float: 'right',
-        marginRight: 10
+        marginRight: 10,
     },
     content: {
-        marginLeft: 20
-    }
-}
+        marginLeft: 20,
+    },
+};
 
 class ToggledLeftRightListItem extends Component {
     state = { toggle: this.props.defaultToggleOpen === undefined ? false : this.props.defaultToggleOpen };
@@ -22,9 +22,9 @@ class ToggledLeftRightListItem extends Component {
     }
 
     render() {
-        let props = { ...this.props }
-        delete props.children
-        delete props.defaultToggleOpen
+        let props = { ...this.props };
+        delete props.children;
+        delete props.defaultToggleOpen;
 
         if (this.props.children) {
             props.onClick = () => this.handleToggle();
@@ -38,8 +38,8 @@ class ToggledLeftRightListItem extends Component {
                     {!this.state.toggle ? '' : this.props.children}
                 </div>
             </div>
-        )
+        );
     }
 }
 
-export default ToggledLeftRightListItem
+export default ToggledLeftRightListItem;

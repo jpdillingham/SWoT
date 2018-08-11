@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { black } from 'material-ui/styles/colors'
+import { black } from 'material-ui/styles/colors';
 import { AvPlayArrow, ActionSchedule, AvStop } from 'material-ui/svg-icons';
 
 const styles = {
@@ -15,7 +15,7 @@ const styles = {
         width: 14,
         height: 14,
         marginTop: 3,
-        float: 'right'
+        float: 'right',
     },
     title: {
         position: 'absolute',
@@ -26,15 +26,15 @@ const styles = {
         whiteSpace: 'pre',
         overflow: 'hidden',
         width: 'calc(100% - 25px)',
-    }
-}
+    },
+};
 class WorkoutsCalendarEvent extends Component {
     render() {
         let event = this.props.event;
         let icon = event.status === 'scheduled' ? <ActionSchedule style={{ ...styles.icon, color: event.fontColor}}/> : 
             event.status === 'started' ? <AvPlayArrow style={{ ...styles.icon, color: event.fontColor}}/> : <AvStop style={{ ...styles.icon, color: event.fontColor}}/>;
 
-        console.log(event)
+        console.log(event);
         return (
             <div>
                 {React.Children.map(this.props.children, child =>
@@ -46,8 +46,8 @@ class WorkoutsCalendarEvent extends Component {
                     </div>
                 )}
             </div>
-        )
+        );
     }
 }
 
-export default WorkoutsCalendarEvent
+export default WorkoutsCalendarEvent;

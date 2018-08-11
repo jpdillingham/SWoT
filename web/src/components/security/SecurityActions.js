@@ -5,38 +5,38 @@ import {
     CognitoUserSession, 
     CognitoAccessToken, 
     CognitoIdToken, 
-    CognitoRefreshToken 
-} from 'amazon-cognito-identity-js'
-import { COGNITO_POOLID, COGNITO_CLIENTID } from '../../constants'
+    CognitoRefreshToken, 
+} from 'amazon-cognito-identity-js';
+import { COGNITO_POOLID, COGNITO_CLIENTID } from '../../constants';
 
 const loginAction = (user, session) => ({
     type: 'LOGIN',
     user: user,
     session: session,
-})
+});
 
 const refreshAction = (session) => ({
     type: 'REFRESH',
     session: session,
-})
+});
 
 const logoutAction = () => ({
-    type: 'LOGOUT'
-})
+    type: 'LOGOUT',
+});
 
 const getCognitoUserPool = () => {
     return new CognitoUserPool({ 
         UserPoolId: COGNITO_POOLID, 
-        ClientId: COGNITO_CLIENTID 
-    })
-}
+        ClientId: COGNITO_CLIENTID, 
+    });
+};
 
 const getCognitoUser = (email) => {
     return new CognitoUser({
         Username: email,
         Pool: getCognitoUserPool(),
-    })
-}
+    });
+};
 
 export const ensureSession = () => (dispatch, getState) => {
     let sessionData = getState().security.session;
@@ -51,7 +51,7 @@ export const ensureSession = () => (dispatch, getState) => {
                 IdToken: idToken,
                 AccessToken: accessToken,
                 RefreshToken: refreshToken,
-                ClockDrift: sessionData.clockDrift
+                ClockDrift: sessionData.clockDrift,
             });
     
             if (!session.isValid()) {
@@ -60,7 +60,7 @@ export const ensureSession = () => (dispatch, getState) => {
                 }, error => {
                     dispatch(logoutAction());
                     reject(error.response.message);
-                })
+                });
             }
             else {
                 resolve(true);
@@ -70,8 +70,8 @@ export const ensureSession = () => (dispatch, getState) => {
             dispatch(logoutAction());
             reject('Invalid session');
         }
-    })
-}
+    });
+};
 
 export const refreshSession = () => (dispatch, getState) => {
     let cognitoUser = getCognitoUser(getState().security.user);
@@ -85,12 +85,12 @@ export const refreshSession = () => (dispatch, getState) => {
                 reject(err);
             }
             else {
-                dispatch(refreshAction(result))
+                dispatch(refreshAction(result));
                 resolve(result);
             }
-        })
-    })
-}
+        });
+    });
+};
 
 
 
@@ -101,8 +101,8 @@ export const logout = () => (dispatch, getState) => {
         cognitoUser.signOut();
         dispatch(logoutAction());
         resolve();
-    })
-}
+    });
+};
 
 export const authenticate = (email, password) => (dispatch) => {
     let cognitoUser = getCognitoUser(email);
@@ -110,7 +110,7 @@ export const authenticate = (email, password) => (dispatch) => {
     let auth = {
         Usernane: email,
         Password: password,
-    }
+    };
 
     let authDetails = new AuthenticationDetails(auth);
 
@@ -123,10 +123,10 @@ export const authenticate = (email, password) => (dispatch) => {
             onFailure: function(err) {
                 console.log(err);
                 reject(err);
-            }
-        })
-    })
-}
+            },
+        });
+    });
+};
 
 export const register = (email, password) => (dispatch) => {
     let cognitoUserPool = getCognitoUserPool();
@@ -141,9 +141,9 @@ export const register = (email, password) => (dispatch) => {
                 console.log(result);
                 resolve(result);
             }
-        })
-    })
-}
+        });
+    });
+};
 
 export const confirm = (email, code) => (dispatch) => {
     let cognitoUser = getCognitoUser(email);
@@ -159,5 +159,5 @@ export const confirm = (email, code) => (dispatch) => {
                 resolve(result);
             }
         });
-    })
-}
+    });
+};

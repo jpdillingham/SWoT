@@ -1,23 +1,23 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
 import { ActionAssignmentTurnedIn, ActionDelete, ContentSave, NavigationCancel, NavigationArrowBack } from 'material-ui/svg-icons';
-import { red500, grey300 } from 'material-ui/styles/colors'
+import { red500, grey300 } from 'material-ui/styles/colors';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import IconButton from 'material-ui/IconButton'
-import IconMenu from 'material-ui/IconMenu'
-import MenuItem from 'material-ui/MenuItem'
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
-import ConfirmDialog from '../../shared/ConfirmDialog'
+import ConfirmDialog from '../../shared/ConfirmDialog';
 
-import { getElapsedTime } from '../../../util'
-import { WORKOUT_AVATAR_COLOR } from '../../../constants'
-import { fontContrastColor, getUnixTimestamp } from '../../../util'
+import { getElapsedTime } from '../../../util';
+import { WORKOUT_AVATAR_COLOR } from '../../../constants';
+import { fontContrastColor, getUnixTimestamp } from '../../../util';
 
-import ExerciseEditorCard from '../../exercises/editor/ExerciseEditorCard'
+import ExerciseEditorCard from '../../exercises/editor/ExerciseEditorCard';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import TextField from 'material-ui/TextField';
 import Spinner from '../../shared/Spinner';
@@ -41,7 +41,7 @@ const styles = {
         top: 10,
     },
     notes: {
-        marginLeft: 20
+        marginLeft: 20,
     },
     fab: {
         margin: 0,
@@ -61,7 +61,7 @@ const styles = {
     spinner: {
         zIndex: 1000,
     },
-}
+};
 
 const initialState = {
     api: {
@@ -73,7 +73,7 @@ const initialState = {
     },
     workout: undefined,
     editsMade: false,
-}
+};
 
 class WorkoutEditorCard extends Component {
     state = initialState;
@@ -89,7 +89,7 @@ class WorkoutEditorCard extends Component {
                 ...e, 
                 startTime: e.startTime ? new Date(e.startTime).toString().split(' ').slice(0, 6).join(' ') : e.startTime,
                 endTime: e.endTime ? new Date(e.endTime).toString().split(' ').slice(0, 6).join(' ') : e.endTime,
-            } 
+            }; 
         });
 
         let w = { 
@@ -110,12 +110,12 @@ class WorkoutEditorCard extends Component {
     }
 
     handleDeleteClick = () => {
-        this.setState({ deleteDialog: { open: true }})
+        this.setState({ deleteDialog: { open: true }});
     }
 
     handleDeleteDialogClose = (result) => {
         if (result.cancelled) { 
-            this.setState({ deleteDialog: { open: false }})
+            this.setState({ deleteDialog: { open: false }});
         }
     }
 
@@ -148,7 +148,7 @@ class WorkoutEditorCard extends Component {
                     ...e, 
                     startTime: e.startTime ? getUnixTimestamp(e.startTime) : e.startTime,
                     endTime: e.endTime ? getUnixTimestamp(e.endTime) : e.endTime,
-                } 
+                }; 
             });
 
             this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
@@ -165,8 +165,8 @@ class WorkoutEditorCard extends Component {
                     this.setState({ api: { isExecuting: false, isErrored: false }});
                 }, error => {
                     this.setState({ api: { isExecuting: false, isErrored: true }});
-                })
-            })
+                });
+            });
         }
     }
 
@@ -202,105 +202,104 @@ class WorkoutEditorCard extends Component {
 
         return (
             <div>
-            <Card zDepth={2} style={!this.state.api.isExecuting ? styles.card : { ...styles.card, backgroundColor: grey300 }}>
-                <CardHeader                        
-                    titleStyle={{ ...styles.cardTitle, color: fontColor }}
-                    style={{ ...styles.cardHeader, backgroundColor: color }}
-                    title={'Editing: ' + this.props.workout.routine.name}
-                    subtitle={
-                        'Completed ' + moment(this.props.workout.endTime).calendar()
-                    }
-                    subtitleStyle={{ color: fontColor }}
-                    avatar={
-                        <Avatar 
-                            backgroundColor={color} 
-                            size={40} 
-                            color={fontColor}
-                            icon={<ActionAssignmentTurnedIn/>} 
-                        />
-                    }
-                >
-                    <FloatingActionButton 
-                        secondary={false} 
-                        zDepth={2} 
-                        style={styles.fab}
-                        mini={true}
-                        onClick={this.handleSaveClick}
-                        disabled={!this.areTimesValid()}
+                <Card zDepth={2} style={!this.state.api.isExecuting ? styles.card : { ...styles.card, backgroundColor: grey300 }}>
+                    <CardHeader                        
+                        titleStyle={{ ...styles.cardTitle, color: fontColor }}
+                        style={{ ...styles.cardHeader, backgroundColor: color }}
+                        title={'Editing: ' + this.props.workout.routine.name}
+                        subtitle={
+                            'Completed ' + moment(this.props.workout.endTime).calendar()
+                        }
+                        subtitleStyle={{ color: fontColor }}
+                        avatar={
+                            <Avatar 
+                                backgroundColor={color} 
+                                size={40} 
+                                color={fontColor}
+                                icon={<ActionAssignmentTurnedIn/>} 
+                            />
+                        }
                     >
-                        <ContentSave />
-                    </FloatingActionButton>
-                </CardHeader>
-                <IconMenu
-                    style={styles.iconMenu}
-                    iconButtonElement={<IconButton><MoreVertIcon color={fontColor}/></IconButton>}
-                    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                    targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                >
-                    {this.state.editsMade ? <MenuItem primaryText="Cancel Edits" onClick={this.handleCancelEditClick} leftIcon={<NavigationCancel/>}/> :
-                        <MenuItem primaryText="Back to Report" onClick={this.handleCancelEditClick} leftIcon={<NavigationArrowBack/>}/>}
-                    <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
-                </IconMenu>
-                <CardText>
-                    {this.state.workout.routine.exercises.map((e, index) => 
-                        <ExerciseEditorCard 
-                            key={index} 
-                            exercise={e}
-                            validationErrors={this.state.validationErrors}
-                            onChange={this.handleExerciseChange}
+                        <FloatingActionButton 
+                            secondary={false} 
+                            zDepth={2} 
+                            style={styles.fab}
+                            mini={true}
+                            onClick={this.handleSaveClick}
+                            disabled={!this.areTimesValid()}
+                        >
+                            <ContentSave />
+                        </FloatingActionButton>
+                    </CardHeader>
+                    <IconMenu
+                        style={styles.iconMenu}
+                        iconButtonElement={<IconButton><MoreVertIcon color={fontColor}/></IconButton>}
+                        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+                    >
+                        {this.state.editsMade ? <MenuItem primaryText="Cancel Edits" onClick={this.handleCancelEditClick} leftIcon={<NavigationCancel/>}/> :
+                            <MenuItem primaryText="Back to Report" onClick={this.handleCancelEditClick} leftIcon={<NavigationArrowBack/>}/>}
+                        <MenuItem primaryText="Delete" onClick={this.handleDeleteClick} leftIcon={<ActionDelete/>}/>
+                    </IconMenu>
+                    <CardText>
+                        {this.state.workout.routine.exercises.map((e, index) => 
+                            <ExerciseEditorCard 
+                                key={index} 
+                                exercise={e}
+                                validationErrors={this.state.validationErrors}
+                                onChange={this.handleExerciseChange}
+                                disabled={refreshing}
+                            />
+                        )}
+                        <TextField
+                            style={styles.field}
+                            hintText={'Start Time'}
+                            floatingLabelText={'Start Time'}
+                            errorText={!Number.isFinite(getUnixTimestamp(workout.startTime)) ? "This isn't a valid date string." : ''}
+                            onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
+                            value={workout.startTime}
                             disabled={refreshing}
                         />
-                    )}
-                    <TextField
-                        style={styles.field}
-                        hintText={'Start Time'}
-                        floatingLabelText={'Start Time'}
-                        errorText={!Number.isFinite(getUnixTimestamp(workout.startTime)) ? "This isn't a valid date string." : ''}
-                        onChange={(event, newValue) => this.handlePropertyChange('startTime', newValue)}
-                        value={workout.startTime}
-                        disabled={refreshing}
-                    />
-                    <TextField
-                        style={styles.field}
-                        hintText={'End Time'}
-                        floatingLabelText={'End Time'}
-                        errorText={!Number.isFinite(getUnixTimestamp(workout.endTime)) ? "This isn't a valid date string." : ''}
-                        onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
-                        value={workout.endTime}
-                        disabled={refreshing}
-                    />
-                    <TextField
-                        style={styles.field}
-                        hintText={'Duration'}
-                        floatingLabelText={'Duration'}
-                        value={duration}
-                        disabled={true}
-                    />
-                    <TextField
-                        style={styles.field}
-                        hintText={'Notes'}
-                        floatingLabelText={'Notes'}
-                        multiLine={true}
-                        onChange={(event, newValue) => this.handlePropertyChange('notes', newValue)}
-                        value={workout.notes ? workout.notes : ''}
-                        disabled={refreshing}
-                    />
-                    {this.state.api.isExecuting ? <Spinner style={styles.spinner}/> : ''}
-                </CardText>
-            </Card>
-            <ConfirmDialog 
-                title={'Delete Workout History'}
-                buttonCaption={'Delete'}
-                onConfirm={this.props.onDelete}
-                onClose={this.handleDeleteDialogClose}
-                open={this.state.deleteDialog.open} 
-            >
-                Are you sure you want to delete the history for Workout '{this.props.workout.routine.name}'?
-            </ConfirmDialog>
-        </div>
-
-        )
+                        <TextField
+                            style={styles.field}
+                            hintText={'End Time'}
+                            floatingLabelText={'End Time'}
+                            errorText={!Number.isFinite(getUnixTimestamp(workout.endTime)) ? "This isn't a valid date string." : ''}
+                            onChange={(event, newValue) => this.handlePropertyChange('endTime', newValue)}
+                            value={workout.endTime}
+                            disabled={refreshing}
+                        />
+                        <TextField
+                            style={styles.field}
+                            hintText={'Duration'}
+                            floatingLabelText={'Duration'}
+                            value={duration}
+                            disabled={true}
+                        />
+                        <TextField
+                            style={styles.field}
+                            hintText={'Notes'}
+                            floatingLabelText={'Notes'}
+                            multiLine={true}
+                            onChange={(event, newValue) => this.handlePropertyChange('notes', newValue)}
+                            value={workout.notes ? workout.notes : ''}
+                            disabled={refreshing}
+                        />
+                        {this.state.api.isExecuting ? <Spinner style={styles.spinner}/> : ''}
+                    </CardText>
+                </Card>
+                <ConfirmDialog 
+                    title={'Delete Workout History'}
+                    buttonCaption={'Delete'}
+                    onConfirm={this.props.onDelete}
+                    onClose={this.handleDeleteDialogClose}
+                    open={this.state.deleteDialog.open} 
+                >
+                    Are you sure you want to delete the history for Workout '{this.props.workout.routine.name}'?
+                </ConfirmDialog>
+            </div>
+        );
     }
 }
 
-export default withRouter(WorkoutEditorCard)
+export default withRouter(WorkoutEditorCard);

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 
-import ListItem from 'material-ui/List/ListItem'
+import ListItem from 'material-ui/List/ListItem';
 
 const styles = {
     right: {
         float: 'right',
-        marginRight: 10
+        marginRight: 10,
     },
-}
+};
 
 class LeftRightListItem extends Component {
     render() {
-        let props = { ...this.props }
-        delete props.rightText
-        delete props.leftText
+        let props = { ...this.props };
+        delete props.rightText;
+        delete props.leftText;
 
         return (
             <ListItem
@@ -25,8 +25,8 @@ class LeftRightListItem extends Component {
                     </span>
                 }
             />            
-        )
+        );
     }
 }
 
-export default LeftRightListItem
+export default LeftRightListItem;

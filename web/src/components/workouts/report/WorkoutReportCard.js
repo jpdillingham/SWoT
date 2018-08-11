@@ -4,21 +4,21 @@ import moment from 'moment';
 
 import Avatar from 'material-ui/Avatar';
 import { ActionAssignmentTurnedIn, ActionDelete, ActionWatchLater, ActionSpeakerNotes, ContentCreate } from 'material-ui/svg-icons';
-import { black, red500 } from 'material-ui/styles/colors'
+import { black, red500 } from 'material-ui/styles/colors';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import IconButton from 'material-ui/IconButton'
-import IconMenu from 'material-ui/IconMenu'
-import List from 'material-ui/List'
-import MenuItem from 'material-ui/MenuItem'
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import List from 'material-ui/List';
+import MenuItem from 'material-ui/MenuItem';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
-import ConfirmDialog from '../../shared/ConfirmDialog'
+import ConfirmDialog from '../../shared/ConfirmDialog';
 
-import { getElapsedTime } from '../../../util'
-import { WORKOUT_AVATAR_COLOR } from '../../../constants'
-import { fontContrastColor } from '../../../util'
+import { getElapsedTime } from '../../../util';
+import { WORKOUT_AVATAR_COLOR } from '../../../constants';
+import { fontContrastColor } from '../../../util';
 
-import ExerciseReportCard from '../../exercises/ExerciseReportCard'
+import ExerciseReportCard from '../../exercises/ExerciseReportCard';
 import LeftRightListItem from '../../shared/LeftRightListItem';
 import ToggledLeftRightListItem from '../../shared/ToggledLeftRightListItem';
 
@@ -41,26 +41,26 @@ const styles = {
         top: 10,
     },
     notes: {
-        marginLeft: 20
+        marginLeft: 20,
     },
-}
+};
 
 const initialState = {
     deleteDialog: {
         open: false,
     },
-}
+};
 
 class WorkoutReportCard extends Component {
     state = initialState;
 
     handleDeleteClick = () => {
-        this.setState({ deleteDialog: { open: true }})
+        this.setState({ deleteDialog: { open: true }});
     }
 
     handleDeleteDialogClose = (result) => {
         if (result.cancelled) { 
-            this.setState({ deleteDialog: { open: false }})
+            this.setState({ deleteDialog: { open: false }});
         }
     }
 
@@ -132,8 +132,8 @@ class WorkoutReportCard extends Component {
                     Are you sure you want to delete the history for Workout '{this.props.workout.routine.name}'?
                 </ConfirmDialog>
             </div>
-        )
+        );
     }
 }
 
-export default withRouter(WorkoutReportCard)
+export default withRouter(WorkoutReportCard);

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key'
-import CommunicationEmail from 'material-ui/svg-icons/communication/email'
-import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
-import { CardText, CardActions } from 'material-ui/Card'
+import CommunicationVpnKey from 'material-ui/svg-icons/communication/vpn-key';
+import CommunicationEmail from 'material-ui/svg-icons/communication/email';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import { CardText, CardActions } from 'material-ui/Card';
 import SecurityCard from './SecurityCard';
 
 import { authenticate } from './SecurityActions';
@@ -30,15 +30,15 @@ const styles = {
         marginTop: '10px',
         marginBottom: '10px',
         marginLeft: '95px',
-        width: '200px'
+        width: '200px',
     },
     toggleText: {
         marginTop: '30pt',
         fontSize: '9pt',
         textAlign: 'center',
-        display: 'block'
-    }
-}
+        display: 'block',
+    },
+};
 
 const initialState = {
     info: {
@@ -52,8 +52,8 @@ const initialState = {
     api: {
         isExecuting: false,
         isErrored: false,
-    }
-}
+    },
+};
 
 class Login extends Component {
     constructor(props) {
@@ -96,26 +96,26 @@ class Login extends Component {
                         this.setState({ 
                             info: { ...this.state.info, password: '' },
                             api: { isExecuting: false, isErrored: true },
-                        })
+                        });
                         this.props.showSnackbar(error.message);  
                         this.passwordInput.current.focus();  
-                    })
-                })
+                    });
+                });
             }
-        })
+        });
     }
 
     handleEmailChange = (event, value) => {
         this.setState({ 
             info: { ...this.state.info, email: value },
-            validationErrors: { ...this.state.validationErrors, email: undefined }
+            validationErrors: { ...this.state.validationErrors, email: undefined },
         });
     }
 
     handlePasswordChange = (event, value) => {
         this.setState({ 
             info: { ...this.state.info, password: value },
-            validationErrors: { ...this.state.validationErrors, password: undefined }
+            validationErrors: { ...this.state.validationErrors, password: undefined },
         });
     }
 
@@ -126,8 +126,8 @@ class Login extends Component {
         if (!validateEmail(this.state.info.email)) {
             validationErrors = {
                 ...validationErrors,
-                email: 'Invalid email.'
-            }
+                email: 'Invalid email.',
+            };
 
             focus = this.emailInput.current;
         }
@@ -135,8 +135,8 @@ class Login extends Component {
         if (this.state.info.password === undefined || this.state.info.password === '') {
             validationErrors = { 
                 ...validationErrors, 
-                password: 'The password can\'t be blank.' 
-            }
+                password: 'The password can\'t be blank.', 
+            };
 
             focus = !focus ? this.passwordInput.current : focus;
         }
@@ -144,7 +144,7 @@ class Login extends Component {
             validationErrors = { 
                 ...validationErrors, 
                 password: 'The password must be at least 6 characters.',
-            }
+            };
 
             focus = !focus ? this.passwordInput.current: focus;
         }
@@ -208,19 +208,19 @@ class Login extends Component {
                     </div>
                 </CardActions>
             </SecurityCard>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state, ownProps) => {
     return { 
         appVariables: state.app.variables,
-    }
-}
+    };
+};
 
 const mapDispatchToProps = {
     authenticate,
-    showSnackbar
-}
+    showSnackbar,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -10,8 +10,8 @@ import Spinner from '../../shared/Spinner';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import { black, red500, grey300 } from 'material-ui/styles/colors';
-import { WORKOUT_AVATAR_COLOR } from '../../../constants'
-import Avatar from 'material-ui/Avatar'
+import { WORKOUT_AVATAR_COLOR } from '../../../constants';
+import Avatar from 'material-ui/Avatar';
 import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -41,7 +41,7 @@ const initialState = {
         width: 0,
         height: 0,
     },
-}
+};
 
 const styles = {
     cardHeader: {
@@ -67,7 +67,7 @@ const styles = {
         position: 'fixed',
         top: '50%',
         left: '50%',
-        transform: 'translate(-50%, -50%)'
+        transform: 'translate(-50%, -50%)',
     },
     clearIcon: {
         width: 18,
@@ -89,7 +89,7 @@ const styles = {
     spinner: {
         zIndex: 1000,
     },
-}
+};
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
@@ -103,15 +103,15 @@ class WorkoutsCalendar extends Component {
         this.setState({ loadApi: { isExecuting: true }}, () => {
             Promise.all([
                 this.props.fetchWorkouts(),
-                this.handleUpdate(new Date(), 'month', 'loadApi')
+                this.handleUpdate(new Date(), 'month', 'loadApi'),
             ])
             .then(response => {
                 this.setState({ loadApi: { isExecuting: false, isErrored: false }});
             }, error => {
                 this.props.showSnackbar('Error fetching Exercises: ' + error);
                 this.setState({ loadApi: { isExecuting: false, isErrored: true }});
-            })
-        })
+            });
+        });
     }
 
     componentDidMount = () => {
@@ -127,26 +127,26 @@ class WorkoutsCalendar extends Component {
     }
 
     handleWorkoutClick = (workoutId) => {
-        this.navigate('/workouts/' + workoutId)
+        this.navigate('/workouts/' + workoutId);
     }
 
     fetchHistory = (filters, api = 'refreshApi') => {
         this.setState({ 
             [api]: { ...this.state[api], isExecuting: true },
-            filters: filters
+            filters: filters,
         }, () => {
             this.props.fetchWorkoutsHistory(filters)
             .then(response => {
-                this.setState({ [api]: { isExecuting: false, isErrored: false }})
+                this.setState({ [api]: { isExecuting: false, isErrored: false }});
             }, error => {
                 this.props.showSnackbar('Error updating Workout history: ' + error);
                 this.setState({ [api]: { isExecuting: false, isErrored: true }});
-            })
-        })
+            });
+        });
     }
 
     handleSelectEvent = (event) => {
-        this.navigate('/workouts/' + event.id)
+        this.navigate('/workouts/' + event.id);
     }
 
     handleSelectSlot = (slot) => {
@@ -204,8 +204,8 @@ class WorkoutsCalendar extends Component {
                 end: moment(w.endTime || w.startTime || w.scheduledTime).toDate(),
                 status: w.startTime === undefined ? 'scheduled' : w.endTime === undefined ? 'started' : 'completed',
                 color: color,
-                fontColor: fontContrastColor(color)
-            }
+                fontColor: fontContrastColor(color),
+            };
         });
 
         let views = [ 'month' ];
@@ -219,7 +219,7 @@ class WorkoutsCalendar extends Component {
                             style={!this.state.refreshApi.isExecuting ? styles.card : 
                                 { 
                                     ...styles.card, 
-                                    backgroundColor: grey300 
+                                    backgroundColor: grey300, 
                                 }
                             }
                         >
@@ -261,20 +261,20 @@ class WorkoutsCalendar extends Component {
                         />
                         <AddFloatingAddButton dialog={<WorkoutDialog/>}/>
                     </div> 
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
     workouts: state.workouts,
     workoutsHistory: state.workoutsHistory,
-})
+});
 
 const mapDispatchToProps = {
     fetchWorkouts,
     fetchWorkoutsHistory,
     showSnackbar,
     setTitle,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorkoutsCalendar)
+export default connect(mapStateToProps, mapDispatchToProps)(WorkoutsCalendar);

@@ -2,22 +2,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import api from '../../../api';
 
-import { black, red500 } from 'material-ui/styles/colors'
-import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
+import { black, red500 } from 'material-ui/styles/colors';
+import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 
-import { sortByProp } from '../../../util'
+import { sortByProp } from '../../../util';
 import SelectField from 'material-ui/SelectField/SelectField';
-import MenuItem from 'material-ui/MenuItem'
-import NavigationCancel from 'material-ui/svg-icons/navigation/cancel'
+import MenuItem from 'material-ui/MenuItem';
+import NavigationCancel from 'material-ui/svg-icons/navigation/cancel';
 
-import Spinner from '../../shared/Spinner'
+import Spinner from '../../shared/Spinner';
 
-import { fetchExercisesHistory } from './ExercisesHistoryActions'
-import { fetchExercises } from '../ExercisesActions'
-import { setTitle, showSnackbar } from '../../app/AppActions'
+import { fetchExercisesHistory } from './ExercisesHistoryActions';
+import { fetchExercises } from '../ExercisesActions';
+import { setTitle, showSnackbar } from '../../app/AppActions';
 
 import History from '../../shared/history/History';
-import { EXERCISE_AVATAR_COLOR, API_ROOT } from '../../../constants'
+import { EXERCISE_AVATAR_COLOR, API_ROOT } from '../../../constants';
 import ExercisesHistoryContent from './ExercisesHistoryContent';
 import HelpChecklist from '../../help/HelpChecklist';
 
@@ -29,7 +29,7 @@ const initialState = {
         order: 'desc',
         toTime: undefined,
         fromTime: undefined,
-        exerciseId: undefined
+        exerciseId: undefined,
     },
     loadApi: {
         isExecuting: false,
@@ -38,8 +38,8 @@ const initialState = {
     refreshApi: {
         isExecuting: false,
         isErrored: false,
-    }
-}
+    },
+};
 
 const styles = {
     grid: {
@@ -52,14 +52,14 @@ const styles = {
         position: 'fixed',
         top: '50%',
         left: '50%',
-        transform: 'translate(-50%, -50%)'
+        transform: 'translate(-50%, -50%)',
     },
     paginationButton: {
         color: black,
-        width: 150
+        width: 150,
     },
     buttonRow: {
-        textAlign: 'center'
+        textAlign: 'center',
     },
     clearIcon: {
         width: 18,
@@ -69,7 +69,7 @@ const styles = {
         marginBottom: 15,
         marginRight: 10,
     },
-}
+};
 
 class ExercisesHistory extends Component {
     constructor(props) {
@@ -104,14 +104,14 @@ class ExercisesHistory extends Component {
                         this.props.fetchExercises();
                     }
                     else {
-                        this.setState({ loadApi: { isExecuting: false, isErrored: false }})
+                        this.setState({ loadApi: { isExecuting: false, isErrored: false }});
                     }
                 });
             })
             .catch(error => {
-                this.setState({ loadApi: { isExecuting: false, isErroed: true }})
-            })
-        })
+                this.setState({ loadApi: { isExecuting: false, isErroed: true }});
+            });
+        });
     }
 
     navigate = (url) => {
@@ -119,7 +119,7 @@ class ExercisesHistory extends Component {
     }
 
     handleItemClick = (id) => {
-        this.navigate('/exercises/' + id)
+        this.navigate('/exercises/' + id);
     }
 
     handleFiltersChange = (filters) => {
@@ -127,24 +127,24 @@ class ExercisesHistory extends Component {
     }
 
     handleCustomFilterChange = (filter, event, index, value) => {
-        this.fetchHistory({ ...this.state.filters, offset: 0, exerciseId: value })
+        this.fetchHistory({ ...this.state.filters, offset: 0, exerciseId: value });
     }
 
     handleCustomFilterClearClick = () => {
-        this.fetchHistory({ ...this.state.filters, exerciseId: undefined })
+        this.fetchHistory({ ...this.state.filters, exerciseId: undefined });
     }
 
     fetchHistory = (filters, api = 'refreshApi') => {
         this.setState({ 
             [api]: { ...this.state[api], isExecuting: true },
-            filters: filters
+            filters: filters,
         }, () => {
             this.props.fetchExercisesHistory(filters)
             .then(response => {
-                this.setState({ [api]: { isExecuting: false, isErrored: false }})
+                this.setState({ [api]: { isExecuting: false, isErrored: false }});
             }, error => {
                 this.props.showSnackbar('Error fetching Exercise history: ' + error);
-                this.setState({ [api]: { isExecuting: false, isErrored: true }})
+                this.setState({ [api]: { isExecuting: false, isErrored: true }});
             });
         });
     }
@@ -207,20 +207,20 @@ class ExercisesHistory extends Component {
                                 />
                             </History>
                         </div>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
     exercisesHistory: state.exercisesHistory,
-    exercises: state.exercises
-})
+    exercises: state.exercises,
+});
 
 const mapDispatchToProps = {
     fetchExercisesHistory,
     fetchExercises,
     showSnackbar,
     setTitle,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExercisesHistory)
+export default connect(mapStateToProps, mapDispatchToProps)(ExercisesHistory);

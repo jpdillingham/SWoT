@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import { grey300, red500 } from 'material-ui/styles/colors'
+import { grey300, red500 } from 'material-ui/styles/colors';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Avatar from 'material-ui/Avatar';
 import ActionAssignmentTurnedIn from 'material-ui/svg-icons/action/assignment-turned-in';
-import IconMenu from 'material-ui/IconMenu'
-import IconButton from 'material-ui/IconButton'
+import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import MenuItem from 'material-ui/MenuItem'
-import FloatingActionButton from 'material-ui/FloatingActionButton'
+import MenuItem from 'material-ui/MenuItem';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
 import { AvPlayArrow, AvStop, AvReplay, ActionUpdate } from 'material-ui/svg-icons';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField/TextField';
@@ -64,7 +64,7 @@ const styles = {
     spinner: {
         zIndex: 1000,
     },
-}
+};
 
 const initialState = {
     deleteDialog: {
@@ -85,8 +85,8 @@ const initialState = {
     api: {
         isExecuting: false,
         isErrored: false,
-    }
-}
+    },
+};
 
 class WorkoutCard extends Component {
     state = initialState;
@@ -101,8 +101,8 @@ class WorkoutCard extends Component {
                     this.setState({ api: { isExecuting: false, isErrored: false }});
                 }, error => {
                     this.setState({ api: { isExecuting: false, isErrored: true }});
-                })
-            })
+                });
+            });
         }
         else if (workout.endTime === undefined) {
             this.setState({ completeDialog: { open: true }});
@@ -127,33 +127,33 @@ class WorkoutCard extends Component {
     }
 
     handleNotesChange = (event, value) => {
-        this.setState({ workout: { ...this.state.workout, notes: value }})
+        this.setState({ workout: { ...this.state.workout, notes: value }});
     }
 
     handleDeleteClick = () => {
-        this.setState({ deleteDialog: { open: true }})
+        this.setState({ deleteDialog: { open: true }});
     }
 
     handleDeleteDialogClose = (result) => {
         if (result.cancelled) {
-            this.setState({ deleteDialog: { open: false }})
+            this.setState({ deleteDialog: { open: false }});
         }
     }
 
     handleResetClick = () => {
-        this.setState({ resetDialog: { open: true }})
+        this.setState({ resetDialog: { open: true }});
     }
 
     handleResetDialogClose = (result) => {
-        this.setState({ resetDialog: { open: false }})
+        this.setState({ resetDialog: { open: false }});
     }
 
     handleRescheduleClick = () => {
-        this.setState({ rescheduleDialog: { open: true }})
+        this.setState({ rescheduleDialog: { open: true }});
     }
 
     handleRescheduleDialogClose = (result) => {
-        this.setState({ rescheduleDialog: { open: false }})
+        this.setState({ rescheduleDialog: { open: false }});
     }
 
     render() {
@@ -271,8 +271,8 @@ class WorkoutCard extends Component {
                     onClose={this.handleRescheduleDialogClose}
                 />
             </div>
-        )
+        );
     }
 }
 
-export default WorkoutCard
+export default WorkoutCard;

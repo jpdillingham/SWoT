@@ -4,18 +4,18 @@ import { withRouter } from 'react-router-dom';
 
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import { grey300 } from 'material-ui/styles/colors'
+import { grey300 } from 'material-ui/styles/colors';
 
-import RoutineHistoryDialogContent from './RoutineHistoryDialogContent'
-import { fetchWorkoutsHistory, clearWorkoutsHistory } from '../../workouts/history/WorkoutsHistoryActions'
-import Spinner from '../../shared/Spinner'
-import { showSnackbar } from '../../app/AppActions'
+import RoutineHistoryDialogContent from './RoutineHistoryDialogContent';
+import { fetchWorkoutsHistory, clearWorkoutsHistory } from '../../workouts/history/WorkoutsHistoryActions';
+import Spinner from '../../shared/Spinner';
+import { showSnackbar } from '../../app/AppActions';
 
 const styles = {
     dialogContent: {
         width: 400,
     },
-}
+};
 
 const initialState = {
     api: {
@@ -27,8 +27,8 @@ const initialState = {
         limit: 10,
         order: 'desc',
         routineId: undefined,
-    }
-}
+    },
+};
 
 class RoutineHistoryDialog extends Component {
     state = initialState
@@ -37,28 +37,28 @@ class RoutineHistoryDialog extends Component {
         if (!this.props.open && nextProps.open) {
             this.props.clearWorkoutsHistory().then(() => {
                 this.fetchHistory({ ...this.state.filters, routineId: nextProps.routine.id });
-            })
+            });
         }
     }
 
     fetchHistory = (filters) => {
         this.setState({ 
             api: { ...this.state.api, isExecuting: true },
-            filters: { ...filters, routineId: this.props.routine.id }
+            filters: { ...filters, routineId: this.props.routine.id },
         }, () => {
             this.props.fetchWorkoutsHistory(filters)
             .then(response => {
-                this.setState({ api: { isExecuting: false, isErrored: false }})
+                this.setState({ api: { isExecuting: false, isErrored: false }});
             }, error => {
                 this.props.showSnackbar('Error fetching Workout history: ' + error);
                 this.setState({ api: { isExecuting: false, isErrored: true }});
-            })
-        })
+            });
+        });
     }
 
     handleCloseClick = () => {
-        this.setState({ api: { isExecuting: false, isErrored: false }})
-        this.props.onClose()
+        this.setState({ api: { isExecuting: false, isErrored: false }});
+        this.props.onClose();
     }
 
     handleViewFullHistoryClick = () => {
@@ -109,18 +109,18 @@ class RoutineHistoryDialog extends Component {
                     {this.state.api.isExecuting ? <Spinner/> : ''}
                 </Dialog>
             </div>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
-    workoutsHistory: state.workoutsHistory
-})
+    workoutsHistory: state.workoutsHistory,
+});
 
 const mapDispatchToProps = {
     fetchWorkoutsHistory,
     clearWorkoutsHistory,
     showSnackbar,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RoutineHistoryDialog))
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(RoutineHistoryDialog));

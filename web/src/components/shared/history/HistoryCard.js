@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 
 import { Card, CardHeader, CardText } from 'material-ui/Card';
-import Avatar from 'material-ui/Avatar'
-import { black, grey300 } from 'material-ui/styles/colors'
-import Divider from 'material-ui/Divider'
+import Avatar from 'material-ui/Avatar';
+import { black, grey300 } from 'material-ui/styles/colors';
+import Divider from 'material-ui/Divider';
 
 import Spinner from '../Spinner';
 
@@ -21,15 +21,15 @@ const styles = {
         position: 'relative',
     },
     headerDivider: {
-        marginTop: 10
+        marginTop: 10,
     },
     footerDivider: {
-        marginBottom: 10
+        marginBottom: 10,
     },
     content: {
         position: 'relative',
     },
-}
+};
 
 class HistoryCard extends Component {
     render() {
@@ -56,8 +56,8 @@ class HistoryCard extends Component {
                         </div>
                     </CardText>
                 </Card> 
-        )
+        );
     }
 }
 
-export default HistoryCard
+export default HistoryCard;

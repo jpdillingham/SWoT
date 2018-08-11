@@ -1,57 +1,57 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { fetchWorkouts } from './WorkoutsActions'
-import { fetchWorkoutsHistory } from './history/WorkoutsHistoryActions'
-import { setTitle, showSnackbar } from '../app/AppActions'
+import { fetchWorkouts } from './WorkoutsActions';
+import { fetchWorkoutsHistory } from './history/WorkoutsHistoryActions';
+import { setTitle, showSnackbar } from '../app/AppActions';
 import { fetchRoutines } from '../routines/RoutinesActions';
 
-import { black, red500 } from 'material-ui/styles/colors'
-import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
-import FlatButton from 'material-ui/FlatButton'
+import { black, red500 } from 'material-ui/styles/colors';
+import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
+import FlatButton from 'material-ui/FlatButton';
 
-import AddFloatingAddButton from '../shared/AddFloatingActionButton'
+import AddFloatingAddButton from '../shared/AddFloatingActionButton';
 import WorkoutDialog from './WorkoutDialog';
-import ActionSchedule from 'material-ui/svg-icons/action/schedule'
-import AvStop from 'material-ui/svg-icons/av/stop'
-import AvPlayArrow from 'material-ui/svg-icons/av/play-arrow'
-import ActionInfo from 'material-ui/svg-icons/action/info'
+import ActionSchedule from 'material-ui/svg-icons/action/schedule';
+import AvStop from 'material-ui/svg-icons/av/stop';
+import AvPlayArrow from 'material-ui/svg-icons/av/play-arrow';
+import ActionInfo from 'material-ui/svg-icons/action/info';
 
-import Spinner from '../shared/Spinner'
-import WorkoutsListCard from './WorkoutsListCard'
-import HelpChecklist from '../help/HelpChecklist'
+import Spinner from '../shared/Spinner';
+import WorkoutsListCard from './WorkoutsListCard';
+import HelpChecklist from '../help/HelpChecklist';
 
 const initialState = {
     api: {
         isExecuting: false,
         isErrored: false,
-    }
-}
+    },
+};
 
 const styles = {
     grid: {
         display: 'grid',
         gridGap: 10,
     },
-}
+};
 
 class Workouts extends Component {
     state = initialState;
 
     componentWillMount() {
         this.props.setTitle('Workouts');
-        this.setState({ api: { ...this.state.api, isExecuting: true }})
+        this.setState({ api: { ...this.state.api, isExecuting: true }});
 
         Promise.all([
             this.props.fetchRoutines(),
             this.props.fetchWorkouts(),
-            this.props.fetchWorkoutsHistory({ offset: 0, limit: 5, order: 'desc' })
+            this.props.fetchWorkoutsHistory({ offset: 0, limit: 5, order: 'desc' }),
         ]).then(responses => {
-            this.setState({ api: { isExecuting: false, isErrored: false }})
+            this.setState({ api: { isExecuting: false, isErrored: false }});
         }, error => {
             this.props.showSnackbar('Error fetching Workout data: ' + error);
             this.setState({ api: { isExecuting: false, isErrored: true }});
-        })
+        });
     }
 
     navigate = (url) => {
@@ -59,7 +59,7 @@ class Workouts extends Component {
     }
 
     handleClick = (workoutId) => {
-        this.navigate('/workouts/' + workoutId)
+        this.navigate('/workouts/' + workoutId);
     }
 
     render() {
@@ -112,7 +112,7 @@ class Workouts extends Component {
                                 dialog={<WorkoutDialog/>}
                             />
                         </div>
-        )
+        );
     }
 }
 
@@ -120,7 +120,7 @@ const mapStateToProps = (state) => ({
     routines: state.routines,
     workouts: state.workouts,
     workoutsHistory: state.workoutsHistory,
-})
+});
 
 const mapDispatchToProps = {
     fetchRoutines,
@@ -128,6 +128,6 @@ const mapDispatchToProps = {
     fetchWorkoutsHistory,
     showSnackbar,
     setTitle,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Workouts)
+export default connect(mapStateToProps, mapDispatchToProps)(Workouts);

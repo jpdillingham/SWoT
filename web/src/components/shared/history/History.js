@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import { ListItem } from 'material-ui/List'
-import { black } from 'material-ui/styles/colors'
+import { ListItem } from 'material-ui/List';
+import { black } from 'material-ui/styles/colors';
 
-import ActionRestore from 'material-ui/svg-icons/action/restore'
-import ContentClear from 'material-ui/svg-icons/content/clear'
+import ActionRestore from 'material-ui/svg-icons/action/restore';
+import ContentClear from 'material-ui/svg-icons/content/clear';
 
-import HistoryOptions from './HistoryOptions'
-import HistoryCard from './HistoryCard'
+import HistoryOptions from './HistoryOptions';
+import HistoryCard from './HistoryCard';
 import HistoryPagination from './HistoryPagination';
 
 const defaultFilters = {
@@ -16,7 +16,7 @@ const defaultFilters = {
     order: 'desc',
     toDate: undefined,
     fromDate: undefined,
-}
+};
 
 class History extends Component {
     constructor(props) {
@@ -33,8 +33,8 @@ class History extends Component {
             filters: props.defaultFilters ? props.defaultFilters : { 
                 ...defaultFilters, 
                 toDate: defaultToDate.getTime(), 
-                fromDate: defaultFromDate.getTime() 
-            } 
+                fromDate: defaultFromDate.getTime(), 
+            }, 
         }; 
         
         if (!props.defaultFilters) this.props.onFilterChange(this.state.filters);
@@ -43,14 +43,14 @@ class History extends Component {
     handleNextClick = () => {
         this.updateFilters({
             ...this.state.filters,
-            offset: this.state.filters.offset + this.state.filters.limit
+            offset: this.state.filters.offset + this.state.filters.limit,
         });
     }
 
     handlePreviousClick = () => {     
         this.updateFilters({
             ...this.state.filters,
-            offset: this.state.filters.offset - this.state.filters.limit
+            offset: this.state.filters.offset - this.state.filters.limit,
         });
     }
 
@@ -68,12 +68,12 @@ class History extends Component {
     updateFilters = (filters) => {
         this.setState({ filters: filters }, () => {
             this.props.onFilterChange(this.state.filters);
-        })
+        });
     }
 
     componentWillReceiveProps = (nextProps) => {
         if (this.props.total !== nextProps.total) {
-            this.updateFilters({ ...this.state.filters, offset: 0 })          
+            this.updateFilters({ ...this.state.filters, offset: 0 });        
         }
     }
 
@@ -123,8 +123,8 @@ class History extends Component {
             >
                 {this.props.children}
             </HistoryCard>
-        )
+        );
     }
 }
 
-export default History
+export default History;
