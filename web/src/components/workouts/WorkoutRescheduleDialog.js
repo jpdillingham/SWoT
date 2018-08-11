@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-import Spinner from '../shared/Spinner'
-import { grey300 } from 'material-ui/styles/colors'
+import Spinner from '../shared/Spinner';
+import { grey300 } from 'material-ui/styles/colors';
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import DatePicker from 'material-ui/DatePicker'
-import TimePicker from 'material-ui/TimePicker'
+import DatePicker from 'material-ui/DatePicker';
+import TimePicker from 'material-ui/TimePicker';
 
 import SaveRetryFlatButton from '../shared/SaveRetryFlatButton';
 
@@ -19,8 +19,8 @@ const styles = {
     },
     time: {
         width: '100%',
-    }
-}
+    },
+};
 
 const getInitialState = () => ({
     selectedDate: new Date(),
@@ -28,8 +28,8 @@ const getInitialState = () => ({
     api: {
         isExecuting: false,
         isErrored: false,
-    }
-})
+    },
+});
 
 class WorkoutRescheduleDialog extends Component {
     state = getInitialState();
@@ -46,7 +46,7 @@ class WorkoutRescheduleDialog extends Component {
     }
 
     handleTimeChange = (event, value) => {
-        this.setState({ selectedTime: value })
+        this.setState({ selectedTime: value });
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -66,14 +66,14 @@ class WorkoutRescheduleDialog extends Component {
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
             this.props.onSave({ date: this.state.selectedDate, time: this.state.selectedTime })
             .then(response => { 
-                this.props.onClose({ cancelled: false }) }, error => {
+                this.props.onClose({ cancelled: false }); }, error => {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
-            })
-        })
+            });
+        });
     }
 
     handleCancelClick = () => {
-        this.setState(getInitialState(), () => this.props.onClose({ cancelled: true }))
+        this.setState(getInitialState(), () => this.props.onClose({ cancelled: true }));
     }
 
     render() {
@@ -122,8 +122,8 @@ class WorkoutRescheduleDialog extends Component {
                 />
                 {this.state.api.isExecuting? <Spinner /> : ''}
             </Dialog>
-        )
+        );
     }
 }
 
-export default WorkoutRescheduleDialog
+export default WorkoutRescheduleDialog;

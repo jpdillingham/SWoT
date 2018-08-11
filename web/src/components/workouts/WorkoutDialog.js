@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { fetchRoutines } from '../routines/RoutinesActions'
-import { addWorkout } from '../workouts/WorkoutsActions'
-import Spinner from '../shared/Spinner'
-import { grey300, red500 } from 'material-ui/styles/colors'
+import { fetchRoutines } from '../routines/RoutinesActions';
+import { addWorkout } from '../workouts/WorkoutsActions';
+import Spinner from '../shared/Spinner';
+import { grey300, red500 } from 'material-ui/styles/colors';
 
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import SelectField from 'material-ui/SelectField'
-import MenuItem from 'material-ui/MenuItem'
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
-import DatePicker from 'material-ui/DatePicker'
-import TimePicker from 'material-ui/TimePicker'
+import DatePicker from 'material-ui/DatePicker';
+import TimePicker from 'material-ui/TimePicker';
 
-import { showSnackbar } from '../app/AppActions.js'
+import { showSnackbar } from '../app/AppActions.js';
 
 import { getGuid } from '../../util';
 
@@ -33,8 +33,8 @@ const styles = {
     },
     time: {
         width: '100%',
-    }
-}
+    },
+};
 
 const getInitialState = () => ({
     selectedDate: new Date(),
@@ -52,8 +52,8 @@ const getInitialState = () => ({
     api: {
         isExecuting: false,
         isErrored: false,
-    }
-})
+    },
+});
 
 class WorkoutDialog extends Component {
     state = getInitialState();
@@ -66,8 +66,8 @@ class WorkoutDialog extends Component {
     handleSaveClick = () => {
         this.setState({
             validationErrors: {
-                routine: this.state.workout.routine.id === undefined ? 'A Routine must be selected.' : ''
-            }
+                routine: this.state.workout.routine.id === undefined ? 'A Routine must be selected.' : '',
+            },
         }, () => {
             if (Object.keys(this.state.validationErrors).find(e => this.state.validationErrors[e] !== '') === undefined) {
                 this.setState({ 
@@ -75,17 +75,17 @@ class WorkoutDialog extends Component {
                     workout: {
                         ...this.state.workout,
                         scheduledTime: this.getScheduledTime(),
-                    }
+                    },
                 }, () => 
                     this.props.addWorkout(this.state.workout)
                     .then(response => {
-                        this.handleApiSuccess('Scheduled Workout \'' + response.data.routine.name + '\' for ' + moment(response.data.scheduledTime).calendar() + '.')
+                        this.handleApiSuccess('Scheduled Workout \'' + response.data.routine.name + '\' for ' + moment(response.data.scheduledTime).calendar() + '.');
                     }, error => {
                         this.handleApiError('Error scheduling Workout: ' + error);
                     })
-                )
+                );
             }
-        })
+        });
     }
 
     getScheduledTime = () => {
@@ -96,13 +96,13 @@ class WorkoutDialog extends Component {
     }
 
     handleApiSuccess = (message) => {
-        this.setState({ ...this.state.api, isExecuting: false })
-        this.props.showSnackbar(message)
+        this.setState({ ...this.state.api, isExecuting: false });
+        this.props.showSnackbar(message);
         this.props.handleClose();
     }
 
     handleApiError = (message) => {
-        this.setState({ api: { isExecuting: false, isErrored: true }})
+        this.setState({ api: { isExecuting: false, isErrored: true }});
         this.props.showSnackbar(message);
     }
 
@@ -111,8 +111,8 @@ class WorkoutDialog extends Component {
             validationErrors: { routine: '' },
             workout: { 
                 ...this.state.workout, 
-                routine: this.props.routines.find(r => r.id === value)
-            } 
+                routine: this.props.routines.find(r => r.id === value),
+            }, 
         });
     }
 
@@ -122,7 +122,7 @@ class WorkoutDialog extends Component {
 
     handleTimeChange = (event, value) => {
 
-        this.setState({ selectedTime: value })
+        this.setState({ selectedTime: value });
     }
 
     componentWillReceiveProps = (nextProps) => {
@@ -198,23 +198,23 @@ class WorkoutDialog extends Component {
                                 primaryText={r.name}
                                 leftIcon={<ActionAssignment style={{ fill: color }}/>}
                             />
-                        )
+                        );
                     })}
                 </SelectField>
                 {this.state.api.isExecuting? <Spinner /> : ''}
             </Dialog>
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
-    routines: state.routines
-})
+    routines: state.routines,
+});
 
 const mapDispatchToProps = {
     showSnackbar,
     fetchRoutines,
-    addWorkout
-}
+    addWorkout,
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorkoutDialog)
+export default connect(mapStateToProps, mapDispatchToProps)(WorkoutDialog);

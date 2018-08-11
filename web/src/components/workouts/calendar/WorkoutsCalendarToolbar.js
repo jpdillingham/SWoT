@@ -17,8 +17,8 @@ const styles = {
     date:{
         color: black,
         fontSize: 16,
-    }
-}
+    },
+};
 
 class WorkoutsCalendarToolbar extends Component {
     handlePreviousClick = () => {
@@ -59,8 +59,8 @@ class WorkoutsCalendarToolbar extends Component {
                     label={moment(this.props.date).format('MMMM YYYY')}
                 />
             </div>
-        )
+        );
     }
 }
 
-export default WorkoutsCalendarToolbar
+export default WorkoutsCalendarToolbar;

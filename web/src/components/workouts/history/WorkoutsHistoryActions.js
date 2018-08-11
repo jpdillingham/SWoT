@@ -10,7 +10,7 @@ const workoutsHistoryGet = (workouts, totalCount) => ({
 });
 
 const workoutsHistoryClear = () => ({
-    type: 'WORKOUTS_HISTORY_CLEAR'
+    type: 'WORKOUTS_HISTORY_CLEAR',
 });
 
 const workoutHistoryGet = (workout) => ({
@@ -19,12 +19,12 @@ const workoutHistoryGet = (workout) => ({
 });
 
 const workoutHistoryClear = () => ({
-    type: 'WORKOUT_HISTORY_CLEAR'
+    type: 'WORKOUT_HISTORY_CLEAR',
 });
 
 const workoutHistoryDelete = (id) => ({
     type: 'WORKOUT_HISTORY_DELETE',
-    workoutId: id
+    workoutId: id,
 });
 
 const workoutHistoryPut = (workout) => ({
@@ -42,7 +42,7 @@ export const fetchWorkoutsHistory = (filters) => (dispatch, getState) => {
         if (filters[f] !== undefined) {
             queryParams += '&' + f + '=' + filters[f];
         }
-    })
+    });
 
     return new Promise((resolve, reject) => {
         api.get(endpoint + queryParams)
@@ -54,14 +54,14 @@ export const fetchWorkoutsHistory = (filters) => (dispatch, getState) => {
             reject(error.response.message);
         });    
     });
-}
+};
 
 export const clearWorkoutsHistory = () => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         dispatch(workoutsHistoryClear());
         resolve();
     });
-}
+};
 
 export const fetchWorkoutHistory = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
@@ -70,18 +70,18 @@ export const fetchWorkoutHistory = (id) => (dispatch, getState) => {
             dispatch(workoutHistoryGet(response.data));
             resolve(response);        
         }, error => {
-            console.log(error.response)
+            console.log(error.response);
             reject(error.response.data || error.response.status);
         });
     });
-}
+};
 
 export const clearWorkoutHistory = () => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
         dispatch(workoutHistoryClear());
         resolve();
     });
-}
+};
 
 export const updateWorkoutHistory = (workout) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
@@ -93,7 +93,7 @@ export const updateWorkoutHistory = (workout) => (dispatch, getState) => {
             reject(error.response.data || error.response.status);
         });
     });
-}
+};
 
 export const deleteWorkoutHistory = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
@@ -110,4 +110,4 @@ export const deleteWorkoutHistory = (id) => (dispatch, getState) => {
             reject(error.response.message);
         });
     });
-}
+};

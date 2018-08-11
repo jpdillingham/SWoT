@@ -18,7 +18,7 @@ const styles = {
     buttons: {
         float: 'right',
     },
-}
+};
 
 class WorkoutStepTitle extends Component {
     handleMoveUpDownClick = (event, exercise, direction) => {
@@ -41,8 +41,8 @@ class WorkoutStepTitle extends Component {
                     <span style={styles.notHovered}>{this.props.exercise.name}</span> 
                 }
             </div>
-        )
+        );
     }
 }
 
-export default WorkoutStepTitle
+export default WorkoutStepTitle;

@@ -1,31 +1,31 @@
 import React, { Component } from 'react';
 
 import { Step, Stepper, StepButton, StepContent } from 'material-ui/Stepper';
-import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle'
-import AVPlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled'
-import ImageLens from 'material-ui/svg-icons/image/lens'
+import ActionCheckCircle from 'material-ui/svg-icons/action/check-circle';
+import AVPlayCircleFilled from 'material-ui/svg-icons/av/play-circle-filled';
+import ImageLens from 'material-ui/svg-icons/image/lens';
 
-import ExerciseForm from '../../exercises/ExerciseForm'
+import ExerciseForm from '../../exercises/ExerciseForm';
 import WorkoutStepTitle from './WorkoutStepTitle';
 
 const initialState = {
     stepIndex: -1,
     hoverId: undefined,
-}
+};
 
 class WorkoutStepper extends Component {
     state = initialState;
 
     handleStepClick = (index) => {
-        this.setState({ stepIndex: index })
+        this.setState({ stepIndex: index });
     }
 
     handleStepMouseEnter = (exercise) => {
-        this.setState({ hoverId: exercise.sequence })
+        this.setState({ hoverId: exercise.sequence });
     }
 
     handleStepMouseLeave = (exercise) => {
-        this.setState({ hoverId: undefined })
+        this.setState({ hoverId: undefined });
     }
 
     handleMoveUpDownClick = (exercise, direction) => {
@@ -76,7 +76,7 @@ class WorkoutStepper extends Component {
     }
 
     componentWillReceiveProps = (nextProps) => {
-        this.setState({ stepIndex: this.getNextExerciseIndex() })
+        this.setState({ stepIndex: this.getNextExerciseIndex() });
     }
 
     updateWorkout = (workout) => {
@@ -84,7 +84,7 @@ class WorkoutStepper extends Component {
             stepIndex: -1,
             hoverIndex: undefined,
         }, () => {
-            this.props.onWorkoutChange(workout)
+            this.props.onWorkoutChange(workout);
         });
     }
 
@@ -148,8 +148,8 @@ class WorkoutStepper extends Component {
                     </Step>
                 )}
             </Stepper>
-        )
+        );
     }
 }
 
-export default WorkoutStepper
+export default WorkoutStepper;

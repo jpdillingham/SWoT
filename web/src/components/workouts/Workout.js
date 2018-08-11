@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { red500 } from 'material-ui/styles/colors'
-import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off'
+import { red500 } from 'material-ui/styles/colors';
+import ActionHighlightOff from 'material-ui/svg-icons/action/highlight-off';
 
-import { fetchWorkouts, updateWorkout, deleteWorkout } from './WorkoutsActions'
-import { fetchWorkoutHistory, deleteWorkoutHistory, updateWorkoutHistory } from './history/WorkoutsHistoryActions'
+import { fetchWorkouts, updateWorkout, deleteWorkout } from './WorkoutsActions';
+import { fetchWorkoutHistory, deleteWorkoutHistory, updateWorkoutHistory } from './history/WorkoutsHistoryActions';
 import { setTitle, showSnackbar } from '../app/AppActions';
 
-import Spinner from '../shared/Spinner'
-import WorkoutCard from './WorkoutCard'
-import WorkoutReportCard from './report/WorkoutReportCard'
+import Spinner from '../shared/Spinner';
+import WorkoutCard from './WorkoutCard';
+import WorkoutReportCard from './report/WorkoutReportCard';
 import WorkoutEditorCard from './editor/WorkoutEditorCard';
 
 const initialState = {
@@ -21,7 +21,7 @@ const initialState = {
         isExecuting: false,
         isErrored: false,
     },
-}
+};
 
 const styles = {
     icon: {
@@ -30,9 +30,9 @@ const styles = {
         position: 'fixed',
         top: '50%',
         left: '50%',
-        transform: 'translate(-50%, -50%)'
+        transform: 'translate(-50%, -50%)',
     },
-}
+};
 
 class Workout extends Component {
     state = initialState;
@@ -52,7 +52,7 @@ class Workout extends Component {
     fetchWorkout = () => {
         this.setState({ 
             api: { ...this.state.api, isExecuting: true }}
-        )
+        );
 
         return this.props.fetchWorkouts()
         .then(response => {
@@ -63,17 +63,17 @@ class Workout extends Component {
                     this.props.fetchWorkoutHistory(this.props.match.params.id)
                     .then(response => {
                         this.setState({
-                            api: { isExecuting: false, isErrored: false }
+                            api: { isExecuting: false, isErrored: false },
                         });
                     }, error => {
                         this.props.showSnackbar('Error fetching Workout history: ' + error);
                         this.setState({ api: { isExecuting: false, isErrored: true }});
-                    })
+                    });
                 }
                 else {
                     this.setState({ api: { isExecuting: false, isErrored: false }});
                 }
-            })
+            });
         }, error => {
             this.props.showSnackbar('Error fetching Workouts: ' + error);
             this.setState({ api: { isExecuting: false, isErrored: true }});
@@ -92,8 +92,8 @@ class Workout extends Component {
             }, error => {
                 this.props.showSnackbar('Error deleting Workout history: ' + error);
                 reject(error);
-            })
-        })
+            });
+        });
     }
 
     handleWorkoutHistoryChange = (workout) => {
@@ -104,8 +104,8 @@ class Workout extends Component {
                 resolve(response);
             }, error => {
                 this.props.showSnackbar('Error updating Workout history: ' + error);
-            })
-        })
+            });
+        });
     }
 
     navigate = (url) => {
@@ -170,8 +170,8 @@ class Workout extends Component {
             }, error => {
                 this.props.showSnackbar('Error updating Workout \'' + workout.routine.name + '\'.');
                 reject(error);
-            })
-        })
+            });
+        });
     }
 
     handleWorkoutComplete = (workout) => {
@@ -190,7 +190,7 @@ class Workout extends Component {
                 // in a spot i can't control
                 this.setState({ api: { ...this.state.api, isExecuting: true}}, () => {
                     setTimeout(() => this.fetchWorkout(), 1000);
-                })
+                });
             });
         });
     }
@@ -203,8 +203,8 @@ class Workout extends Component {
                 resolve(response);
             }, error => {
                 this.props.showSnackbar('Error starting Workout \'' + workout.routine.name + '\'.');
-            })
-        })
+            });
+        });
     }
 
     handleWorkoutDelete = () => {
@@ -219,17 +219,17 @@ class Workout extends Component {
             }, error => {
                 this.props.showSnackbar('Error deleting Workout \'' + workout.routine.name + '\'.');
                 reject(error);
-            })
-        })
+            });
+        });
     }
 
     handleNavigate = (path) => {
         this.setState({ api: { isExecuting: true }}, () => {
-            this.navigate(path)
+            this.navigate(path);
             window.setTimeout(() => {
-                this.setState({ api: { isExecuting: false }}) 
-            }, 500)
-        })
+                this.setState({ api: { isExecuting: false }}); 
+            }, 500);
+        });
     }
 
     render() {
@@ -264,14 +264,14 @@ class Workout extends Component {
                                 onDelete={this.handleWorkoutHistoryDelete}
                                 onEditClick={() => this.handleNavigate((this.props.location.pathname + '/edit').replace('//', '/'))}
                             />
-        )
+        );
     }
 }
 
 const mapStateToProps = (state) => ({
     workouts: state.workouts,
     workoutsHistory: state.workoutsHistory,
-})
+});
 
 const mapDispatchToProps = {
     fetchWorkouts,
@@ -282,6 +282,6 @@ const mapDispatchToProps = {
     updateWorkoutHistory,
     showSnackbar,
     setTitle,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Workout)
+export default connect(mapStateToProps, mapDispatchToProps)(Workout);
