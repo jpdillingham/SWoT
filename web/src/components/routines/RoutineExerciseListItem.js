@@ -8,7 +8,7 @@ class RoutineExerciseListItem extends Component {
     render() {
         let exerciseImage = this.props.exercise.type;
         if (EXERCISE_TYPES.indexOf(exerciseImage) === -1) { 
-            exerciseImage = 'unknown'
+            exerciseImage = 'unknown';
         }
 
         return(
@@ -23,16 +23,16 @@ class RoutineExerciseListItem extends Component {
                 }
                 primaryText={this.props.exercise.name}
             />
-        )
+        );
     }
 }
 
-export default RoutineExerciseListItem
+export default RoutineExerciseListItem;
 
 const styles = {
     leftIcon: {
         width: '32px',
         height: '32px',
         marginTop: 7,
-    }
-}
+    },
+};

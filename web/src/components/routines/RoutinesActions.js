@@ -5,22 +5,22 @@ const endpoint = API_ROOT + '/routines';
 
 const routinesGet = (routines) => ({
     type: 'ROUTINES_GET',
-    routines: routines
+    routines: routines,
 });
 
 const routinesPost = (routine) => ({
     type: 'ROUTINES_POST',
-    routine: routine
+    routine: routine,
 });
 
 const routinesPut = (routine) => ({
     type: 'ROUTINES_PUT',
-    routine: routine
+    routine: routine,
 });
 
 const routinesDelete = (id) => ({
     type: 'ROUTINES_DELETE',
-    id: id
+    id: id,
 });
 
 export const fetchRoutines = () => (dispatch, getState) => {
@@ -33,7 +33,7 @@ export const fetchRoutines = () => (dispatch, getState) => {
             reject(error.response.message);
         });    
     });
-}
+};
 
 export const addRoutine = (routine) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
@@ -50,7 +50,7 @@ export const addRoutine = (routine) => (dispatch, getState) => {
             reject(error.response.message);
         });
     });
-}
+};
 
 export const updateRoutine = (routine) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
@@ -67,7 +67,7 @@ export const updateRoutine = (routine) => (dispatch, getState) => {
             reject(error.response.message);
         });
     });
-}
+};
 
 export const deleteRoutine = (id) => (dispatch, getState) => {
     return new Promise((resolve, reject) => {
@@ -84,4 +84,4 @@ export const deleteRoutine = (id) => (dispatch, getState) => {
             reject(error.response.message);
         });
     });
-}
+};

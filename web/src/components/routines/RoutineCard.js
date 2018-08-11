@@ -10,7 +10,7 @@ import Avatar from 'material-ui/Avatar';
 import { CARD_WIDTH } from '../../constants';
 import ContentCreate from 'material-ui/svg-icons/content/create';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
-import RoutineExerciseListItem from './RoutineExerciseListItem'
+import RoutineExerciseListItem from './RoutineExerciseListItem';
 import { red500 } from 'material-ui/styles/colors';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import IconMenu from 'material-ui/IconMenu';
@@ -19,12 +19,12 @@ import { ContentContentCopy, ActionDelete } from 'material-ui/svg-icons';
 import Divider from 'material-ui/Divider';
 import ActionHistory from 'material-ui/svg-icons/action/history';
 
-import ConfirmDialog from '../shared/ConfirmDialog'
-import RoutineDialog from './RoutineDialog'
+import ConfirmDialog from '../shared/ConfirmDialog';
+import RoutineDialog from './RoutineDialog';
 import RoutineHistoryDialog from './history/RoutineHistoryDialog';
 
 import { fontContrastColor } from '../../util';
-import { INTENTS } from '../../constants'
+import { INTENTS } from '../../constants';
 
 const styles = {
     iconMenu: {
@@ -49,17 +49,17 @@ const styles = {
         marginTop: 6,
     },
     container: {
-        height: '100%'
+        height: '100%',
     },
     card: {
         width: CARD_WIDTH,
         height: '100%',
-        position: 'relative'
+        position: 'relative',
     },
     link: {
         cursor: 'pointer',
     },
-}
+};
 
 const initialState = {
     deleteDialog: {
@@ -68,37 +68,37 @@ const initialState = {
     routineDialog: {
         open: false,
         routine: {},
-        intent: INTENTS.EDIT
+        intent: INTENTS.EDIT,
     },
     historyDialog: {
         open: false,
     },
-}
+};
 
 class RoutineCard extends Component {
     state = initialState;
 
     handleDeleteClick = () => {
-        this.setState({ deleteDialog: { open: true }})
+        this.setState({ deleteDialog: { open: true }});
     }
 
     handleDeleteDialogClose = (result) => {
         if (result.cancelled) {
-            this.setState({ deleteDialog: { open: false }})
+            this.setState({ deleteDialog: { open: false }});
         }
     }
 
     handleDuplicateClick = () => {
-        let routine = Object.assign({}, this.props.routine)
-        routine.name = routine.name + '(1)'
+        let routine = Object.assign({}, this.props.routine);
+        routine.name = routine.name + '(1)';
 
         this.setState(prevState => ({
             routineDialog: {
                 open: true,
                 routine: routine,
-                intent: INTENTS.COPY
-            }
-        }))
+                intent: INTENTS.COPY,
+            },
+        }));
     }
 
     handleHistoryClick = () => {
@@ -111,8 +111,8 @@ class RoutineCard extends Component {
 
     handleRoutineDialogClose = () => {
         this.setState({
-            routineDialog: { ...initialState.routineDialog }
-        })
+            routineDialog: { ...initialState.routineDialog },
+        });
     }
 
     handleEditClick = () => {
@@ -121,8 +121,8 @@ class RoutineCard extends Component {
                 open: true,
                 routine: this.props.routine,
                 intent: INTENTS.EDIT,
-            }
-        }))
+            },
+        }));
     }
 
     render() {
@@ -197,8 +197,8 @@ class RoutineCard extends Component {
                     routine={this.props.routine}
                 />
             </div>
-        )
+        );
     }
 }
 
-export default withRouter(RoutineCard)
+export default withRouter(RoutineCard);

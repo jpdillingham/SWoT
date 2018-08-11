@@ -10,13 +10,13 @@ const styles = {
         width: 400,
     },
     exercise: {
-        width: '100%'
-    }
-}
+        width: '100%',
+    },
+};
 
 const initialState = {
-    exercise: { id: undefined }
-}
+    exercise: { id: undefined },
+};
 
 class RoutineExerciseDialog extends Component {
     state = initialState;
@@ -26,13 +26,13 @@ class RoutineExerciseDialog extends Component {
     }
 
     handleCancelClick = () => {
-        this.props.handleClose({ cancelled: true })
+        this.props.handleClose({ cancelled: true });
     }
 
     handleExerciseChange = (event, index, value) => {
         this.setState(prevState => ({
-            exercise: this.props.exercises.find(e => e.id === value)
-        }))
+            exercise: this.props.exercises.find(e => e.id === value),
+        }));
     }
 
     componentWillReceiveProps(nextProps) {
@@ -81,8 +81,8 @@ class RoutineExerciseDialog extends Component {
                     )}
                 </SelectField>
             </Dialog>
-        )
+        );
     }
 }
 
-export default RoutineExerciseDialog
+export default RoutineExerciseDialog;

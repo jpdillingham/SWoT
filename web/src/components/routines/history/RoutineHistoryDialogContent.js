@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import moment from 'moment';
 
-import { sortByProp } from '../../../util'
+import { sortByProp } from '../../../util';
 
-import { grey300 } from 'material-ui/styles/colors'
+import { grey300 } from 'material-ui/styles/colors';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 const styles = {
     date: {
-        width: 60
-    }
-}
+        width: 60,
+    },
+};
 
 class RoutineHistoryDialogContent extends Component {
     render() {
@@ -39,9 +39,9 @@ class RoutineHistoryDialogContent extends Component {
                         )}
                 </TableBody>
             </Table>
-        )
+        );
     }
 }
 
-export default RoutineHistoryDialogContent
+export default RoutineHistoryDialogContent;
 

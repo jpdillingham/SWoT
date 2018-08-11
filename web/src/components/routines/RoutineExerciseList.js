@@ -16,13 +16,13 @@ const styles = {
         width: '32px',
         height: '32px',
         marginTop: 7,
-    }
-}
+    },
+};
 
 class RoutineExerciseList extends Component {
     getImage = (type) => {
         if (EXERCISE_TYPES.indexOf(type) === -1) { 
-            type = 'unknown'
+            type = 'unknown';
         }
     }
 
@@ -55,8 +55,8 @@ class RoutineExerciseList extends Component {
                         />
                     ) : ''}
             </List>
-        )
+        );
     }
 }
 
-export default RoutineExerciseList
+export default RoutineExerciseList;
