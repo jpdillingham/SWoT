@@ -32,11 +32,11 @@ class WorkoutStepTitle extends Component {
                 {this.props.workoutIsStarted && (this.props.isHovered || this.props.isActive) ? 
                     <div>
                         <span style={styles.hovered}>{this.props.exercise.name}</span>
-                        <div style={styles.buttons}>
+                        {this.props.enabled && <div style={styles.buttons}>
                             {!this.props.isFirstExercise ? <NavigationArrowUpward onClick={(event) => this.handleMoveUpDownClick(event, this.props.exercise, 'up')}/> : ''}
                             {!this.props.isLastExercise ?
                                 <NavigationArrowDownward onClick={(event) => this.handleMoveUpDownClick(event, this.props.exercise, 'down')}/> : ''}
-                        </div>
+                        </div>}
                     </div> :
                     <span style={styles.notHovered}>{this.props.exercise.name}</span> 
                 }
