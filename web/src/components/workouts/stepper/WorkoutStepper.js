@@ -137,6 +137,7 @@ class WorkoutStepper extends Component {
                                 isFirstExercise={exercise.sequence === 0}
                                 isLastExercise={exercise.sequence === lastExercise.sequence}
                                 onMoveUpDownClick={this.handleMoveUpDownClick}
+                                enabled={this.props.enabled}
                             />
                         </StepButton>
                         <StepContent>
