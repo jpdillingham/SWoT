@@ -98,7 +98,10 @@ export const logout = () => (dispatch, getState) => {
     let cognitoUser = getCognitoUser(getState().security.user);
 
     return new Promise((resolve, reject) => {
-        cognitoUser.signOut();
+        if (cognitoUser) {
+            cognitoUser.signOut();
+        }
+
         dispatch(logoutAction());
         resolve();
     });
