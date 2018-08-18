@@ -30,7 +30,7 @@ export const fetchWorkouts = () => (dispatch, getState) => {
             dispatch(workoutsGet(response.data));
             resolve(response);
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });    
     });
 };
@@ -47,7 +47,7 @@ export const addWorkout = (workout) => (dispatch, getState) => {
                 reject("Unknown POST response code (expected 201, received " + response.status + ").");
             }            
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });
     });
 };
@@ -67,7 +67,7 @@ export const updateWorkout = (workout) => (dispatch, getState) => {
                 reject("API error: Unknown PUT response code (expected 200, received " + response.status + ").");
             }            
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });
     });
 };
@@ -84,7 +84,7 @@ export const deleteWorkout = (id) => (dispatch, getState) => {
                 reject("Unknown DELETE response code (expected 204, received " + response.status + ").");
             } 
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });
     });
 };

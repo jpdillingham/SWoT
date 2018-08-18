@@ -30,7 +30,7 @@ export const fetchRoutines = () => (dispatch, getState) => {
             dispatch(routinesGet(response.data));
             resolve(response);
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });    
     });
 };
@@ -47,7 +47,7 @@ export const addRoutine = (routine) => (dispatch, getState) => {
                 reject('Unknown POST response code (expected 201, received ' + response.status + ').');
             }            
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });
     });
 };
@@ -64,7 +64,7 @@ export const updateRoutine = (routine) => (dispatch, getState) => {
                 reject('Unknown PUT response code (expected 200, received ' + response.status + ').');
             }            
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });
     });
 };
@@ -81,7 +81,7 @@ export const deleteRoutine = (id) => (dispatch, getState) => {
                 reject('Unknown DELETE response code (expected 204, received ' + response.status + ').');
             } 
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });
     });
 };

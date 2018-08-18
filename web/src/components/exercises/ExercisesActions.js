@@ -51,7 +51,7 @@ export const addExercise = (exercise) => (dispatch, getState) => {
                 reject('Unknown POST response code (expected 201, received ' + response.status + ').');
             }
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });
     });
 };
@@ -68,7 +68,7 @@ export const updateExercise = (exercise) => (dispatch, getState) => {
                 reject('Unknown PUT response code (expected 200, received ' + response.status + ').');
             }
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });
     });
 };
@@ -85,7 +85,7 @@ export const deleteExercise = (id) => (dispatch, getState) => {
                 reject('Unknown DELETE response code (expected 204, received ' + response.status + ').');
             }
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });
     });
 };
