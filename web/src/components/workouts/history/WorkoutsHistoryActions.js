@@ -51,7 +51,7 @@ export const fetchWorkoutsHistory = (filters) => (dispatch, getState) => {
             dispatch(workoutsHistoryGet(response.data, totalCount));
             resolve(response);
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });    
     });
 };
@@ -70,8 +70,7 @@ export const fetchWorkoutHistory = (id) => (dispatch, getState) => {
             dispatch(workoutHistoryGet(response.data));
             resolve(response);        
         }, error => {
-            console.log(error.response);
-            reject(error.response.data || error.response.status);
+            reject(error);
         });
     });
 };
@@ -90,7 +89,7 @@ export const updateWorkoutHistory = (workout) => (dispatch, getState) => {
             dispatch(workoutHistoryPut(response.data));
             resolve(response);
         }, error => {
-            reject(error.response.data || error.response.status);
+            reject(error);
         });
     });
 };
@@ -107,7 +106,7 @@ export const deleteWorkoutHistory = (id) => (dispatch, getState) => {
                 reject("Unknown DELETE response code (expected 204, received " + response.status + ").");
             } 
         }, error => {
-            reject(error.response.message);
+            reject(error);
         });
     });
 };
