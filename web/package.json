@@ -6,7 +6,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "",
     "eject": "react-scripts eject",
     "update-s3": "aws s3 sync build/ s3://swot-content --acl public-read --delete",
     "deploy": "react-scripts build && aws update-s3"
@@ -34,11 +34,14 @@
     "react-md-spinner": "^0.2.5",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^1.1.4",
+    "react-scripts": "^2.0.5",
     "redux": "^3.7.2",
     "redux-thunk": "^2.3.0"
   },
-  "devDependencies": {
-    "webpack": "^3.12.0"
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
