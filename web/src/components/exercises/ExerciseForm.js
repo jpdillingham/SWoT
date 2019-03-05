@@ -42,11 +42,8 @@ const styles = {
     fab: {
         margin: 0,
         top: -20,
-        left: 'auto',
-        bottom: 'auto',
         right: -210,
         position: 'relative',
-        zIndex: 1000,
     },
     link: {
         cursor: 'pointer',
