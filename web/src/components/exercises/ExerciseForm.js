@@ -35,18 +35,17 @@ const styles = {
     card: {
         width: CARD_WIDTH - 100,
         height: '100%',
-        position: 'relative',
         marginBottom: 5,
         marginLeft: 5,
         marginTop: 20,
     },
     fab: {
         margin: 0,
-        top: 47,
-        right: 40,
+        top: 34,
+        right: 18,
         bottom: 'auto',
         left: 'auto',
-        position: 'absolute',
+        position: 'relative',
         zIndex: 1000,
     },
     link: {
@@ -59,9 +58,9 @@ const styles = {
         color: black,
     },
     iconMenu: {
-        position: 'absolute',
-        right: 0,
-        top: 10,
+        position: 'relative',
+        right: -235,
+        top: -65,
     },
 };
 
