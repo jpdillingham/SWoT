@@ -62,6 +62,9 @@ const styles = {
         right: -242,
         top: -58,
     },
+    text: {
+        marginTop: -48,
+    },
 };
 
 const initialState = {
