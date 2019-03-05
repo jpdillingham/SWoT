@@ -231,7 +231,7 @@ class ExerciseForm extends Component {
                         <FloatingActionButton 
                             secondary={false} 
                             zDepth={2} 
-                            style={styles.fab}
+                            style={{ ...styles.fab, top: started ? styles.fab.top + 4 : styles.fab.top }}
                             mini={true}
                             onClick={this.handleActionClick}
                         >
@@ -241,7 +241,7 @@ class ExerciseForm extends Component {
                         </FloatingActionButton>
                     </CardHeader>
                     <IconMenu
-                        style={styles.iconMenu}
+                        style={{ ...styles.iconMenu, top: started ? styles.iconMenu.top : styles.iconMenu.top + 4 }}
                         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
