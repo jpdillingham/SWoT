@@ -241,7 +241,7 @@ class ExerciseForm extends Component {
                         }
                     </FloatingActionButton>
                     <IconMenu
-                        style={{ ...styles.iconMenu, top: started ? styles.iconMenu.top : styles.iconMenu.top + 4 }}
+                        style={{ ...styles.iconMenu, top: started ? styles.iconMenu.top - 5 : styles.iconMenu.top }}
                         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
