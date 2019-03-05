@@ -41,11 +41,11 @@ const styles = {
     },
     fab: {
         margin: 0,
-        top: 34,
-        right: 18,
+        top: 47,
+        right: 40,
         bottom: 'auto',
         left: 'auto',
-        position: 'relative',
+        position: 'absolute',
         zIndex: 1000,
     },
     link: {
@@ -59,8 +59,8 @@ const styles = {
     },
     iconMenu: {
         position: 'relative',
-        right: -235,
-        top: -65,
+        right: -242,
+        top: -58,
     },
 };
 
