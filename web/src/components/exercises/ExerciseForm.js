@@ -41,11 +41,11 @@ const styles = {
     },
     fab: {
         margin: 0,
-        top: 47,
-        right: 40,
-        bottom: 'auto',
+        top: -20,
         left: 'auto',
-        position: 'absolute',
+        bottom: 'auto',
+        right: -210,
+        position: 'relative',
         zIndex: 1000,
     },
     link: {
@@ -59,7 +59,7 @@ const styles = {
     },
     iconMenu: {
         position: 'relative',
-        right: -242,
+        right: -202,
         top: -58,
     },
     text: {
@@ -228,18 +228,18 @@ class ExerciseForm extends Component {
                             />
                         }
                     >
-                        <FloatingActionButton 
-                            secondary={false} 
-                            zDepth={2} 
-                            style={{ ...styles.fab, top: started ? styles.fab.top + 4 : styles.fab.top }}
-                            mini={true}
-                            onClick={this.handleActionClick}
-                        >
-                            {!started ? <AvPlayArrow/> :
-                                !this.props.exercise.endTime ? <AvStop/> : <AvFastRewind/>
-                            }
-                        </FloatingActionButton>
                     </CardHeader>
+                    <FloatingActionButton 
+                        secondary={false} 
+                        zDepth={2} 
+                        style={styles.fab}
+                        mini={true}
+                        onClick={this.handleActionClick}
+                    >
+                        {!started ? <AvPlayArrow/> :
+                            !this.props.exercise.endTime ? <AvStop/> : <AvFastRewind/>
+                        }
+                    </FloatingActionButton>
                     <IconMenu
                         style={{ ...styles.iconMenu, top: started ? styles.iconMenu.top : styles.iconMenu.top + 4 }}
                         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
