@@ -234,7 +234,7 @@ class ExerciseForm extends Component {
                         mini={true}
                         onClick={this.handleActionClick}
                     >
-                        {!started ? <AvPlayArrow style={{position: "unset", zIndex: 0 }}/> :
+                        {!started ? <AvPlayArrow/> :
                             !this.props.exercise.endTime ? <AvStop/> : <AvFastRewind/>
                         }
                     </FloatingActionButton>
