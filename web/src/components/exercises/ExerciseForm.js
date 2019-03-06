@@ -230,7 +230,7 @@ class ExerciseForm extends Component {
                     <FloatingActionButton 
                         secondary={false} 
                         zDepth={2} 
-                        style={styles.fab}
+                        style={{ ...styles.fab, top: started ? styles.fab.top + 5 : styles.fab.top }}
                         mini={true}
                         onClick={this.handleActionClick}
                     >
