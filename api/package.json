@@ -28,7 +28,7 @@
     "express": "^4.16.2"
   },
   "devDependencies": {
-    "aws-sdk": "^2.208.0",
+    "aws-sdk": "^2.415.0",
     "modclean": "^2.1.2",
     "modclean-patterns-default": "^1.1.1"
   }
