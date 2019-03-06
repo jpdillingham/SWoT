@@ -41,12 +41,10 @@ const styles = {
     },
     fab: {
         margin: 0,
-        top: -20,
-        left: 'auto',
-        bottom: 'auto',
-        right: -210,
-        position: 'relative',
-        zIndex: 1000,
+        top: 67,
+        left: 210,
+        position: 'absolute',
+        zIndex: 100,
     },
     link: {
         cursor: 'pointer',
@@ -59,7 +57,7 @@ const styles = {
     },
     iconMenu: {
         position: 'relative',
-        right: -202,
+        right: -240,
         top: -58,
     },
     text: {
@@ -236,7 +234,7 @@ class ExerciseForm extends Component {
                         mini={true}
                         onClick={this.handleActionClick}
                     >
-                        {!started ? <AvPlayArrow/> :
+                        {!started ? <AvPlayArrow style={{position: "unset", zIndex: 0 }}/> :
                             !this.props.exercise.endTime ? <AvStop/> : <AvFastRewind/>
                         }
                     </FloatingActionButton>
