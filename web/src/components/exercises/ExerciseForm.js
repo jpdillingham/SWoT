@@ -35,18 +35,17 @@ const styles = {
     card: {
         width: CARD_WIDTH - 100,
         height: '100%',
-        position: 'relative',
         marginBottom: 5,
         marginLeft: 5,
         marginTop: 20,
     },
     fab: {
         margin: 0,
-        top: 47,
-        right: 40,
-        bottom: 'auto',
+        top: -20,
         left: 'auto',
-        position: 'absolute',
+        bottom: 'auto',
+        right: -210,
+        position: 'relative',
         zIndex: 1000,
     },
     link: {
@@ -59,9 +58,12 @@ const styles = {
         color: black,
     },
     iconMenu: {
-        position: 'absolute',
-        right: 0,
-        top: 10,
+        position: 'relative',
+        right: -202,
+        top: -58,
+    },
+    text: {
+        marginTop: -48,
     },
 };
 
@@ -226,20 +228,20 @@ class ExerciseForm extends Component {
                             />
                         }
                     >
-                        <FloatingActionButton 
-                            secondary={false} 
-                            zDepth={2} 
-                            style={styles.fab}
-                            mini={true}
-                            onClick={this.handleActionClick}
-                        >
-                            {!started ? <AvPlayArrow/> :
-                                !this.props.exercise.endTime ? <AvStop/> : <AvFastRewind/>
-                            }
-                        </FloatingActionButton>
                     </CardHeader>
+                    <FloatingActionButton 
+                        secondary={false} 
+                        zDepth={2} 
+                        style={styles.fab}
+                        mini={true}
+                        onClick={this.handleActionClick}
+                    >
+                        {!started ? <AvPlayArrow/> :
+                            !this.props.exercise.endTime ? <AvStop/> : <AvFastRewind/>
+                        }
+                    </FloatingActionButton>
                     <IconMenu
-                        style={styles.iconMenu}
+                        style={{ ...styles.iconMenu, top: started ? styles.iconMenu.top - 5 : styles.iconMenu.top }}
                         iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
                         anchorOrigin={{horizontal: 'right', vertical: 'top'}}
                         targetOrigin={{horizontal: 'right', vertical: 'top'}}
