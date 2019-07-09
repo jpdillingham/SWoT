@@ -45,7 +45,7 @@ matrix:
       function_name: SWoT
       region: us-east-1
       role: arn:aws:iam::578324725290:role/service-role/lambdarole
-      runtime: nodejs6.10
+      runtime: nodejs10.x
       module_name: src/index
       handler_name: handler
       access_key_id: AKIAILRZNTSHNQYX2NYQ
