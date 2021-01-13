@@ -1,0 +1,35 @@
+name: CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  ci:
+    name: Web
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build Web
+        run: |
+          cd web
+          npm ci
+          npm test
+          npm run build
+      - name: Upload Static Web Content
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v2
+        with:
+          name: web
+          path: web/build
+      - name: Build API
+        run: |
+          cd api
+          npm ci
+          npm test
+          npm run clean-modules
+      - name: deploy
+        run: echo deploy
