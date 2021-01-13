@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  ci:
-    name: Web
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -31,5 +31,47 @@ jobs:
           npm ci
           npm test
           npm run clean-modules
-      - name: deploy
-        run: echo deploy
+      - name: Zip API
+        run: |
+          cd api
+          zip -r ../api.zip .
+      - name: Upload API Zip
+        if: github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@v2
+        with:
+          name: api
+          path: api.zip
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Download Static Web Content
+        uses: actions/download-artifact@v2
+        with:
+          name: web
+          path: web
+      - name: Download API Zip
+        uses: actions/download-artifact@v2
+        with:
+          name: api
+          path: .
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Deploy Static Web Content to S3
+        run: |
+          aws s3 sync web/. s3://swot-content
+      - name: Deploy API to Lambda
+        run: |
+          aws lambda update-function-configuration \
+          --function-name SWoT \
+          --description $GITHUB_WORKFLOW \#$GITHUB_RUN_NUMBER - $(git rev-parse --short HEAD) \
+          aws lambda update-function-code \
+          --function-name SWoT \
+          --publish \
+          --zip-file fileb://api.zip
