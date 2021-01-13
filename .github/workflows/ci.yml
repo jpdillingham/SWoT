@@ -65,7 +65,7 @@ jobs:
           aws-region: us-east-1
       - name: Deploy Static Web Content to S3
         run: |
-          aws s3 sync web/. s3://swot-content
+          aws s3 sync web/. s3://swot-content --acl public-read 
       - name: Deploy API to Lambda
         run: |
           aws lambda update-function-configuration \
