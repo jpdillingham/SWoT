@@ -70,7 +70,7 @@ jobs:
         run: |
           aws lambda update-function-configuration \
           --function-name SWoT \
-          --description $GITHUB_WORKFLOW \#$GITHUB_RUN_NUMBER - $(git rev-parse --short HEAD) \
+          --description "$GITHUB_WORKFLOW #$GITHUB_RUN_NUMBER - $GITHUB_SHA"
           aws lambda update-function-code \
           --function-name SWoT \
           --publish \
