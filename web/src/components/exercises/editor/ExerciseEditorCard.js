@@ -40,23 +40,23 @@ const styles = {
 class ExerciseEditorCard extends Component {
     getMetricDisplayName = (metric) => {
         return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '');
-    }
+    };
 
     handleMetricChange = (metric, value) => {
         let m = this.props.exercise.metrics
             .map(m => m.name === metric.name ? { ...m, value: value } : m);
 
         this.handlePropertyChange('metrics', m);
-    }
+    };
 
     handlePropertyChange = (property, value) => {
         let e = { ...this.props.exercise, [property]: value };
         this.props.onChange(e);
-    }
+    };
 
     areTimesValid = () => {
         return Number.isFinite(getUnixTimestamp(this.props.exercise.startTime)) && Number.isFinite(getUnixTimestamp(this.props.exercise.endTime));
-    }
+    };
 
     render() {
         let exerciseImage = this.props.exercise.type;

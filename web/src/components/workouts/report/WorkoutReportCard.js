@@ -56,17 +56,17 @@ class WorkoutReportCard extends Component {
 
     handleDeleteClick = () => {
         this.setState({ deleteDialog: { open: true }});
-    }
+    };
 
     handleDeleteDialogClose = (result) => {
         if (result.cancelled) { 
             this.setState({ deleteDialog: { open: false }});
         }
-    }
+    };
 
     handleEditClick = () => {
         this.props.onEditClick();
-    }
+    };
 
     render() {
         let color = this.props.workout.routine.color;

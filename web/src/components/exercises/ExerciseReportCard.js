@@ -39,7 +39,7 @@ const styles = {
 class ExerciseReportCard extends Component {
     getMetricDisplayName = (metric) => {
         return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '');
-    }
+    };
 
     render() {
         let exerciseImage = this.props.exercise.type;

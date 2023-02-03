@@ -37,7 +37,7 @@ const initialState = {
 };
 
 class ExerciseProgressDialog extends Component {
-    state = initialState
+    state = initialState;
 
     componentWillReceiveProps = (nextProps) => {
         if (!this.props.open && nextProps.open) {
@@ -45,7 +45,7 @@ class ExerciseProgressDialog extends Component {
                 this.fetchHistory({ ...this.state.filters, exerciseId: nextProps.exercise.id });
             });
         }
-    }
+    };
 
     fetchHistory = (filters) => {
         this.setState({ 
@@ -60,20 +60,20 @@ class ExerciseProgressDialog extends Component {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
             });
         });
-    }
+    };
 
     handleCloseClick = () => {
         this.setState({ api: { isExecuting: false, isErrored: false }});
         this.props.onClose();
-    }
+    };
 
     handleViewFullProgressClick = () => {
         this.navigate('/exercises/progress/' + this.props.exercise.id);
-    }
+    };
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     getDistinctMetrics = (exercises) => {
         let metrics = !exercises ? undefined : exercises.map(e => e.metrics);
@@ -82,7 +82,7 @@ class ExerciseProgressDialog extends Component {
             .sort(sortByProp('name'))
             .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true)
             .map(m => { return { name: m.name, uom: m.uom }; });
-    }
+    };
 
     getDatasets = (exercises) => {
         let datasets = this.getDistinctMetrics(exercises)
@@ -102,7 +102,7 @@ class ExerciseProgressDialog extends Component {
             }, datasets));
         
         return datasets;
-    }
+    };
 
     render() {
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};

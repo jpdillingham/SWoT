@@ -90,19 +90,19 @@ class ExerciseForm extends Component {
 
     handleHistoryClick = () => { 
         this.setState({ historyDialog: { open: true }});
-    }
+    };
 
     handleHistoryClose = () => {
         this.setState({ historyDialog: { open: false }});
-    }
+    };
 
     handleProgressClick = () => { 
         this.setState({ progressDialog: { open: true }});
-    }
+    };
 
     handleProgressClose = () => {
         this.setState({ progressDialog: { open: false }});
-    }
+    };
 
     handleMetricChange = (event, value, metric) => {
         this.setState({ 
@@ -113,11 +113,11 @@ class ExerciseForm extends Component {
                 }),
             },
         });
-    }
+    };
 
     handleResetClick = () => {
         this.setState({ resetDialog: { open: true }});
-    }
+    };
 
     handleResetConfirm = () => {
         let e = { ...this.state.exercise };
@@ -131,15 +131,15 @@ class ExerciseForm extends Component {
         });
 
         return this.updateExercise(e, true);
-    }
+    };
 
     handleResetClose = (result) => {
         this.setState({ resetDialog: { open: false }});
-    }
+    };
 
     handleNotesChange = (event, value) => {
         this.setState({ exercise: { ...this.state.exercise, notes: value }});
-    }
+    };
 
     handleActionClick = () => {
         if (!this.props.exercise.startTime) {
@@ -151,7 +151,7 @@ class ExerciseForm extends Component {
         else {
             this.updateExercise({ ...this.props.exercise, startTime: new Date().getTime(), endTime: undefined });
         }
-    }
+    };
 
     updateExercise = (exercise, suppressApi = false) => {
         return new Promise((resolve, reject) => {
@@ -166,25 +166,25 @@ class ExerciseForm extends Component {
                 })
             );
         });
-    }
+    };
 
     getMetricDisplayName = (metric) => {
         return metric.name + (metric.uom ? ' (' + metric.uom + ')' : '');
-    }
+    };
 
     componentDidMount = () => {
         this.timer = setInterval(() => this.setState({ ticker: this.state.ticker + 1 }), 1000);
-    }
+    };
 
     componentWillUnmount = () => {
         clearInterval(this.timer);
-    }
+    };
 
     componentWillReceiveProps = (nextProps) => {
         if (this.state.exercise.startTime !== nextProps.exercise.startTime || this.state.exercise.endTime !== nextProps.exercise.endTime) {
             this.setState({ exercise: nextProps.exercise });
         }
-    }
+    };
 
     render() {
         let exerciseImage = this.props.exercise.type;

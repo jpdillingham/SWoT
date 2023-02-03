@@ -62,7 +62,7 @@ const initialState = {
 };
 
 class ExerciseDialog extends Component {
-    state = initialState
+    state = initialState;
 
     handleNameChange = (event, value) => {
         let nameList = this.props.existingNames;
@@ -82,21 +82,21 @@ class ExerciseDialog extends Component {
                 validationErrors: {  ...prevState.validationErrors, name: '' },
             }));
         }
-    }
+    };
 
     handleTypeChange = (event, index, value) => {
         this.setState(prevState => ({ 
             exercise: { ...prevState.exercise, type: value },
             validationErrors: { ...prevState.validationErrors, type: '' },
         }));
-    }
+    };
 
     handleUrlChange = (event, value) => {
         this.setState(prevState => ({
             exercise: { ...prevState.exercise, url: value },
             validationErrors: { ...prevState.validationErrors, url: '' },
         }));
-    }
+    };
 
     handleMetricDialogClose = (result) => {
         if (result.added) {
@@ -107,7 +107,7 @@ class ExerciseDialog extends Component {
         }
 
         this.setState({ metricDialog: { open: false, intent: '', metric: {} } });
-    }
+    };
 
     handleMoveUpMetricMenuClick = (index) => {
         let arr = this.state.exercise.metrics.slice();
@@ -117,7 +117,7 @@ class ExerciseDialog extends Component {
         }
 
         this.setState({ exercise: { ...this.state.exercise, metrics: arr } }); 
-    }
+    };
 
     handleMoveDownMetricMenuClick = (index) => {
         let arr = this.state.exercise.metrics.slice();
@@ -127,7 +127,7 @@ class ExerciseDialog extends Component {
         }
 
         this.setState({ exercise: { ...this.state.exercise, metrics: arr } });
-    }
+    };
 
     handleEditMetricMenuClick = (metric) => {
         this.setState({ 
@@ -137,11 +137,11 @@ class ExerciseDialog extends Component {
                 metric: metric, 
             }, 
         });
-    }
+    };
 
     handleDeleteMetricMenuClick = (metric) => {
         this.metricDelete(metric);
-    }
+    };
 
     handleAddMetricClick = () => {
         this.setState({ 
@@ -151,7 +151,7 @@ class ExerciseDialog extends Component {
                 metric: {},
             }, 
         });
-    }
+    };
 
     handleSaveClick = () => {
         this.setState({
@@ -182,23 +182,23 @@ class ExerciseDialog extends Component {
                 }
             }
         });
-    }
+    };
 
     handleApiSuccess = (message) => {
         this.setState({ ...this.state.api, isExecuting: false });
         this.props.showSnackbar(message);
         this.props.handleClose();
-    }
+    };
 
     handleApiError = (message) => {
         this.setState({ api: { isExecuting: false, isErrored: true }});
         this.props.showSnackbar(message);
-    }
+    };
 
     handleCancelClick = () => {
         this.setState({ api: { isExecuting: false, isErrored: false }});
         this.props.handleClose();
-    }
+    };
 
     componentWillReceiveProps(nextProps) {
         if (this.props.open && !nextProps.open) {
@@ -222,7 +222,7 @@ class ExerciseDialog extends Component {
                 metrics: prevState.exercise.metrics.concat(metric),
             },
         }));
-    }
+    };
 
     metricUpdate = (metric) => {
         this.setState(prevState => ({
@@ -233,7 +233,7 @@ class ExerciseDialog extends Component {
                 }),
             },
         }));
-    }
+    };
 
     metricDelete = (metric) => {
         this.setState(prevState => ({
@@ -242,7 +242,7 @@ class ExerciseDialog extends Component {
                 metrics: prevState.exercise.metrics.filter(m => m.name !== metric.name),
             },
         }));
-    }
+    };
 
     render() {
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};

@@ -68,7 +68,7 @@ class HelpChecklist extends Component {
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     render() {
         let noExercises = !this.props.exercises.length;

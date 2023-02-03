@@ -39,7 +39,7 @@ class HistoryOptions extends Component {
         if (!this.props.disabled) {
             this.props.onChange({ ...this.props.filters, [filter]: value });
         }
-    }
+    };
 
     render() {
         return (

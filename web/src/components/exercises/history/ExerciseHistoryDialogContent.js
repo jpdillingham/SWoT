@@ -18,19 +18,20 @@ class ExerciseHistoryDialogContent extends Component {
         return !metrics || !metrics.length ? '' : 
                 metrics.map(m => m.name)
                     .reduce((acc, m) => acc.concat('/' + m));
-    }
+    };
+
     getValues = (exercise) => {
         let metrics = this.props.exercise.metrics;
         return !metrics || !metrics.length ? '' :
                 metrics
                 .map(m => this.getValue(exercise, m.name))
                 .reduce((acc, v) => acc.concat('/' + v)); 
-    }
+    };
 
     getValue = (exercise, metric) => {
         var foundMetric = exercise.metrics.find(m => m.name === metric);
         return !foundMetric ? '' : !foundMetric.value ? '-' : foundMetric.value;
-    }
+    };
 
     render() {
         let history = this.props.history;

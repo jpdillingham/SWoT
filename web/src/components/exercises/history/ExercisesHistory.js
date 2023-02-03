@@ -112,27 +112,27 @@ class ExercisesHistory extends Component {
                 this.setState({ loadApi: { isExecuting: false, isErroed: true }});
             });
         });
-    }
+    };
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     handleItemClick = (id) => {
         this.navigate('/exercises/' + id);
-    }
+    };
 
     handleFiltersChange = (filters) => {
         this.fetchHistory({ ...filters, exerciseId: this.state.filters.exerciseId });
-    }
+    };
 
     handleCustomFilterChange = (filter, event, index, value) => {
         this.fetchHistory({ ...this.state.filters, offset: 0, exerciseId: value });
-    }
+    };
 
     handleCustomFilterClearClick = () => {
         this.fetchHistory({ ...this.state.filters, exerciseId: undefined });
-    }
+    };
 
     fetchHistory = (filters, api = 'refreshApi') => {
         this.setState({ 
@@ -147,7 +147,7 @@ class ExercisesHistory extends Component {
                 this.setState({ [api]: { isExecuting: false, isErrored: true }});
             });
         });
-    }
+    };
 
     render() {
         let history = this.props.exercisesHistory;

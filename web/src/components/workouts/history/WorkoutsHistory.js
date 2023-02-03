@@ -112,23 +112,23 @@ class WorkoutsHistory extends Component {
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     handleItemClick = (workoutId) => {
         this.navigate('/workouts/' + workoutId);
-    }
+    };
 
     handleFiltersChange = (filters) => {
         this.fetchHistory({ ...filters, routineId: this.state.filters.routineId });
-    }
+    };
 
     handleCustomFilterChange = (filter, event, index, value) => {
         this.fetchHistory({ ...this.state.filters, offset: 0, routineId: value });
-    }
+    };
 
     handleCustomFilterClearClick = () => {
         this.fetchHistory({ ...this.state.filters, routineId: undefined });
-    }
+    };
 
     fetchHistory = (filters, api = 'refreshApi') => {
         this.setState({ 
@@ -143,7 +143,7 @@ class WorkoutsHistory extends Component {
                 this.setState({ [api]: { isExecuting: false, isErrored: true }});
             });
         });
-    }
+    };
 
     render() {
         return (

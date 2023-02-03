@@ -61,7 +61,7 @@ class WorkoutDialog extends Component {
     handleCancelClick = () => {
         this.setState({ api: { isExecuting: false, isErrored: false }});
         this.props.handleClose();
-    }
+    };
 
     handleSaveClick = () => {
         this.setState({
@@ -86,25 +86,25 @@ class WorkoutDialog extends Component {
                 );
             }
         });
-    }
+    };
 
     getScheduledTime = () => {
         let date = this.state.selectedDate;
         let time = this.state.selectedTime;
 
         return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), 0).getTime();
-    }
+    };
 
     handleApiSuccess = (message) => {
         this.setState({ ...this.state.api, isExecuting: false });
         this.props.showSnackbar(message);
         this.props.handleClose();
-    }
+    };
 
     handleApiError = (message) => {
         this.setState({ api: { isExecuting: false, isErrored: true }});
         this.props.showSnackbar(message);
-    }
+    };
 
     handleRoutineChange = (event, index, value) => {
         this.setState({ 
@@ -114,16 +114,16 @@ class WorkoutDialog extends Component {
                 routine: this.props.routines.find(r => r.id === value),
             }, 
         });
-    }
+    };
 
     handleDateChange = (event, value) => {
         this.setState({ selectedDate: value });
-    }
+    };
 
     handleTimeChange = (event, value) => {
 
         this.setState({ selectedTime: value });
-    }
+    };
 
     componentWillReceiveProps = (nextProps) => {
         if (this.props.open && !nextProps.open) {
@@ -136,7 +136,7 @@ class WorkoutDialog extends Component {
                 this.setState({ selectedDate: nextProps.defaultDate });
             }
         }
-    }
+    };
 
     render() {
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};

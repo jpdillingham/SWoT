@@ -74,15 +74,15 @@ class Login extends Component {
         else {
             this.passwordInput.current.focus();
         }
-    }
+    };
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     handleNavigateClick = (url) => {
         this.navigate(url);
-    }
+    };
 
     handleLoginClick = () => {
         this.setState({ validationErrors: this.validateState() }, () => {
@@ -103,21 +103,21 @@ class Login extends Component {
                 });
             }
         });
-    }
+    };
 
     handleEmailChange = (event, value) => {
         this.setState({ 
             info: { ...this.state.info, email: value },
             validationErrors: { ...this.state.validationErrors, email: undefined },
         });
-    }
+    };
 
     handlePasswordChange = (event, value) => {
         this.setState({ 
             info: { ...this.state.info, password: value },
             validationErrors: { ...this.state.validationErrors, password: undefined },
         });
-    }
+    };
 
     validateState = () => {
         let validationErrors = this.state.validationErrors;
@@ -152,7 +152,7 @@ class Login extends Component {
         if (focus) focus.focus();
 
         return validationErrors;
-    }
+    };
 
     render() {
         let disabled = this.state.api.isExecuting || this.state.api.isSuccess;

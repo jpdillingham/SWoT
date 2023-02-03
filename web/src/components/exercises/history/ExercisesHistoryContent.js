@@ -10,7 +10,7 @@ class ExercisesHistoryContent extends Component {
     getValue = (exercise, metric) => {
         var foundMetric = exercise.metrics.find(m => m.name === metric);
         return !foundMetric ? '' : !foundMetric.value ? '-' : foundMetric.value;
-    }
+    };
 
     render() {
         let history = this.props.exercisesHistory;

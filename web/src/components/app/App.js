@@ -54,7 +54,7 @@ class App extends Component {
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     componentWillMount = () => {
         if ([ '/register', '/confirm' ].find(r => r === this.props.location.pathname)) return;
@@ -63,7 +63,7 @@ class App extends Component {
             .then((result) => { }, (err) => {
                 this.navigate('/login');
             });
-    }
+    };
 
     componentWillReceiveProps = (nextProps) => {
         if (this.props.session !== undefined) {
@@ -71,7 +71,7 @@ class App extends Component {
                 this.navigate('/login');
             }
         };
-    }
+    };
 
     render() {
         return (

@@ -116,19 +116,19 @@ class WorkoutsCalendar extends Component {
 
     componentDidMount = () => {
         window.addEventListener("resize", this.updateDimensions);
-    }
+    };
 
     componentWillUnmount = () => {
         window.removeEventListener("resize", this.updateDimensions);
-    }
+    };
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     handleWorkoutClick = (workoutId) => {
         this.navigate('/workouts/' + workoutId);
-    }
+    };
 
     fetchHistory = (filters, api = 'refreshApi') => {
         this.setState({ 
@@ -143,23 +143,23 @@ class WorkoutsCalendar extends Component {
                 this.setState({ [api]: { isExecuting: false, isErrored: true }});
             });
         });
-    }
+    };
 
     handleSelectEvent = (event) => {
         this.navigate('/workouts/' + event.id);
-    }
+    };
 
     handleSelectSlot = (slot) => {
         this.setState({ workoutDialog: { date: slot.start, open: true }});
-    }
+    };
 
     handleWorkoutDialogClose = (result) => {
         this.setState({ workoutDialog: { open: false }});
-    }
+    };
 
     handleNavigate = (date, view) => {
         this.handleUpdate(date, view);
-    }
+    };
 
     handleUpdate = (date, view, api = 'refreshApi') => {
         let start, end;
@@ -184,11 +184,11 @@ class WorkoutsCalendar extends Component {
         }
 
         this.fetchHistory({ fromTime: start, toTime: end }, api);
-    }
+    };
 
     updateDimensions = () => {
         this.setState({ window: { width: window.innerWidth, height: window.innerHeight }});
-    }
+    };
 
     render() {
         let workoutsHistory = this.props.workoutsHistory && this.props.workoutsHistory.workouts ? this.props.workoutsHistory.workouts : [];

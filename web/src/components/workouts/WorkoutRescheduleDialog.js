@@ -39,15 +39,15 @@ class WorkoutRescheduleDialog extends Component {
         let time = this.state.selectedTime;
 
         return new Date(date.getFullYear(), date.getMonth(), date.getDate(), time.getHours(), time.getMinutes(), 0).getTime();
-    }
+    };
 
     handleDateChange = (event, value) => {
         this.setState({ selectedDate: value });
-    }
+    };
 
     handleTimeChange = (event, value) => {
         this.setState({ selectedTime: value });
-    }
+    };
 
     componentWillReceiveProps = (nextProps) => {
         if (this.props.open && !nextProps.open) {
@@ -60,7 +60,7 @@ class WorkoutRescheduleDialog extends Component {
                 selectedTime: new Date(nextProps.workout.scheduledTime),
             });
         }
-    }
+    };
 
     handleSaveClick = () => {
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
@@ -70,11 +70,11 @@ class WorkoutRescheduleDialog extends Component {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
             });
         });
-    }
+    };
 
     handleCancelClick = () => {
         this.setState(getInitialState(), () => this.props.onClose({ cancelled: true }));
-    }
+    };
 
     render() {
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};

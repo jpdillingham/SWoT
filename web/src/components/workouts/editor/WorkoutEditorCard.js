@@ -80,7 +80,7 @@ class WorkoutEditorCard extends Component {
 
     componentWillMount = () => {
         this.convertToFriendlyTimes(this.props.workout.routine.exercises);
-    }
+    };
 
     convertToFriendlyTimes = (exercises) => {
         let e = exercises;
@@ -103,28 +103,28 @@ class WorkoutEditorCard extends Component {
         };
 
         this.setState({ workout: w, editsMade: false });
-    }
+    };
 
     componentWillReceiveProps = (nextProps) => {
         this.convertToFriendlyTimes(nextProps.workout.routine.exercises);
-    }
+    };
 
     handleDeleteClick = () => {
         this.setState({ deleteDialog: { open: true }});
-    }
+    };
 
     handleDeleteDialogClose = (result) => {
         if (result.cancelled) { 
             this.setState({ deleteDialog: { open: false }});
         }
-    }
+    };
 
     handlePropertyChange = (property, value) => {
         this.setState({ 
             workout: { ...this.state.workout, [property]: value },
             editsMade: true,
         });
-    }
+    };
 
     handleExerciseChange = (exercise) => {
         this.setState({ 
@@ -138,7 +138,7 @@ class WorkoutEditorCard extends Component {
             },
             editsMade: true,
         });
-    }
+    };
 
     handleSaveClick = () => {
         if (this.areTimesValid()) {
@@ -168,15 +168,15 @@ class WorkoutEditorCard extends Component {
                 });
             });
         }
-    }
+    };
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     handleCancelEditClick = () => {
         this.props.onCancelClick();
-    }
+    };
 
     areTimesValid = () => {
         let workoutValid = Number.isFinite(getUnixTimestamp(this.state.workout.startTime)) && Number.isFinite(getUnixTimestamp(this.state.workout.endTime));
@@ -185,7 +185,7 @@ class WorkoutEditorCard extends Component {
             (e.endTime && !Number.isFinite(getUnixTimestamp(e.endTime)))) === undefined;
 
         return workoutValid && exercisesValid;
-    }
+    };
 
     render() {
         let color = this.props.workout.routine.color;

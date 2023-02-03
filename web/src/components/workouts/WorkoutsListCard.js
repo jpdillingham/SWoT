@@ -45,7 +45,7 @@ class WorkoutsListCard extends Component {
             return a[f] < b[f] ? -1 : 
                 a[f] === b[f] ? 0 : 1; 
         }        
-    }
+    };
 
     render() {
         return (

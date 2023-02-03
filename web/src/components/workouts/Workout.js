@@ -40,14 +40,14 @@ class Workout extends Component {
     componentWillMount = () => {
         this.props.setTitle('Workout');
         this.fetchWorkout();
-    }
+    };
 
     getWorkout = (props = this.props) => {
         let workout = props && props.workouts ? props.workouts.find(w => w.id === props.match.params.id) : undefined;
         workout = workout ? workout : props && props.workoutsHistory && props.workoutsHistory.workout ? props.workoutsHistory.workout : undefined;
 
         return workout;
-    }
+    };
 
     fetchWorkout = () => {
         this.setState({ 
@@ -78,7 +78,7 @@ class Workout extends Component {
             this.props.showSnackbar('Error fetching Workouts: ' + error);
             this.setState({ api: { isExecuting: false, isErrored: true }});
         });
-    }
+    };
 
     handleWorkoutHistoryDelete = () => {
         let workout = this.getWorkout(); 
@@ -94,7 +94,7 @@ class Workout extends Component {
                 reject(error);
             });
         });
-    }
+    };
 
     handleWorkoutHistoryChange = (workout) => {
         return new Promise((resolve, reject) => {
@@ -106,11 +106,11 @@ class Workout extends Component {
                 this.props.showSnackbar('Error updating Workout history: ' + error);
             });
         });
-    }
+    };
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     handleWorkoutReset = () => {
         let workout = this.getWorkout();
@@ -135,7 +135,7 @@ class Workout extends Component {
         });
 
         return this.handleWorkoutChange(workout, 'Reset Workout \'' + workout.routine.name + '\'.');
-    }
+    };
 
     handleWorkoutReschedule = (datetime = { date: undefined, time: undefined}) => {
         let date = datetime.date || new Date();
@@ -146,7 +146,7 @@ class Workout extends Component {
         let workout = { ...this.getWorkout(), scheduledTime: scheduledTime };
         
         return this.handleWorkoutChange(workout, 'Rescheduled Workout \'' + workout.routine.name + '\' for ' + moment(scheduledTime).calendar() + '.');
-    }
+    };
 
     handleWorkoutExerciseChange = (exercise) => {
         let workout = this.getWorkout(); 
@@ -156,7 +156,7 @@ class Workout extends Component {
         });
 
         return this.handleWorkoutChange(workout);
-    }
+    };
 
     handleWorkoutChange = (workout, notify = undefined) => {
         return new Promise((resolve, reject) => {
@@ -172,7 +172,7 @@ class Workout extends Component {
                 reject(error);
             });
         });
-    }
+    };
 
     handleWorkoutComplete = (workout) => {
         return new Promise((resolve, reject) => {
@@ -193,7 +193,7 @@ class Workout extends Component {
                 });
             });
         });
-    }
+    };
 
     handleWorkoutStart = (workout) => {
         return new Promise((resolve, reject) => {
@@ -205,7 +205,7 @@ class Workout extends Component {
                 this.props.showSnackbar('Error starting Workout \'' + workout.routine.name + '\'.');
             });
         });
-    }
+    };
 
     handleWorkoutDelete = () => {
         let workout = this.getWorkout();
@@ -221,7 +221,7 @@ class Workout extends Component {
                 reject(error);
             });
         });
-    }
+    };
 
     handleNavigate = (path) => {
         this.setState({ api: { isExecuting: true }}, () => {
@@ -230,7 +230,7 @@ class Workout extends Component {
                 this.setState({ api: { isExecuting: false }}); 
             }, 500);
         });
-    }
+    };
 
     render() {
         let workout = this.getWorkout(this.props);

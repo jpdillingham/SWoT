@@ -48,13 +48,13 @@ class ExerciseMetricDialog extends Component {
                 validationErrors: { name: '' },
             }));
         }
-    }
+    };
 
     handleUomChange = (event, value) => {
         this.setState(prevState => ({
             metric: { ...prevState.metric, uom: value },
         }));
-    }
+    };
 
     handleSaveClick = (result) => {
         if (this.state.metric.name === '') {
@@ -74,11 +74,11 @@ class ExerciseMetricDialog extends Component {
 
             this.props.handleClose(result);
         }
-    }
+    };
 
     handleCancelClick = () => {
         this.props.handleClose({ cancelled: true });
-    }
+    };
 
     componentWillReceiveProps(nextProps) {
         this.setState(initialState);

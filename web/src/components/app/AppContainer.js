@@ -7,11 +7,11 @@ import LogoutButton from '../security/LogoutButton';
 class AppContainer extends Component {
     state = {
         drawerOpen: false,
-    }
+    };
 
     toggleDrawer = () => {
         this.setState({ drawerOpen: !this.state.drawerOpen });
-    }
+    };
 
     render() {
         return (

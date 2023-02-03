@@ -20,7 +20,7 @@ class ConfirmDialog extends Component {
         if (!this.props.open && nextProps.open) {
             this.setState(initialState);
         }
-    }
+    };
 
     handleConfirmClick = () => {
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
@@ -31,11 +31,11 @@ class ConfirmDialog extends Component {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
             });
         });
-    }
+    };
 
     handleCancelClick = () => {
         this.setState(initialState, () => this.props.onClose({ cancelled: true }));
-    }
+    };
 
     render() {
         let style = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};

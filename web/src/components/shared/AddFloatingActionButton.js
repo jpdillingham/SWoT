@@ -28,15 +28,15 @@ class AddFloatingActionButton extends Component {
         if (this.props.startOpen) {
             this.setState({ addDialog: { open: true }});
         }
-    }
+    };
 
     handleAddClick = () => {
         this.setState({ addDialog: { open: true }});
-    }
+    };
 
     handleAddDialogClose = (result) => {
         this.setState({ addDialog: { open: false }});
-    }
+    };
 
     render() {
         return (

@@ -24,7 +24,7 @@ class WorkoutStepTitle extends Component {
     handleMoveUpDownClick = (event, exercise, direction) => {
         this.props.onMoveUpDownClick(exercise, direction);
         event.stopPropagation();
-    }
+    };
 
     render() {
         return (

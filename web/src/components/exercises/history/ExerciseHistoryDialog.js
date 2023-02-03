@@ -31,7 +31,7 @@ const initialState = {
 };
 
 class ExerciseHistoryDialog extends Component {
-    state = initialState
+    state = initialState;
 
     componentWillReceiveProps = (nextProps) => {
         if (!this.props.open && nextProps.open) {
@@ -39,7 +39,7 @@ class ExerciseHistoryDialog extends Component {
                 this.fetchHistory({ ...this.state.filters, exerciseId: nextProps.exercise.id });
             });
         }
-    }
+    };
 
     fetchHistory = (filters) => {
         this.setState({ 
@@ -54,20 +54,20 @@ class ExerciseHistoryDialog extends Component {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
             });
         });
-    }
+    };
 
     handleCloseClick = () => {
         this.setState({ api: { isExecuting: false, isErrored: false }});
         this.props.onClose();
-    }
+    };
 
     handleViewFullHistoryClick = () => {
         this.navigate('/exercises/history/' + this.props.exercise.id);
-    }
+    };
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     render() {
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};

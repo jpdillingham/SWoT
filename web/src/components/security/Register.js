@@ -73,36 +73,36 @@ class Register extends Component {
 
     componentDidMount = () => {
         this.emailInput.current.focus();
-    }
+    };
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     handleNavigateClick = (url) => {
         this.navigate(url);
-    }
+    };
 
     handleEmailChange = (event, value) => {
         this.setState({ 
             info: { ...this.state.info, email: value },
             validationErrors: { ...this.state.validationErrors, email: undefined },
         });
-    }
+    };
 
     handlePasswordChange = (event, value) => {
         this.setState({ 
             info: { ...this.state.info, password: value },
             validationErrors: { ...this.state.validationErrors, password: undefined, password2: undefined },
         });
-    }
+    };
 
     handlePassword2Change = (event, value) => {
         this.setState({ 
             info: { ...this.state.info, password2: value },
             validationErrors: { ...this.state.validationErrors, password: undefined, password2: undefined },
         });
-    }
+    };
 
     handleRegisterClick = () => {
         this.setState({ validationErrors: this.validateState() }, () => {
@@ -123,7 +123,7 @@ class Register extends Component {
                 });
             }
         });
-    }
+    };
 
     validateState = () => {
         let validationErrors = this.state.validationErrors;
@@ -169,7 +169,7 @@ class Register extends Component {
         if (focus) focus.focus();
 
         return validationErrors;
-    }
+    };
 
     render() {
         let disabled = this.state.api.isExecuting || this.state.api.isSuccess;

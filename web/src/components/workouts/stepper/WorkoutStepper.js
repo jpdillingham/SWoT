@@ -18,15 +18,15 @@ class WorkoutStepper extends Component {
 
     handleStepClick = (index) => {
         this.setState({ stepIndex: index });
-    }
+    };
 
     handleStepMouseEnter = (exercise) => {
         this.setState({ hoverId: exercise.sequence });
-    }
+    };
 
     handleStepMouseLeave = (exercise) => {
         this.setState({ hoverId: undefined });
-    }
+    };
 
     handleMoveUpDownClick = (exercise, direction) => {
         let exercises = this.getSequencedExercises();
@@ -69,15 +69,15 @@ class WorkoutStepper extends Component {
 
             this.updateWorkout({ ...this.props.workout, routine: { ...this.props.workout.routine, exercises: exercises }});
         }
-    }
+    };
 
     componentDidMount = () => {
         this.setState({ stepIndex: this.getNextExerciseIndex() });
-    }
+    };
 
     componentWillReceiveProps = (nextProps) => {
         this.setState({ stepIndex: this.getNextExerciseIndex() });
-    }
+    };
 
     updateWorkout = (workout) => {
         this.setState({ 
@@ -86,12 +86,12 @@ class WorkoutStepper extends Component {
         }, () => {
             this.props.onWorkoutChange(workout);
         });
-    }
+    };
 
     getSequencedExercises = () => {
         return this.props.workout.routine.exercises
                 .sort((a, b) => a.sequence === b.sequence ? 0 : a.sequence > b.sequence ? 1 : -1);
-    }
+    };
 
     getNextExerciseIndex = () => {
         let incomplete = this.getSequencedExercises()
@@ -103,7 +103,7 @@ class WorkoutStepper extends Component {
         if (started) return started.sequence;
 
         return incomplete[0].sequence;
-    }
+    };
 
     render() {
         let exercises = this.getSequencedExercises();

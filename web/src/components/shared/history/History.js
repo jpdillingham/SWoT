@@ -45,14 +45,14 @@ class History extends Component {
             ...this.state.filters,
             offset: this.state.filters.offset + this.state.filters.limit,
         });
-    }
+    };
 
     handlePreviousClick = () => {     
         this.updateFilters({
             ...this.state.filters,
             offset: this.state.filters.offset - this.state.filters.limit,
         });
-    }
+    };
 
     handleFiltersChange = (filters) => {
         let fromTimeChanged = this.state.filters.fromTime !== filters.fromTime;
@@ -63,19 +63,19 @@ class History extends Component {
         }
 
         this.updateFilters(filters);
-    }
+    };
 
     updateFilters = (filters) => {
         this.setState({ filters: filters }, () => {
             this.props.onFilterChange(this.state.filters);
         });
-    }
+    };
 
     componentWillReceiveProps = (nextProps) => {
         if (this.props.total !== nextProps.total) {
             this.updateFilters({ ...this.state.filters, offset: 0 });        
         }
-    }
+    };
 
     render() {
         let filters = this.state.filters;

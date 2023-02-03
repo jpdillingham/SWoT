@@ -140,11 +140,11 @@ class ExerciseProgress extends Component {
 
     componentDidMount = () => {
         window.addEventListener("resize", this.updateDimensions);
-    }
+    };
 
     componentWillUnmount = () => {
         window.removeEventListener("resize", this.updateDimensions);
-    }
+    };
 
     handleFiltersChange = (filters) => {
         this.setState({ 
@@ -159,7 +159,7 @@ class ExerciseProgress extends Component {
                 this.setState({ refreshApi: { isExecuting: false, isErrored: true }});
             });
         });
-    }
+    };
 
     getDistinctMetrics = (exercises) => {
         let metrics = !exercises ? undefined : exercises.map(e => e.metrics);
@@ -168,7 +168,7 @@ class ExerciseProgress extends Component {
             .sort(sortByProp('name'))
             .filter((value, index, array) => index > 0 ? value.name !== array[index - 1].name : true)
             .map(m => { return { name: m.name, uom: m.uom };});
-    }
+    };
 
     getDatasets = (exercises) => {
         let datasets = this.getDistinctMetrics(exercises)
@@ -188,11 +188,11 @@ class ExerciseProgress extends Component {
             }, datasets));
         
         return datasets;
-    }
+    };
 
     updateDimensions = () => {
         this.setState({ window: { width: window.innerWidth, height: window.innerHeight }});
-    }
+    };
 
     render() {
         let history = this.props.exercisesHistory;

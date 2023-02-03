@@ -19,7 +19,7 @@ class ToggledLeftRightListItem extends Component {
 
     handleToggle = () => {
         this.setState({ toggle: !this.state.toggle });
-    }
+    };
 
     render() {
         let props = { ...this.props };

@@ -97,15 +97,15 @@ class ConfirmRegistration extends Component {
         else {
             this.codeInput.current.focus();
         }
-    }
+    };
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     handleNavigateClick = (url) => {
         this.navigate(url);
-    }
+    };
 
     handleConfirmClick = () => {
         this.setState({ validationErrors: this.validateState() }, () => {
@@ -130,7 +130,7 @@ class ConfirmRegistration extends Component {
                 });
             }
         });
-    }
+    };
 
     validateState = () => {
         let validationErrors = this.state.validationErrors;
@@ -165,7 +165,7 @@ class ConfirmRegistration extends Component {
         if (focus) focus.focus();
 
         return validationErrors;
-    }
+    };
 
     handleEmailChange = (event, value) => {
         this.setState({ 
@@ -176,7 +176,7 @@ class ConfirmRegistration extends Component {
                 ...this.state.info, email: value, 
             }, 
         });
-    }
+    };
 
     handleCodeChange = (event, value) => {
         this.setState({ 
@@ -187,7 +187,7 @@ class ConfirmRegistration extends Component {
                 ...this.state.info, code: value, 
             },
         });
-    }
+    };
 
     render() {
         let disabled = this.state.api.isExecuting || this.state.api.isSuccess;

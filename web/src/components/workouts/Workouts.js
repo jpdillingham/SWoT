@@ -56,11 +56,11 @@ class Workouts extends Component {
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     handleClick = (workoutId) => {
         this.navigate('/workouts/' + workoutId);
-    }
+    };
 
     render() {
         return (

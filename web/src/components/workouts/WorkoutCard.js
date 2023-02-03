@@ -107,7 +107,7 @@ class WorkoutCard extends Component {
         else if (workout.endTime === undefined) {
             this.setState({ completeDialog: { open: true }});
         }
-    }
+    };
 
     handleWorkoutChange = (workout) => {
         this.setState({ api: { ...this.state.api, isExecuting: true }}, () => {
@@ -118,43 +118,43 @@ class WorkoutCard extends Component {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
             });
         });
-    }
+    };
 
     handleCompleteDialogClose = (result) => {
         if (result.cancelled) {
             this.setState({ completeDialog: { open: false }});
         }
-    }
+    };
 
     handleNotesChange = (event, value) => {
         this.setState({ workout: { ...this.state.workout, notes: value }});
-    }
+    };
 
     handleDeleteClick = () => {
         this.setState({ deleteDialog: { open: true }});
-    }
+    };
 
     handleDeleteDialogClose = (result) => {
         if (result.cancelled) {
             this.setState({ deleteDialog: { open: false }});
         }
-    }
+    };
 
     handleResetClick = () => {
         this.setState({ resetDialog: { open: true }});
-    }
+    };
 
     handleResetDialogClose = (result) => {
         this.setState({ resetDialog: { open: false }});
-    }
+    };
 
     handleRescheduleClick = () => {
         this.setState({ rescheduleDialog: { open: true }});
-    }
+    };
 
     handleRescheduleDialogClose = (result) => {
         this.setState({ rescheduleDialog: { open: false }});
-    }
+    };
 
     render() {
         let color = this.props.workout.routine.color;

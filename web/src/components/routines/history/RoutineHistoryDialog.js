@@ -31,7 +31,7 @@ const initialState = {
 };
 
 class RoutineHistoryDialog extends Component {
-    state = initialState
+    state = initialState;
 
     componentWillReceiveProps = (nextProps) => {
         if (!this.props.open && nextProps.open) {
@@ -39,7 +39,7 @@ class RoutineHistoryDialog extends Component {
                 this.fetchHistory({ ...this.state.filters, routineId: nextProps.routine.id });
             });
         }
-    }
+    };
 
     fetchHistory = (filters) => {
         this.setState({ 
@@ -54,20 +54,20 @@ class RoutineHistoryDialog extends Component {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
             });
         });
-    }
+    };
 
     handleCloseClick = () => {
         this.setState({ api: { isExecuting: false, isErrored: false }});
         this.props.onClose();
-    }
+    };
 
     handleViewFullHistoryClick = () => {
         this.navigate('/workouts/history/' + this.props.routine.id);
-    }
+    };
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     render() {
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};

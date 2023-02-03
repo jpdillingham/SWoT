@@ -52,7 +52,7 @@ class Exercises extends Component {
                 this.setState({ api: { isExecuting: false, isErrored: true }});
             });
         });
-    }
+    };
 
     handleExerciseDelete = (exercise) => {
         return new Promise((resolve, reject) => {
@@ -65,7 +65,7 @@ class Exercises extends Component {
                 reject(error);
             });
         });
-    }
+    };
 
     render() {
         return (

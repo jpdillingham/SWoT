@@ -29,24 +29,24 @@ const initialState = {
 };
 
 class LogoutButton extends Component {
-    state = initialState
+    state = initialState;
 
     handleLogoutClick = () => {
         this.setState({ dialog: { open: true }});
-    }
+    };
 
     handleDialogClose = (result) => {
         if (result.cancelled) {
             this.setState({ dialog: { open: false }});
         }
-    }
+    };
 
     handleLogoutConfirm = () => {
         return this.props.logout()
         .then(() => {
             this.props.showSnackbar("Successfully logged out!");
         });
-    }
+    };
 
     render() {
         return (

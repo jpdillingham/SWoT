@@ -22,15 +22,15 @@ class ExerciseAddButton extends Component {
         addDialog: {
             open: false,
         },
-    }
+    };
 
     handleAddClick = () => {
         this.setState({ addDialog: { open: true }});
-    }
+    };
 
     handleAddDialogClose = (result) => {
         this.setState({ addDialog: { open: false }});
-    }
+    };
 
     render() {
         return (

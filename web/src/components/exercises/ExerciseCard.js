@@ -80,19 +80,19 @@ const initialState = {
 };
 
 class ExerciseCard extends Component {
-    state = initialState
+    state = initialState;
 
     handleDeleteDialogClose = (result) => {
         if (result.cancelled) {
             this.setState({ deleteDialog: { open: false }});
         }
-    }
+    };
 
     handleExerciseDialogClose = () => {
         this.setState({
             exerciseDialog: { ...initialState.exerciseDialog },
         });
-    }
+    };
 
     handleEditClick = () => {
         this.setState(prevState => ({
@@ -102,31 +102,31 @@ class ExerciseCard extends Component {
                 intent: INTENTS.EDIT,
             },
         }));
-    }
+    };
 
     handleDeleteClick = () => {
         this.setState({ deleteDialog: { open: true }});
-    }
+    };
 
     handleProgressClick = () => {
         this.setState({ progressDialog: { open: true }});
-    }
+    };
 
     handleProgressDialogClose = () => {
         this.setState({ progressDialog: { open: false }});
-    }
+    };
 
     handleHistoryClick = () => {
         this.setState({ historyDialog: { open: true }});
-    }
+    };
 
     handleHistoryDialogClose = () => {
         this.setState({ historyDialog: { open: false }});
-    }
+    };
 
     navigate = (url) => {
         this.props.history.push(url);
-    }
+    };
 
     handleDuplicateClick = () => {
         let exercise = Object.assign({}, this.props.exercise);
@@ -139,7 +139,7 @@ class ExerciseCard extends Component {
                 intent: INTENTS.COPY,
             },
         }));
-    }
+    };
 
     render() {
         let exerciseImage = this.props.exercise.type;
