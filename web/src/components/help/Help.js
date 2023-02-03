@@ -7,7 +7,7 @@ import HelpChecklist from './HelpChecklist';
 class Help extends Component {
     componentWillMount = () => {
         this.props.setTitle('Help');
-    }
+    };
 
     render() {
         return (
