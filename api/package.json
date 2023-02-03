@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "aws-sdk": "^2.415.0",
-    "modclean": "^2.1.2",
+    "modclean": "^3.0.0-beta.1",
     "modclean-patterns-default": "^1.1.1"
   }
 }
