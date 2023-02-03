@@ -21,7 +21,7 @@
     "url": "https://github.com/jpdillingham/SWoT/issues"
   },
   "dependencies": {
-    "amazon-cognito-identity-js": "^1.29.0",
+    "amazon-cognito-identity-js": "^6.1.2",
     "axios": "^0.21.2",
     "chart.js": "^2.9.4",
     "material-ui": "^0.20.1",
