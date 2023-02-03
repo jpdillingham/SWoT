@@ -24,7 +24,7 @@ class RoutineExerciseList extends Component {
         if (EXERCISE_TYPES.indexOf(type) === -1) { 
             type = 'unknown';
         }
-    }
+    };
 
     render() {
         return (

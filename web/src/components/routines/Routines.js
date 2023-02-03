@@ -38,7 +38,7 @@ class Routines extends Component {
             isExecuting: false,
             isErrored: false,
         },
-    }
+    };
 
     componentWillMount() {
         this.props.setTitle('Routines');
@@ -67,7 +67,7 @@ class Routines extends Component {
                 reject(error);
             });
         });
-    }
+    };
 
     render() {
         return (

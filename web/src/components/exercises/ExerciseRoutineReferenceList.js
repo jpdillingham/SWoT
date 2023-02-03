@@ -33,7 +33,7 @@ class ExerciseRoutineReferenceList extends Component {
             isExecuting: false,
             isErrored: false,
         },
-    }
+    };
 
     componentWillMount = () => {
         this.setState({ api: { ...this.state.api, isExecuting: true }});
@@ -45,7 +45,7 @@ class ExerciseRoutineReferenceList extends Component {
             this.props.showSnackbar('Error fetching Routines: ' + error);
             this.setState({ api: { isExecuting: false, isErrored: true }});
         });
-    }
+    };
 
     render() {
         let routines = this.props.routines

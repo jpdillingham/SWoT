@@ -23,17 +23,17 @@ class RoutineExerciseDialog extends Component {
 
     handleAddClick = (result) => {
         this.props.handleClose({ added: true, exercise: this.state.exercise });
-    }
+    };
 
     handleCancelClick = () => {
         this.props.handleClose({ cancelled: true });
-    }
+    };
 
     handleExerciseChange = (event, index, value) => {
         this.setState(prevState => ({
             exercise: this.props.exercises.find(e => e.id === value),
         }));
-    }
+    };
 
     componentWillReceiveProps(nextProps) {
         this.setState(initialState);

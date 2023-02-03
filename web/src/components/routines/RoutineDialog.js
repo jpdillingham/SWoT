@@ -56,7 +56,7 @@ const initialState = {
 };
 
 class RoutineDialog extends Component {
-    state = initialState
+    state = initialState;
 
     handleNameChange = (event, value) => {
         let nameList = this.props.existingNames;
@@ -76,20 +76,20 @@ class RoutineDialog extends Component {
                 validationErrors: {  ...prevState.validationErrors, name: '' },
             }));
         }
-    }
+    };
 
     handleColorChange = (event, index, value) => {
         this.setState(prevState => ({
             routine: { ...prevState.routine, color: value },
             validationErrors: { ...prevState.validationErrors, color: '' },
         }));
-    }
+    };
 
     handleAddExerciseClick = () => {
         this.props.fetchExercises().then(
             this.setState({ exerciseDialog: { open: true }})
         );
-    }
+    };
 
     handleSaveClick = () => {
         this.setState({
@@ -122,23 +122,23 @@ class RoutineDialog extends Component {
                 }
             }
         });
-    }
+    };
 
     handleApiSuccess = (message) => {
         this.setState({ ...this.state.api, isExecuting: false });
         this.props.showSnackbar(message);
         this.props.handleClose();
-    }
+    };
 
     handleApiError = (message) => {
         this.setState({ api: { isExecuting: false, isErrored: true }});
         this.props.showSnackbar(message);
-    }
+    };
 
     handleCancelClick = () => {
         this.setState({ api: { isExecuting: false, isErrored: false }});
         this.props.handleClose();
-    }
+    };
 
     componentWillReceiveProps(nextProps) {
         if (this.props.open && !nextProps.open) {
@@ -163,7 +163,7 @@ class RoutineDialog extends Component {
         }
 
         this.setState({ routine: { ...this.state.routine, exercises: arr } }); 
-    }
+    };
 
     handleMoveDownExerciseMenuClick = (index) => {
         let arr = this.state.routine.exercises.slice();
@@ -173,21 +173,21 @@ class RoutineDialog extends Component {
         }
 
         this.setState({ routine: { ...this.state.routine, exercises: arr } });
-    }
+    };
 
     handleDeleteExerciseMenuClick = (index) => {
         let arr = this.state.routine.exercises.slice();
         arr.splice(index, 1);
 
         this.setState({ routine: { ...this.state.routine, exercises: arr }});
-    }
+    };
 
     handleExerciseDialogClose = (result) => {
         if (result.added) {
             this.setState({ routine: { ...this.state.routine, exercises: this.state.routine.exercises.concat(result.exercise) }});
         }
         this.setState({ exerciseDialog: { open: false }});
-    }
+    };
 
     render() {
         let refreshStyle = this.state.api.isExecuting ? { backgroundColor: grey300 } : {};

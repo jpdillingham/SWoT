@@ -80,13 +80,13 @@ class RoutineCard extends Component {
 
     handleDeleteClick = () => {
         this.setState({ deleteDialog: { open: true }});
-    }
+    };
 
     handleDeleteDialogClose = (result) => {
         if (result.cancelled) {
             this.setState({ deleteDialog: { open: false }});
         }
-    }
+    };
 
     handleDuplicateClick = () => {
         let routine = Object.assign({}, this.props.routine);
@@ -99,21 +99,21 @@ class RoutineCard extends Component {
                 intent: INTENTS.COPY,
             },
         }));
-    }
+    };
 
     handleHistoryClick = () => {
         this.setState({ historyDialog: { open: true }});
-    }
+    };
 
     handleHistoryDialogClose = () => {
         this.setState({ historyDialog: { open: false }});
-    }
+    };
 
     handleRoutineDialogClose = () => {
         this.setState({
             routineDialog: { ...initialState.routineDialog },
         });
-    }
+    };
 
     handleEditClick = () => {
         this.setState(prevState => ({
@@ -123,7 +123,7 @@ class RoutineCard extends Component {
                 intent: INTENTS.EDIT,
             },
         }));
-    }
+    };
 
     render() {
         let color = this.props.routine.color;
